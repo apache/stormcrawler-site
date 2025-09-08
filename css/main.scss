@@ -115,22 +115,11 @@ p {
 	}
 }
 
-.home .site-nav li:nth-child(1) a {
-	background:$colour-brand;
-}
-
-.getting-started .site-nav li:nth-child(4) a {
-	background:$colour-brand;
-}
-
-.docs .site-nav li:nth-child(5) a {
-	background:$colour-brand;
-}
-
-.faq .site-nav li:nth-child(6) a {
-	background:$colour-brand;
-}
-
+.home .site-nav li:nth-child(1) a,
+.download .site-nav li:nth-child(2) a,
+.getting-started .site-nav li:nth-child(3) a,
+.contribute .site-nav li:nth-child(4) a,
+.faq .site-nav li:nth-child(6) a,
 .support .site-nav li:nth-child(7) a {
 	background:$colour-brand;
 }
