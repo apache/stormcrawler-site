@@ -68,18 +68,11 @@ p {
       .site-nav a {
         padding: 9px 15px; } }
 
-.home .site-nav li:nth-child(1) a {
-  background: #BE6551; }
-
-.getting-started .site-nav li:nth-child(4) a {
-  background: #BE6551; }
-
-.docs .site-nav li:nth-child(5) a {
-  background: #BE6551; }
-
-.faq .site-nav li:nth-child(6) a {
-  background: #BE6551; }
-
+.home .site-nav li:nth-child(1) a,
+.download .site-nav li:nth-child(2) a,
+.getting-started .site-nav li:nth-child(3) a,
+.contribute .site-nav li:nth-child(4) a,
+.faq .site-nav li:nth-child(6) a,
 .support .site-nav li:nth-child(7) a {
   background: #BE6551; }
 
