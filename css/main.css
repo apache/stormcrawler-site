@@ -7,7 +7,7 @@
   -webkit-font-smoothing: antialiased; }
 
 .row, .site-header__wrap, .site-nav ul, .page-title h1 {
-  max-width: 900px;
+  max-width: 1000px;
   margin: 0 auto; }
 
 .row-col, .page-title h1 {
@@ -73,7 +73,8 @@ p {
 .getting-started .site-nav li:nth-child(3) a,
 .contribute .site-nav li:nth-child(4) a,
 .faq .site-nav li:nth-child(6) a,
-.support .site-nav li:nth-child(7) a {
+.security .site-nav li:nth-child(7) a,
+.support .site-nav li:nth-child(8) a {
   background: #BE6551; }
 
 main h1, main h2, main h3 {

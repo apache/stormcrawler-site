@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Reporting Security Problems to Apache StormCrawler</title>
+  <meta name="description" content="Apache StormCrawler is collection of resources for building low-latency, scalable web crawlers on Apache Storm
+">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="https://stormcrawler.apache.org/security/">
+  <link rel="alternate" type="application/rss+xml" title="Apache StormCrawler" href="https://stormcrawler.apache.org/feed.xml">
+  <link rel="icon" type="/image/png" href="/img/favicon.png" />
+</head>
+
+
+  <body class="security">
+
+    <header class="site-header">
+  <div class="site-header__wrap">
+    <div class="site-header__logo">
+      <a href="/"><img src="/img/logo-small.png" alt="Apache StormCrawler"></a>
+    </div>
+  </div>
+</header>
+<nav class="site-nav">
+  <ul>
+    <li><a href="/index.html">Home</a>
+    <li><a href="/download/index.html">Download</a>
+    <li><a href="/getting-started/">Getting Started</a></li>
+    <li><a href="/contribute/">Contribute</a></li>
+    <li><a href="https://javadoc.io/doc/org.apache.stormcrawler/stormcrawler-core/3.3.0/index.html">JavaDocs</a>
+    <li><a href="/faq/">FAQ</a></li>
+    <li><a href="/security/">Security</a></li>
+    <li><a href="/support/">Support</a></li>
+  </ul>
+</nav>
+<span id="forkongithub"><a href="https://github.com/apache/incubator-stormcrawler">Fork me on GitHub</a></span>
+
+
+      <main class="main-content">    
+        <div class="row row-col">
+	<h1>Security</h1>
+	<h2>Reporting New Security Problems with Apache StormCrawler</h2>
+	<p>The Apache Software Foundation takes a very active stance in eliminating security problems and denial of service attacks against its products.</p>
+	<p>We strongly encourage people to report security problems privately using the security mailing list of the <a href="https://www.apache.org/security/">ASF Security Team</a> before disclosing them in a public forum.</p>
+	<p>Please note that the security mailing list should only be used for reporting undisclosed security vulnerabilities and managing the process of fixing such vulnerabilities. We cannot accept regular bug reports or other queries at this address. All mail sent to this address that does not relate to an undisclosed security problem in our source code will be ignored.</p>
+	<p>The private security mailing address is: <a class="externalLink" href="mailto:security@stormcrawler.apache.org">security@stormcrawler.apache.org</a></p>
+
+	<h2>Threat Model and Security Considerations</h2>
+	<p>StormCrawler is designed to operate in trusted environments as part of a distributed Apache Storm&reg; cluster. This document outlines the threat model and key security assumptions to help users understand the secure use and deployment of StormCrawler.</p>
+
+	<h3>Trusted Configuration</h3>
+	<p>The configuration file used by StormCrawler is loaded during topology submission and is treated as a trusted source. It does not involve any user-supplied input at runtime.</p>
+	<p>If an attacker is able to modify this file, they would already have full access to the system, including:</p>
+	<ul>
+		<li>The ability to alter behavior of the topology</li>
+		<li>Access to credentials and other secrets</li>
+		<li>Arbitrary control over job execution</li>
+	</ul>
+	<p>Securing the configuration file and the environment in which topologies are submitted is essential. However, modification of the file implies full system compromise and is out of scope for runtime protections.</p>
+
+	<h3>Apache Storm&reg; Cluster Security</h3>
+	<p>StormCrawler runs on an Apache Storm&reg; cluster, which is designed to allow users to:</p>
+	<ul>
+		<li>Submit topologies</li>
+		<li>Execute custom, user-defined code</li>
+	</ul>
+	<p>This model inherently trusts cluster users and assumes they are authorized.</p>
+
+	<h4>Security Recommendations:</h4>
+	<ul>
+		<li>Access to the Apache Storm&reg; cluster must be strictly restricted to trusted users</li>
+		<li>Underlying systems should not store secrets or hold elevated privileges beyond those assigned to the authorized users</li>
+		<li>Avoid deploying StormCrawler in multi-tenant environments without strong isolation guarantees</li>
+	</ul>
+
+	<h3>Summary</h3>
+	<p>StormCrawler's security model assumes a trusted deployment environment. Users should:</p>
+	<ul>
+		<li>Secure configuration files and deployment infrastructure</li>
+		<li>Restrict Apache Storm&reg; cluster access</li>
+		<li>Follow best practices for secret and privilege management</li>
+	</ul>
+
+	<h2>Asking Questions About Known Security Problems</h2>
+	<p>Questions about:</p>
+	<ul>
+		<li>if a vulnerability applies to your particular application</li>
+		<li>obtaining further information on a published vulnerability</li>
+		<li>availability of patches and/or new releases</li>
+	</ul>
+	<p>should be addressed to the <a href="https://lists.apache.org/list.html?dev@stormcrawler.apache.org">dev mailing list</a>.</p>
+
+	<h2>Known Security Vulnerabilities</h2>
+	<p>No known security vulnerability yet.</p>
+</div>
+
+      </main>
+
+    <footer class="site-footer">
+&copy; 2025 <a href="https://www.apache.org/">The Apache Software Foundation</a><br/><br/>
+Licensed under the <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License, Version 2.0</a>. <br/> Apache StormCrawler, StormCrawler, the Apache feather logo are trademarks of The Apache Software Foundation. <br/> All other marks mentioned may be trademarks or registered trademarks of their respective owners. <br/><br/>
+	<a href="https://privacy.apache.org/policies/privacy-policy-public.html">Privacy Policy</a> | <a href="https://www.apache.org/security/">Security</a> | <a href="https://www.apache.org/foundation/sponsorship">Sponsorship</a> | <a href="https://www.apache.org/foundation/sponsors">Sponsors</a><br/><br/>
+	<div class="footer-widget">
+		<a class="acevent" data-format="wide" data-mode="dark"></a>
+	</div>
+</footer>
+
+
+  </body>
+
+  <script src="https://www.apachecon.com/event-images/snippet.js"></script>
+
+  <!-- Matomo -->
+  <script>
+    var _paq = window._paq = window._paq || [];
+    /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+    _paq.push(["setDoNotTrack", true]);
+    _paq.push(["disableCookies"]);
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="https://analytics.apache.org/";
+      _paq.push(['setTrackerUrl', u+'matomo.php']);
+      _paq.push(['setSiteId', '58']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+  </script>
+  <!-- End Matomo Code -->
+</html>
