@@ -13,7 +13,7 @@ title: Reporting Security Problems to Apache StormCrawler
 	<p>The private security mailing address is: <a class="externalLink" href="mailto:security@stormcrawler.apache.org">security@stormcrawler.apache.org</a></p>
 
 	<h2>Threat Model and Security Considerations</h2>
-	<p>StormCrawler is designed to operate in trusted environments as part of a distributed Apache Storm cluster. This document outlines the threat model and key security assumptions to help users understand the secure use and deployment of StormCrawler.</p>
+	<p>StormCrawler is designed to operate in trusted environments as part of a distributed Apache Storm&reg; cluster. This document outlines the threat model and key security assumptions to help users understand the secure use and deployment of StormCrawler.</p>
 
 	<h3>Trusted Configuration</h3>
 	<p>The configuration file used by StormCrawler is loaded during topology submission and is treated as a trusted source. It does not involve any user-supplied input at runtime.</p>
@@ -25,8 +25,8 @@ title: Reporting Security Problems to Apache StormCrawler
 	</ul>
 	<p>Securing the configuration file and the environment in which topologies are submitted is essential. However, modification of the file implies full system compromise and is out of scope for runtime protections.</p>
 
-	<h3>Storm Cluster Security</h3>
-	<p>StormCrawler runs on an Apache Storm cluster, which is designed to allow users to:</p>
+	<h3>Apache Storm&reg; Cluster Security</h3>
+	<p>StormCrawler runs on an Apache Storm&reg; cluster, which is designed to allow users to:</p>
 	<ul>
 		<li>Submit topologies</li>
 		<li>Execute custom, user-defined code</li>
@@ -35,7 +35,7 @@ title: Reporting Security Problems to Apache StormCrawler
 
 	<h4>Security Recommendations:</h4>
 	<ul>
-		<li>Access to the Storm cluster must be strictly restricted to trusted users</li>
+		<li>Access to the Apache Storm&reg; cluster must be strictly restricted to trusted users</li>
 		<li>Underlying systems should not store secrets or hold elevated privileges beyond those assigned to the authorized users</li>
 		<li>Avoid deploying StormCrawler in multi-tenant environments without strong isolation guarantees</li>
 	</ul>
@@ -44,7 +44,7 @@ title: Reporting Security Problems to Apache StormCrawler
 	<p>StormCrawler's security model assumes a trusted deployment environment. Users should:</p>
 	<ul>
 		<li>Secure configuration files and deployment infrastructure</li>
-		<li>Restrict Storm cluster access</li>
+		<li>Restrict Apache Storm&reg; cluster access</li>
 		<li>Follow best practices for secret and privilege management</li>
 	</ul>
 
