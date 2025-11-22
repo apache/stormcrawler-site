@@ -11,6 +11,9 @@ publish:
 github:
   description: "Source for the Apache StormCrawler web site"
   homepage: https://stormcrawler.apache.org/
+  labels:
+    - website
+    - jekyll
   features:
     # Enable wiki for documentation
     wiki: true
