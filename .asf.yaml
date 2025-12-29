@@ -16,7 +16,7 @@ github:
     - jekyll
   features:
     # Enable wiki for documentation
-    wiki: true
+    wiki: false
     # Enable issue management
     issues: true
     # Enable projects for project management boards
