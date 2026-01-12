@@ -7,7 +7,7 @@
   -webkit-font-smoothing: antialiased; }
 
 .row, .site-header__wrap, .site-nav ul, .page-title h1 {
-  max-width: 900px;
+  max-width: 1000px;
   margin: 0 auto; }
 
 .row-col, .page-title h1 {
@@ -68,19 +68,13 @@ p {
       .site-nav a {
         padding: 9px 15px; } }
 
-.home .site-nav li:nth-child(1) a {
-  background: #BE6551; }
-
-.getting-started .site-nav li:nth-child(4) a {
-  background: #BE6551; }
-
-.docs .site-nav li:nth-child(5) a {
-  background: #BE6551; }
-
-.faq .site-nav li:nth-child(6) a {
-  background: #BE6551; }
-
-.support .site-nav li:nth-child(7) a {
+.home .site-nav li:nth-child(1) a,
+.download .site-nav li:nth-child(2) a,
+.getting-started .site-nav li:nth-child(3) a,
+.contribute .site-nav li:nth-child(4) a,
+.faq .site-nav li:nth-child(6) a,
+.security .site-nav li:nth-child(7) a,
+.support .site-nav li:nth-child(8) a {
   background: #BE6551; }
 
 main h1, main h2, main h3 {
@@ -163,12 +157,12 @@ pre {
   text-align: center;
   font-weight: bold;
   padding: 5px 40px;
-  font-size: 1.25rem;
+  font-size: 0.725rem;
   line-height: 2rem;
   position: relative; }
 
 #forkongithub a:hover {
-  background: #832779;
+  background: #BE6551;
   color: #fff; }
 
 #forkongithub a::before, #forkongithub a::after {

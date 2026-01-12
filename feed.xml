@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Apache StormCrawler (Incubating)</title>
-    <description>Apache StormCrawler (Incubating) is collection of resources for building low-latency, scalable web crawlers on Apache Storm
+    <title>Apache StormCrawler</title>
+    <description>Apache StormCrawler is collection of resources for building low-latency, scalable web crawlers on Apache Storm
 </description>
     <link>https://stormcrawler.apache.org/</link>
     <atom:link href="https://stormcrawler.apache.org/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 02 Apr 2025 18:19:25 +0000</pubDate>
-    <lastBuildDate>Wed, 02 Apr 2025 18:19:25 +0000</lastBuildDate>
+    <pubDate>Mon, 12 Jan 2026 18:19:31 +0000</pubDate>
+    <lastBuildDate>Mon, 12 Jan 2026 18:19:31 +0000</lastBuildDate>
     <generator>Jekyll v3.9.5</generator>
     
   </channel>

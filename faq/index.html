@@ -6,13 +6,13 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Apache StormCrawler (Incubating)</title>
-  <meta name="description" content="Apache StormCrawler (Incubating) is collection of resources for building low-latency, scalable web crawlers on Apache Storm
+  <title>Apache StormCrawler</title>
+  <meta name="description" content="Apache StormCrawler is collection of resources for building low-latency, scalable web crawlers on Apache Storm
 ">
 
   <link rel="stylesheet" href="/css/main.css">
   <link rel="canonical" href="https://stormcrawler.apache.org/faq/">
-  <link rel="alternate" type="application/rss+xml" title="Apache StormCrawler (Incubating)" href="https://stormcrawler.apache.org/feed.xml">
+  <link rel="alternate" type="application/rss+xml" title="Apache StormCrawler" href="https://stormcrawler.apache.org/feed.xml">
   <link rel="icon" type="/image/png" href="/img/favicon.png" />
 </head>
 
@@ -22,7 +22,7 @@
     <header class="site-header">
   <div class="site-header__wrap">
     <div class="site-header__logo">
-      <a href="/"><img src="/img/incubator_logo.png" alt="Apache StormCrawler (Incubating)"></a>
+      <a href="/"><img src="/img/logo-small.png" alt="Apache StormCrawler"></a>
     </div>
   </div>
 </header>
@@ -32,8 +32,9 @@
     <li><a href="/download/index.html">Download</a>
     <li><a href="/getting-started/">Getting Started</a></li>
     <li><a href="/contribute/">Contribute</a></li>
-    <li><a href="https://javadoc.io/doc/org.apache.stormcrawler/stormcrawler-core/3.3.0/index.html">JavaDocs</a>
+    <li><a href="https://javadoc.io/doc/org.apache.stormcrawler/stormcrawler-core/3.5.0/index.html">JavaDocs</a>
     <li><a href="/faq/">FAQ</a></li>
+    <li><a href="/security/">Security</a></li>
     <li><a href="/support/">Support</a></li>
   </ul>
 </nav>
@@ -48,7 +49,7 @@
 
   <p>A: Probably worth having a look at <a href="http://storm.apache.org/">Apache Storm® first. The <a href="http://storm.apache.org/releases/current/Tutorial.html">tutorial</a> and <a href="http://storm.apache.org/documentation/Concepts.html">concept</a> pages are good starting points.</p>
 
-  <p><strong>Q: Do I need an Apache Storm® cluster to run Apache StormCrawler (Incubating)?</strong></p>
+  <p><strong>Q: Do I need an Apache Storm® cluster to run Apache StormCrawler?</strong></p>
 
   <p>A: No. It can run in local mode and will just use the Storm libraries as dependencies. It makes sense to install Storm in pseudo-distributed mode though so that you can use its UI to monitor the topologies.</p>
 
@@ -56,7 +57,7 @@
 
   <p>A: Apache Storm® is an elegant framework, with simple concepts, which provides a solid platform for distributed stream processing. It gives us fault tolerance and guaranteed data processing out of the box. The project is also very dynamic and backed by a thriving community. Last but not least it is under ASF 2.0 license.</p>
 
-  <p id="howfast"><strong>Q: How fast is Apache StormCrawler (Incubating)?</strong></p>
+  <p id="howfast"><strong>Q: How fast is Apache StormCrawler?</strong></p>
 
   <p>A: This depends mainly on the diversity of hostnames as well as your politeness settings. For instance, if you have 1M URLs from the same host and have set a delay of 1 sec between request then the best you'll be able to do is 86400 pages per day. In practice this would be less than that as the time needed for fetching the content (which itself depends on your network and how large the documents are), parsing and indexing it etc...  This is true of any crawler, not just StormCrawler.</p>
 
@@ -65,16 +66,16 @@
   <p>A: This <a href="http://digitalpebble.blogspot.co.uk/2015/09/index-web-with-aws-cloudsearch.html">tutorial</a> on using Apache Nutch® and SC for indexing with Cloudsearch give you some idea of how they compare in their methodology and performance. 
   We also ran a comparative <a href="http://digitalpebble.blogspot.co.uk/2017/01/the-battle-of-crawlers-apache-nutch-vs.html">benchmark</a> on a larger crawl.</p>
   <p>In a nutshell (pardon the pun), Nutch proceeds by batch steps where it selects the URLs to fetch, fetches them, parses them then update it database with the new info about the URLs it just processed and adds the newly discovered URLs. The generate and update steps take longer and longer as the crawl grows and the resources are used unevenly : when fetching there is little CPU or disk used whereas when doing all the other activities, you are not fetching anything at all, which is a waste of time and bandwidth.</p>
-  <p>Apache StormCrawler (Incubating) proceeds differently and does everything at the same time, hence optimising the physical resources of the cluster, but can potentially accomodate more use cases, e.g. when URLs naturally come as streams or when low latency is a must. URLs also get indexed as they are fetched and not as a batch. On a more subjective note and apart from being potentially more efficient, Apache StormCrawler (Incubating) is more modern, easier to understand and build, nicer to use, more versatile and more actively maintained (but this is just my opinion and I am of course completely biased).</p>
-  <p>Apache Nutch® is a great tool though, which we used for years with many of our customers at DigitalPebble, and it can also do things that Apache StormCrawler (Incubating) cannot currently do out of the box like deduplicating or advanced scoring like PageRank.</p>
+  <p>Apache StormCrawler proceeds differently and does everything at the same time, hence optimising the physical resources of the cluster, but can potentially accomodate more use cases, e.g. when URLs naturally come as streams or when low latency is a must. URLs also get indexed as they are fetched and not as a batch. On a more subjective note and apart from being potentially more efficient, Apache StormCrawler is more modern, easier to understand and build, nicer to use, more versatile and more actively maintained (but this is just my opinion and I am of course completely biased).</p>
+  <p>Apache Nutch® is a great tool though, which we used for years with many of our customers at DigitalPebble, and it can also do things that Apache StormCrawler cannot currently do out of the box like deduplicating or advanced scoring like PageRank.</p>
 
   <p><strong>Q: Do I need some sort of external storage? And if so, then what?</strong></p>
 
   <p>A: Yes, you'll need to store the URLs to fetch somewhere. The type of the storage to use depends on the nature of your crawl. If your crawl is not recursive i.e. you just want to process specific pages and/or won't discover new pages through more than one path, then you could use messaging queues like <a href="https://www.rabbitmq.com/">RabbitMQ</a>, <a href="https://aws.amazon.com/sqs/">AWS SQS</a> or <a href="http://kafka.apache.org">Apache Kafka®</a>. All you'll need is a Spout implementation that can read from them and generate Tuples for the crawl topology. Luckily there are many existing resources you can leverage. You might even find that the <a href="https://github.com/apache/incubator-stormcrawler/blob/master/core/src/main/java/com/digitalpebble/storm/crawler/spout/FileSpout.java">FileSpout</a> is all you need. An important consideration with queues is that you might want to bucket the URLs to fetch per host / domain or IP into separate queues and have one instance of the Spout per queue. This way you'll get a good diversity of URLs down the topology and optimal performance.</p>
-  <p>If your crawl is recursive and there is a possibility that URLs which are already known are discovered multiple times, then a queue won't help as it would add the same URL to the queue every time it is discovered. This would be very inefficient. Instead you should use a storage where the keys are unique, like for instance a relational database. Apache StormCrawler (Incubating) has several resources you can use in the <a href="https://github.com/apache/incubator-stormcrawler/tree/master/external">external modules</a> such as one for SOLR, Elasticsearch or SQL.</p>
-  <p>The advantage of using Apache StormCrawler (Incubating) is that is it both modular and flexible. You can plug it to pretty much any storage you want.</p>
+  <p>If your crawl is recursive and there is a possibility that URLs which are already known are discovered multiple times, then a queue won't help as it would add the same URL to the queue every time it is discovered. This would be very inefficient. Instead you should use a storage where the keys are unique, like for instance a relational database. Apache StormCrawler has several resources you can use in the <a href="https://github.com/apache/incubator-stormcrawler/tree/master/external">external modules</a> such as one for SOLR, Elasticsearch or SQL.</p>
+  <p>The advantage of using Apache StormCrawler is that is it both modular and flexible. You can plug it to pretty much any storage you want.</p>
 
-  <p><strong>Q: Is Apache StormCrawler (Incubating) polite?</strong></p>
+  <p><strong>Q: Is Apache StormCrawler polite?</strong></p>
   <p>A: The <a href="http://www.robotstxt.org/">robots.txt</a> protocol is supported and the fetchers are configured to have a <a href="https://github.com/apache/incubator-stormcrawler/blob/master/core/src/main/resources/crawler-default.yaml#L6">delay</a> between calls to the same hostname or domain. However like with every tool, it is down to how people use it.</p>
 
   <p><strong>Q: When do I know when a crawl is finished?</strong></p>
@@ -85,12 +86,8 @@
       </main>
 
     <footer class="site-footer">
-	<img src="/img/incubator_feather_egg_logo_bw_crop.png" alt="Apache Incubator Logo" width="500"><br/>
-
-	Apache StormCrawler is an effort undergoing incubation at The Apache Software Foundation (ASF), sponsored by the Apache Incubator. Incubation is required of all newly accepted projects until a further review indicates that the infrastructure, communications, and decision making process have stabilized in a manner consistent with other successful ASF projects. While incubation status is not necessarily a reflection of the completeness or stability of the code, it does indicate that the project has yet to be fully endorsed by the ASF.
-<br/> <br/>
-	&copy; 2024 <a href="https://www.apache.org/">The Apache Software Foundation</a><br/><br/>
-Licensed under the <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License, Version 2.0</a>. <br/> Apache StormCrawler, StormCrawler, the Apache feather logo are trademarks of The Apache Software Foundation. <br/> All other marks mentioned may be trademarks or registered trademarks of their respective owners. <br/><br/>
+&copy; 2025 <a href="https://www.apache.org/">The Apache Software Foundation</a><br/><br/>
+Licensed under the <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License, Version 2.0</a>. <br/> Apache StormCrawler, StormCrawler, the Apache logo are trademarks of The Apache Software Foundation. <br/> All other marks mentioned may be trademarks or registered trademarks of their respective owners. <br/><br/>
 	<a href="https://privacy.apache.org/policies/privacy-policy-public.html">Privacy Policy</a> | <a href="https://www.apache.org/security/">Security</a> | <a href="https://www.apache.org/foundation/sponsorship">Sponsorship</a> | <a href="https://www.apache.org/foundation/sponsors">Sponsors</a><br/><br/>
 	<div class="footer-widget">
 		<a class="acevent" data-format="wide" data-mode="dark"></a>
