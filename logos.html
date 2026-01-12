@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Icon Variants Table</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        table {
+            margin: 0 auto;
+            border-collapse: collapse;
+        }
+        td {
+            padding: 20px;
+            border: 1px solid #ccc;
+        }
+        img {
+            width: 400px; /* Set all images to 400px wide */
+            height: auto; /* Keep aspect ratio */
+        }
+        .label {
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        @media (max-width: 1300px) {
+            img {
+                width: 90%; /* Make images responsive on smaller screens */
+            }
+        }
+    </style>
+</head>
+<body>
+<h1>Icon Variants</h1>
+<table>
+    <r>
+        <td><img src="img/logo-small.png" alt="Original"></td>
+        <td></td>
+    </r>
+    <tr>
+        <td class="label">Original</td>
+        <td class="label"></td>
+    </tr>
+    <tr>
+        <td><img src="img/var1.svg" alt="Variant 1"></td>
+        <td><img src="img/var1b.svg" alt="Variant 1"></td>
+
+    </tr>
+    <tr>
+        <td class="label">Variant 1 (original)</td>
+        <td class="label">Variant 1 (smaller icon)</td>
+    </tr>
+    <tr>
+        <td><img src="img/var2.svg" alt="Variant 2"></td>
+        <td><img src="img/var3.svg" alt="Variant 3"></td>
+    </tr>
+    <tr>
+        <td class="label">Variant 2</td>
+        <td class="label">Variant 3</td>
+    </tr>
+</table>
+</body>
+</html>
