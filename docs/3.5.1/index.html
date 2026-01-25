@@ -1,0 +1,3009 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.23">
+<meta name="author" content="Apache Software Foundation">
+<title>Apache StormCrawler 3.5.1 - Documentation</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<style>
+/*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
+/* Uncomment the following line when using as a custom stylesheet */
+/* @import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700"; */
+html{font-family:sans-serif;-webkit-text-size-adjust:100%}
+a{background:none}
+a:focus{outline:thin dotted}
+a:active,a:hover{outline:0}
+h1{font-size:2em;margin:.67em 0}
+b,strong{font-weight:bold}
+abbr{font-size:.9em}
+abbr[title]{cursor:help;border-bottom:1px dotted #dddddf;text-decoration:none}
+dfn{font-style:italic}
+hr{height:0}
+mark{background:#ff0;color:#000}
+code,kbd,pre,samp{font-family:monospace;font-size:1em}
+pre{white-space:pre-wrap}
+q{quotes:"\201C" "\201D" "\2018" "\2019"}
+small{font-size:80%}
+sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}
+sup{top:-.5em}
+sub{bottom:-.25em}
+img{border:0}
+svg:not(:root){overflow:hidden}
+figure{margin:0}
+audio,video{display:inline-block}
+audio:not([controls]){display:none;height:0}
+fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}
+legend{border:0;padding:0}
+button,input,select,textarea{font-family:inherit;font-size:100%;margin:0}
+button,input{line-height:normal}
+button,select{text-transform:none}
+button,html input[type=button],input[type=reset],input[type=submit]{-webkit-appearance:button;cursor:pointer}
+button[disabled],html input[disabled]{cursor:default}
+input[type=checkbox],input[type=radio]{padding:0}
+button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}
+textarea{overflow:auto;vertical-align:top}
+table{border-collapse:collapse;border-spacing:0}
+*,::before,::after{box-sizing:border-box}
+html,body{font-size:100%}
+body{background:#fff;color:rgba(0,0,0,.8);padding:0;margin:0;font-family:"Noto Serif","DejaVu Serif",serif;line-height:1;position:relative;cursor:auto;-moz-tab-size:4;-o-tab-size:4;tab-size:4;word-wrap:anywhere;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased}
+a:hover{cursor:pointer}
+img,object,embed{max-width:100%;height:auto}
+object,embed{height:100%}
+img{-ms-interpolation-mode:bicubic}
+.left{float:left!important}
+.right{float:right!important}
+.text-left{text-align:left!important}
+.text-right{text-align:right!important}
+.text-center{text-align:center!important}
+.text-justify{text-align:justify!important}
+.hide{display:none}
+img,object,svg{display:inline-block;vertical-align:middle}
+textarea{height:auto;min-height:50px}
+select{width:100%}
+.subheader,.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{line-height:1.45;color:#7a2518;font-weight:400;margin-top:0;margin-bottom:.25em}
+div,dl,dt,dd,ul,ol,li,h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6,pre,form,p,blockquote,th,td{margin:0;padding:0}
+a{color:#2156a5;text-decoration:underline;line-height:inherit}
+a:hover,a:focus{color:#1d4b8f}
+a img{border:0}
+p{line-height:1.6;margin-bottom:1.25em;text-rendering:optimizeLegibility}
+p aside{font-size:.875em;line-height:1.35;font-style:italic}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{font-family:"Open Sans","DejaVu Sans",sans-serif;font-weight:300;font-style:normal;color:#ba3925;text-rendering:optimizeLegibility;margin-top:1em;margin-bottom:.5em;line-height:1.0125em}
+h1 small,h2 small,h3 small,#toctitle small,.sidebarblock>.content>.title small,h4 small,h5 small,h6 small{font-size:60%;color:#e99b8f;line-height:0}
+h1{font-size:2.125em}
+h2{font-size:1.6875em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.375em}
+h4,h5{font-size:1.125em}
+h6{font-size:1em}
+hr{border:solid #dddddf;border-width:1px 0 0;clear:both;margin:1.25em 0 1.1875em}
+em,i{font-style:italic;line-height:inherit}
+strong,b{font-weight:bold;line-height:inherit}
+small{font-size:60%;line-height:inherit}
+code{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;color:rgba(0,0,0,.9)}
+ul,ol,dl{line-height:1.6;margin-bottom:1.25em;list-style-position:outside;font-family:inherit}
+ul,ol{margin-left:1.5em}
+ul li ul,ul li ol{margin-left:1.25em;margin-bottom:0}
+ul.circle{list-style-type:circle}
+ul.disc{list-style-type:disc}
+ul.square{list-style-type:square}
+ul.circle ul:not([class]),ul.disc ul:not([class]),ul.square ul:not([class]){list-style:inherit}
+ol li ul,ol li ol{margin-left:1.25em;margin-bottom:0}
+dl dt{margin-bottom:.3125em;font-weight:bold}
+dl dd{margin-bottom:1.25em}
+blockquote{margin:0 0 1.25em;padding:.5625em 1.25em 0 1.1875em;border-left:1px solid #ddd}
+blockquote,blockquote p{line-height:1.6;color:rgba(0,0,0,.85)}
+@media screen and (min-width:768px){h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2}
+h1{font-size:2.75em}
+h2{font-size:2.3125em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.6875em}
+h4{font-size:1.4375em}}
+table{background:#fff;margin-bottom:1.25em;border:1px solid #dedede;word-wrap:normal}
+table thead,table tfoot{background:#f7f8f7}
+table thead tr th,table thead tr td,table tfoot tr th,table tfoot tr td{padding:.5em .625em .625em;font-size:inherit;color:rgba(0,0,0,.8);text-align:left}
+table tr th,table tr td{padding:.5625em .625em;font-size:inherit;color:rgba(0,0,0,.8)}
+table tr.even,table tr.alt{background:#f8f8f7}
+table thead tr th,table tfoot tr th,table tbody tr td,table tr td,table tfoot tr td{line-height:1.6}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2;word-spacing:-.05em}
+h1 strong,h2 strong,h3 strong,#toctitle strong,.sidebarblock>.content>.title strong,h4 strong,h5 strong,h6 strong{font-weight:400}
+.center{margin-left:auto;margin-right:auto}
+.stretch{width:100%}
+.clearfix::before,.clearfix::after,.float-group::before,.float-group::after{content:" ";display:table}
+.clearfix::after,.float-group::after{clear:both}
+:not(pre).nobreak{word-wrap:normal}
+:not(pre).nowrap{white-space:nowrap}
+:not(pre).pre-wrap{white-space:pre-wrap}
+:not(pre):not([class^=L])>code{font-size:.9375em;font-style:normal!important;letter-spacing:0;padding:.1em .5ex;word-spacing:-.15em;background:#f7f7f8;border-radius:4px;line-height:1.45;text-rendering:optimizeSpeed}
+pre{color:rgba(0,0,0,.9);font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;line-height:1.45;text-rendering:optimizeSpeed}
+pre code,pre pre{color:inherit;font-size:inherit;line-height:inherit}
+pre>code{display:block}
+pre.nowrap,pre.nowrap pre{white-space:pre;word-wrap:normal}
+em em{font-style:normal}
+strong strong{font-weight:400}
+.keyseq{color:rgba(51,51,51,.8)}
+kbd{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;display:inline-block;color:rgba(0,0,0,.8);font-size:.65em;line-height:1.45;background:#f7f7f7;border:1px solid #ccc;border-radius:3px;box-shadow:0 1px 0 rgba(0,0,0,.2),inset 0 0 0 .1em #fff;margin:0 .15em;padding:.2em .5em;vertical-align:middle;position:relative;top:-.1em;white-space:nowrap}
+.keyseq kbd:first-child{margin-left:0}
+.keyseq kbd:last-child{margin-right:0}
+.menuseq,.menuref{color:#000}
+.menuseq b:not(.caret),.menuref{font-weight:inherit}
+.menuseq{word-spacing:-.02em}
+.menuseq b.caret{font-size:1.25em;line-height:.8}
+.menuseq i.caret{font-weight:bold;text-align:center;width:.45em}
+b.button::before,b.button::after{position:relative;top:-1px;font-weight:400}
+b.button::before{content:"[";padding:0 3px 0 2px}
+b.button::after{content:"]";padding:0 2px 0 3px}
+p a>code:hover{color:rgba(0,0,0,.9)}
+#header,#content,#footnotes,#footer{width:100%;margin:0 auto;max-width:62.5em;*zoom:1;position:relative;padding-left:.9375em;padding-right:.9375em}
+#header::before,#header::after,#content::before,#content::after,#footnotes::before,#footnotes::after,#footer::before,#footer::after{content:" ";display:table}
+#header::after,#content::after,#footnotes::after,#footer::after{clear:both}
+#content{margin-top:1.25em}
+#content::before{content:none}
+#header>h1:first-child{color:rgba(0,0,0,.85);margin-top:2.25rem;margin-bottom:0}
+#header>h1:first-child+#toc{margin-top:8px;border-top:1px solid #dddddf}
+#header>h1:only-child{border-bottom:1px solid #dddddf;padding-bottom:8px}
+#header .details{border-bottom:1px solid #dddddf;line-height:1.45;padding-top:.25em;padding-bottom:.25em;padding-left:.25em;color:rgba(0,0,0,.6);display:flex;flex-flow:row wrap}
+#header .details span:first-child{margin-left:-.125em}
+#header .details span.email a{color:rgba(0,0,0,.85)}
+#header .details br{display:none}
+#header .details br+span::before{content:"\00a0\2013\00a0"}
+#header .details br+span.author::before{content:"\00a0\22c5\00a0";color:rgba(0,0,0,.85)}
+#header .details br+span#revremark::before{content:"\00a0|\00a0"}
+#header #revnumber{text-transform:capitalize}
+#header #revnumber::after{content:"\00a0"}
+#content>h1:first-child:not([class]){color:rgba(0,0,0,.85);border-bottom:1px solid #dddddf;padding-bottom:8px;margin-top:0;padding-top:1rem;margin-bottom:1.25rem}
+#toc{border-bottom:1px solid #e7e7e9;padding-bottom:.5em}
+#toc>ul{margin-left:.125em}
+#toc ul.sectlevel0>li>a{font-style:italic}
+#toc ul.sectlevel0 ul.sectlevel1{margin:.5em 0}
+#toc ul{font-family:"Open Sans","DejaVu Sans",sans-serif;list-style-type:none}
+#toc li{line-height:1.3334;margin-top:.3334em}
+#toc a{text-decoration:none}
+#toc a:active{text-decoration:underline}
+#toctitle{color:#7a2518;font-size:1.2em}
+@media screen and (min-width:768px){#toctitle{font-size:1.375em}
+body.toc2{padding-left:15em;padding-right:0}
+body.toc2 #header>h1:nth-last-child(2){border-bottom:1px solid #dddddf;padding-bottom:8px}
+#toc.toc2{margin-top:0!important;background:#f8f8f7;position:fixed;width:15em;left:0;top:0;border-right:1px solid #e7e7e9;border-top-width:0!important;border-bottom-width:0!important;z-index:1000;padding:1.25em 1em;height:100%;overflow:auto}
+#toc.toc2 #toctitle{margin-top:0;margin-bottom:.8rem;font-size:1.2em}
+#toc.toc2>ul{font-size:.9em;margin-bottom:0}
+#toc.toc2 ul ul{margin-left:0;padding-left:1em}
+#toc.toc2 ul.sectlevel0 ul.sectlevel1{padding-left:0;margin-top:.5em;margin-bottom:.5em}
+body.toc2.toc-right{padding-left:0;padding-right:15em}
+body.toc2.toc-right #toc.toc2{border-right-width:0;border-left:1px solid #e7e7e9;left:auto;right:0}}
+@media screen and (min-width:1280px){body.toc2{padding-left:20em;padding-right:0}
+#toc.toc2{width:20em}
+#toc.toc2 #toctitle{font-size:1.375em}
+#toc.toc2>ul{font-size:.95em}
+#toc.toc2 ul ul{padding-left:1.25em}
+body.toc2.toc-right{padding-left:0;padding-right:20em}}
+#content #toc{border:1px solid #e0e0dc;margin-bottom:1.25em;padding:1.25em;background:#f8f8f7;border-radius:4px}
+#content #toc>:first-child{margin-top:0}
+#content #toc>:last-child{margin-bottom:0}
+#footer{max-width:none;background:rgba(0,0,0,.8);padding:1.25em}
+#footer-text{color:hsla(0,0%,100%,.8);line-height:1.44}
+#content{margin-bottom:.625em}
+.sect1{padding-bottom:.625em}
+@media screen and (min-width:768px){#content{margin-bottom:1.25em}
+.sect1{padding-bottom:1.25em}}
+.sect1:last-child{padding-bottom:0}
+.sect1+.sect1{border-top:1px solid #e7e7e9}
+#content h1>a.anchor,h2>a.anchor,h3>a.anchor,#toctitle>a.anchor,.sidebarblock>.content>.title>a.anchor,h4>a.anchor,h5>a.anchor,h6>a.anchor{position:absolute;z-index:1001;width:1.5ex;margin-left:-1.5ex;display:block;text-decoration:none!important;visibility:hidden;text-align:center;font-weight:400}
+#content h1>a.anchor::before,h2>a.anchor::before,h3>a.anchor::before,#toctitle>a.anchor::before,.sidebarblock>.content>.title>a.anchor::before,h4>a.anchor::before,h5>a.anchor::before,h6>a.anchor::before{content:"\00A7";font-size:.85em;display:block;padding-top:.1em}
+#content h1:hover>a.anchor,#content h1>a.anchor:hover,h2:hover>a.anchor,h2>a.anchor:hover,h3:hover>a.anchor,#toctitle:hover>a.anchor,.sidebarblock>.content>.title:hover>a.anchor,h3>a.anchor:hover,#toctitle>a.anchor:hover,.sidebarblock>.content>.title>a.anchor:hover,h4:hover>a.anchor,h4>a.anchor:hover,h5:hover>a.anchor,h5>a.anchor:hover,h6:hover>a.anchor,h6>a.anchor:hover{visibility:visible}
+#content h1>a.link,h2>a.link,h3>a.link,#toctitle>a.link,.sidebarblock>.content>.title>a.link,h4>a.link,h5>a.link,h6>a.link{color:#ba3925;text-decoration:none}
+#content h1>a.link:hover,h2>a.link:hover,h3>a.link:hover,#toctitle>a.link:hover,.sidebarblock>.content>.title>a.link:hover,h4>a.link:hover,h5>a.link:hover,h6>a.link:hover{color:#a53221}
+details,.audioblock,.imageblock,.literalblock,.listingblock,.stemblock,.videoblock{margin-bottom:1.25em}
+details{margin-left:1.25rem}
+details>summary{cursor:pointer;display:block;position:relative;line-height:1.6;margin-bottom:.625rem;outline:none;-webkit-tap-highlight-color:transparent}
+details>summary::-webkit-details-marker{display:none}
+details>summary::before{content:"";border:solid transparent;border-left:solid;border-width:.3em 0 .3em .5em;position:absolute;top:.5em;left:-1.25rem;transform:translateX(15%)}
+details[open]>summary::before{border:solid transparent;border-top:solid;border-width:.5em .3em 0;transform:translateY(15%)}
+details>summary::after{content:"";width:1.25rem;height:1em;position:absolute;top:.3em;left:-1.25rem}
+.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{text-rendering:optimizeLegibility;text-align:left;font-family:"Noto Serif","DejaVu Serif",serif;font-size:1rem;font-style:italic}
+table.tableblock.fit-content>caption.title{white-space:nowrap;width:0}
+.paragraph.lead>p,#preamble>.sectionbody>[class=paragraph]:first-of-type p{font-size:1.21875em;line-height:1.6;color:rgba(0,0,0,.85)}
+.admonitionblock>table{border-collapse:separate;border:0;background:none;width:100%}
+.admonitionblock>table td.icon{text-align:center;width:80px}
+.admonitionblock>table td.icon img{max-width:none}
+.admonitionblock>table td.icon .title{font-weight:bold;font-family:"Open Sans","DejaVu Sans",sans-serif;text-transform:uppercase}
+.admonitionblock>table td.content{padding-left:1.125em;padding-right:1.25em;border-left:1px solid #dddddf;color:rgba(0,0,0,.6);word-wrap:anywhere}
+.admonitionblock>table td.content>:last-child>:last-child{margin-bottom:0}
+.exampleblock>.content{border:1px solid #e6e6e6;margin-bottom:1.25em;padding:1.25em;background:#fff;border-radius:4px}
+.sidebarblock{border:1px solid #dbdbd6;margin-bottom:1.25em;padding:1.25em;background:#f3f3f2;border-radius:4px}
+.sidebarblock>.content>.title{color:#7a2518;margin-top:0;text-align:center}
+.exampleblock>.content>:first-child,.sidebarblock>.content>:first-child{margin-top:0}
+.exampleblock>.content>:last-child,.exampleblock>.content>:last-child>:last-child,.exampleblock>.content .olist>ol>li:last-child>:last-child,.exampleblock>.content .ulist>ul>li:last-child>:last-child,.exampleblock>.content .qlist>ol>li:last-child>:last-child,.sidebarblock>.content>:last-child,.sidebarblock>.content>:last-child>:last-child,.sidebarblock>.content .olist>ol>li:last-child>:last-child,.sidebarblock>.content .ulist>ul>li:last-child>:last-child,.sidebarblock>.content .qlist>ol>li:last-child>:last-child{margin-bottom:0}
+.literalblock pre,.listingblock>.content>pre{border-radius:4px;overflow-x:auto;padding:1em;font-size:.8125em}
+@media screen and (min-width:768px){.literalblock pre,.listingblock>.content>pre{font-size:.90625em}}
+@media screen and (min-width:1280px){.literalblock pre,.listingblock>.content>pre{font-size:1em}}
+.literalblock pre,.listingblock>.content>pre:not(.highlight),.listingblock>.content>pre[class=highlight],.listingblock>.content>pre[class^="highlight "]{background:#f7f7f8}
+.literalblock.output pre{color:#f7f7f8;background:rgba(0,0,0,.9)}
+.listingblock>.content{position:relative}
+.listingblock code[data-lang]::before{display:none;content:attr(data-lang);position:absolute;font-size:.75em;top:.425rem;right:.5rem;line-height:1;text-transform:uppercase;color:inherit;opacity:.5}
+.listingblock:hover code[data-lang]::before{display:block}
+.listingblock.terminal pre .command::before{content:attr(data-prompt);padding-right:.5em;color:inherit;opacity:.5}
+.listingblock.terminal pre .command:not([data-prompt])::before{content:"$"}
+.listingblock pre.highlightjs{padding:0}
+.listingblock pre.highlightjs>code{padding:1em;border-radius:4px}
+.listingblock pre.prettyprint{border-width:0}
+.prettyprint{background:#f7f7f8}
+pre.prettyprint .linenums{line-height:1.45;margin-left:2em}
+pre.prettyprint li{background:none;list-style-type:inherit;padding-left:0}
+pre.prettyprint li code[data-lang]::before{opacity:1}
+pre.prettyprint li:not(:first-child) code[data-lang]::before{display:none}
+table.linenotable{border-collapse:separate;border:0;margin-bottom:0;background:none}
+table.linenotable td[class]{color:inherit;vertical-align:top;padding:0;line-height:inherit;white-space:normal}
+table.linenotable td.code{padding-left:.75em}
+table.linenotable td.linenos,pre.pygments .linenos{border-right:1px solid;opacity:.35;padding-right:.5em;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}
+pre.pygments span.linenos{display:inline-block;margin-right:.75em}
+.quoteblock{margin:0 1em 1.25em 1.5em;display:table}
+.quoteblock:not(.excerpt)>.title{margin-left:-1.5em;margin-bottom:.75em}
+.quoteblock blockquote,.quoteblock p{color:rgba(0,0,0,.85);font-size:1.15rem;line-height:1.75;word-spacing:.1em;letter-spacing:0;font-style:italic;text-align:justify}
+.quoteblock blockquote{margin:0;padding:0;border:0}
+.quoteblock blockquote::before{content:"\201c";float:left;font-size:2.75em;font-weight:bold;line-height:.6em;margin-left:-.6em;color:#7a2518;text-shadow:0 1px 2px rgba(0,0,0,.1)}
+.quoteblock blockquote>.paragraph:last-child p{margin-bottom:0}
+.quoteblock .attribution{margin-top:.75em;margin-right:.5ex;text-align:right}
+.verseblock{margin:0 1em 1.25em}
+.verseblock pre{font-family:"Open Sans","DejaVu Sans",sans-serif;font-size:1.15rem;color:rgba(0,0,0,.85);font-weight:300;text-rendering:optimizeLegibility}
+.verseblock pre strong{font-weight:400}
+.verseblock .attribution{margin-top:1.25rem;margin-left:.5ex}
+.quoteblock .attribution,.verseblock .attribution{font-size:.9375em;line-height:1.45;font-style:italic}
+.quoteblock .attribution br,.verseblock .attribution br{display:none}
+.quoteblock .attribution cite,.verseblock .attribution cite{display:block;letter-spacing:-.025em;color:rgba(0,0,0,.6)}
+.quoteblock.abstract blockquote::before,.quoteblock.excerpt blockquote::before,.quoteblock .quoteblock blockquote::before{display:none}
+.quoteblock.abstract blockquote,.quoteblock.abstract p,.quoteblock.excerpt blockquote,.quoteblock.excerpt p,.quoteblock .quoteblock blockquote,.quoteblock .quoteblock p{line-height:1.6;word-spacing:0}
+.quoteblock.abstract{margin:0 1em 1.25em;display:block}
+.quoteblock.abstract>.title{margin:0 0 .375em;font-size:1.15em;text-align:center}
+.quoteblock.excerpt>blockquote,.quoteblock .quoteblock{padding:0 0 .25em 1em;border-left:.25em solid #dddddf}
+.quoteblock.excerpt,.quoteblock .quoteblock{margin-left:0}
+.quoteblock.excerpt blockquote,.quoteblock.excerpt p,.quoteblock .quoteblock blockquote,.quoteblock .quoteblock p{color:inherit;font-size:1.0625rem}
+.quoteblock.excerpt .attribution,.quoteblock .quoteblock .attribution{color:inherit;font-size:.85rem;text-align:left;margin-right:0}
+p.tableblock:last-child{margin-bottom:0}
+td.tableblock>.content{margin-bottom:1.25em;word-wrap:anywhere}
+td.tableblock>.content>:last-child{margin-bottom:-1.25em}
+table.tableblock,th.tableblock,td.tableblock{border:0 solid #dedede}
+table.grid-all>*>tr>*{border-width:1px}
+table.grid-cols>*>tr>*{border-width:0 1px}
+table.grid-rows>*>tr>*{border-width:1px 0}
+table.frame-all{border-width:1px}
+table.frame-ends{border-width:1px 0}
+table.frame-sides{border-width:0 1px}
+table.frame-none>colgroup+*>:first-child>*,table.frame-sides>colgroup+*>:first-child>*{border-top-width:0}
+table.frame-none>:last-child>:last-child>*,table.frame-sides>:last-child>:last-child>*{border-bottom-width:0}
+table.frame-none>*>tr>:first-child,table.frame-ends>*>tr>:first-child{border-left-width:0}
+table.frame-none>*>tr>:last-child,table.frame-ends>*>tr>:last-child{border-right-width:0}
+table.stripes-all>*>tr,table.stripes-odd>*>tr:nth-of-type(odd),table.stripes-even>*>tr:nth-of-type(even),table.stripes-hover>*>tr:hover{background:#f8f8f7}
+th.halign-left,td.halign-left{text-align:left}
+th.halign-right,td.halign-right{text-align:right}
+th.halign-center,td.halign-center{text-align:center}
+th.valign-top,td.valign-top{vertical-align:top}
+th.valign-bottom,td.valign-bottom{vertical-align:bottom}
+th.valign-middle,td.valign-middle{vertical-align:middle}
+table thead th,table tfoot th{font-weight:bold}
+tbody tr th{background:#f7f8f7}
+tbody tr th,tbody tr th p,tfoot tr th,tfoot tr th p{color:rgba(0,0,0,.8);font-weight:bold}
+p.tableblock>code:only-child{background:none;padding:0}
+p.tableblock{font-size:1em}
+ol{margin-left:1.75em}
+ul li ol{margin-left:1.5em}
+dl dd{margin-left:1.125em}
+dl dd:last-child,dl dd:last-child>:last-child{margin-bottom:0}
+li p,ul dd,ol dd,.olist .olist,.ulist .ulist,.ulist .olist,.olist .ulist{margin-bottom:.625em}
+ul.checklist,ul.none,ol.none,ul.no-bullet,ol.no-bullet,ol.unnumbered,ul.unstyled,ol.unstyled{list-style-type:none}
+ul.no-bullet,ol.no-bullet,ol.unnumbered{margin-left:.625em}
+ul.unstyled,ol.unstyled{margin-left:0}
+li>p:empty:only-child::before{content:"";display:inline-block}
+ul.checklist>li>p:first-child{margin-left:-1em}
+ul.checklist>li>p:first-child>.fa-square-o:first-child,ul.checklist>li>p:first-child>.fa-check-square-o:first-child{width:1.25em;font-size:.8em;position:relative;bottom:.125em}
+ul.checklist>li>p:first-child>input[type=checkbox]:first-child{margin-right:.25em}
+ul.inline{display:flex;flex-flow:row wrap;list-style:none;margin:0 0 .625em -1.25em}
+ul.inline>li{margin-left:1.25em}
+.unstyled dl dt{font-weight:400;font-style:normal}
+ol.arabic{list-style-type:decimal}
+ol.decimal{list-style-type:decimal-leading-zero}
+ol.loweralpha{list-style-type:lower-alpha}
+ol.upperalpha{list-style-type:upper-alpha}
+ol.lowerroman{list-style-type:lower-roman}
+ol.upperroman{list-style-type:upper-roman}
+ol.lowergreek{list-style-type:lower-greek}
+.hdlist>table,.colist>table{border:0;background:none}
+.hdlist>table>tbody>tr,.colist>table>tbody>tr{background:none}
+td.hdlist1,td.hdlist2{vertical-align:top;padding:0 .625em}
+td.hdlist1{font-weight:bold;padding-bottom:1.25em}
+td.hdlist2{word-wrap:anywhere}
+.literalblock+.colist,.listingblock+.colist{margin-top:-.5em}
+.colist td:not([class]):first-child{padding:.4em .75em 0;line-height:1;vertical-align:top}
+.colist td:not([class]):first-child img{max-width:none}
+.colist td:not([class]):last-child{padding:.25em 0}
+.thumb,.th{line-height:0;display:inline-block;border:4px solid #fff;box-shadow:0 0 0 1px #ddd}
+.imageblock.left{margin:.25em .625em 1.25em 0}
+.imageblock.right{margin:.25em 0 1.25em .625em}
+.imageblock>.title{margin-bottom:0}
+.imageblock.thumb,.imageblock.th{border-width:6px}
+.imageblock.thumb>.title,.imageblock.th>.title{padding:0 .125em}
+.image.left,.image.right{margin-top:.25em;margin-bottom:.25em;display:inline-block;line-height:0}
+.image.left{margin-right:.625em}
+.image.right{margin-left:.625em}
+a.image{text-decoration:none;display:inline-block}
+a.image object{pointer-events:none}
+sup.footnote,sup.footnoteref{font-size:.875em;position:static;vertical-align:super}
+sup.footnote a,sup.footnoteref a{text-decoration:none}
+sup.footnote a:active,sup.footnoteref a:active,#footnotes .footnote a:first-of-type:active{text-decoration:underline}
+#footnotes{padding-top:.75em;padding-bottom:.75em;margin-bottom:.625em}
+#footnotes hr{width:20%;min-width:6.25em;margin:-.25em 0 .75em;border-width:1px 0 0}
+#footnotes .footnote{padding:0 .375em 0 .225em;line-height:1.3334;font-size:.875em;margin-left:1.2em;margin-bottom:.2em}
+#footnotes .footnote a:first-of-type{font-weight:bold;text-decoration:none;margin-left:-1.05em}
+#footnotes .footnote:last-of-type{margin-bottom:0}
+#content #footnotes{margin-top:-.625em;margin-bottom:0;padding:.75em 0}
+div.unbreakable{page-break-inside:avoid}
+.big{font-size:larger}
+.small{font-size:smaller}
+.underline{text-decoration:underline}
+.overline{text-decoration:overline}
+.line-through{text-decoration:line-through}
+.aqua{color:#00bfbf}
+.aqua-background{background:#00fafa}
+.black{color:#000}
+.black-background{background:#000}
+.blue{color:#0000bf}
+.blue-background{background:#0000fa}
+.fuchsia{color:#bf00bf}
+.fuchsia-background{background:#fa00fa}
+.gray{color:#606060}
+.gray-background{background:#7d7d7d}
+.green{color:#006000}
+.green-background{background:#007d00}
+.lime{color:#00bf00}
+.lime-background{background:#00fa00}
+.maroon{color:#600000}
+.maroon-background{background:#7d0000}
+.navy{color:#000060}
+.navy-background{background:#00007d}
+.olive{color:#606000}
+.olive-background{background:#7d7d00}
+.purple{color:#600060}
+.purple-background{background:#7d007d}
+.red{color:#bf0000}
+.red-background{background:#fa0000}
+.silver{color:#909090}
+.silver-background{background:#bcbcbc}
+.teal{color:#006060}
+.teal-background{background:#007d7d}
+.white{color:#bfbfbf}
+.white-background{background:#fafafa}
+.yellow{color:#bfbf00}
+.yellow-background{background:#fafa00}
+span.icon>.fa{cursor:default}
+a span.icon>.fa{cursor:inherit}
+.admonitionblock td.icon [class^="fa icon-"]{font-size:2.5em;text-shadow:1px 1px 2px rgba(0,0,0,.5);cursor:default}
+.admonitionblock td.icon .icon-note::before{content:"\f05a";color:#19407c}
+.admonitionblock td.icon .icon-tip::before{content:"\f0eb";text-shadow:1px 1px 2px rgba(155,155,0,.8);color:#111}
+.admonitionblock td.icon .icon-warning::before{content:"\f071";color:#bf6900}
+.admonitionblock td.icon .icon-caution::before{content:"\f06d";color:#bf3400}
+.admonitionblock td.icon .icon-important::before{content:"\f06a";color:#bf0000}
+.conum[data-value]{display:inline-block;color:#fff!important;background:rgba(0,0,0,.8);border-radius:50%;text-align:center;font-size:.75em;width:1.67em;height:1.67em;line-height:1.67em;font-family:"Open Sans","DejaVu Sans",sans-serif;font-style:normal;font-weight:bold}
+.conum[data-value] *{color:#fff!important}
+.conum[data-value]+b{display:none}
+.conum[data-value]::after{content:attr(data-value)}
+pre .conum[data-value]{position:relative;top:-.125em}
+b.conum *{color:inherit!important}
+.conum:not([data-value]):empty{display:none}
+dt,th.tableblock,td.content,div.footnote{text-rendering:optimizeLegibility}
+h1,h2,p,td.content,span.alt,summary{letter-spacing:-.01em}
+p strong,td.content strong,div.footnote strong{letter-spacing:-.005em}
+p,blockquote,dt,td.content,td.hdlist1,span.alt,summary{font-size:1.0625rem}
+p{margin-bottom:1.25rem}
+.sidebarblock p,.sidebarblock dt,.sidebarblock td.content,p.tableblock{font-size:1em}
+.exampleblock>.content{background:#fffef7;border-color:#e0e0dc;box-shadow:0 1px 4px #e0e0dc}
+.print-only{display:none!important}
+@page{margin:1.25cm .75cm}
+@media print{*{box-shadow:none!important;text-shadow:none!important}
+html{font-size:80%}
+a{color:inherit!important;text-decoration:underline!important}
+a.bare,a[href^="#"],a[href^="mailto:"]{text-decoration:none!important}
+a[href^="http:"]:not(.bare)::after,a[href^="https:"]:not(.bare)::after{content:"(" attr(href) ")";display:inline-block;font-size:.875em;padding-left:.25em}
+abbr[title]{border-bottom:1px dotted}
+abbr[title]::after{content:" (" attr(title) ")"}
+pre,blockquote,tr,img,object,svg{page-break-inside:avoid}
+thead{display:table-header-group}
+svg{max-width:100%}
+p,blockquote,dt,td.content{font-size:1em;orphans:3;widows:3}
+h2,h3,#toctitle,.sidebarblock>.content>.title{page-break-after:avoid}
+#header,#content,#footnotes,#footer{max-width:none}
+#toc,.sidebarblock,.exampleblock>.content{background:none!important}
+#toc{border-bottom:1px solid #dddddf!important;padding-bottom:0!important}
+body.book #header{text-align:center}
+body.book #header>h1:first-child{border:0!important;margin:2.5em 0 1em}
+body.book #header .details{border:0!important;display:block;padding:0!important}
+body.book #header .details span:first-child{margin-left:0!important}
+body.book #header .details br{display:block}
+body.book #header .details br+span::before{content:none!important}
+body.book #toc{border:0!important;text-align:left!important;padding:0!important;margin:0!important}
+body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-break-before:always}
+.listingblock code[data-lang]::before{display:block}
+#footer{padding:0 .9375em}
+.hide-on-print{display:none!important}
+.print-only{display:block!important}
+.hide-for-print{display:none!important}
+.show-for-print{display:inherit!important}}
+@media amzn-kf8,print{#header>h1:first-child{margin-top:1.25rem}
+.sect1{padding:0!important}
+.sect1+.sect1{border:0}
+#footer{background:none}
+#footer-text{color:rgba(0,0,0,.6);font-size:.9em}}
+@media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+/*! Stylesheet for CodeRay to loosely match GitHub themes | MIT License */
+pre.CodeRay{background:#f7f7f8}
+.CodeRay .line-numbers{border-right:1px solid;opacity:.35;padding:0 .5em 0 0;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}
+.CodeRay span.line-numbers{display:inline-block;margin-right:.75em}
+.CodeRay .line-numbers strong{color:#000}
+table.CodeRay{border-collapse:separate;border:0;margin-bottom:0;background:none}
+table.CodeRay td{vertical-align:top;line-height:inherit}
+table.CodeRay td.line-numbers{text-align:right}
+table.CodeRay td.code{padding:0 0 0 .75em}
+.CodeRay .debug{color:#fff!important;background:navy!important}
+.CodeRay .annotation{color:#007}
+.CodeRay .attribute-name{color:navy}
+.CodeRay .attribute-value{color:#700}
+.CodeRay .binary{color:#509}
+.CodeRay .comment{color:#998;font-style:italic}
+.CodeRay .char{color:#04d}
+.CodeRay .char .content{color:#04d}
+.CodeRay .char .delimiter{color:#039}
+.CodeRay .class{color:#458;font-weight:bold}
+.CodeRay .complex{color:#a08}
+.CodeRay .constant,.CodeRay .predefined-constant{color:teal}
+.CodeRay .color{color:#099}
+.CodeRay .class-variable{color:#369}
+.CodeRay .decorator{color:#b0b}
+.CodeRay .definition{color:#099}
+.CodeRay .delimiter{color:#000}
+.CodeRay .doc{color:#970}
+.CodeRay .doctype{color:#34b}
+.CodeRay .doc-string{color:#d42}
+.CodeRay .escape{color:#666}
+.CodeRay .entity{color:#800}
+.CodeRay .error{color:#808}
+.CodeRay .exception{color:inherit}
+.CodeRay .filename{color:#099}
+.CodeRay .function{color:#900;font-weight:bold}
+.CodeRay .global-variable{color:teal}
+.CodeRay .hex{color:#058}
+.CodeRay .integer,.CodeRay .float{color:#099}
+.CodeRay .include{color:#555}
+.CodeRay .inline{color:#000}
+.CodeRay .inline .inline{background:#ccc}
+.CodeRay .inline .inline .inline{background:#bbb}
+.CodeRay .inline .inline-delimiter{color:#d14}
+.CodeRay .inline-delimiter{color:#d14}
+.CodeRay .important{color:#555;font-weight:bold}
+.CodeRay .interpreted{color:#b2b}
+.CodeRay .instance-variable{color:teal}
+.CodeRay .label{color:#970}
+.CodeRay .local-variable{color:#963}
+.CodeRay .octal{color:#40e}
+.CodeRay .predefined{color:#369}
+.CodeRay .preprocessor{color:#579}
+.CodeRay .pseudo-class{color:#555}
+.CodeRay .directive{font-weight:bold}
+.CodeRay .type{font-weight:bold}
+.CodeRay .predefined-type{color:inherit}
+.CodeRay .reserved,.CodeRay .keyword{color:#000;font-weight:bold}
+.CodeRay .key{color:#808}
+.CodeRay .key .delimiter{color:#606}
+.CodeRay .key .char{color:#80f}
+.CodeRay .value{color:#088}
+.CodeRay .regexp .delimiter{color:#808}
+.CodeRay .regexp .content{color:#808}
+.CodeRay .regexp .modifier{color:#808}
+.CodeRay .regexp .char{color:#d14}
+.CodeRay .regexp .function{color:#404;font-weight:bold}
+.CodeRay .string{color:#d20}
+.CodeRay .string .string .string{background:#ffd0d0}
+.CodeRay .string .content{color:#d14}
+.CodeRay .string .char{color:#d14}
+.CodeRay .string .delimiter{color:#d14}
+.CodeRay .shell{color:#d14}
+.CodeRay .shell .delimiter{color:#d14}
+.CodeRay .symbol{color:#990073}
+.CodeRay .symbol .content{color:#a60}
+.CodeRay .symbol .delimiter{color:#630}
+.CodeRay .tag{color:teal}
+.CodeRay .tag-special{color:#d70}
+.CodeRay .variable{color:#036}
+.CodeRay .insert{background:#afa}
+.CodeRay .delete{background:#faa}
+.CodeRay .change{color:#aaf;background:#007}
+.CodeRay .head{color:#f8f;background:#505}
+.CodeRay .insert .insert{color:#080}
+.CodeRay .delete .delete{color:#800}
+.CodeRay .change .change{color:#66f}
+.CodeRay .head .head{color:#f4f}
+</style>
+</head>
+<body class="article toc2 toc-left">
+<div id="header">
+<h1>Apache StormCrawler 3.5.1 - Documentation</h1>
+<div class="details">
+<span id="author" class="author">Apache Software Foundation</span><br>
+</div>
+<div id="toc" class="toc2">
+<div id="toctitle">Apache StormCrawler 3.5.1 - Documentation</div>
+<ul class="sectlevel1">
+<li><a href="#_overview">1. Overview</a></li>
+<li><a href="#_key_features">2. Key Features</a></li>
+<li><a href="#_quick_start">3. Quick Start</a>
+<ul class="sectlevel2">
+<li><a href="#_prerequisites">3.1. Prerequisites</a></li>
+<li><a href="#_terminology">3.2. Terminology</a></li>
+<li><a href="#_bootstrapping_a_stormcrawler_project">3.3. Bootstrapping a StormCrawler Project</a>
+<ul class="sectlevel3">
+<li><a href="#_docker_compose_setup">3.3.1. Docker Compose Setup</a></li>
+<li><a href="#_compile">3.3.2. Compile</a></li>
+<li><a href="#_inject_your_first_seeds">3.3.3. Inject Your First Seeds</a></li>
+<li><a href="#_run_your_first_crawl">3.3.4. Run Your First Crawl</a></li>
+</ul>
+</li>
+<li><a href="#_summary">3.4. Summary</a></li>
+</ul>
+</li>
+<li><a href="#architecture">4. Understanding StormCrawler&#8217;s Architecture</a>
+<ul class="sectlevel2">
+<li><a href="#_architecture_overview">4.1. Architecture Overview</a>
+<ul class="sectlevel3">
+<li><a href="#_crawl_flow_and_core_components">4.1.1. Crawl Flow and Core Components</a></li>
+<li><a href="#_url_filters">4.1.2. URL Filters</a></li>
+<li><a href="#_parse_filters">4.1.3. Parse Filters</a></li>
+<li><a href="#_interaction_between_url_filters_and_parse_filters">4.1.4. Interaction Between URL Filters and Parse Filters</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_understanding_stormcrawlers_internals">5. Understanding StormCrawler&#8217;s Internals</a>
+<ul class="sectlevel2">
+<li><a href="#_status_stream">5.1. Status Stream</a></li>
+<li><a href="#_bolts">5.2. Bolts</a>
+<ul class="sectlevel3">
+<li><a href="#_fetcher_bolts">5.2.1. Fetcher Bolts</a></li>
+</ul>
+</li>
+<li><a href="#_indexer_bolts">5.3. Indexer Bolts</a></li>
+<li><a href="#_parser_bolts">5.4. Parser Bolts</a>
+<ul class="sectlevel3">
+<li><a href="#_jsoupparserbolt">5.4.1. JSoupParserBolt</a></li>
+<li><a href="#_sitemapparserbolt">5.4.2. SiteMapParserBolt</a></li>
+</ul>
+</li>
+<li><a href="#_filters">5.5. Filters</a>
+<ul class="sectlevel3">
+<li><a href="#parsefilters">5.5.1. Parse Filters</a></li>
+<li><a href="#urlfilters">5.5.2. URL Filters</a></li>
+</ul>
+</li>
+<li><a href="#metadatatransfer">5.6. Metadata Transfer</a></li>
+<li><a href="#protocols">5.7. Protocols</a>
+<ul class="sectlevel3">
+<li><a href="#_network_protocols">5.7.1. Network Protocols</a></li>
+<li><a href="#_feature_grid">5.7.2. Feature grid</a></li>
+<li><a href="#_http2">5.7.3. HTTP/2</a></li>
+<li><a href="#_metadata_dependent_behavior_for_http_protocols">5.7.4. Metadata-dependent Behavior For HTTP Protocols</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_configuration">6. Configuration</a>
+<ul class="sectlevel2">
+<li><a href="#_user_agent_configuration">6.1. User Agent Configuration</a>
+<ul class="sectlevel3">
+<li><a href="#_crawler_identification">6.1.1. Crawler Identification</a></li>
+<li><a href="#_robots_exclusion_protocol">6.1.2. Robots Exclusion Protocol</a></li>
+</ul>
+</li>
+<li><a href="#_proxy">6.2. Proxy</a></li>
+<li><a href="#_metadata_2">6.3. Metadata</a>
+<ul class="sectlevel3">
+<li><a href="#_registering_metadata_for_kryo_serialization">6.3.1. Registering Metadata for Kryo Serialization</a></li>
+<li><a href="#_metadatatransfer">6.3.2. MetadataTransfer</a></li>
+</ul>
+</li>
+<li><a href="#_configuration_options">6.4. Configuration Options</a>
+<ul class="sectlevel3">
+<li><a href="#_fetching_and_partitioning">6.4.1. Fetching and Partitioning</a></li>
+<li><a href="#_protocol">6.4.2. Protocol</a></li>
+<li><a href="#_indexing">6.4.3. Indexing</a></li>
+<li><a href="#_status_persistence">6.4.4. Status Persistence</a></li>
+<li><a href="#_parsing">6.4.5. Parsing</a></li>
+<li><a href="#_metadata_3">6.4.6. Metadata</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_debugging_a_stormcrawler_topology">7. Debugging a StormCrawler Topology</a></li>
+<li><a href="#poweredby">8. Companies &amp; Projects Using StormCrawler</a></li>
+<li><a href="#_talks_tutorials_articles_and_interviews">9. Talks, tutorials, articles and interviews</a></li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="_overview">1. Overview</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Apache StormCrawler is an open source collection of resources for building low-latency, scalable web crawlers on <a href="https://storm.apache.org/">Apache Storm</a>. It is provided under the <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License</a> and is written mostly in Java.</p>
+</div>
+<div class="paragraph">
+<p>The aims of StormCrawler are to help build web crawlers that are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Scalable</p>
+</li>
+<li>
+<p>Low latency</p>
+</li>
+<li>
+<p>Easy to extend</p>
+</li>
+<li>
+<p>Polite yet efficient</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>StormCrawler is both a library and a collection of reusable components designed to help developers build custom web crawlers with ease.
+Getting started is simple — the Maven archetypes allow you to quickly scaffold a new project, which you can then adapt to fit your specific needs.</p>
+</div>
+<div class="paragraph">
+<p>In addition to its core modules, StormCrawler offers a range of external resources that can be easily integrated into your project.
+These include spouts and bolts for OpenSearch, as well as a ParserBolt that leverages Apache Tika to handle various document formats and many more.</p>
+</div>
+<div class="paragraph">
+<p>StormCrawler is well-suited for scenarios where URLs to fetch and parse arrive as continuous streams, but it also performs exceptionally in large-scale, recursive crawls where low latency is essential.
+The project is actively maintained, widely adopted in production environments, and supported by an engaged community.</p>
+</div>
+<div class="paragraph">
+<p>You can find links to recent talks and demos later in this document, showcasing real-world applications and use cases.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_key_features">2. Key Features</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Here is a short list of provided features:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Integration with <a href="https://github.com/crawler-commons/url-frontier">URLFrontier</a> for distributed URL management</p>
+</li>
+<li>
+<p>Pluggable components (Spouts and Bolts from <a href="https://storm.apache.org/">Apache Storm</a>) for flexibility and modularity — adding custom components is straightforward</p>
+</li>
+<li>
+<p>Support for <a href="https://tika.apache.org/">Apache Tika</a> for document parsing via <code>ParserBolt</code></p>
+</li>
+<li>
+<p>Integration with <a href="https://opensearch.org/">OpenSearch</a> and <a href="https://solr.apache.org/">Apache Solr</a> for indexing and status storage</p>
+</li>
+<li>
+<p>Option to store crawled data as WARC (Web ARChive) files</p>
+</li>
+<li>
+<p>Support for headless crawling using <a href="https://playwright.dev/">Playwright</a></p>
+</li>
+<li>
+<p>Support for LLM-based advanced text extraction</p>
+</li>
+<li>
+<p>Proxy support for distributed and controlled crawling</p>
+</li>
+<li>
+<p>Flexible and pluggable filtering mechanisms:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>URL Filters for pre-fetch filtering</p>
+</li>
+<li>
+<p>Parse Filters for post-fetch content filtering</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Built-in support for crawl metrics and monitoring</p>
+</li>
+<li>
+<p>Configurable politeness policies (e.g., crawl delay, user agent management)</p>
+</li>
+<li>
+<p>Robust HTTP fetcher based on <a href="https://hc.apache.org/">Apache HttpComponents</a> or <a href="https://square.github.io/okhttp/">OkHttp</a>.</p>
+</li>
+<li>
+<p>MIME type detection and response-based filtering</p>
+</li>
+<li>
+<p>Support for parsing and honoring <code>robots.txt</code> and sitemaps</p>
+</li>
+<li>
+<p>Stream-based, real-time architecture using <a href="https://storm.apache.org/">Apache Storm</a> — suitable for both recursive and one-shot crawling tasks</p>
+</li>
+<li>
+<p>Can run in both local and distributed environments</p>
+</li>
+<li>
+<p>Apache Maven archetypes for quickly bootstrapping new crawler projects</p>
+</li>
+<li>
+<p>Actively developed and used in production by <a href="#poweredby">multiple organizations</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_quick_start">3. Quick Start</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>These instructions should help you get Apache StormCrawler up and running in 5 to 15 minutes.</p>
+</div>
+<div class="sect2">
+<h3 id="_prerequisites">3.1. Prerequisites</h3>
+<div class="paragraph">
+<p>To run StormCrawler, you will need Java SE 17 or later.</p>
+</div>
+<div class="paragraph">
+<p>Additionally, since we&#8217;ll be running the required Apache Storm cluster using Docker Compose,
+make sure Docker is installed on your operating system.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_terminology">3.2. Terminology</h3>
+<div class="paragraph">
+<p>Before starting, we will give a quick overview of <strong>central</strong> Storm concepts and terminology, you need to know before starting with StormCrawler:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Topology</strong>: A topology is the overall data processing graph in Storm, consisting of spouts and bolts connected together to perform continuous, real-time computations.</p>
+</li>
+<li>
+<p><strong>Spout</strong>: A spout is a source component in a Storm topology that emits streams of data into the processing pipeline.</p>
+</li>
+<li>
+<p><strong>Bolt</strong>: A bolt processes, transforms, or routes data streams emitted by spouts or other bolts within the topology.</p>
+</li>
+<li>
+<p><strong>Flux</strong>: In Apache Storm, Flux is a declarative configuration framework that enables you to define and run Storm topologies using YAML files instead of writing Java code. This simplifies topology management and deployment.</p>
+</li>
+<li>
+<p><strong>Frontier</strong>: In the context of a web crawler, the Frontier is the component responsible for managing and prioritizing the list of URLs to be fetched next.</p>
+</li>
+<li>
+<p><strong>Seed</strong>: In web crawling, a seed is an initial URL or set of URLs from which the crawler starts its discovery and fetching process.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_bootstrapping_a_stormcrawler_project">3.3. Bootstrapping a StormCrawler Project</h3>
+<div class="paragraph">
+<p>You can quickly generate a new StormCrawler project using the Maven archetype:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">mvn archetype:generate -DarchetypeGroupId=org.apache.stormcrawler \
+                       -DarchetypeArtifactId=stormcrawler-archetype \
+                       -DarchetypeVersion=&lt;CURRENT_VERSION&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Be sure to replace <code>&lt;CURRENT_VERSION&gt;</code> with the latest released version of StormCrawler, which you can find on <a href="https://search.maven.org/artifact/org.apache.stormcrawler/stormcrawler-archetype">search.maven.org</a>.</p>
+</div>
+<div class="paragraph">
+<p>During the process, you’ll be prompted to provide the following:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>groupId</code> (e.g. <code>com.mycompany.crawler</code>)</p>
+</li>
+<li>
+<p><code>artifactId</code> (e.g. <code>stormcrawler</code>)</p>
+</li>
+<li>
+<p>Version</p>
+</li>
+<li>
+<p>Package name</p>
+</li>
+<li>
+<p>User agent details</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+Specifying a user agent is important for crawler ethics because it identifies your crawler to websites, promoting transparency and allowing site owners to manage or block requests if needed. Be sure to provide a crawler information website as well.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The archetype will generate a fully-structured project including:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>A pre-configured <code>pom.xml</code> with the necessary dependencies</p>
+</li>
+<li>
+<p>Default resource files</p>
+</li>
+<li>
+<p>A sample <code>crawler.flux</code> configuration</p>
+</li>
+<li>
+<p>A basic configuration file</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>After generation, navigate into the newly created directory (named after the <code>artifactId</code> you specified).</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+You can learn more about the architecture and how each component works together if you look into <a href="#architecture">the architecture documentation</a>.
+By exploring that part of the documentation, you can gain a better understanding of how StormCrawler performs crawling and how bolts, spouts, as well as parse and URL filters, collaborate in the process.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_docker_compose_setup">3.3.1. Docker Compose Setup</h4>
+<div class="paragraph">
+<p>Below is a simple <code>docker-compose.yml</code> configuration to spin up URLFrontier, Zookeeper, Storm Nimbus, Storm Supervisor, and the Storm UI:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="yaml"><span class="key">services</span>:
+  <span class="key">zookeeper</span>:
+    <span class="key">image</span>: <span class="string"><span class="content">zookeeper:3.9.3</span></span>
+    <span class="key">container_name</span>: <span class="string"><span class="content">zookeeper</span></span>
+    <span class="key">restart</span>: <span class="string"><span class="content">always</span></span>
+
+  <span class="key">nimbus</span>:
+    <span class="key">image</span>: <span class="string"><span class="content">storm:latest</span></span>
+    <span class="key">container_name</span>: <span class="string"><span class="content">nimbus</span></span>
+    <span class="key">hostname</span>: <span class="string"><span class="content">nimbus</span></span>
+    <span class="key">command</span>: <span class="string"><span class="content">storm nimbus</span></span>
+    <span class="key">depends_on</span>:
+      - <span class="string"><span class="content">zookeeper</span></span>
+    <span class="key">restart</span>: <span class="string"><span class="content">always</span></span>
+
+  <span class="key">supervisor</span>:
+    <span class="key">image</span>: <span class="string"><span class="content">storm:latest</span></span>
+    <span class="key">container_name</span>: <span class="string"><span class="content">supervisor</span></span>
+    <span class="key">command</span>: <span class="string"><span class="content">storm supervisor -c worker.childopts=-Xmx%HEAP-MEM%m</span></span>
+    <span class="key">depends_on</span>:
+      - <span class="string"><span class="content">nimbus</span></span>
+      - <span class="string"><span class="content">zookeeper</span></span>
+    <span class="key">restart</span>: <span class="string"><span class="content">always</span></span>
+
+  <span class="key">ui</span>:
+    <span class="key">image</span>: <span class="string"><span class="content">storm:latest</span></span>
+    <span class="key">container_name</span>: <span class="string"><span class="content">ui</span></span>
+    <span class="key">command</span>: <span class="string"><span class="content">storm ui</span></span>
+    <span class="key">depends_on</span>:
+      - <span class="string"><span class="content">nimbus</span></span>
+    <span class="key">restart</span>: <span class="string"><span class="content">always</span></span>
+    <span class="key">ports</span>:
+      - <span class="string"><span class="delimiter">&quot;</span><span class="content">127.0.0.1:8080:8080</span><span class="delimiter">&quot;</span></span>
+
+  <span class="key">urlfrontier</span>:
+    <span class="key">image</span>: <span class="string"><span class="content">crawlercommons/url-frontier:latest</span></span>
+    <span class="key">container_name</span>: <span class="string"><span class="content">urlfrontier</span></span>
+    <span class="key">restart</span>: <span class="string"><span class="content">always</span></span>
+    <span class="key">ports</span>:
+      - <span class="string"><span class="delimiter">&quot;</span><span class="content">127.0.0.1:7071:7071</span><span class="delimiter">&quot;</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Notes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>This example Docker Compose uses the official Apache Storm and Apache Zookeeper images.</p>
+</li>
+<li>
+<p>URLFrontier is an additional service used by StormCrawler to act as Frontier. Please note, that we also offer other Frontier implementations like OpenSearch or Apache Solr.</p>
+</li>
+<li>
+<p>Ports may need adjustment depending on your environment.</p>
+</li>
+<li>
+<p>The Storm UI runs on port 8080 by default.</p>
+</li>
+<li>
+<p>Ensure network connectivity between services; Docker Compose handles this by default.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>After setting up your Docker Compose, you should start it up:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">docker compose up -d</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Check the logs and see, if every service is up and running:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">docker compose logs -f</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Next, access the Storm UI via <code>https://localhost:8080</code> and check, that a Storm Nimbus as well as a Storm Supervisor is available.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_compile">3.3.2. Compile</h4>
+<div class="paragraph">
+<p>Build the generated archetype by running</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">mvn package</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This will create a uberjar named <code>${artifactId}-${version}.jar</code> (matches the artifact id and the version specified during the archetype generation) in your <code>target</code> directory.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_inject_your_first_seeds">3.3.3. Inject Your First Seeds</h4>
+<div class="paragraph">
+<p>Now you are ready to insert your first seeds into URLFrontier. To do so, create a file <code>seeds.txt</code> containing your seeds:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">https://stormcrawler.apache.org</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>After you have saved it, we need to inject the seeds into URLFrontier. This can be done by running URLFrontiers client:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">java -cp target/${artifactId}-${version}.jar crawlercommons.urlfrontier.client.Client PutURLs -f seeds.txt</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>where <em>seeds.txt</em> is the previously created file containing URLs to inject, with one URL per line.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_run_your_first_crawl">3.3.4. Run Your First Crawl</h4>
+<div class="paragraph">
+<p>Now it is time to run our first crawl. To do so, we need to start our crawler topology in distributed mode and deploy it on our Storm Cluster.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">docker run --network ${NETWORK} -it \
+--rm \
+-v &quot;$(pwd)/crawler-conf.yaml:/apache-storm/crawler-conf.yaml&quot; \
+-v &quot;$(pwd)/crawler.flux:/apache-storm/crawler.flux&quot; \
+-v &quot;$(pwd)/${artifactId}-${version}.jar:/apache-storm/${artifactId}-${version}.jar&quot; \
+storm:latest \
+storm jar ${artifactId}-${version}.jar org.apache.storm.flux.Flux --remote crawler.flux</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>where <code>${NETWORK}</code> is the name of the Docker network of the previously started Docker Compose. You can find this name by running</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">docker network ls</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>After running the <code>storm jar</code> command, you should carefully monitor the logs via</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">docker compose logs -f</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>as well as the Storm UI. It should now list a running topology.</p>
+</div>
+<div class="paragraph">
+<p>In the default archetype, the fetched content is printed out to the default system out print stream.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+In a Storm topology defined with Flux, parallelism specifies the number of tasks or instances of a spout or bolt to run concurrently, enabling scalable and efficient processing. In the archetype every component is set to a parallelism of <strong>1</strong>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Congratulations! You learned how to start your first simple crawl using Apache StormCrawler.</p>
+</div>
+<div class="paragraph">
+<p>Feel free to explore the rest of our documentation to build more complex crawler topologies.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_summary">3.4. Summary</h3>
+<div class="paragraph">
+<p>This document shows how simple it is to get Apache StormCrawler up and running and to run a simple crawl.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="architecture">4. Understanding StormCrawler&#8217;s Architecture</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_architecture_overview">4.1. Architecture Overview</h3>
+<div class="paragraph">
+<p>Apache StormCrawler is built as a distributed, stream-oriented web crawling system
+on top of Apache Storm. Its architecture emphasizes clear separation between
+<strong>crawl control</strong> and <strong>content processing</strong>, with the URL frontier acting as the
+central coordination point.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/stormcrawler.drawio.jpg" alt="StormCrawler Architecture" width="100%">
+</div>
+<div class="title">Figure 1. Architecture overview of StormCrawler</div>
+</div>
+<div class="paragraph">
+<p>Figure 1 illustrates StormCrawler’s stream-processing crawl pipeline, built on Apache Storm.
+The architecture is intentionally modular and centers around two core abstractions:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The URL frontier: decides <strong>what</strong> to crawl and <strong>when</strong></p>
+</li>
+<li>
+<p>The parsing and indexing pipeline: decides <strong>what</strong> to <strong>extract</strong>, <strong>keep</strong>, and <strong>store</strong></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Black arrows show the <strong>main data flow</strong>, gray arrows represent URLs <strong>taken from the frontier</strong>, and purple arrows indicate <strong>URL status updates</strong> fed back to the frontier.</p>
+</div>
+<div class="sect3">
+<h4 id="_crawl_flow_and_core_components">4.1.1. Crawl Flow and Core Components</h4>
+<div class="paragraph">
+<p>The crawl begins with the <strong>Frontier</strong>, which is responsible for scheduling,
+prioritization, politeness, and retry logic. URLs are emitted by a
+<code>FrontierSpout</code> and partitioned by the <code>URLPartitioner</code>, typically using the
+host as a key to enforce politeness constraints.</p>
+</div>
+<div class="paragraph">
+<p>The <code>Fetcher</code> retrieves web resources and emits both the fetched content and
+associated metadata such as HTTP status codes, headers, and MIME types. Based
+on the content type, documents are routed to specialized parsers, including
+<code>SiteMapParser</code>, <code>JSoupParser</code> for HTML content, and <code>TikaParser</code> for binary
+formats via Apache Tika.</p>
+</div>
+<div class="paragraph">
+<p>Parsed content is then sent to the <code>Indexer</code> and persisted by the <code>Storage</code>
+layer. Throughout the pipeline, fetch and parse outcomes are reported to the
+<code>StatusUpdater</code>, which feeds URL status information back to the frontier,
+closing the crawl feedback loop.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_url_filters">4.1.2. URL Filters</h4>
+<div class="paragraph">
+<p>URL Filters determine whether a URL should be accepted, rejected, or modified
+before it is scheduled for fetching. They operate on seed URLs, discovered
+links, and redirect targets, ensuring that only crawl-worthy URLs enter the
+frontier.</p>
+</div>
+<div class="paragraph">
+<p>In Figure 1, URL Filters are conceptually positioned between link discovery
+and the frontier. Their primary role is to control crawl scope and prevent
+frontier explosion.</p>
+</div>
+<div class="paragraph">
+<p>Typical URL Filters include:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>URL Length</strong>: rejects excessively long URLs that often indicate session IDs
+or crawler traps.</p>
+</li>
+<li>
+<p><strong>Path Repetition</strong>: detects repeating path segments that can lead to infinite
+crawl loops.</p>
+</li>
+<li>
+<p><strong>URL Normalization</strong>: canonicalizes URLs by removing fragments, sorting query
+parameters, or enforcing consistent schemes.</p>
+</li>
+<li>
+<p><strong>MIME Type</strong>: avoids scheduling URLs unlikely to yield useful content.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>By applying these filters early, StormCrawler prevents unnecessary fetches and
+maintains an efficient, focused crawl.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_parse_filters">4.1.3. Parse Filters</h4>
+<div class="paragraph">
+<p>Parse Filters operate after content has been successfully fetched and parsed.
+They allow fine-grained control over how extracted data and outgoing links are
+processed.</p>
+</div>
+<div class="paragraph">
+<p>Parse Filters are applied within the parsing bolts, following parsing by
+<code>SiteMapParser</code>, <code>JSoupParser</code>, or <code>TikaParser</code>. They can modify extracted text,
+metadata, and links before the content is indexed or new URLs are emitted.</p>
+</div>
+<div class="paragraph">
+<p>Common Parse Filters include:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>URL Filters (post-parse)</strong>: further refine outgoing links extracted from
+content.</p>
+</li>
+<li>
+<p><strong>XPath</strong>: extract structured fields from HTML documents.</p>
+</li>
+<li>
+<p><strong>Text Extraction</strong>: control which parts of a document contribute to the
+indexed text.</p>
+</li>
+<li>
+<p><strong>Enrichment</strong>: add custom metadata such as language detection, entity tags,
+or domain-specific signals.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Parse Filters enable domain-specific logic without coupling it directly to the
+crawler’s core components.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_interaction_between_url_filters_and_parse_filters">4.1.4. Interaction Between URL Filters and Parse Filters</h4>
+<div class="paragraph">
+<p>URL Filters focus on deciding <strong>what should be crawled</strong>, while Parse
+Filters focus on deciding <strong>what should be kept and how it should be
+interpreted</strong>.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_understanding_stormcrawlers_internals">5. Understanding StormCrawler&#8217;s Internals</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_status_stream">5.1. Status Stream</h3>
+<div class="paragraph">
+<p>The Apache StormCrawler components rely on two Apache Storm streams: the <em>default</em> one and another one called <em>status</em>.</p>
+</div>
+<div class="paragraph">
+<p>The aim of the <em>status</em> stream is to pass information about URLs to a persistence layer. Typically, a bespoke bolt will take the tuples coming from the <em>status</em> stream and update the information about URLs in some sort of storage (e.g., OpenSearch, HBase, etc&#8230;&#8203;), which is then used by a Spout to send new URLs down the topology.</p>
+</div>
+<div class="paragraph">
+<p>This is critical for building recursive crawls (i.e., you discover new URLs and not just process known ones). The <em>default</em> stream is used for the URL being processed and is generally used at the end of the pipeline by an indexing bolt (which could also be OpenSearch, HBase, etc&#8230;&#8203;), regardless of whether the crawler is recursive or not.</p>
+</div>
+<div class="paragraph">
+<p>Tuples are emitted on the <em>status</em> stream by the parsing bolts for handling outlinks but also to notify that there has been a problem with a URL (e.g., unparsable content). It is also used by the fetching bolts to handle redirections, exceptions, and unsuccessful fetch status (e.g., HTTP code 400).</p>
+</div>
+<div class="paragraph">
+<p>A bolt which sends tuples on the <em>status</em> stream declares its output in the following way:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">declarer.declareStream(
+    org.apache.storm.crawler.Constants.StatusStreamName,
+    <span class="keyword">new</span> Fields(<span class="string"><span class="delimiter">&quot;</span><span class="content">url</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">metadata</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">status</span><span class="delimiter">&quot;</span></span>));</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As you can see for instance in <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/bolt/SimpleFetcherBolt.java#L149">SimpleFetcherBolt</a>.</p>
+</div>
+<div class="paragraph">
+<p>The <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/persistence/Status.java">Status</a> enum has the following values:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>DISCOVERED:: outlinks found by the parsers or "seed" URLs emitted into the topology by one of the spouts or "injected" into the storage. The URLs can be already known in the storage.</p>
+</li>
+<li>
+<p>REDIRECTION:: set by the fetcher bolts.</p>
+</li>
+<li>
+<p>FETCH_ERROR:: set by the fetcher bolts.</p>
+</li>
+<li>
+<p>ERROR:: used by either the fetcher, parser, or indexer bolts.</p>
+</li>
+<li>
+<p>FETCHED:: set by the StatusStreamBolt bolt (see below).</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The difference between FETCH_ERROR and ERROR is that the former is possibly transient whereas the latter is terminal. The bolt which is in charge of updating the status (see below) can then decide when and whether to schedule a new fetch for a URL based on the status value.</p>
+</div>
+<div class="paragraph">
+<p>The <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/indexing/DummyIndexer.java">DummyIndexer</a> is useful for notifying the storage layer that a URL has been successfully processed, i.e., fetched, parsed, and anything else we want to do with the main content. It must be placed just before the StatusUpdaterBolt and sends a tuple for the URL on the status stream with a Status value of <code>fetched</code>.</p>
+</div>
+<div class="paragraph">
+<p>The class <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/persistence/AbstractStatusUpdaterBolt.java">AbstractStatusUpdaterBolt</a> can be extended to handle status updates for a specific backend. It has an internal cache of URLs with a <code>discovered</code> status so that they don&#8217;t get added to the backend if they already exist, which is a simple but efficient optimisation. It also uses <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/persistence/DefaultScheduler.java">DefaultScheduler</a> to compute a next fetch date and calls MetadataTransfer to filter the metadata that will be stored in the backend.</p>
+</div>
+<div class="paragraph">
+<p>In most cases, the extending classes will just need to implement the method <code>store(String URL, Status status, Metadata metadata, Date nextFetch)</code> and handle their own initialisation in <code>prepare()</code>. You can find an example of a class which extends it in the <a href="https://github.com/apache/stormcrawler/blob/main/external/opensearch/src/main/java/org/apache/stormcrawler/opensearch/persistence/StatusUpdaterBolt.java">StatusUpdaterBolt</a> for OpenSearch.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_bolts">5.2. Bolts</h3>
+<div class="sect3">
+<h4 id="_fetcher_bolts">5.2.1. Fetcher Bolts</h4>
+<div class="paragraph">
+<p>There are actually two different bolts for fetching the content of URLs:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/bolt/SimpleFetcherBolt.java">SimpleFetcherBolt</a></p>
+</li>
+<li>
+<p><a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/bolt/FetcherBolt.java">FetcherBolt</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Both declare the same output:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">declarer.declare(<span class="keyword">new</span> Fields(<span class="string"><span class="delimiter">&quot;</span><span class="content">url</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">content</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">metadata</span><span class="delimiter">&quot;</span></span>));
+declarer.declareStream(
+        org.apache.storm.crawler.Constants.StatusStreamName,
+        <span class="keyword">new</span> Fields(<span class="string"><span class="delimiter">&quot;</span><span class="content">url</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">metadata</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">status</span><span class="delimiter">&quot;</span></span>));</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>with the <code>StatusStream</code> being used for handling redirections, restrictions by robots directives, or fetch errors, whereas the default stream gets the binary content returned by the server as well as the metadata to the following components (typically a parsing bolt).</p>
+</div>
+<div class="paragraph">
+<p>Both use the same <a href="#protocols">Protocols</a> implementations and <a href="#urlfilters">URLFilters</a> to control the redirections.</p>
+</div>
+<div class="paragraph">
+<p>The <strong>FetcherBolt</strong> has an internal set of queues where the incoming URLs are placed based on their hostname/domain/IP (see config <code>fetcher.queue.mode</code>) and a number of <strong>FetchingThreads</strong> (config <code>fetcher.threads.number</code> – 10 by default) which pull the URLs to fetch from the <strong>FetchQueues</strong>. When doing so, they make sure that a minimal amount of time (set with <code>fetcher.server.delay</code> – default 1 sec) has passed since the previous URL was fetched from the same queue. This mechanism ensures that we can control the rate at which requests are sent to the servers. A <strong>FetchQueue</strong> can also be used by more than one <strong>FetchingThread</strong> at a time (in which case <code>fetcher.server.min.delay</code> is used), based on the value of <code>fetcher.threads.per.queue</code>.</p>
+</div>
+<div class="paragraph">
+<p>Incoming tuples spend very little time in the <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/bolt/FetcherBolt.java#L768">execute</a> method of the <strong>FetcherBolt</strong> as they are put in the FetchQueues, which is why you&#8217;ll find that the value of <strong>Execute latency</strong> in the Storm UI is pretty low. They get acked later on, after they&#8217;ve been fetched. The metric to watch for in the Storm UI is <strong>Process latency</strong>.</p>
+</div>
+<div class="paragraph">
+<p>The <strong>SimpleFetcherBolt</strong> does not do any of this, hence its name. It just fetches incoming tuples in its <code>execute</code> method and does not do multi-threading. It does enforce politeness by checking when a URL can be fetched and will wait until it is the case. It is up to the user to declare multiple instances of the bolt in the Topology class and to manage how the URLs get distributed across the instances of <strong>SimpleFetcherBolt</strong>, often with the help of the <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/util/URLPartitioner.java">URLPartitioner</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_indexer_bolts">5.3. Indexer Bolts</h3>
+<div class="paragraph">
+<p>The purpose of crawlers is often to index web pages to make them searchable. The project contains resources for indexing with popular search solutions such as:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://github.com/apache/stormcrawler/blob/main/external/solr/src/main/java/org/apache/stormcrawler/solr/bolt/IndexerBolt.java">Apache SOLR</a></p>
+</li>
+<li>
+<p><a href="https://github.com/apache/stormcrawler/blob/main/external/opensearch/src/main/java/org/apache/stormcrawler/opensearch/bolt/IndexerBolt.java">OpenSearch</a></p>
+</li>
+<li>
+<p><a href="https://github.com/apache/stormcrawler/blob/main/external/aws/src/main/java/org/apache/stormcrawler/aws/bolt/CloudSearchIndexerBolt.java">AWS CloudSearch</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>All of these extend the class <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/indexing/AbstractIndexerBolt.java">AbstractIndexerBolt</a>.</p>
+</div>
+<div class="paragraph">
+<p>The core module also contains a <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/indexing/StdOutIndexer.java">simple indexer</a> which dumps the documents into the standard output – useful for debugging – as well as a <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/indexing/DummyIndexer.java">DummyIndexer</a>.</p>
+</div>
+<div class="paragraph">
+<p>The basic functionalities of filtering a document to index, mapping the metadata (which determines which metadata to keep for indexing and under what field name), or using the canonical tag (if any) are handled by the abstract class. This allows implementations to focus on communication with the indexing APIs.</p>
+</div>
+<div class="paragraph">
+<p>Indexing is often the penultimate component in a pipeline and takes the output of a Parsing bolt on the standard stream. The output of the indexing bolts is on the <em>status</em> stream:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">void</span> declareOutputFields(OutputFieldsDeclarer declarer) {
+    declarer.declareStream(
+            org.apache.stormcrawler.Constants.StatusStreamName,
+            <span class="keyword">new</span> Fields(<span class="string"><span class="delimiter">&quot;</span><span class="content">url</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">metadata</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">status</span><span class="delimiter">&quot;</span></span>));
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/indexing/DummyIndexer.java">DummyIndexer</a> is used for cases where no actual indexing is required. It simply generates a tuple on the <em>status</em> stream so that any StatusUpdater bolt knows that the URL was processed successfully and can update its status and scheduling in the corresponding backend.</p>
+</div>
+<div class="paragraph">
+<p>You can easily build your own custom indexer to integrate with other storage systems, such as a vector database for semantic search, a graph database for network analysis, or any other specialized data store. By extending AbstractIndexerBolt, you only need to implement the logic to communicate with your target system, while StormCrawler handles the rest of the pipeline and status updates.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_parser_bolts">5.4. Parser Bolts</h3>
+<div class="sect3">
+<h4 id="_jsoupparserbolt">5.4.1. JSoupParserBolt</h4>
+<div class="paragraph">
+<p>The <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/bolt/JSoupParserBolt.java">JSoupParserBolt</a> can be used to parse HTML documents and extract the outlinks, text, and metadata it contains. If you want to parse non-HTML documents, use the <a href="https://github.com/apache/stormcrawler/tree/main/external/tika/src/main/java/org/apache/stormcrawler/tika">Tika-based ParserBolt</a> from the external modules.</p>
+</div>
+<div class="paragraph">
+<p>This parser calls the <a href="#urlfilters">URLFilters</a> and <a href="#parsefilters">ParseFilters</a> defined in the configuration. Please note that it calls <a href="#metadatatransfer">MetadataTransfer</a> prior to calling the <a href="#parsefilters">ParseFilters</a>. If you create new Outlinks in your <a id="ParseFilters"></a>, you&#8217;ll need to make sure that you use MetadataTransfer there to inherit the Metadata from the parent document.</p>
+</div>
+<div class="paragraph">
+<p>The <strong>JSoupParserBolt</strong> automatically identifies the charset of the documents. It uses the <a href="StatusStream">status stream</a> to report parsing errors but also for the outlinks it extracts from a page. These would typically be used by an extension of <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/persistence/AbstractStatusUpdaterBolt.java">AbstractStatusUpdaterBolt</a> and persisted in some form of storage.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_sitemapparserbolt">5.4.2. SiteMapParserBolt</h4>
+<div class="paragraph">
+<p>StormCrawler can handle sitemap files thanks to the <strong>SiteMapParserBolt</strong>. This bolt should be placed before the standard <strong>ParserBolt</strong> in the topology, as illustrated in <a href="https://github.com/apache/stormcrawler/blob/main/archetype/src/main/resources/archetype-resources/src/main/java/CrawlTopology.java">CrawlTopology</a>.</p>
+</div>
+<div class="paragraph">
+<p>The reason for this is that the <strong>SiteMapParserBolt</strong> acts as a filter: it passes on any incoming tuples to the default stream so that they get processed by the <strong>ParserBolt</strong>, unless the tuple contains <code>isSitemap=true</code> in its metadata, in which case the <strong>SiteMapParserBolt</strong> will parse it itself. Any outlinks found in the sitemap files are then emitted on the <a id="StatusStream"></a>.</p>
+</div>
+<div class="paragraph">
+<p>The <strong>SiteMapParserBolt</strong> applies any configured <a href="#parsefilters">ParseFilters</a> to the documents it parses and, just like its equivalent for HTML pages, it uses <a href="#metadatatransfer">MetadataTransfer</a> to populate the Metadata objects for the Outlinks it finds.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_filters">5.5. Filters</h3>
+<div class="sect3">
+<h4 id="parsefilters">5.5.1. Parse Filters</h4>
+<div class="paragraph">
+<p>ParseFilters are called from parsing bolts such as <a href="https://github.com/apache/stormcrawler/wiki/JSoupParserBolt">JSoupParserBolt</a> and <a href="https://github.com/apache/stormcrawler/wiki/SiteMapParserBolt">SiteMapParserBolt</a> to extract data from web pages. The extracted data is stored in the Metadata object. ParseFilters can also modify the Outlinks and, in that sense, act as URLFilters.</p>
+</div>
+<div class="paragraph">
+<p>ParseFilters need to implement the interface <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/parse/ParseFilter.java">ParseFilter</a>, which defines three methods:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">void</span> filter(<span class="predefined-type">String</span> <span class="predefined-type">URL</span>, <span class="type">byte</span><span class="type">[]</span> content, DocumentFragment doc, ParseResult parse);
+
+<span class="directive">public</span> <span class="type">void</span> configure(<span class="predefined-type">Map</span> stormConf, JsonNode filterParams);
+
+<span class="directive">public</span> <span class="type">boolean</span> needsDOM();</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The <code>filter</code> method is where the extraction occurs. ParseResult objects contain the outlinks extracted from the document as well as a Map of String to ParseData, where the String is the URL of a subdocument or the main document itself. ParseData objects contain Metadata, binary content, and text for the subdocuments, which is useful for indexing subdocuments independently of the main document.</p>
+</li>
+<li>
+<p>The <code>needsDOM</code> method indicates whether the ParseFilter instance requires the DOM structure. If no ParseFilters need it, the parsing bolt will skip generating the DOM, slightly improving performance.</p>
+</li>
+<li>
+<p>The <code>configure</code> method takes a JSON object loaded by the wrapper class ParseFilters. The Storm configuration map can also be used to configure the filters, as described in <a href="Configuration">Configuration</a>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Here is the default <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/resources/parsefilters.json">JSON configuration file</a> for ParseFilters. The configuration allows multiple instances of the same filter class with different parameters and supports complex parameter objects. ParseFilters are executed in the order they appear in the JSON file.</p>
+</div>
+<div class="sect4">
+<h5 id="_provided_parsefilters">Provided ParseFilters</h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>CollectionTagger</strong> – <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/parse/filter/CollectionTagger.java">CollectionTagger</a> assigns one or more tags to the metadata of a document based on URL patterns defined in a JSON resource file. The resource file supports both include and exclude regular expressions:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="json">{
+  <span class="key"><span class="delimiter">&quot;</span><span class="content">collections</span><span class="delimiter">&quot;</span></span>: [
+    {
+      <span class="key"><span class="delimiter">&quot;</span><span class="content">name</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">stormcrawler</span><span class="delimiter">&quot;</span></span>,
+      <span class="key"><span class="delimiter">&quot;</span><span class="content">includePatterns</span><span class="delimiter">&quot;</span></span>: [<span class="string"><span class="delimiter">&quot;</span><span class="content">https://stormcrawler.net/.+</span><span class="delimiter">&quot;</span></span>]
+    },
+    {
+      <span class="key"><span class="delimiter">&quot;</span><span class="content">name</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">crawler</span><span class="delimiter">&quot;</span></span>,
+      <span class="key"><span class="delimiter">&quot;</span><span class="content">includePatterns</span><span class="delimiter">&quot;</span></span>: [<span class="string"><span class="delimiter">&quot;</span><span class="content">.+crawler.+</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">.+nutch.+</span><span class="delimiter">&quot;</span></span>],
+      <span class="key"><span class="delimiter">&quot;</span><span class="content">excludePatterns</span><span class="delimiter">&quot;</span></span>: [<span class="string"><span class="delimiter">&quot;</span><span class="content">.+baby.+</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">.+spider.+</span><span class="delimiter">&quot;</span></span>]
+    }
+  ]
+}</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>CommaSeparatedToMultivaluedMetadata</strong> – <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/parse/filter/CommaSeparatedToMultivaluedMetadata.java">CommaSeparatedToMultivaluedMetadata</a> rewrites single metadata values containing comma-separated entries into multiple values for the same key, useful for keyword tags.</p>
+</li>
+<li>
+<p><strong>DebugParseFilter</strong> – <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/parse/filter/DebugParseFilter.java">DebugParseFilter</a> dumps an XML representation of the DOM structure to a temporary file.</p>
+</li>
+<li>
+<p><strong>DomainParseFilter</strong> – <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/parse/filter/DomainParseFilter.java">DomainParseFilter</a> stores the domain or host name in the metadata for later indexing.</p>
+</li>
+<li>
+<p><strong>LDJsonParseFilter</strong> – <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/parse/filter/LDJsonParseFilter.java">LDJsonParseFilter</a> extracts data from JSON-LD representations.</p>
+</li>
+<li>
+<p><strong>LinkParseFilter</strong> – <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/parse/filter/LinkParseFilter.java">LinkParseFilter</a> extracts outlinks from documents using XPath expressions defined in the configuration.</p>
+</li>
+<li>
+<p><strong>MD5SignatureParseFilter</strong> – <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/parse/filter/MD5SignatureParseFilter.java">MD5SignatureParseFilter</a> generates an MD5 signature of a document based on the binary content, text, or URL (as a last resort). It can be combined with content filtering to exclude boilerplate text.</p>
+</li>
+<li>
+<p><strong>MimeTypeNormalization</strong> – <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/parse/filter/MimeTypeNormalization.java">MimeTypeNormalization</a> converts server-reported or inferred mime-type values into human-readable values such as <em>pdf</em>, <em>html</em>, or <em>image</em> and stores them in the metadata, useful for indexing and filtering search results.</p>
+</li>
+<li>
+<p><strong>XPathFilter</strong> – <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/parse/filter/XPathFilter.java">XPathFilter</a> allows extraction of data using XPath expressions and storing them in the Metadata object.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>You can also implement custom ParseFilters to extend the capabilities of the parsing pipeline. For example, you might create a filter to enrich a document&#8217;s metadata with additional information, such as language detection, sentiment analysis, named entity recognition, or custom tags extracted from the content. Custom filters can also modify or remove outlinks, normalize text, or integrate external data sources, allowing you to tailor the crawler to your specific processing or indexing requirements.
+By implementing the ParseFilter interface and configuring the filter in the JSON file, your custom logic will be seamlessly executed within the parsing bolt.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="urlfilters">5.5.2. URL Filters</h4>
+<div class="paragraph">
+<p>The URL filters can be used to both remove or modify incoming URLs (unlike Nutch where these functionalities are separated between URLFilters and URLNormalizers). This is generally used within a parsing bolt to normalize and filter outgoing URLs, but is also called within the FetcherBolt to handle redirections.</p>
+</div>
+<div class="paragraph">
+<p>URLFilters need to implement the interface <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/filtering/URLFilter.java">URLFilter</a> which defines a single method:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="predefined-type">String</span> filter(<span class="predefined-type">URL</span> sourceUrl, Metadata sourceMetadata,
+            <span class="predefined-type">String</span> urlToFilter);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>and inherits a default one from <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/util/Configurable.java">Configurable</a>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">void</span> configure(<span class="predefined-type">Map</span> stormConf, JsonNode jsonNode);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The configuration is done via a JSON file which is loaded by the wrapper class <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/filtering/URLFilters.java">URLFilters</a>. The URLFilter instances can be used directly, but it is easier to use the class URLFilters instead. Some filter implementations can also be configured with the <a href="https://github.com/apache/stormcrawler/wiki/Configuration">standard configuration mechanism</a>.</p>
+</div>
+<div class="paragraph">
+<p>Here is an example of a <a href="https://github.com/apache/stormcrawler/blob/main/archetype/src/main/resources/archetype-resources/src/main/resources/urlfilters.json">JSON configuration file</a>.</p>
+</div>
+<div class="paragraph">
+<p>The JSON configuration allows loading several instances of the same filtering class with different parameters and can handle complex configuration objects since it makes no assumptions about the content of the field <code>param</code>. The URLFilters are executed in the order in which they are defined in the JSON file.</p>
+</div>
+<div class="sect4">
+<h5 id="_built_in_url_filters">Built-in URL Filters</h5>
+<div class="sect5">
+<h6 id="_basic">Basic</h6>
+<div class="paragraph">
+<p>The <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/filtering/basic/BasicURLFilter.java">BasicURLFilter</a> filters based on the length of the URL and the repetition of path elements.</p>
+</div>
+<div class="paragraph">
+<p>The <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/filtering/basic/BasicURLNormalizer.java">BasicURLNormalizer</a> removes the anchor part of URLs based on the value of the parameter <code>removeAnchorPart</code>. It also removes query elements based on the configuration and whether their value corresponds to a 32-bit hash.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_fasturlfilter">FastURLFilter</h6>
+<div class="paragraph">
+<p>The <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/filtering/regex/FastURLFilter.java">FastURLFilter</a> is based on regex patterns and organized by scope (host | domain | metadata | global). For a given URL, the scopes are tried in the order given above and the URL is kept or removed based on the first matching rule. The default policy is to accept a URL if no match is found.</p>
+</div>
+<div class="paragraph">
+<p>The resource file is in JSON and looks like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="json">[{
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">scope</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">GLOBAL</span><span class="delimiter">&quot;</span></span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">patterns</span><span class="delimiter">&quot;</span></span>: [
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">DenyPathQuery </span><span class="char">\\</span><span class="content">.jpg</span><span class="delimiter">&quot;</span></span>
+    ]
+  },
+  {
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">scope</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">domain:stormcrawler.net</span><span class="delimiter">&quot;</span></span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">patterns</span><span class="delimiter">&quot;</span></span>: [
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">AllowPath /digitalpebble/</span><span class="delimiter">&quot;</span></span>,
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">DenyPath .+</span><span class="delimiter">&quot;</span></span>
+    ]
+  },
+  {
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">scope</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">metadata:key=value</span><span class="delimiter">&quot;</span></span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">patterns</span><span class="delimiter">&quot;</span></span>: [
+       <span class="string"><span class="delimiter">&quot;</span><span class="content">DenyPath .+</span><span class="delimiter">&quot;</span></span>
+    ]
+}]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><em>DenyPathQuery</em> indicates that the pattern should be applied on the path URL path and the query element, whereas <em>DenyPath</em> means the path alone.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_host">Host</h6>
+<div class="paragraph">
+<p>The <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/filtering/host/HostURLFilter.java">HostURLFilter</a> filters URLs based on whether they belong to the same host or domain name as the source URL. This is configured with the parameters <code>ignoreOutsideDomain</code> and <code>ignoreOutsideHost</code>. The latter takes precedence over the former.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_maxdepth">MaxDepth</h6>
+<div class="paragraph">
+<p>The <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/filtering/depth/MaxDepthFilter.java">MaxDepthFilter</a> is configured with the parameter <code>maxDepth</code> and requires <code>metadata.track.depth</code> to be set to true in the Configuration. This removes outlinks found too far from the seed URL and controls the expansion of the crawl.</p>
+</div>
+<div class="paragraph">
+<p>If the filter is configured with a value of 0, all outlinks will be removed, regardless of whether the depth is being tracked.</p>
+</div>
+<div class="paragraph">
+<p>The max depth can also be set on a per-seed basis using the key/value <code>max.depth</code>, which is automatically transferred to the outlinks if <code>metadata.track.depth</code> is set to true.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_metadata">Metadata</h6>
+<div class="paragraph">
+<p>The <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/filtering/metadata/MetadataFilter.java">MetadataFilter</a> filters URLs based on metadata in the source document.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_regexurlfilter">RegexURLFilter</h6>
+<div class="paragraph">
+<p>The <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/filtering/regex/RegexURLFilter.java">RegexURLFilter</a> uses a configuration file or a JSON ArrayNode containing regular expressions to determine whether a URL should be kept or not. The most specific rule must be placed first as a URL is kept or removed based on the first matching rule.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="json">{
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">urlFilters</span><span class="delimiter">&quot;</span></span>: [
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">-^(file|ftp|mailto):</span><span class="delimiter">&quot;</span></span>,
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">+.</span><span class="delimiter">&quot;</span></span>
+    ]
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_regexurlnormalizer">RegexURLNormalizer</h6>
+<div class="paragraph">
+<p>The <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/filtering/regex/RegexURLNormalizer.java">RegexURLNormalizer</a> uses a configuration file or a JSON ArrayNode containing regular expressions and replacements to normalize URLs.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="json">{
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">urlNormalizers</span><span class="delimiter">&quot;</span></span>: [
+        {
+            <span class="key"><span class="delimiter">&quot;</span><span class="content">pattern</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">#.*?(</span><span class="char">\\</span><span class="content">?|&amp;amp;|$)</span><span class="delimiter">&quot;</span></span>,
+            <span class="key"><span class="delimiter">&quot;</span><span class="content">substitution</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">$1</span><span class="delimiter">&quot;</span></span>
+        },
+        {
+            <span class="key"><span class="delimiter">&quot;</span><span class="content">pattern</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="char">\\</span><span class="content">?&amp;amp;</span><span class="delimiter">&quot;</span></span>,
+            <span class="key"><span class="delimiter">&quot;</span><span class="content">substitution</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="char">\\</span><span class="content">?</span><span class="delimiter">&quot;</span></span>
+        }
+    ]
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_robotsfilter">RobotsFilter</h6>
+<div class="paragraph">
+<p>The <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/filtering/robots/RobotsFilter.java">RobotsFilter</a> discards URLs based on the robots.txt directives. This is meant for small, limited crawls where the number of hosts is finite. Using this on a larger or open crawl would impact performance as the filter tries to retrieve the robots.txt files for any host found.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_sitemapfilter">SitemapFilter</h6>
+<div class="paragraph">
+<p>The <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/filtering/sitemap/SitemapFilter.java">SitemapFilter</a> discards the outlinks of URLs which are not sitemaps when sitemaps have been found.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="metadatatransfer">5.6. Metadata Transfer</h3>
+<div class="paragraph">
+<p>The class <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/util/MetadataTransfer.java">MetadataTransfer</a> is an important part of the framework and is used in key parts of a pipeline.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Fetching</p>
+</li>
+<li>
+<p>Parsing</p>
+</li>
+<li>
+<p>Updating bolts</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>An instance (or extension) of MetadataTransfer gets created and configured with the method <code>public static MetadataTransfer getInstance(Map++&lt;++String, Object++&gt;++ conf)</code> which takes as parameter with the standard Apache Storm configuration.</p>
+</div>
+<div class="paragraph">
+<p>A <strong>MetadataTransfer</strong> instance has mainly two methods, both returning Metadata objects :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>getMetaForOutlink(String targetURL, String sourceURL,           Metadata parentMD)</code></p>
+</li>
+<li>
+<p><code>filter(Metadata metadata)</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The former is used when creating <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/parse/Outlink.java">Outlinks</a> i.e. in the parsing bolts but also for handling redirections in the FetcherBolt(s)
+The latter is used by extensions of the <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/persistence/AbstractStatusUpdaterBolt.java">AbstractStatusUpdaterBolt</a> class to determine which <strong>Metadata</strong> should be persisted.</p>
+</div>
+<div class="paragraph">
+<p>The behavior of the default MetadataTransfer class is driven by configuration only. It has the following options.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>metadata.transfer</code> list of metadata key values to filter or transfer to the outlinks. See <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/resources/crawler-default.yaml#L23">crawler-default.yaml</a></p>
+</li>
+<li>
+<p><code>metadata.persist</code> list of metadata key values to persist in the status storage. See <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/resources/crawler-default.yaml#L28">crawler-default.yaml</a></p>
+</li>
+<li>
+<p><code>metadata.track.path</code> whether to track the URL path or not. Boolean value, true by default.</p>
+</li>
+<li>
+<p><code>metadata.track.depth</code> whether to track the depth from seed. Boolean value, true by default.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Note that the method <code>getMetaForOutlink</code> calls <code>filter</code> to determine what to key values to keep.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="protocols">5.7. Protocols</h3>
+<div class="paragraph">
+<p>StormCrawler supports multiple <strong>network protocols</strong> for fetching content from various sources on the web.
+Each protocol implementation defines how the crawler connects to a resource, sends requests, and handles responses such as status codes, headers, and content streams.</p>
+</div>
+<div class="paragraph">
+<p>Protocols are a key part of the fetching process and are used by StormCrawler’s <strong>bolts</strong> to retrieve data from remote servers.
+While HTTP and HTTPS are the most commonly used, other protocols like <code>file:</code> are also supported for local or distributed filesystem access.</p>
+</div>
+<div class="paragraph">
+<p>Use these configurations to fine-tune fetching performance, authentication, connection handling, and protocol-level optimizations across your crawler topology.</p>
+</div>
+<div class="sect3">
+<h4 id="_network_protocols">5.7.1. Network Protocols</h4>
+<div class="paragraph">
+<p>The following network protocols are implemented in StormCrawler:</p>
+</div>
+<div class="sect4">
+<h5 id="_file">File</h5>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/protocol/file/FileProtocol.java">FileProtocol</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_https">HTTP/S</h5>
+<div class="paragraph">
+<p>See <a id="HTTPProtocol"></a> for the effect of metadata content on protocol behaviour.</p>
+</div>
+<div class="paragraph">
+<p>To change the implementation, add the following lines to your <em>crawler-conf.yaml</em>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="yaml"><span class="key">http.protocol.implementation</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">org.apache.stormcrawler.protocol.okhttp.HttpProtocol</span><span class="delimiter">&quot;</span></span>
+<span class="key">https.protocol.implementation</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">org.apache.stormcrawler.protocol.okhttp.HttpProtocol</span><span class="delimiter">&quot;</span></span></code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/protocol/httpclient/HttpProtocol.java">HttpClient</a></p>
+</li>
+<li>
+<p><a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/protocol/selenium/SeleniumProtocol.java">Selenium</a></p>
+</li>
+<li>
+<p><a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/protocol/okhttp/HttpProtocol.java">OKHttp</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_feature_grid">5.7.2. Feature grid</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 40%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Features</th>
+<th class="tableblock halign-left valign-top">HTTPClient</th>
+<th class="tableblock halign-left valign-top">OKHttp</th>
+<th class="tableblock halign-left valign-top">Selenium</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Basic authentication</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/apache/stormcrawler/pull/589">Y</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/apache/stormcrawler/issues/792">Y</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">N</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Proxy (w. credentials?)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Y / Y</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Y / <a href="https://github.com/apache/stormcrawler/issues/751">Y</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">?</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Interruptible / trimmable <a href="https://github.com/apache/stormcrawler/issues/463">#463</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">N / Y</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Y / Y</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Y / N</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cookies</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Y</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/apache/stormcrawler/issues/632">Y</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">N</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Response headers</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Y</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Y</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">N</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Trust all certificates</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">N</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/apache/stormcrawler/issues/615">Y</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">N</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HEAD method</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/apache/stormcrawler/issues/485">Y</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/apache/stormcrawler/pull/923">Y</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">N</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">POST method</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">N</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/apache/stormcrawler/issues/641">Y</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">N</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Verbatim response header</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/apache/stormcrawler/issues/317">Y</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/apache/stormcrawler/issues/506">Y</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">N</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Verbatim request header</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">N</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/apache/stormcrawler/issues/506">Y</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">N</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IP address capture</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">N</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/apache/stormcrawler/pull/691">Y</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">N</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Navigation and javascript</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">N</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">N</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Y</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HTTP/2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">N</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Y</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">(Y)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configurable connection pool</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">N</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/apache/stormcrawler/issues/918">Y</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">N</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_http2">5.7.3. HTTP/2</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>The <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/protocol/okhttp/HttpProtocol.java">OKHttp</a> protocol supports <a href="https://en.wikipedia.org/wiki/HTTP/2">HTTP/2</a> if the JDK includes <a href="https://en.wikipedia.org/wiki/Application-Layer_Protocol_Negotiation">ALPN</a> (Java 9 and upwards or Java 8 builds starting early/mid 2020).</p>
+</li>
+<li>
+<p><a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/protocol/httpclient/HttpProtocol.java">HttpClient</a> does not yet support HTTP/2.</p>
+</li>
+<li>
+<p><a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/protocol/selenium/SeleniumProtocol.java">Selenium</a>: whether HTTP/2 is used or not depends on the used driver.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Since <a href="https://github.com/apache/stormcrawler/pull/829">#829</a>, the HTTP protocol version used is configurable via <code>http.protocol.versions</code> (see also comments in <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/resources/crawler-default.yaml">crawler-default.yaml</a>).</p>
+</div>
+<div class="paragraph">
+<p>For example, to force that only HTTP/1.1 is used:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="yaml"><span class="key">http.protocol.versions</span>:
+- <span class="string"><span class="delimiter">&quot;</span><span class="content">http/1.1</span><span class="delimiter">&quot;</span></span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_metadata_dependent_behavior_for_http_protocols">5.7.4. Metadata-dependent Behavior For HTTP Protocols</h4>
+<div class="paragraph">
+<p>The <code>metadata</code> argument to <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/protocol/Protocol.java#L53">HTTPProtocol.getProtocolOutput()</a> can affect the behavior of the protocol. The following metadata keys are detected by <code>HTTPProtocol</code> implementations and utilized in performing the request:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>last-modified</code>: If this key is present in <code>metadata</code>, the protocol will use the metadata value as the date for the <code>If-Modified-Since</code> header field of the HTTP request. If the key is not present, the <code>If-Modified-Since</code> field won&#8217;t be added to the request header.</p>
+</li>
+<li>
+<p><code>protocol.etag</code>: If this key is present in <code>metadata</code>, the protocol will use the metadata value as the ETag for the <code>If-None-Match</code> header field of the HTTP request. If the key is not present, the <code>If-None-Match</code> field won&#8217;t be added to the request header.</p>
+</li>
+<li>
+<p><code>http.accept</code>: If this key is present in <code>metadata</code>, the protocol will use the value to override the value for the <code>Accept</code> header field of the HTTP request. If the key is not present, the <code>http.accept</code> global configuration value is used instead. (Available in v1.11+)</p>
+</li>
+<li>
+<p><code>http.accept.language</code>: If this key is present in <code>metadata</code>, the protocol will use the value to override the value for the <code>Accept-Language</code> header field of the HTTP request. If the key is not present, the <code>http.accept.language</code> global configuration value is used instead. (Available in v1.11+)</p>
+</li>
+<li>
+<p><code>protocol.set-cookie</code>: If this key is present in <code>metadata</code> and <code>http.use.cookies</code> is true, the protocol will send cookies stored from the response this page was linked to, given the cookie is applicable to the domain of the link.</p>
+</li>
+<li>
+<p><code>http.method.head</code>: If this key is present in <code>metadata</code>, the protocol sends a HEAD request. (Available in v1.12+ only for httpclient, see <a href="https://github.com/apache/stormcrawler/issues/485">#485</a>)</p>
+</li>
+<li>
+<p><code>http.post.json</code>: If this key is present in <code>metadata</code>, the protocol sends a POST request. (Available in v1.12+ only for okhttp, see <a href="https://github.com/apache/stormcrawler/issues/641">#641</a>)</p>
+</li>
+<li>
+<p><code>protocol.set-headers</code>: If this key is present in metadata, the protocol adds the specified headers to the request. See <a href="https://github.com/apache/stormcrawler/pull/993">#993</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="json"><span class="key"><span class="delimiter">&quot;</span><span class="content">protocol%2Eset-header</span><span class="delimiter">&quot;</span></span>: [
+  <span class="string"><span class="delimiter">&quot;</span><span class="content">header1=value1</span><span class="delimiter">&quot;</span></span>,
+  <span class="string"><span class="delimiter">&quot;</span><span class="content">header2=value2</span><span class="delimiter">&quot;</span></span>
+]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Notes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Metadata values starting with <code>protocol.</code> may start with a different prefix instead. See <code>protocol.md.prefix</code> and <a href="https://github.com/apache/stormcrawler/issues/776">#776</a>.</p>
+</li>
+<li>
+<p>Metadata used for requests needs to be persisted. For example:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="yaml"><span class="key">metadata.persist</span>:
+  - <span class="string"><span class="content">last-modified</span></span>
+  - <span class="string"><span class="content">protocol.etag</span></span>
+  - <span class="string"><span class="content">protocol.set-cookie</span></span>
+  - <span class="string"><span class="content">...</span></span></code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Cookies need to be transferred to outlinks by setting:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="yaml"><span class="key">metadata.transfer</span>:
+  - <span class="string"><span class="content">set-cookie</span></span></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_configuration">6. Configuration</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_user_agent_configuration">6.1. User Agent Configuration</h3>
+<div class="paragraph">
+<p>Crawlers should always act responsibly and ethically when accessing websites. A key aspect of this is properly identifying themselves through the <code>User-Agent</code> header. By providing a clear and accurate user agent string, webmasters can understand who is visiting their site and why, and can apply rules in robots.txt accordingly. Respecting these rules, avoiding excessive request rates, and honoring content restrictions not only ensures legal compliance but also maintains a healthy relationship with the web community.
+Transparent identification is a fundamental part of ethical web crawling.</p>
+</div>
+<div class="paragraph">
+<p>The configuration of the <a href="https://www.w3.org/WAI/UA/work/wiki/Definition_of_User_Agent">user agent</a> in StormCrawler has two purposes:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Identification of the crawler for webmasters</p>
+</li>
+<li>
+<p>Selection of rules from robots.txt</p>
+</li>
+</ol>
+</div>
+<div class="sect3">
+<h4 id="_crawler_identification">6.1.1. Crawler Identification</h4>
+<div class="paragraph">
+<p>The politeness of a web crawler is not limited to how frequently it fetches pages from a site, but also in how it identifies itself to sites it crawls. This is done by setting the HTTP header <code>User-Agent</code>, just like <a href="https://www.whatismybrowser.com/detect/what-is-my-user-agent/">your web browser does</a>.</p>
+</div>
+<div class="paragraph">
+<p>The full user agent string is built from the concatenation of the configuration elements:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>http.agent.name</code>: name of your crawler</p>
+</li>
+<li>
+<p><code>http.agent.version</code>: version of your crawler</p>
+</li>
+<li>
+<p><code>http.agent.description</code>: description of what it does</p>
+</li>
+<li>
+<p><code>http.agent.url</code>: URL webmasters can go to to learn about it</p>
+</li>
+<li>
+<p><code>http.agent.email</code>: an email so that they can get in touch with you</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Whereas StormCrawler used to provide a default value for these, this is not the case since version 2.11 and you will now be asked to provide a value.</p>
+</div>
+<div class="paragraph">
+<p>You can specify the user agent verbatim with the config <code>http.agent</code> but you will still need to provide a <code>http.agent.name</code> for parsing robots.txt files.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_robots_exclusion_protocol">6.1.2. Robots Exclusion Protocol</h4>
+<div class="paragraph">
+<p>This is also known as the robots.txt protocol, it is formalised in <a href="https://www.rfc-editor.org/rfc/rfc9309.html">RFC 9309</a>. Part of what the robots directives do is to define rules to specify which parts of a website (if any) are allowed to be crawled. The rules are organised by <code>User-Agent</code>, with a <code>*</code> to match any agent not otherwise specified explicitly, e.g.:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>User-Agent: *
+Disallow: *.gif$
+Disallow: /example/
+Allow: /publications/</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In the example above the rule allows access to the URLs with the <em>/publications/</em> path prefix, and it restricts access to the URLs with the <em>/example/</em> path prefix and to all URLs with a <em>.gif</em> suffix. The <code>"*"</code> character designates any character, including the otherwise-required forward slash.</p>
+</div>
+<div class="paragraph">
+<p>The value of <code>http.agent.name</code> is what StormCrawler looks for in the robots.txt. It MUST contain only uppercase and lowercase letters ("a-z" and "A-Z"), underscores ("_"), and hyphens ("-").</p>
+</div>
+<div class="paragraph">
+<p>Unless you are running a well known web crawler, it is unlikely that its agent name will be listed explicitly in the robots.txt (if it is, well, congratulations!). While you want the agent name value to reflect who your crawler is, you might want to follow rules set for better known crawlers. For instance, if you were a responsible AI company crawling the web to build a dataset to train LLMs, you would want to follow the rules set for <code>Google-Extended</code> (see <a href="https://developers.google.com/search/docs/crawling-indexing/overview-google-crawlers">list of Google crawlers</a>) if any were found.</p>
+</div>
+<div class="paragraph">
+<p>This is what the configuration <code>http.robots.agents</code> allows you to do. It is a comma-separated string but can also take a list of values. By setting it alongside <code>http.agent.name</code> (which should also be the first value it contains), you are able to broaden the match rules based on the identity as well as the purpose of your crawler.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_proxy">6.2. Proxy</h3>
+<div class="paragraph">
+<p>StormCrawler&#8217;s proxy system is built on top of the <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/proxy/SCProxy.java">SCProxy</a> class and the <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/proxy/ProxyManager.java">ProxyManager</a> interface. Every proxy used in the system is formatted as a <strong>SCProxy</strong>. The <strong>ProxyManager</strong> implementations handle the management and delegation of their internal proxies. At the call of <code>Protocol#getProtocolOutput()</code>, the <code>ProxyManager.getProxy()</code> is called to retrieve a proxy for the individual request.</p>
+</div>
+<div class="paragraph">
+<p>The <strong>ProxyManager</strong> interface can be implemented in a custom class to create custom logic for proxy management and load balancing. The default <strong>ProxyManager</strong> implementation is <strong>SingleProxyManager</strong>. This ensures backwards compatibility for prior StormCrawler releases. To use <strong>MultiProxyManager</strong> or custom implementations, pass the class path and name via the config parameter <code>http.proxy.manager</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>http.proxy.manager: "org.apache.stormcrawler.proxy.MultiProxyManager"</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>StormCrawler implements two <strong>ProxyManager</strong> classes by default:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/proxy/SingleProxyManager.java">SingleProxyManager</a>
+Manages a single proxy passed by the backwards compatible proxy fields in the configuration:</p>
+<div class="literalblock">
+<div class="content">
+<pre>----
+http.proxy.host
+http.proxy.port
+http.proxy.type
+http.proxy.user (optional)
+http.proxy.pass (optional)
+----</pre>
+</div>
+</div>
+</li>
+<li>
+<p><a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/proxy/MultiProxyManager.java">MultiProxyManager</a>
+Manages multiple proxies passed through a TXT file. The file should contain connection strings for all proxies including the protocol and authentication (if needed). The file supports comment lines (<code>//</code> or <code>#</code>) and empty lines. The file path should be passed via the config at the below field. The TXT file must be available to all nodes participating in the topology:</p>
+<div class="literalblock">
+<div class="content">
+<pre>----
+http.proxy.file
+----</pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The <strong>MultiProxyManager</strong> load balances across proxies using one of the following schemes. The load balancing scheme can be passed via the config using <code>http.proxy.rotation</code>; the default value is <code>ROUND_ROBIN</code>:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>ROUND_ROBIN
+Evenly distributes load across all proxies</p>
+</li>
+<li>
+<p>RANDOM
+Randomly selects proxies using the native Java random number generator. RNG is seeded with the nanos at instantiation</p>
+</li>
+<li>
+<p>LEAST_USED
+Selects the proxy with the least amount of usage. This is performed lazily for speed and therefore will not account for changes to usages during the selection process. If no custom implementations are made this should theoretically operate the same as <strong>ROUND_ROBIN</strong></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The <strong>SCProxy</strong> class contains all of the information associated with proxy connection. In addition, it tracks the total usage of the proxy and optionally tracks the location of the proxy IP. Usage information is used for the <strong>LEAST_USED</strong> load balancing scheme. The location information is currently unused but left to enable custom implementations the ability to select proxies by location.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_metadata_2">6.3. Metadata</h3>
+<div class="sect3">
+<h4 id="_registering_metadata_for_kryo_serialization">6.3.1. Registering Metadata for Kryo Serialization</h4>
+<div class="paragraph">
+<p>If your Apache StormCrawler topology doesn&#8217;t extend <code>org.apache.storm.crawler.ConfigurableTopology</code>, you will need to manually register StormCrawler&#8217;s <code>Metadata</code> class for serialization in Storm. For more information on Kryo serialization in Apache Storm, you can refer to the <a href="https://storm.apache.org/documentation/Serialization.html">documentation</a>.</p>
+</div>
+<div class="paragraph">
+<p>To register <code>Metadata</code> for serialization, you&#8217;ll need to import <code>backtype.storm.Config</code> and <code>org.apache.storm.crawler.Metadata</code>. Then, in your topology class, you&#8217;ll register the class with:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">Config.registerSerialization(conf, Metadata.class);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>where <code>conf</code> is your Storm configuration for the topology.</p>
+</div>
+<div class="paragraph">
+<p>Alternatively, you can specify in the configuration file:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="yaml"><span class="key">topology.kryo.register</span>:
+  - <span class="string"><span class="content">org.apache.storm.crawler.Metadata</span></span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_metadatatransfer">6.3.2. MetadataTransfer</h4>
+<div class="paragraph">
+<p>The class <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/util/MetadataTransfer.java">MetadataTransfer</a> is an important part of the framework and is used in key parts of a pipeline:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Fetching</p>
+</li>
+<li>
+<p>Parsing</p>
+</li>
+<li>
+<p>Updating bolts</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>An instance (or extension) of <strong>MetadataTransfer</strong> gets created and configured with the method:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="directive">static</span> MetadataTransfer getInstance(<span class="predefined-type">Map</span>&lt;<span class="predefined-type">String</span>, <span class="predefined-type">Object</span>&gt; conf)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>which takes as parameter the standard Storm <a id="Configuration"></a>.</p>
+</div>
+<div class="paragraph">
+<p>A <strong>MetadataTransfer</strong> instance has mainly two methods, both returning <code>Metadata</code> objects:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>getMetaForOutlink(String targetURL, String sourceURL, Metadata parentMD)</code></p>
+</li>
+<li>
+<p><code>filter(Metadata metadata)</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The former is used when creating <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/parse/Outlink.java">Outlinks</a>, i.e., in the parsing bolts but also for handling redirections in the [[FetcherBolt(s)]].</p>
+</div>
+<div class="paragraph">
+<p>The latter is used by extensions of the <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/persistence/AbstractStatusUpdaterBolt.java">AbstractStatusUpdaterBolt</a> class to determine which <strong>Metadata</strong> should be persisted.</p>
+</div>
+<div class="paragraph">
+<p>The behavior of the default <strong>MetadataTransfer</strong> class is driven by configuration only. It has the following options:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>metadata.transfer</code>:: list of metadata key values to filter or transfer to the outlinks. Please see the corresponding comments in <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/resources/crawler-default.yaml">crawler-default.yaml</a></p>
+</li>
+<li>
+<p><code>metadata.persist</code>:: list of metadata key values to persist in the status storage. Please see the corresponding comments in <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/resources/crawler-default.yaml">crawler-default.yaml</a></p>
+</li>
+<li>
+<p><code>metadata.track.path</code>:: whether to track the URL path or not. Boolean value, true by default.</p>
+</li>
+<li>
+<p><code>metadata.track.depth</code>:: whether to track the depth from seed. Boolean value, true by default.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Note that the method <code>getMetaForOutlink</code> calls <code>filter</code> to determine which key values to keep.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_configuration_options">6.4. Configuration Options</h3>
+<div class="paragraph">
+<p>The following tables describe all available configuration options and their default values.
+If one of the keys is not present in your YAML file, the default value will be taken.</p>
+</div>
+<div class="paragraph">
+<p>Note: Some configuration options may not be applicable depending on the specific components and
+features you are using in your Apache StormCrawler topology. Some external modules might define additional options not listed here.</p>
+</div>
+<div class="sect3">
+<h4 id="_fetching_and_partitioning">6.4.1. Fetching and Partitioning</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 60%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">key</th>
+<th class="tableblock halign-left valign-top">default value</th>
+<th class="tableblock halign-left valign-top">description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">fetcher.max.crawl.delay</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">30</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The maximum number in seconds that will be accepted by Crawl-delay
+directives in robots.txt files. If the crawl-delay exceeds this value the behavior depends on the value of fetcher.max.crawl.delay.force.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">fetcher.max.crawl.delay.force</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configures the behavior of fetcher if the robots.txt crawl-delay exceeds fetcher.max.crawl.delay. If false: the tuple is emitted to the StatusStream
+as an ERROR. If true: the queue delay is set to fetcher.max.crawl.delay.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">fetcher.max.queue.size</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The maximum length of the queue used to store items to be fetched by the FetcherBolt. A setting of -1 sets the length to Integer.MAX_VALUE.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">fetcher.max.throttle.sleep</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The maximum amount of time to wait between fetches; if exceeded, the item is sent to the back of the queue. Used in SimpleFetcherBolt. -1 disables it.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">fetcher.max.urls.in.queues</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Limits the number of URLs that can be stored in a fetch queue. -1 disables the limit.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">fetcher.maxThreads.host/domain/ip</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">fetcher.threads.per.queue</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Overwrites fetcher.threads.per.queue. Useful for crawling some domains/hosts/IPs more intensively.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">fetcher.metrics.time.bucket.secs</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Metrics events emitted every value seconds to the system stream.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">fetcher.queue.mode</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">byHost</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Possible values: byHost, byDomain, byIP. Determines queue grouping.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">fetcher.server.delay</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Delay between crawls in the same queue if no Crawl-delay
+is defined.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">fetcher.server.delay.force</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Defines fetcher behavior when the robots.txt crawl-delay is smaller than fetcher.server.delay.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">fetcher.server.min.delay</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Delay between crawls for queues with &gt;1 thread. Ignores robots.txt.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">fetcher.threads.number</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Total concurrent threads fetching pages. Adjust carefully based on system capacity.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">fetcher.threads.per.queue</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Default number of threads per queue. Can be overridden.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">fetcher.timeout.queue</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Maximum wait time (seconds) for items in the queue. -1 disables timeout.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">fetcherbolt.queue.debug.filepath</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">""</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Path to a debug log (e.g. /tmp/fetcher-dump-{port}).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">http.agent.description</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Description for the User-Agent header.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">http.agent.email</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Email address in User-Agent header.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">http.agent.name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name in User-Agent header.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">http.agent.url</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">URL in User-Agent header.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">http.agent.version</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Version in User-Agent header.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">http.basicauth.password</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Password for http.basicauth.user.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">http.basicauth.user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Username for Basic Authentication.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">http.content.limit</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Maximum HTTP response body size (bytes). Default: no limit.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">http.protocol.implementation</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">org.apache.stormcrawler.protocol.httpclient.HttpProtocol</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HTTP Protocol
+implementation.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">http.proxy.host</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HTTP proxy host.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">http.proxy.pass</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Proxy password.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">http.proxy.port</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8080</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Proxy port.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">http.proxy.user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Proxy username.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">http.robots.403.allow</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Defines behavior when robots.txt returns HTTP 403.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">http.robots.agents</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">''</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Additional user-agent strings for interpreting robots.txt.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">http.robots.file.skip</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ignore robots.txt rules (1.17+).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">http.skip.robots</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Deprecated (replaced by http.robots.file.skip).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">http.store.headers</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Whether to store response headers.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">http.store.responsetime</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Not yet implemented — store response time in Metadata.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">http.timeout</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10000</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Connection timeout (ms).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">http.use.cookies</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Use cookies in subsequent requests.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">https.protocol.implementation</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">org.apache.stormcrawler.protocol.httpclient.HttpProtocol</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HTTPS Protocol
+implementation.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">partition.url.mode</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">byHost</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Defines how URLs are partitioned: byHost, byDomain, or byIP.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">protocols</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">http,https</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Supported protocols.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">redirections.allowed</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Allow URL redirects.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sitemap.discovery</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enable automatic sitemap discovery.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_protocol">6.4.2. Protocol</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 60%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">key</th>
+<th class="tableblock halign-left valign-top">default value</th>
+<th class="tableblock halign-left valign-top">description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cacheConfigParamName</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">maximumSize=10000,expireAfterWrite=6h</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CacheBuilder configuration for robots cache.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">errorcacheConfigParamName</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">maximumSize=10000,expireAfterWrite=1h</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CacheBuilder configuration for error cache.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">file.encoding</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">UTF-8</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Encoding for FileProtocol.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">http.custom.headers</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Custom HTTP headers.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">http.accept</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HTTP Accept
+header.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">http.accept.language</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HTTP Accept-Language
+header.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">http.content.partial.as.trimmed</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Accepts partially fetched content in OKHTTP.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">http.trust.everything</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If true, trust all SSL/TLS connections.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">navigationfilters.config.file</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">JSON config for NavigationFilter. See blog post
+.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">selenium.addresses</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WebDriver server addresses.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">selenium.capabilities</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Desired WebDriver capabilities
+.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">selenium.delegated.protocol</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Delegated protocol for selective Selenium usage.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">selenium.implicitlyWait</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WebDriver element search timeout.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">selenium.instances.num</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Number of instances per WebDriver connection.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">selenium.pageLoadTimeout</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WebDriver page load timeout.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">selenium.setScriptTimeout</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WebDriver script execution timeout.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">topology.message.timeout.secs</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">OKHTTP message timeout.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_indexing">6.4.3. Indexing</h4>
+<div class="paragraph">
+<p>The values below are used by sub-classes of <code>AbstractIndexerBolt</code>.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 60%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">key</th>
+<th class="tableblock halign-left valign-top">default value</th>
+<th class="tableblock halign-left valign-top">description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">indexer.md.filter</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">YAML list of key=value filters for metadata-based indexing.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">indexer.md.mapping</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">YAML mapping from metadata fields to persistence layer fields.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">indexer.text.fieldname</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Field name for indexed HTML body text.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">indexer.url.fieldname</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Field name for indexed URL.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_status_persistence">6.4.4. Status Persistence</h4>
+<div class="paragraph">
+<p>This refers to persisting the status of a URL (e.g. ERROR, DISCOVERED etc.) along with asomething like a <code>nextFetchDate</code>
+that is being calculated by a <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/persistence/DefaultScheduler.java">Scheduler</a>.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 60%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">key</th>
+<th class="tableblock halign-left valign-top">default value</th>
+<th class="tableblock halign-left valign-top">description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">fetchInterval.default</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1440</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Default revisit interval (minutes). Used by DefaultScheduler
+.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">fetchInterval.error</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">44640</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Revisit interval for error pages (minutes).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">fetchInterval.fetch.error</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">120</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Revisit interval for fetch errors (minutes).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">status.updater.cache.spec</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">maximumSize=10000, expireAfterAccess=1h</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cache specification
+.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">status.updater.use.cache</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Whether to use cache to avoid re-persisting URLs.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_parsing">6.4.5. Parsing</h4>
+<div class="paragraph">
+<p>Configures parsing of fetched text and the handling of discovered URIs</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 60%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">key</th>
+<th class="tableblock halign-left valign-top">default value</th>
+<th class="tableblock halign-left valign-top">description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">collections.file</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">collections.json</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Config for CollectionTagger
+.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">collections.key</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">collections</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Key under which tags are stored in metadata.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">feed.filter.hours.since.published</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Discard feeds older than value hours.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">feed.sniffContent</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Try to detect feeds automatically.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">parsefilters.config.file</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">parsefilters.json</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Path to JSON config defining ParseFilters. See example
+.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">parser.emitOutlinks</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Emit discovered links as DISCOVERED tuples.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">parser.emitOutlinks.max.per.page</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Limit number of emitted links per page.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">textextractor.exclude.tags</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">""</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HTML tags ignored by TextExtractor.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">textextractor.include.pattern</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">""</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Regex patterns to include for TextExtractor.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">textextractor.no.text</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Disable text extraction entirely.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">track.anchors</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Add anchor text to outlink metadata.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">urlfilters.config.file</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">urlfilters.json</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">JSON file defining URL filters. See default
+.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_metadata_3">6.4.6. Metadata</h4>
+<div class="paragraph">
+<p>Options on how Storm Crawler should handle metadata tracking as well as
+minimising metadata clashes</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 60%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">key</th>
+<th class="tableblock halign-left valign-top">default value</th>
+<th class="tableblock halign-left valign-top">description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">metadata.persist</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Metadata to persist but not transfer to outlinks.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">metadata.track.depth</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Track crawl depth of URLs.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">metadata.track.path</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Track URL path history in metadata.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">metadata.transfer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Metadata to transfer to outlinks.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">metadata.transfer.class</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">org.apache.stormcrawler.util.MetadataTransfer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Class handling metadata transfer.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">protocol.md.prefix</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Prefix for remote metadata keys to avoid collisions.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_debugging_a_stormcrawler_topology">7. Debugging a StormCrawler Topology</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Assuming you have a StormCrawler setup all ready to use (e.g., generated from the archetype), you can debug it by either:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Running the Java topology from your IDE in debug mode.</p>
+</li>
+<li>
+<p>Using the following command to enable remote debugging:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">export STORM_JAR_JVM_OPTS=&quot;-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=localhost:8000&quot;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then run the topology in the usual way with <code>storm jar ...</code> and remote debug from your IDE.</p>
+</div>
+<div class="paragraph">
+<p>In both cases, the topology will need to run in local mode, i.e., not deployed to a Storm cluster.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="poweredby">8. Companies &amp; Projects Using StormCrawler</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Apache StormCrawler has been adopted by a wide variety of organizations across industries, from startups to large enterprises and research institutions.
+The following is a non-exhaustive list of companies, projects, and institutions that have used Apache StormCrawler in production or research.
+If your organization is also making use of Apache StormCrawler, we’d love to hear from you!</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://www.careerbuilder.com/">CareerBuilder</a></p>
+</li>
+<li>
+<p><a href="https://www.stolencamerafinder.com/">StolenCameraFinder</a></p>
+</li>
+<li>
+<p><a href="https://www.weborama.com/">Weborama</a></p>
+</li>
+<li>
+<p><a href="https://www.ontopic.io/">Ontopic</a></p>
+</li>
+<li>
+<p><a href="https://www.shopstyle.com/">ShopStyle</a></p>
+</li>
+<li>
+<p><a href="https://www.wombatsoftware.de/">Wombat Software</a></p>
+</li>
+<li>
+<p><a href="https://commoncrawl.org/2016/10/news-dataset-available/">CommonCrawl</a></p>
+</li>
+<li>
+<p><a href="https://webfinery.com/">WebFinery</a></p>
+</li>
+<li>
+<p><a href="https://www.reportlinker.com/">ReportLinker</a></p>
+</li>
+<li>
+<p><a href="https://www.tokenmill.lt/">TokenMill</a></p>
+</li>
+<li>
+<p><a href="https://www.polecat.com/">Polecat</a></p>
+</li>
+<li>
+<p><a href="https://www.wizenoze.com/en/">WizeNoze</a></p>
+</li>
+<li>
+<p><a href="https://iproduct.io/">IProduct.io</a></p>
+</li>
+<li>
+<p><a href="https://www.cgi.com/">CGI</a></p>
+</li>
+<li>
+<p><a href="https://github.com/miras-tech/MirasText">MirasText</a></p>
+</li>
+<li>
+<p><a href="https://www.g2webservices.com/">G2 Web Services</a></p>
+</li>
+<li>
+<p><a href="https://www.gov.nt.ca/">Government of Northwest Territories</a></p>
+</li>
+<li>
+<p><a href="https://digitalpebble.blogspot.com/2019/02/meet-stormcrawler-users-q-with-pixray.html">Pixray</a></p>
+</li>
+<li>
+<p><a href="https://www.cameraforensics.com/">CameraForensics</a></p>
+</li>
+<li>
+<p><a href="https://gagepiracy.com/">Gage Piracy</a></p>
+</li>
+<li>
+<p><a href="https://www.clarin.eu/">Clarin ERIC</a></p>
+</li>
+<li>
+<p><a href="https://openwebsearch.eu/owler/">OpenWebSearch</a></p>
+</li>
+<li>
+<p><a href="https://shc-info.zml.hs-heilbronn.de/">Heilbronn University</a></p>
+</li>
+<li>
+<p><a href="https://www.contexity.com">Contexity</a></p>
+</li>
+<li>
+<p><a href="https://www.kodis.iao.fraunhofer.de/de/projekte/SPIDERWISE.html">Fraunhofer IAO - KODIS</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Drop us a line at <a href="mailto:dev@stormcrawler.apache.org">dev@stormcrawler.apache.org</a> if you want to be added to this page.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_talks_tutorials_articles_and_interviews">9. Talks, tutorials, articles and interviews</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><strong>OWler: preliminary results for building a collaborative open web crawler</strong>, Dinzinger and al., OSSYM 2023 <a href="https://ca-roll.github.io/downloads/owler.pdf" class="bare">https://ca-roll.github.io/downloads/owler.pdf</a></p>
+</li>
+<li>
+<p><strong>Presentation: StormCrawler and OpenSearch</strong> (Feb 2023) <a href="https://www.youtube.com/watch?v=azHYI9pnjos" class="bare">https://www.youtube.com/watch?v=azHYI9pnjos</a></p>
+</li>
+<li>
+<p><strong>Crawling the German Health Web: Exploratory Study and Graph Analysis</strong>, Zowalla R, Wetter T, Pfeifer D. J Med Internet Res 2020;22(7):e17853 <a href="https://www.jmir.org/2020/7/e17853" class="bare">https://www.jmir.org/2020/7/e17853</a></p>
+</li>
+<li>
+<p><strong>Tutorial: StormCrawler 1.16 + Elasticsearch 7.5.0</strong> <a href="https://youtu.be/8kpJLPdhvLw" class="bare">https://youtu.be/8kpJLPdhvLw</a></p>
+</li>
+<li>
+<p><strong>StormCrawler open source web crawler strengthened by Elasticsearch, Kibana</strong> <a href="https://www.elastic.co/blog/stormcrawler-open-source-web-crawler-strengthened-by-elasticsearch-kibana" class="bare">https://www.elastic.co/blog/stormcrawler-open-source-web-crawler-strengthened-by-elasticsearch-kibana</a></p>
+</li>
+<li>
+<p><strong>Harvesting Online Health Information</strong>, Richard Zowalla <a href="https://www.slideshare.net/secret/v8Y0qFlGBk7IbB">slides</a></p>
+</li>
+<li>
+<p><em><strong>Tutorial: StormCrawler 1.10 + Apache SOLR 4.7.0</strong></em> <a href="https://youtu.be/F8nvGj03XLo" class="bare">https://youtu.be/F8nvGj03XLo</a></p>
+</li>
+<li>
+<p><strong>Patent-Crawler: A Web Crawler to Gather Virtual Patent Marking Information</strong>, Etienne Orliac, l’Université de Lausanne/École Polytechnique Fédérale de Lausanne (UNIL/EPFL) <a href="https://www.hpcadvisorycouncil.com/events/2018/swiss-workshop/pdf/Weds11April/Orliac_PatentCrawler_Wed110418.pdf">slides</a> - <a href="https://youtu.be/2v6Y_3Q0vT0">video</a></p>
+</li>
+<li>
+<p><em><strong>DigitalPebble&#8217;s Blog: Crawl dynamic content with Selenium and StormCrawler</strong></em> <a href="https://digitalpebble.blogspot.co.uk/2017/04/crawl-dynamic-content-with-selenium-and.html" class="bare">https://digitalpebble.blogspot.co.uk/2017/04/crawl-dynamic-content-with-selenium-and.html</a></p>
+</li>
+<li>
+<p><em><strong>The Battle of the Crawlers: Apache Nutch vs. StormCrawler</strong></em> <a href="https://dzone.com/articles/the-battle-of-the-crawlers-apache-nutch-vs-stormcr" class="bare">https://dzone.com/articles/the-battle-of-the-crawlers-apache-nutch-vs-stormcr</a></p>
+</li>
+<li>
+<p><em><strong>Tutorial: StormCrawler + Elasticsearch + Kibana</strong></em> <a href="https://digitalpebble.blogspot.co.uk/2017/04/video-tutorial-stormcrawler.html" class="bare">https://digitalpebble.blogspot.co.uk/2017/04/video-tutorial-stormcrawler.html</a></p>
+</li>
+<li>
+<p><em><strong>Q&amp;A with InfoQ</strong></em> <a href="https://www.infoq.com/news/2016/12/nioche-stormcrawler-web-crawler" class="bare">https://www.infoq.com/news/2016/12/nioche-stormcrawler-web-crawler</a></p>
+</li>
+<li>
+<p><em><strong>DigitalPebble&#8217;s Blog: Index the web with StormCrawler (revisited)</strong></em> <a href="https://digitalpebble.blogspot.co.uk/2016/09/index-web-with-stormcrawler-revisited.html" class="bare">https://digitalpebble.blogspot.co.uk/2016/09/index-web-with-stormcrawler-revisited.html</a></p>
+</li>
+<li>
+<p><em><strong>DigitalPebble&#8217;s Blog: Index the web with AWS CloudSearch</strong></em> <a href="https://digitalpebble.blogspot.co.uk/2015/09/index-web-with-aws-cloudsearch.html" class="bare">https://digitalpebble.blogspot.co.uk/2015/09/index-web-with-aws-cloudsearch.html</a></p>
+</li>
+<li>
+<p><em><strong>Low latency scalable web crawling on Apache Storm</strong></em> <a href="https://www.slideshare.net/digitalpebble/j-nioche-berlinbuzzwords20150601">slides</a> - <a href="https://t.co/A3bRKroDn3">video</a>, by Julien Nioche. BerlinBuzzwords 2015</p>
+</li>
+<li>
+<p><em><strong>Storm Crawler: A real-time distributed web crawling and monitoring framework</strong></em> <a href="https://www.slideshare.net/ontopic/storm-crawler-apacheconna2015">slides</a>, by Jake Dodd - <a href="https://www.ontopic.io/">Ontopic</a>, ApacheCon North America 2015</p>
+</li>
+<li>
+<p><em><strong>A quick introduction to Storm Crawler</strong></em> <a href="https://www.slideshare.net/digitalpebble/j-nioche-apacheconeu2014fastfeather">slides</a>, by Julien Nioche. ApacheCon Europe, Budapest, Nov 2014</p>
+</li>
+<li>
+<p><em><strong>StormCrawler in the wild</strong></em> <a href="https://www.slideshare.net/digitalpebble/storm-crawler-ontopic20141113">slides</a>, by Jake Dodd - <a href="https://www.ontopic.io/">Ontopic</a>, ApacheCon Europe, Budapest, Nov 2014</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Drop us a line at <a href="mailto:dev@stormcrawler.apache.org">dev@stormcrawler.apache.org</a> if you want to be added to this page.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2026-01-17 19:55:00 +0100
+</div>
+</div>
+</body>
+</html>
