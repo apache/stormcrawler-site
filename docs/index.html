@@ -1,0 +1,144 @@
+---
+layout: default
+slug: documentation
+title: Documentation of Apache StormCrawler
+---
+
+<div class="row row-col">
+    <h1>Documentation</h1>
+
+    <p>
+        This page provides documentation resources for Apache StormCrawler
+    </p>
+
+    <h2>User Documentation</h2>
+
+    <p>
+        Additional documentation, including configuration guides and usage examples,
+        is available in the versioned documentation pages:
+    </p>
+
+    <ul>
+        <li>
+            <a href="/docs/3.5.1/index.html" target="_blank">
+                <b>3.5.1 (current)</b>
+            </a>
+        </li>
+    </ul>
+
+    </p>
+
+    <h2>Javadoc</h2>
+
+    <p>
+        The full API reference for Apache StormCrawler Javadoc.io:
+    </p>
+
+    <ul>
+        <li>
+            <a href="https://javadoc.io/doc/org.apache.stormcrawler/stormcrawler-core/3.5.1/index.htm" target="_blank"
+               rel="noopener">
+                <b>3.5.1 (current)</b>
+            </a>
+
+        </li>
+        <li>
+            <a href="https://javadoc.io/doc/org.apache.stormcrawler/stormcrawler-core/3.5.0/index.htm" target="_blank"
+               rel="noopener">
+                <b>3.5.0</b>
+            </a>
+
+        </li>
+        <li>
+            <a href="https://javadoc.io/doc/org.apache.stormcrawler/stormcrawler-core/3.4.0/index.htm" target="_blank"
+               rel="noopener">
+                <b>3.4.0</b>
+            </a>
+
+        </li>
+    </ul>
+
+    <h2>FAQ</h2>
+    <br>
+
+    <p><strong>Q: Topologies? Spouts? Bolts? I’m confused!</strong></p>
+    <p>
+        A: If you’re new to these concepts, it’s worth starting with
+        <a href="http://storm.apache.org/" target="_blank">Apache Storm®</a>. The
+        <a href="http://storm.apache.org/releases/current/Tutorial.html" target="_blank">tutorial</a>
+        and <a href="http://storm.apache.org/documentation/Concepts.html" target="_blank">concept pages</a>
+        provide a good introduction. In addition, you can have a look at our own documentation, which provides a quick overview.
+    </p>
+
+    <p><strong>Q: Do I need an Apache Storm® cluster to run StormCrawler?</strong></p>
+    <p>
+        A: Not necessarily. StormCrawler can run in local mode, using Storm libraries as dependencies.
+        However, installing Storm in pseudo-distributed mode is useful if you want to use its UI
+        to monitor topologies.
+    </p>
+
+    <p><strong>Q: Why use Apache Storm®?</strong></p>
+    <p>
+        A: Apache Storm® is a robust, fault-tolerant framework for distributed stream processing.
+        It guarantees data processing, is simple to understand, actively maintained, and licensed under ASF 2.0.
+    </p>
+
+    <p id="howfast"><strong>Q: How fast is StormCrawler?</strong></p>
+    <p>
+        A: Speed depends on the diversity of hostnames, your politeness settings and execution environment. For example,
+        if you have 1 million URLs from the same host and set a 1-second delay between requests,
+        you can fetch a maximum of ~86,400 pages per day. Actual performance will vary depending
+        on network speed, document size, parsing, and indexing overhead. This is true for any crawler.
+    </p>
+
+    <p><strong>Q: Why choose StormCrawler over Apache Nutch?</strong></p>
+    <p>
+        A: StormCrawler processes URLs as a continuous stream, indexing them as they are fetched.
+        Nutch uses batch steps, which can slow down as the crawl grows and resources are unevenly used.
+        StormCrawler can handle streaming URLs or low-latency use cases efficiently. It is also more modern, modular,
+        and actively maintained, though Nutch excels in advanced scoring and deduplication.
+    </p>
+    <p>
+        Tutorials comparing both are available here:
+        <a href="http://digitalpebble.blogspot.co.uk/2015/09/index-web-with-aws-cloudsearch.html"  target="_blank">Nutch & SC with
+            CloudSearch</a>
+        and a benchmark study:
+        <a href="http://digitalpebble.blogspot.co.uk/2017/01/the-battle-of-crawlers-apache-nutch-vs.html"  target="_blank">Crawlers
+            benchmark</a>.
+    </p>
+
+    <p><strong>Q: Do I need external storage? Which type?</strong></p>
+    <p>
+        A: Yes, StormCrawler needs storage for URLs. The type depends on your crawl:
+    </p>
+    <ul>
+        <li>
+            <strong>Non-recursive crawls:</strong> Messaging queues like
+            <a href="https://www.rabbitmq.com/"  target="_blank">RabbitMQ</a>,
+            <a href="https://aws.amazon.com/sqs/"  target="_blank">AWS SQS</a>, or
+            <a href="http://kafka.apache.org"  target="_blank">Apache Kafka®</a> work well. Use a Spout implementation to read from the
+            queue.
+        </li>
+        <li>
+            <strong>Recursive crawls:</strong> Use storage with unique keys (e.g., a database)
+            to avoid duplicate URLs. StormCrawler provides external modules for
+            <a href="https://github.com/apache/stormcrawler/tree/master/external"  target="_blank">Apache SOLR, OpenSearch, SQL</a>.
+        </li>
+    </ul>
+    <p>
+        The modularity of StormCrawler lets you plug in almost any storage backend.
+    </p>
+
+    <p><strong>Q: Is StormCrawler polite?</strong></p>
+    <p>
+        A: Yes. It respects the <a href="http://www.robotstxt.org/"  target="_blank">robots.txt</a> protocol
+        and can be configured with a politness dely between requests to the same host or domain.
+    </p>
+
+    <p><strong>Q: How do I know when a crawl is finished?</strong></p>
+    <p>
+        A: Storm topologies run continuously by design, so there is no automatic “finished” state.
+        You need to monitor progress and stop the crawl manually or implement a custom termination mechanism.
+    </p>
+
+</div>
