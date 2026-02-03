@@ -10,7 +10,7 @@
 
 
 // Vars
-$colour-brand: #BE6551;
+$colour-brand: #99181C;
 $colour-black: #000;
 $colour-white: #fff;
 $color-light-grey: #e5e5e5;
@@ -82,7 +82,7 @@ p {
 	margin:30px auto;
 	width:100%;
 	img {
-		max-height: 200px;
+		max-height: 100px;
 		max-width:100%;
 	}
 }
@@ -224,7 +224,7 @@ pre {
     position:relative;
 }
 #forkongithub a:hover{
-    background:#BE6551;
+    background:#99181C;
     color:#fff;
 }
 #forkongithub a::before,#forkongithub a::after{
