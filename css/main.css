@@ -31,7 +31,7 @@ body {
   font: normal 15px/23px "ubuntu",sans-serif; }
 
 a {
-  color: #BE6551;
+  color: #99181C;
   text-decoration: none; }
 
 p {
@@ -45,7 +45,7 @@ p {
   margin: 30px auto;
   width: 100%; }
   .site-header__logo img {
-    max-height: 200px;
+    max-height: 100px;
     max-width: 100%; }
 
 .site-nav {
@@ -74,7 +74,7 @@ p {
 .contribute .site-nav li:nth-child(5) a,
 .security .site-nav li:nth-child(6) a,
 .support .site-nav li:nth-child(7) a {
-  background: #BE6551; }
+  background: #99181C; }
 
 main h1, main h2, main h3 {
   line-height: 1.5em;
@@ -92,7 +92,7 @@ main ul, main ol {
   margin: 0 0 30px 18px; }
 
 .page-title {
-  background: #BE6551;
+  background: #99181C;
   color: #fff;
   padding: 30px 0;
   margin: -40px 0 40px 0;
@@ -134,7 +134,7 @@ pre {
 
 .github-info {
   text-align: center;
-  background: #BE6551;
+  background: #99181C;
   padding: 20px 0 15px; }
   .github-info * {
     text-align: center; }
@@ -161,7 +161,7 @@ pre {
   position: relative; }
 
 #forkongithub a:hover {
-  background: #BE6551;
+  background: #99181C;
   color: #fff; }
 
 #forkongithub a::before, #forkongithub a::after {
