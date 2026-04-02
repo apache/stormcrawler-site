@@ -14,6 +14,14 @@
   <link rel="canonical" href="https://stormcrawler.apache.org/download/">
   <link rel="alternate" type="application/rss+xml" title="Apache StormCrawler" href="https://stormcrawler.apache.org/feed.xml">
   <link rel="icon" type="/image/png" href="/img/favicon.png" />
+  <script>
+    (function() {
+      var t = localStorage.getItem('theme');
+      if (t === 'dark' || (!t && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
 </head>
 
 
@@ -22,7 +30,10 @@
     <header class="site-header">
   <div class="site-header__wrap">
     <div class="site-header__logo">
-      <a href="/"><img src="/img/logo.png" alt="Apache StormCrawler"></a>
+      <a href="/">
+        <img class="logo-light" src="/img/logo.png" alt="Apache StormCrawler">
+        <img class="logo-dark" src="/img/logo-dark.png" alt="Apache StormCrawler">
+      </a>
     </div>
   </div>
 </header>
@@ -48,7 +59,7 @@
     <p>You <b>must</b> <a href="https://www.apache.org/info/verification.html">verify</a> the integrity of the
         downloaded files. We provide OpenPGP signatures (*.asc files) for every release file. This signature should be
         matched against <a href="https://downloads.apache.org/stormcrawler/KEYS">KEYS</a> file which contains the
-        OpenPGP keys of StormCrawlers’s Release Managers. We also provide SHA-512 checksums for every release file.
+        OpenPGP keys of StormCrawler’s Release Managers. We also provide SHA-512 checksums for every release file.
         After you download the file, you should calculate a checksum for your download, and make sure it is the same as
         ours. </p>
     <p>More information about release signing and verifying signatures can be found <a
@@ -92,6 +103,32 @@ Licensed under the <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 
 	</div>
 </footer>
 
+
+    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">&#9790;</button>
+
+    <script>
+      (function() {
+        var toggle = document.getElementById('theme-toggle');
+        var root = document.documentElement;
+        var stored = localStorage.getItem('theme');
+        if (stored === 'dark' || (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+          root.setAttribute('data-theme', 'dark');
+          toggle.textContent = '\u2600';
+        }
+        toggle.addEventListener('click', function() {
+          var isDark = root.getAttribute('data-theme') === 'dark';
+          if (isDark) {
+            root.removeAttribute('data-theme');
+            localStorage.setItem('theme', 'light');
+            toggle.textContent = '\u263E';
+          } else {
+            root.setAttribute('data-theme', 'dark');
+            localStorage.setItem('theme', 'dark');
+            toggle.textContent = '\u2600';
+          }
+        });
+      })();
+    </script>
 
   </body>
 

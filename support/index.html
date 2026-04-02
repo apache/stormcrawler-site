@@ -14,6 +14,14 @@
   <link rel="canonical" href="https://stormcrawler.apache.org/support/">
   <link rel="alternate" type="application/rss+xml" title="Apache StormCrawler" href="https://stormcrawler.apache.org/feed.xml">
   <link rel="icon" type="/image/png" href="/img/favicon.png" />
+  <script>
+    (function() {
+      var t = localStorage.getItem('theme');
+      if (t === 'dark' || (!t && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
 </head>
 
 
@@ -22,7 +30,10 @@
     <header class="site-header">
   <div class="site-header__wrap">
     <div class="site-header__logo">
-      <a href="/"><img src="/img/logo.png" alt="Apache StormCrawler"></a>
+      <a href="/">
+        <img class="logo-light" src="/img/logo.png" alt="Apache StormCrawler">
+        <img class="logo-dark" src="/img/logo-dark.png" alt="Apache StormCrawler">
+      </a>
     </div>
   </div>
 </header>
@@ -53,7 +64,7 @@
 
   <h2>Want to be added to this page? </h2>
   <p>All submitted information must be factual and informational in nature and not be a marketing statement. Statements that promote your products and services over other offerings on the page will not be tolerated and will be removed. Such marketing statements can be added to your own pages on your own site.</p>
-  <p>When in doubt, email the Apache StormCrawler PMC and ask. We are be happy to help.</p>
+  <p>When in doubt, email the Apache StormCrawler PMC and ask. We are happy to help.</p>
 
   <h2>Companies</h2>
   <ul>
@@ -72,6 +83,32 @@ Licensed under the <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 
 	</div>
 </footer>
 
+
+    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">&#9790;</button>
+
+    <script>
+      (function() {
+        var toggle = document.getElementById('theme-toggle');
+        var root = document.documentElement;
+        var stored = localStorage.getItem('theme');
+        if (stored === 'dark' || (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+          root.setAttribute('data-theme', 'dark');
+          toggle.textContent = '\u2600';
+        }
+        toggle.addEventListener('click', function() {
+          var isDark = root.getAttribute('data-theme') === 'dark';
+          if (isDark) {
+            root.removeAttribute('data-theme');
+            localStorage.setItem('theme', 'light');
+            toggle.textContent = '\u263E';
+          } else {
+            root.setAttribute('data-theme', 'dark');
+            localStorage.setItem('theme', 'dark');
+            toggle.textContent = '\u2600';
+          }
+        });
+      })();
+    </script>
 
   </body>
 
