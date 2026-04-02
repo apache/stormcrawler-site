@@ -15,6 +15,42 @@ $colour-black: #000;
 $colour-white: #fff;
 $color-light-grey: #e5e5e5;
 
+:root {
+	--bg: #fff;
+	--bg-secondary: #f7f7f7;
+	--text: #000;
+	--text-secondary: #555;
+	--border: #ddd;
+	--nav-bg: #000;
+	--nav-text: #fff;
+	--code-bg: #e5e5e5;
+	--header-bg: #fff;
+	--footer-bg: #000;
+	--footer-text: #fff;
+	--used-by-border: rgba(0,0,0,0.1);
+	--used-by-shadow: rgba(0,0,0,0.1);
+	--fork-bg: #000;
+	--fork-text: #fff;
+}
+
+[data-theme="dark"] {
+	--bg: #1a1a2e;
+	--bg-secondary: #16213e;
+	--text: #e0e0e0;
+	--text-secondary: #aaa;
+	--border: #333;
+	--nav-bg: #0f0f23;
+	--nav-text: #e0e0e0;
+	--code-bg: #16213e;
+	--header-bg: #1a1a2e;
+	--footer-bg: #0f0f23;
+	--footer-text: #e0e0e0;
+	--used-by-border: rgba(255,255,255,0.1);
+	--used-by-shadow: rgba(0,0,0,0.3);
+	--fork-bg: #16213e;
+	--fork-text: #e0e0e0;
+}
+
 * {
 	margin:0;
 	padding:0;
@@ -52,9 +88,10 @@ $color-light-grey: #e5e5e5;
 }
 
 body {
-	background:$colour-white;
-	color:$colour-black;
+	background:var(--bg);
+	color:var(--text);
 	font:normal 15px/23px "ubuntu",sans-serif;
+	transition:background 0.3s, color 0.3s;
 }
 
 a {
@@ -67,8 +104,9 @@ p {
 }
 
 .site-header {
-	background:#fff;
+	background:var(--header-bg);
 	text-align:center;
+	transition:background 0.3s;
 	&:after {
 		@extend .clear;
 	}
@@ -88,12 +126,13 @@ p {
 }
 
 .site-nav {
-	background:$colour-black;
+	background:var(--nav-bg);
 	font-size:0;
 	text-align:center;
 	margin:0 0 40px 0;
-	a {
-		color:#fff;
+	transition:background 0.3s;
+	a, a:visited, a:hover, a:active {
+		color:var(--nav-text);
 	}
 	ul {
 		@extend .row;
@@ -135,7 +174,7 @@ main {
 	h2 {
 		font-size:1.25rem;
 		margin:0 0 30px 0;
-		border-bottom:solid 1px #ddd;
+		border-bottom:solid 1px var(--border);
 		padding:0 0 5px 0;
 	}
 	p {
@@ -160,35 +199,36 @@ main {
 
 pre {
 	margin:0 0 30px 0;
-	background:$color-light-grey;
+	background:var(--code-bg);
 	padding:15px 20px;
 	overflow:scroll;
 	font-family:"ubuntu mono",monospaced;
+	transition:background 0.3s;
 }
 
 .used-by-panel {
-	box-shadow:inset 0 2px 2px rgba(0,0,0,0.1);
+	box-shadow:inset 0 2px 2px var(--used-by-shadow);
 	text-align:center;
-	border:solid 1px rgba(0,0,0,0.1);
+	border:solid 1px var(--used-by-border);
 	margin:20px 0 60px 0;
 	padding:30px 30px 0 30px;
 	border-radius:5px;
-	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f7f7f7+0,ffffff+100 */
-	background: rgb(247,247,247); /* Old browsers */
-	background: -moz-linear-gradient(top,  rgba(247,247,247,1) 0%, rgba(255,255,255,1) 100%); /* FF3.6-15 */
-	background: -webkit-linear-gradient(top,  rgba(247,247,247,1) 0%,rgba(255,255,255,1) 100%); /* Chrome10-25,Safari5.1-6 */
-	background: linear-gradient(to bottom,  rgba(247,247,247,1) 0%,rgba(255,255,255,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f7f7f7', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+	background: var(--bg-secondary);
+	transition:background 0.3s;
 	img {
-		max-height: 100%;  
-		max-width: 100%; 
+		max-height: 100%;
+		max-width: 100%;
 		margin:0 20px 40px 15px;
 		vertical-align: middle;
 	}
 	h2 {
 		border:0;
-		color:$colour-black;
+		color:var(--text);
 	}
+}
+
+[data-theme="dark"] .used-by-panel img {
+	filter: brightness(0.9) contrast(1.1);
 }
 
 .github-info {
@@ -201,19 +241,20 @@ pre {
 }
 
 .site-footer {
-	background:$colour-black;
-	color:$colour-white;
+	background:var(--footer-bg);
+	color:var(--footer-text);
 	text-align:center;
 	padding:15px 0;
+	transition:background 0.3s;
 	a {
-		color:$colour-white;
+		color:var(--footer-text);
 		text-decoration: underline;
 	}
 }
 
 #forkongithub a{
-    background:#000;
-    color:#fff;
+    background:var(--fork-bg);
+    color:var(--fork-text);
     text-decoration:none;
     font-family:arial,sans-serif;
     text-align:center;
@@ -270,3 +311,34 @@ pre {
         display: none;
     }
 }
+
+// Dark mode toggle
+.theme-toggle {
+	position:fixed;
+	bottom:20px;
+	right:20px;
+	z-index:10000;
+	background:var(--nav-bg);
+	color:var(--nav-text);
+	border:2px solid var(--border);
+	border-radius:50%;
+	width:44px;
+	height:44px;
+	cursor:pointer;
+	font-size:20px;
+	display:flex;
+	align-items:center;
+	justify-content:center;
+	transition:background 0.3s, color 0.3s;
+	box-shadow:0 2px 8px rgba(0,0,0,0.3);
+	&:hover {
+		background:$colour-brand;
+		color:#fff;
+	}
+}
+
+// Dark mode logo swap
+.site-header__logo .logo-light { display:inline; }
+.site-header__logo .logo-dark { display:none; }
+[data-theme="dark"] .site-header__logo .logo-light { display:none; }
+[data-theme="dark"] .site-header__logo .logo-dark { display:inline; }

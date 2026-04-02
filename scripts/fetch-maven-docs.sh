@@ -18,3 +18,6 @@ curl -L "${URL}" -o "/tmp/${FILENAME}"
 
 echo "Extracting to ${DEST_DIR}"
 tar -xzf "/tmp/${FILENAME}" -C "${DEST_DIR}"
+
+echo "Injecting dark mode script into doc pages"
+find "${DEST_DIR}" -name '*.html' -exec sed -i '' 's|</head>|<script src="/js/darkmode-docs.js"></script></head>|' {} +

@@ -13,6 +13,32 @@
 
     {% include footer.html %}
 
+    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">&#9790;</button>
+
+    <script>
+      (function() {
+        var toggle = document.getElementById('theme-toggle');
+        var root = document.documentElement;
+        var stored = localStorage.getItem('theme');
+        if (stored === 'dark' || (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+          root.setAttribute('data-theme', 'dark');
+          toggle.textContent = '\u2600';
+        }
+        toggle.addEventListener('click', function() {
+          var isDark = root.getAttribute('data-theme') === 'dark';
+          if (isDark) {
+            root.removeAttribute('data-theme');
+            localStorage.setItem('theme', 'light');
+            toggle.textContent = '\u263E';
+          } else {
+            root.setAttribute('data-theme', 'dark');
+            localStorage.setItem('theme', 'dark');
+            toggle.textContent = '\u2600';
+          }
+        });
+      })();
+    </script>
+
   </body>
 
   <script src="https://www.apachecon.com/event-images/snippet.js"></script>
