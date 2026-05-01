@@ -14,6 +14,14 @@
   <link rel="canonical" href="https://stormcrawler.apache.org/security/">
   <link rel="alternate" type="application/rss+xml" title="Apache StormCrawler" href="https://stormcrawler.apache.org/feed.xml">
   <link rel="icon" type="/image/png" href="/img/favicon.png" />
+  <script>
+    (function() {
+      var t = localStorage.getItem('theme');
+      if (t === 'dark' || (!t && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
 </head>
 
 
@@ -22,7 +30,10 @@
     <header class="site-header">
   <div class="site-header__wrap">
     <div class="site-header__logo">
-      <a href="/"><img src="/img/logo-small.png" alt="Apache StormCrawler"></a>
+      <a href="/">
+        <img class="logo-light" src="/img/logo.png" alt="Apache StormCrawler">
+        <img class="logo-dark" src="/img/logo-dark.png" alt="Apache StormCrawler">
+      </a>
     </div>
   </div>
 </header>
@@ -30,12 +41,12 @@
   <ul>
     <li><a href="/index.html">Home</a>
     <li><a href="/download/index.html">Download</a>
-    <li><a href="/getting-started/">Getting Started</a></li>
+    <li><a href="/docs/3.5.1/index.html#_quick_start">Quick Start</a>
+    <li><a href="/docs/">Documentation</a></li>
     <li><a href="/contribute/">Contribute</a></li>
-    <li><a href="https://javadoc.io/doc/org.apache.stormcrawler/stormcrawler-core/3.5.0/index.html">JavaDocs</a>
-    <li><a href="/faq/">FAQ</a></li>
     <li><a href="/security/">Security</a></li>
     <li><a href="/support/">Support</a></li>
+    <li><a href="/team/">Team</a></li>
   </ul>
 </nav>
 <span id="forkongithub"><a href="https://github.com/apache/incubator-stormcrawler">Fork me on GitHub</a></span>
@@ -102,7 +113,7 @@
       </main>
 
     <footer class="site-footer">
-&copy; 2025 <a href="https://www.apache.org/">The Apache Software Foundation</a><br/><br/>
+&copy; 2026 <a href="https://www.apache.org/">The Apache Software Foundation</a><br/><br/>
 Licensed under the <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License, Version 2.0</a>. <br/> Apache StormCrawler, StormCrawler, the Apache logo are trademarks of The Apache Software Foundation. <br/> All other marks mentioned may be trademarks or registered trademarks of their respective owners. <br/><br/>
 	<a href="https://privacy.apache.org/policies/privacy-policy-public.html">Privacy Policy</a> | <a href="https://www.apache.org/security/">Security</a> | <a href="https://www.apache.org/foundation/sponsorship">Sponsorship</a> | <a href="https://www.apache.org/foundation/sponsors">Sponsors</a><br/><br/>
 	<div class="footer-widget">
@@ -110,6 +121,32 @@ Licensed under the <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 
 	</div>
 </footer>
 
+
+    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">&#9790;</button>
+
+    <script>
+      (function() {
+        var toggle = document.getElementById('theme-toggle');
+        var root = document.documentElement;
+        var stored = localStorage.getItem('theme');
+        if (stored === 'dark' || (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+          root.setAttribute('data-theme', 'dark');
+          toggle.textContent = '\u2600';
+        }
+        toggle.addEventListener('click', function() {
+          var isDark = root.getAttribute('data-theme') === 'dark';
+          if (isDark) {
+            root.removeAttribute('data-theme');
+            localStorage.setItem('theme', 'light');
+            toggle.textContent = '\u263E';
+          } else {
+            root.setAttribute('data-theme', 'dark');
+            localStorage.setItem('theme', 'dark');
+            toggle.textContent = '\u2600';
+          }
+        });
+      })();
+    </script>
 
   </body>
 
