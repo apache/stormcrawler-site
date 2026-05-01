@@ -45,7 +45,7 @@ jobs:
       - name: 'Checkout asf-site'
         uses: actions/checkout@v4
         with:
-          repository: 'apache/incubator-stormcrawler-site'
+          repository: 'apache/stormcrawler-site'
           ref: 'asf-site'
           path: 'asf-site'
 
