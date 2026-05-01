@@ -15,3 +15,7 @@ url: "https://stormcrawler.apache.org" # the base hostname & protocol for your s
 
 # Build settings
 markdown: kramdown
+
+# Team page (consumed by _plugins/team.rb)
+team:
+  whimsy_project: stormcrawler
