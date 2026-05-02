@@ -31,6 +31,7 @@ _config.local.yml
 
 # Ignore any local development overrides for plugins
 _plugins/*
+!_plugins/team.rb
 
 # Ignore any IDE or editor specific files
 .vscode/
@@ -46,3 +47,6 @@ _plugins/*
 
 # Ignore backup files
 *~
+
+# Local scratch dir for inspecting other Apache project sites
+tmp/

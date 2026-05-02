@@ -1,0 +1,66 @@
+---
+layout: default
+slug: team
+title: Apache StormCrawler Project Team
+---
+
+<div class="row row-col">
+    <h1>Project Team</h1>
+
+    <p>
+        Apache StormCrawler is built and maintained by a community of committers and
+        PMC members. The list below is generated at build time from the Apache
+        <a href="https://whimsy.apache.org/" target="_blank" rel="noopener">Whimsy</a>
+        LDAP exports.
+    </p>
+
+    {% if site.data.team and site.data.team.size > 0 %}
+        <div class="contributor-grid">
+            {% for c in site.data.team %}
+                {% if c.profile_url %}
+                    <a class="contributor-card" href="{{ c.profile_url }}" rel="noopener" target="_blank">
+                {% else %}
+                    <span class="contributor-card">
+                {% endif %}
+                        <span class="contributor-badge" style="background:{{ c.color }};" aria-hidden="true">{{ c.initials }}</span>
+                        <span class="contributor-name">{{ c.name }}</span>
+                        {% if c.role_flags != "" %}<span class="contributor-role">{{ c.role_flags }}</span>{% endif %}
+                        {% if c.chair %}<span class="contributor-role contributor-role-chair">Chair</span>{% endif %}
+                {% if c.profile_url %}</a>{% else %}</span>{% endif %}
+            {% endfor %}
+        </div>
+
+        <p class="contributor-legend">
+            <span class="contributor-role">C</span> indicates a committer,
+            <span class="contributor-role">C-P</span> a PMC member, and
+            <span class="contributor-role contributor-role-chair">Chair</span> the current PMC chair.
+        </p>
+    {% else %}
+        <p>The team list could not be generated for this build.</p>
+    {% endif %}
+
+    {% if site.data.wall_of_fame and site.data.wall_of_fame.size > 0 %}
+        <h2 id="wall-of-fame">Wall of Fame &mdash; Thanks to Our Contributors</h2>
+        <p>
+            Apache StormCrawler exists because of the people below, who have contributed
+            code, reviews, documentation and bug reports across the project's GitHub
+            repositories. The list is generated automatically from GitHub: if you've
+            contributed and don't see yourself, please ping us on the
+            <a href="https://lists.apache.org/list.html?dev@stormcrawler.apache.org">dev mailing list</a>.
+        </p>
+        <div class="contributor-grid">
+            {% for w in site.data.wall_of_fame %}
+                <a class="contributor-card" href="{{ w.profile_url }}" rel="noopener" target="_blank">
+                    <span class="contributor-badge" style="background:{{ w.color }};" aria-hidden="true">{{ w.initials }}</span>
+                    <span class="contributor-name">{{ w.name }}</span>
+                </a>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if site.data.team_meta.last_updated %}
+        <p class="team-last-updated">
+            Last updated: <time datetime="{{ site.data.team_meta.last_updated }}">{{ site.data.team_meta.last_updated }}</time>
+        </p>
+    {% endif %}
+</div>

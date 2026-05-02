@@ -1,0 +1,34 @@
+# Manual overrides for the StormCrawler team page (_plugins/team.rb).
+#
+# Whimsy LDAP rarely carries `githubUsername` for ASF committers, and it does
+# not expose the PMC chair, so pin those bits here. Keys are Apache IDs.
+#
+#   <apache_id>:
+#     gh:    <github-login> | [primary, alias1, alias2, ...]
+#     chair: true             # marks the current PMC chair
+#     name:  <display name>   # overrides Whimsy's display name (rare)
+#
+# The plugin also auto-discovers a GitHub login when the Apache ID matches a
+# contributor login on one of the project repos — so you only need an override
+# entry when those differ (e.g. `tallison` -> `tballison`).
+#
+# `gh` may be a list (or `;`-separated string) for committers with multiple
+# GitHub accounts. The first entry is the primary used for the profile link;
+# the rest are aliases excluded from the Wall of Fame so the same person isn't
+# listed twice.
+
+rzo1:
+  chair: true
+
+# Pinned because their GitHub login differs from their Apache ID.
+tallison:
+  gh: tballison
+snagel:
+  gh: sebastian-nagel
+jnioche:
+  gh: [jnioche, jniocheCF]
+
+# Add as needed for committers/PMC members whose card still shows no link:
+#   wave:        { gh: <login> }
+#   lewismc:     { gh: <login> }
+#   ayushsaxena: { gh: <login> }
