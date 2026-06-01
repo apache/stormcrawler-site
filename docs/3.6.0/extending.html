@@ -712,13 +712,13 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 </div>
 </div>
 <div class="paragraph">
-<p>Use the <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/protocol/DelegatorProtocol.java">DelegatorProtocol</a> when you need to route URLs to different protocol implementations based on metadata or URL patterns.</p>
+<p>Use the <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/protocol/DelegatorProtocol.java">DelegatorProtocol</a> when you need to route URLs to different protocol implementations based on metadata or URL patterns.</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_custom_page_action_playwright">Custom Page Action (Playwright)</h4>
 <div class="paragraph">
-<p>The <a href="https://github.com/apache/stormcrawler/tree/main/external/playwright">Playwright protocol</a> exposes a <code>PageAction</code> extension point so you can plug site-specific post-navigate behaviour (tab/accordion expansion, cookie-banner dismissal, infinite-scroll, custom <code>evaluate()</code> calls, screenshotting, &#8230;&#8203;) into the protocol without subclassing it. Actions are loaded as an ordered chain from a JSON file referenced by <code>playwright.page.actions.config.file</code> and follow the same <code>Configurable</code> lifecycle as URL/parse filters. The chain runs after <code>page.navigate()</code> succeeds and before <code>page.content()</code> is captured, so any DOM mutations land in the rendered content returned by the protocol.</p>
+<p>The <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.6.0/external/playwright">Playwright protocol</a> exposes a <code>PageAction</code> extension point so you can plug site-specific post-navigate behaviour (tab/accordion expansion, cookie-banner dismissal, infinite-scroll, custom <code>evaluate()</code> calls, screenshotting, &#8230;&#8203;) into the protocol without subclassing it. Actions are loaded as an ordered chain from a JSON file referenced by <code>playwright.page.actions.config.file</code> and follow the same <code>Configurable</code> lifecycle as URL/parse filters. The chain runs after <code>page.navigate()</code> succeeds and before <code>page.content()</code> is captured, so any DOM mutations land in the rendered content returned by the protocol.</p>
 </div>
 <div class="paragraph">
 <p>A handful of built-in actions ship with the module — <code>DismissOverlayAction</code>, <code>ExpandClickablesAction</code>, <code>ScrollToBottomAction</code>, <code>EvaluateAction</code>, <code>WaitForSelectorAction</code>, <code>ScreenshotAction</code>. Reach for a custom action when none of those fit. Extend <code>PageAction</code> and implement <code>apply</code>:</p>
@@ -774,7 +774,7 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <div class="sect3">
 <h4 id="_custom_bolt_or_spout">Custom Bolt or Spout</h4>
 <div class="paragraph">
-<p>For a bolt that emits on the status stream (like fetchers and parsers), extend <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/bolt/StatusEmitterBolt.java">StatusEmitterBolt</a>:</p>
+<p>For a bolt that emits on the status stream (like fetchers and parsers), extend <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/bolt/StatusEmitterBolt.java">StatusEmitterBolt</a>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -806,7 +806,7 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 </div>
 </div>
 <div class="paragraph">
-<p>For a custom spout, extend <code>BaseRichSpout</code> and implement <code>open()</code>, <code>nextTuple()</code>, <code>ack()</code>, <code>fail()</code>, and <code>declareOutputFields()</code>. See <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/spout/FileSpout.java">FileSpout</a> for a simple example. For spouts backed by a storage layer, extend <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/persistence/AbstractQueryingSpout.java">AbstractQueryingSpout</a> instead.</p>
+<p>For a custom spout, extend <code>BaseRichSpout</code> and implement <code>open()</code>, <code>nextTuple()</code>, <code>ack()</code>, <code>fail()</code>, and <code>declareOutputFields()</code>. See <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/spout/FileSpout.java">FileSpout</a> for a simple example. For spouts backed by a storage layer, extend <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/persistence/AbstractQueryingSpout.java">AbstractQueryingSpout</a> instead.</p>
 </div>
 </div>
 </div>
@@ -1026,7 +1026,7 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 </div>
 </div>
 <div class="paragraph">
-<p>StormCrawler provides MetricsConsumer implementations for <a href="https://github.com/apache/stormcrawler/tree/main/external/opensearch">OpenSearch</a>, <a href="https://github.com/apache/stormcrawler/tree/main/external/solr">Solr</a>, and <a href="https://github.com/apache/stormcrawler/tree/main/external/sql">SQL</a>.</p>
+<p>StormCrawler provides MetricsConsumer implementations for <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.6.0/external/opensearch">OpenSearch</a>, <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.6.0/external/solr">Solr</a>, and <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.6.0/external/sql">SQL</a>.</p>
 </div>
 <div class="paragraph">
 <p>The <strong>Storm UI</strong> (default port 8080) provides real-time visibility into topology health, including execute/process latency, emit counts, and error rates per bolt and spout.</p>

@@ -628,7 +628,7 @@ Allow: /publications/</pre>
 <div class="sect2">
 <h3 id="_proxy">Proxy</h3>
 <div class="paragraph">
-<p>StormCrawler&#8217;s proxy system is built on top of the <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/proxy/SCProxy.java">SCProxy</a> class and the <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/proxy/ProxyManager.java">ProxyManager</a> interface. Every proxy used in the system is formatted as a <strong>SCProxy</strong>. The <strong>ProxyManager</strong> implementations handle the management and delegation of their internal proxies. At the call of <code>Protocol#getProtocolOutput()</code>, the <code>ProxyManager.getProxy()</code> is called to retrieve a proxy for the individual request.</p>
+<p>StormCrawler&#8217;s proxy system is built on top of the <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/proxy/SCProxy.java">SCProxy</a> class and the <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/proxy/ProxyManager.java">ProxyManager</a> interface. Every proxy used in the system is formatted as a <strong>SCProxy</strong>. The <strong>ProxyManager</strong> implementations handle the management and delegation of their internal proxies. At the call of <code>Protocol#getProtocolOutput()</code>, the <code>ProxyManager.getProxy()</code> is called to retrieve a proxy for the individual request.</p>
 </div>
 <div class="paragraph">
 <p>The <strong>ProxyManager</strong> interface can be implemented in a custom class to create custom logic for proxy management and load balancing. The default <strong>ProxyManager</strong> implementation is <strong>SingleProxyManager</strong>. This ensures backwards compatibility for prior StormCrawler releases. To use <strong>MultiProxyManager</strong> or custom implementations, pass the class path and name via the config parameter <code>http.proxy.manager</code>:</p>
@@ -644,7 +644,7 @@ Allow: /publications/</pre>
 <div class="ulist">
 <ul>
 <li>
-<p><a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/proxy/SingleProxyManager.java">SingleProxyManager</a>
+<p><a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/proxy/SingleProxyManager.java">SingleProxyManager</a>
 Manages a single proxy passed by the backwards compatible proxy fields in the configuration:</p>
 <div class="literalblock">
 <div class="content">
@@ -659,7 +659,7 @@ http.proxy.pass (optional)
 </div>
 </li>
 <li>
-<p><a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/proxy/MultiProxyManager.java">MultiProxyManager</a>
+<p><a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/proxy/MultiProxyManager.java">MultiProxyManager</a>
 Manages multiple proxies passed through a TXT file. The file should contain connection strings for all proxies including the protocol and authentication (if needed). The file supports comment lines (<code>//</code> or <code>#</code>) and empty lines. The file path should be passed via the config at the below field. The TXT file must be available to all nodes participating in the topology:</p>
 <div class="literalblock">
 <div class="content">
@@ -725,7 +725,7 @@ Selects the proxy with the least amount of usage. This is performed lazily for s
 <div class="sect3">
 <h4 id="_metadatatransfer">MetadataTransfer</h4>
 <div class="paragraph">
-<p>The class <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/util/MetadataTransfer.java">MetadataTransfer</a> is an important part of the framework and is used in key parts of a pipeline:</p>
+<p>The class <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/util/MetadataTransfer.java">MetadataTransfer</a> is an important part of the framework and is used in key parts of a pipeline:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -765,10 +765,10 @@ Selects the proxy with the least amount of usage. This is performed lazily for s
 </ul>
 </div>
 <div class="paragraph">
-<p>The former is used when creating <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/parse/Outlink.java">Outlinks</a>, i.e., in the parsing bolts but also for handling redirections in the [[FetcherBolt(s)]].</p>
+<p>The former is used when creating <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/parse/Outlink.java">Outlinks</a>, i.e., in the parsing bolts but also for handling redirections in the [[FetcherBolt(s)]].</p>
 </div>
 <div class="paragraph">
-<p>The latter is used by extensions of the <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/persistence/AbstractStatusUpdaterBolt.java">AbstractStatusUpdaterBolt</a> class to determine which <strong>Metadata</strong> should be persisted.</p>
+<p>The latter is used by extensions of the <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/persistence/AbstractStatusUpdaterBolt.java">AbstractStatusUpdaterBolt</a> class to determine which <strong>Metadata</strong> should be persisted.</p>
 </div>
 <div class="paragraph">
 <p>The behavior of the default <strong>MetadataTransfer</strong> class is driven by configuration only. It has the following options:</p>
@@ -776,10 +776,10 @@ Selects the proxy with the least amount of usage. This is performed lazily for s
 <div class="ulist">
 <ul>
 <li>
-<p><code>metadata.transfer</code>:: list of metadata key values to filter or transfer to the outlinks. Please see the corresponding comments in <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/resources/crawler-default.yaml">crawler-default.yaml</a></p>
+<p><code>metadata.transfer</code>:: list of metadata key values to filter or transfer to the outlinks. Please see the corresponding comments in <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/resources/crawler-default.yaml">crawler-default.yaml</a></p>
 </li>
 <li>
-<p><code>metadata.persist</code>:: list of metadata key values to persist in the status storage. Please see the corresponding comments in <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/resources/crawler-default.yaml">crawler-default.yaml</a></p>
+<p><code>metadata.persist</code>:: list of metadata key values to persist in the status storage. Please see the corresponding comments in <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/resources/crawler-default.yaml">crawler-default.yaml</a></p>
 </li>
 <li>
 <p><code>metadata.track.path</code>:: whether to track the URL path or not. Boolean value, true by default.</p>
@@ -1265,7 +1265,7 @@ header.</p></td>
 <h4 id="_status_persistence">Status Persistence</h4>
 <div class="paragraph">
 <p>This refers to persisting the status of a URL (e.g. ERROR, DISCOVERED etc.) along with something like a <code>nextFetchDate</code>
-that is being calculated by a <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/persistence/DefaultScheduler.java">Scheduler</a>.</p>
+that is being calculated by a <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/persistence/DefaultScheduler.java">Scheduler</a>.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -1381,7 +1381,7 @@ that is being calculated by a <a href="https://github.com/apache/stormcrawler/bl
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">parsefilters.config.file</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">parsefilters.json</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Path to JSON config defining ParseFilters. See <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/resources/parsefilters.json">default parsefilters.json</a>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Path to JSON config defining ParseFilters. See <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/archetype/src/main/resources/archetype-resources/src/main/resources/parsefilters.json">default parsefilters.json</a>.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">parser.emitOutlinks</p></td>
@@ -1436,7 +1436,7 @@ that is being calculated by a <a href="https://github.com/apache/stormcrawler/bl
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">urlfilters.config.file</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">urlfilters.json</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">JSON file defining URL filters. See <a href="https://github.com/apache/stormcrawler/blob/main/archetype/src/main/resources/archetype-resources/src/main/resources/urlfilters.json">default urlfilters.json</a>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">JSON file defining URL filters. See <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/archetype/src/main/resources/archetype-resources/src/main/resources/urlfilters.json">default urlfilters.json</a>.</p></td>
 </tr>
 </tbody>
 </table>
@@ -1506,7 +1506,7 @@ For full setup instructions, see the README in each module&#8217;s directory.</p
 <h4 id="_opensearch">OpenSearch</h4>
 <div class="paragraph">
 <p>Integration with <a href="https://opensearch.org/">OpenSearch</a> for indexing, URL status persistence, and metrics.
-See the <a href="https://github.com/apache/stormcrawler/tree/main/external/opensearch">opensearch module</a> for full details.</p>
+See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.6.0/external/opensearch">opensearch module</a> for full details.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -1624,7 +1624,7 @@ See the <a href="https://github.com/apache/stormcrawler/tree/main/external/opens
 <h4 id="_solr">Solr</h4>
 <div class="paragraph">
 <p>Integration with <a href="https://solr.apache.org/">Apache Solr</a> for indexing, URL status persistence, and metrics.
-See the <a href="https://github.com/apache/stormcrawler/tree/main/external/solr">solr module</a> for full details. Supports both standalone Solr and SolrCloud (via ZooKeeper).</p>
+See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.6.0/external/solr">solr module</a> for full details. Supports both standalone Solr and SolrCloud (via ZooKeeper).</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -1702,7 +1702,7 @@ See the <a href="https://github.com/apache/stormcrawler/tree/main/external/solr"
 <h4 id="_sql">SQL</h4>
 <div class="paragraph">
 <p>Integration with relational databases via JDBC for URL status persistence, indexing, and metrics.
-See the <a href="https://github.com/apache/stormcrawler/tree/main/external/sql">sql module</a> for full details and table creation scripts.</p>
+See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.6.0/external/sql">sql module</a> for full details and table creation scripts.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -1765,7 +1765,7 @@ See the <a href="https://github.com/apache/stormcrawler/tree/main/external/sql">
 <h4 id="_urlfrontier">URLFrontier</h4>
 <div class="paragraph">
 <p>Integration with <a href="https://github.com/crawler-commons/url-frontier">URLFrontier</a>, a language-agnostic API for URL management and scheduling.
-See the <a href="https://github.com/apache/stormcrawler/tree/main/external/urlfrontier">urlfrontier module</a> for full details.</p>
+See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.6.0/external/urlfrontier">urlfrontier module</a> for full details.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -1808,7 +1808,7 @@ See the <a href="https://github.com/apache/stormcrawler/tree/main/external/urlfr
 <h4 id="_tika">Tika</h4>
 <div class="paragraph">
 <p>Apache Tika integration for parsing non-HTML documents (PDF, Word, etc.).
-See the <a href="https://github.com/apache/stormcrawler/tree/main/external/tika">tika module</a> for full details.</p>
+See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.6.0/external/tika">tika module</a> for full details.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -1853,7 +1853,7 @@ When using the Tika <code>ParserBolt</code> alongside <code>JSoupParserBolt</cod
 <h4 id="_aws">AWS</h4>
 <div class="paragraph">
 <p>Integration with AWS services: CloudSearch for indexing and S3 for content caching.
-See the <a href="https://github.com/apache/stormcrawler/tree/main/external/aws">aws module</a> for full details.</p>
+See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.6.0/external/aws">aws module</a> for full details.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -1916,7 +1916,7 @@ See the <a href="https://github.com/apache/stormcrawler/tree/main/external/aws">
 <h4 id="_ai_llm_text_extraction">AI (LLM Text Extraction)</h4>
 <div class="paragraph">
 <p>LLM-based text extraction using OpenAI-compatible APIs (including local models via Ollama).
-See the <a href="https://github.com/apache/stormcrawler/tree/main/external/ai">ai module</a> for full details.</p>
+See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.6.0/external/ai">ai module</a> for full details.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -1979,7 +1979,7 @@ See the <a href="https://github.com/apache/stormcrawler/tree/main/external/ai">a
 <h4 id="_playwright">Playwright</h4>
 <div class="paragraph">
 <p>Browser-based fetching using <a href="https://playwright.dev/">Playwright</a> for JavaScript-rendered pages.
-See the <a href="https://github.com/apache/stormcrawler/tree/main/external/playwright">playwright module</a> for full details.</p>
+See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.6.0/external/playwright">playwright module</a> for full details.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -2118,7 +2118,7 @@ so one bad action cannot abort the rest of the chain.</p>
 </tbody>
 </table>
 <div class="paragraph">
-<p>See the <a href="https://github.com/apache/stormcrawler/tree/main/external/playwright">playwright module README</a> for the full parameter list of each built-in action and a guide on writing your own.</p>
+<p>See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.6.0/external/playwright">playwright module README</a> for the full parameter list of each built-in action and a guide on writing your own.</p>
 </div>
 </div>
 <div class="sect4">
@@ -2127,7 +2127,7 @@ so one bad action cannot abort the rest of the chain.</p>
 <p>Browser fetching is much more expensive than a plain HTTP fetch, so most operators only want
 Playwright on URLs that actually need it. The <code>JsRenderingDetector</code> parse filter inspects the
 parsed page from a cheap fetch and sets a metadata flag (default <code>fetch.with=playwright</code>) on URLs
-that look JavaScript-rendered. Pair it with <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/protocol/DelegatorProtocol.java">DelegatorProtocol</a>
+that look JavaScript-rendered. Pair it with <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/protocol/DelegatorProtocol.java">DelegatorProtocol</a>
 to route subsequent fetches of those URLs to the Playwright protocol while leaving everything else
 on a fast HTTP client.</p>
 </div>
@@ -2195,7 +2195,7 @@ on the current fetch, and <code>DefaultScheduler</code> reschedules the URL acco
 fetch interval (<code>fetchInterval.fetch.with=playwright: 5</code>) or drop <code>JsRenderingRedirectionBolt</code>
 between the parser and indexer. The bolt reads the routing flag and, on hit, emits only to the
 status stream with <code>Status.FETCHED</code> so the stub document never reaches the index. The full
-parameter list and tuning notes are in the <a href="https://github.com/apache/stormcrawler/tree/main/external/playwright">playwright module README</a>.</p>
+parameter list and tuning notes are in the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.6.0/external/playwright">playwright module README</a>.</p>
 </div>
 </div>
 </div>
@@ -2203,7 +2203,7 @@ parameter list and tuning notes are in the <a href="https://github.com/apache/st
 <h4 id="_language_id">Language ID</h4>
 <div class="paragraph">
 <p>Language identification for crawled documents using the lang-detect library.
-See the <a href="https://github.com/apache/stormcrawler/tree/main/external/langid">langid module</a> source code for details.</p>
+See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.6.0/external/langid">langid module</a> source code for details.</p>
 </div>
 <div class="paragraph">
 <p>The <code>LanguageID</code> parse filter is configured in <code>parsefilters.json</code>:</p>
@@ -2239,7 +2239,7 @@ See the <a href="https://github.com/apache/stormcrawler/tree/main/external/langi
 <h4 id="_warc">WARC</h4>
 <div class="paragraph">
 <p>Reading and writing <a href="https://iipc.github.io/warc-specifications/specifications/warc-format/warc-1.1/">WARC</a> (Web ARChive) files for archival and replay.
-See the <a href="https://github.com/apache/stormcrawler/tree/main/external/warc">warc module</a> for full details.</p>
+See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.6.0/external/warc">warc module</a> for full details.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>

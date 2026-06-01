@@ -47,6 +47,23 @@ find "${DEST_DIR}" -maxdepth 1 -name '*.html' -exec "${SED_I[@]}" \
   -e 's|https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css|fonts/font-awesome.min.css|g' \
   {} +
 
+# Pin GitHub source links to the release tag matching this docs version, so they
+# keep working as files move around on the main branch over time.
+echo "Pinning GitHub source links to tag stormcrawler-${VERSION}"
+find "${DEST_DIR}" -maxdepth 1 -name '*.html' -exec "${SED_I[@]}" \
+  -e "s|github.com/apache/stormcrawler/blob/main/|github.com/apache/stormcrawler/blob/stormcrawler-${VERSION}/|g" \
+  -e "s|github.com/apache/stormcrawler/tree/main/|github.com/apache/stormcrawler/tree/stormcrawler-${VERSION}/|g" \
+  {} +
+
+# The GitHub wiki is offline: rewrite any leftover wiki links to their replacements
+# (the docs' own configuration page and the tag-pinned bolt sources).
+echo "Rewriting GitHub wiki links"
+find "${DEST_DIR}" -maxdepth 1 -name '*.html' -exec "${SED_I[@]}" \
+  -e "s|https://github.com/apache/stormcrawler/wiki/Configuration|configuration.html|g" \
+  -e "s|https://github.com/apache/stormcrawler/wiki/JSoupParserBolt|https://github.com/apache/stormcrawler/blob/stormcrawler-${VERSION}/core/src/main/java/org/apache/stormcrawler/bolt/JSoupParserBolt.java|g" \
+  -e "s|https://github.com/apache/stormcrawler/wiki/SiteMapParserBolt|https://github.com/apache/stormcrawler/blob/stormcrawler-${VERSION}/core/src/main/java/org/apache/stormcrawler/bolt/SiteMapParserBolt.java|g" \
+  {} +
+
 # Stable "latest" alias: docs/latest/ is a full copy of the newest version's docs
 # (same approach as Apache Storm's releases/current/). Only refresh it if the
 # fetched version is the newest one available, so backfilling an older version
