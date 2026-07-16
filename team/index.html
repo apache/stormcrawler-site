@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" class="no-js">
 
   <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#FBFCFF">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0B0E1A">
 
   <title>Apache StormCrawler Project Team</title>
   <meta name="description" content="Apache StormCrawler is collection of resources for building low-latency, scalable web crawlers on Apache Storm
@@ -27,36 +29,58 @@
 
   <body class="team">
 
-    <header class="site-header">
-  <div class="site-header__wrap">
+    <header class="site-header" id="site-header">
+  <div class="site-header__inner">
     <div class="site-header__logo">
-      <a href="/">
+      <a href="/" aria-label="Apache StormCrawler home">
         <img class="logo-light" src="/img/logo.png" alt="Apache StormCrawler">
         <img class="logo-dark" src="/img/logo-dark.png" alt="Apache StormCrawler">
       </a>
     </div>
+    <div class="site-header__actions">
+      <a class="icon-btn" href="https://github.com/apache/stormcrawler" aria-label="Apache StormCrawler on GitHub" title="GitHub">
+        <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+      </a>
+      <button class="icon-btn theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">&#9790;</button>
+      <a class="icon-btn" href="/download/" aria-label="Download" title="Download">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11m0 0-5-5m5 5 5-5M4 20h16"/></svg>
+      </a>
+      <button class="icon-btn nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="mobile-nav" aria-label="Menu">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M2 4.5h14M2 9h14M2 13.5h14"/></svg>
+      </button>
+    </div>
   </div>
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Main menu">
+    <ul>
+      <li><a href="/index.html">Home</a></li>
+      <li><a href="/download/index.html">Download</a></li>
+      <li><a href="/docs/latest/index.html#_quick_start">Quick Start</a></li>
+      <li><a href="/docs/">Documentation</a></li>
+      <li><a href="/contribute/">Contribute</a></li>
+      <li><a href="/security/">Security</a></li>
+      <li><a href="/support/">Support</a></li>
+      <li><a href="/team/" class="active">Team</a></li>
+    </ul>
+  </nav>
 </header>
-<nav class="site-nav">
-  <ul>
-    <li><a href="/index.html">Home</a>
-    <li><a href="/download/index.html">Download</a>
-    <li><a href="/docs/3.5.1/index.html#_quick_start">Quick Start</a>
-    <li><a href="/docs/">Documentation</a></li>
-    <li><a href="/contribute/">Contribute</a></li>
-    <li><a href="/security/">Security</a></li>
-    <li><a href="/support/">Support</a></li>
-    <li><a href="/team/">Team</a></li>
-  </ul>
-</nav>
-<span id="forkongithub"><a href="https://github.com/apache/incubator-stormcrawler">Fork me on GitHub</a></span>
 
 
-      <main class="main-content">    
-        <div class="row row-col">
-    <h1>Project Team</h1>
-
-    <p>
+    
+      <div class="page-hero">
+        <div class="page-hero__inner">
+          
+          <p class="eyebrow">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2 4.5 13.5H11L9.5 22 19 10h-6.5L13 2Z"/></svg>
+            Community
+          </p>
+          
+          <h1>Project Team</h1>
+          <p class="page-hero__sub">The committers and PMC members behind Apache StormCrawler, and the contributors on our Wall of Fame.</p>
+        </div>
+      </div>
+      <div class="strip strip--page" aria-hidden="true"></div>
+      <main class="main-content page-content">
+        <p>
         Apache StormCrawler is built and maintained by a community of committers and
         PMC members. The list below is generated at build time from the Apache
         <a href="https://whimsy.apache.org/" target="_blank" rel="noopener">Whimsy</a>
@@ -69,7 +93,7 @@
                 
                     <a class="contributor-card" href="https://github.com/tballison" rel="noopener" target="_blank">
                 
-                        <span class="contributor-badge" style="background:#2c5364;" aria-hidden="true">TA</span>
+                        <span class="contributor-badge" style="background:#0f2027;" aria-hidden="true">TA</span>
                         <span class="contributor-name">Tim Allison</span>
                         <span class="contributor-role">C-P</span>
                         
@@ -78,7 +102,7 @@
                 
                     <a class="contributor-card" href="https://github.com/michaeldinzinger" rel="noopener" target="_blank">
                 
-                        <span class="contributor-badge" style="background:#6a3093;" aria-hidden="true">MD</span>
+                        <span class="contributor-badge" style="background:#11324d;" aria-hidden="true">MD</span>
                         <span class="contributor-name">Michael Dinzinger</span>
                         <span class="contributor-role">C</span>
                         
@@ -87,7 +111,7 @@
                 
                     <a class="contributor-card" href="https://github.com/pjfanning" rel="noopener" target="_blank">
                 
-                        <span class="contributor-badge" style="background:#16222a;" aria-hidden="true">PF</span>
+                        <span class="contributor-badge" style="background:#11324d;" aria-hidden="true">PF</span>
                         <span class="contributor-name">PJ Fanning</span>
                         <span class="contributor-role">C</span>
                         
@@ -96,7 +120,7 @@
                 
                     <span class="contributor-card">
                 
-                        <span class="contributor-badge" style="background:#3a1c71;" aria-hidden="true">DF</span>
+                        <span class="contributor-badge" style="background:#0f2027;" aria-hidden="true">DF</span>
                         <span class="contributor-name">Dave Fisher</span>
                         <span class="contributor-role">C</span>
                         
@@ -105,7 +129,7 @@
                 
                     <span class="contributor-card">
                 
-                        <span class="contributor-badge" style="background:#2c5364;" aria-hidden="true">LM</span>
+                        <span class="contributor-badge" style="background:#5614b0;" aria-hidden="true">LM</span>
                         <span class="contributor-name">Lewis John McGibbney</span>
                         <span class="contributor-role">C</span>
                         
@@ -114,7 +138,7 @@
                 
                     <a class="contributor-card" href="https://github.com/sebastian-nagel" rel="noopener" target="_blank">
                 
-                        <span class="contributor-badge" style="background:#0f2027;" aria-hidden="true">SN</span>
+                        <span class="contributor-badge" style="background:#16222a;" aria-hidden="true">SN</span>
                         <span class="contributor-name">Sebastian Nagel</span>
                         <span class="contributor-role">C-P</span>
                         
@@ -123,16 +147,25 @@
                 
                     <a class="contributor-card" href="https://github.com/jnioche" rel="noopener" target="_blank">
                 
-                        <span class="contributor-badge" style="background:#5614b0;" aria-hidden="true">JN</span>
+                        <span class="contributor-badge" style="background:#11324d;" aria-hidden="true">JN</span>
                         <span class="contributor-name">Julien Nioche</span>
                         <span class="contributor-role">C-P</span>
                         
                 </a>
             
                 
+                    <a class="contributor-card" href="https://github.com/dpol1" rel="noopener" target="_blank">
+                
+                        <span class="contributor-badge" style="background:#283c86;" aria-hidden="true">DP</span>
+                        <span class="contributor-name">Davide Polato</span>
+                        <span class="contributor-role">C</span>
+                        
+                </a>
+            
+                
                     <span class="contributor-card">
                 
-                        <span class="contributor-badge" style="background:#3b1f5b;" aria-hidden="true">AS</span>
+                        <span class="contributor-badge" style="background:#3a1c71;" aria-hidden="true">AS</span>
                         <span class="contributor-name">Ayush Saxena</span>
                         <span class="contributor-role">C</span>
                         
@@ -141,7 +174,7 @@
                 
                     <a class="contributor-card" href="https://github.com/sigee" rel="noopener" target="_blank">
                 
-                        <span class="contributor-badge" style="background:#3a1c71;" aria-hidden="true">DS</span>
+                        <span class="contributor-badge" style="background:#373b44;" aria-hidden="true">DS</span>
                         <span class="contributor-name">Dávid Szigecsán</span>
                         <span class="contributor-role">C-P</span>
                         
@@ -150,7 +183,7 @@
                 
                     <a class="contributor-card" href="https://github.com/mvolikas" rel="noopener" target="_blank">
                 
-                        <span class="contributor-badge" style="background:#0f2027;" aria-hidden="true">MV</span>
+                        <span class="contributor-badge" style="background:#283c86;" aria-hidden="true">MV</span>
                         <span class="contributor-name">Markos Volikas</span>
                         <span class="contributor-role">C-P</span>
                         
@@ -159,7 +192,7 @@
                 
                     <a class="contributor-card" href="https://github.com/rzo1" rel="noopener" target="_blank">
                 
-                        <span class="contributor-badge" style="background:#16222a;" aria-hidden="true">RZ</span>
+                        <span class="contributor-badge" style="background:#3a1c71;" aria-hidden="true">RZ</span>
                         <span class="contributor-name">Richard Zowalla</span>
                         <span class="contributor-role">C-P</span>
                         <span class="contributor-role contributor-role-chair">Chair</span>
@@ -175,7 +208,7 @@
     
 
     
-        <h2 id="wall-of-fame">Wall of Fame &mdash; Thanks to Our Contributors</h2>
+        <h2 id="wall-of-fame">Wall of Fame: Thanks to Our Contributors</h2>
         <p>
             Apache StormCrawler exists because of the people below, who have contributed
             code, reviews, documentation and bug reports across the project's GitHub
@@ -186,127 +219,127 @@
         <div class="contributor-grid">
             
                 <a class="contributor-card" href="https://github.com/jorgelbg" rel="noopener" target="_blank">
-                    <span class="contributor-badge" style="background:#6a3093;" aria-hidden="true">JB</span>
+                    <span class="contributor-badge" style="background:#283c86;" aria-hidden="true">JB</span>
                     <span class="contributor-name">Jorge Luis Betancourt</span>
                 </a>
             
                 <a class="contributor-card" href="https://github.com/mattburns" rel="noopener" target="_blank">
-                    <span class="contributor-badge" style="background:#5614b0;" aria-hidden="true">MB</span>
+                    <span class="contributor-badge" style="background:#373b44;" aria-hidden="true">MB</span>
                     <span class="contributor-name">Matt Burns</span>
                 </a>
             
                 <a class="contributor-card" href="https://github.com/FelixEngl" rel="noopener" target="_blank">
-                    <span class="contributor-badge" style="background:#3a1c71;" aria-hidden="true">FE</span>
+                    <span class="contributor-badge" style="background:#6a3093;" aria-hidden="true">FE</span>
                     <span class="contributor-name">Felix Engl</span>
                 </a>
             
                 <a class="contributor-card" href="https://github.com/m4t1eu" rel="noopener" target="_blank">
-                    <span class="contributor-badge" style="background:#5614b0;" aria-hidden="true">M4</span>
+                    <span class="contributor-badge" style="background:#0f2027;" aria-hidden="true">M4</span>
                     <span class="contributor-name">M4t1eu</span>
                 </a>
             
                 <a class="contributor-card" href="https://github.com/eshioji" rel="noopener" target="_blank">
-                    <span class="contributor-badge" style="background:#16222a;" aria-hidden="true">ES</span>
+                    <span class="contributor-badge" style="background:#1d2671;" aria-hidden="true">ES</span>
                     <span class="contributor-name">Enno Shioji</span>
                 </a>
             
                 <a class="contributor-card" href="https://github.com/hatemalimam" rel="noopener" target="_blank">
-                    <span class="contributor-badge" style="background:#5614b0;" aria-hidden="true">HA</span>
+                    <span class="contributor-badge" style="background:#373b44;" aria-hidden="true">HA</span>
                     <span class="contributor-name">Hatem Alimam</span>
                 </a>
             
-                <a class="contributor-card" href="https://github.com/dpol1" rel="noopener" target="_blank">
-                    <span class="contributor-badge" style="background:#373b44;" aria-hidden="true">DP</span>
-                    <span class="contributor-name">Davide Polato</span>
-                </a>
-            
                 <a class="contributor-card" href="https://github.com/jakekdodd" rel="noopener" target="_blank">
-                    <span class="contributor-badge" style="background:#1d2671;" aria-hidden="true">JD</span>
+                    <span class="contributor-badge" style="background:#0f2027;" aria-hidden="true">JD</span>
                     <span class="contributor-name">Jake K. Dodd</span>
                 </a>
             
                 <a class="contributor-card" href="https://github.com/jcruzmartini" rel="noopener" target="_blank">
-                    <span class="contributor-badge" style="background:#283c86;" aria-hidden="true">JM</span>
+                    <span class="contributor-badge" style="background:#16222a;" aria-hidden="true">JM</span>
                     <span class="contributor-name">Juan Cruz Martini</span>
                 </a>
             
                 <a class="contributor-card" href="https://github.com/juli-alvarez" rel="noopener" target="_blank">
-                    <span class="contributor-badge" style="background:#373b44;" aria-hidden="true">JA</span>
+                    <span class="contributor-badge" style="background:#0f2027;" aria-hidden="true">JA</span>
                     <span class="contributor-name">Julian Alvarez</span>
                 </a>
             
                 <a class="contributor-card" href="https://github.com/ndtreviv" rel="noopener" target="_blank">
-                    <span class="contributor-badge" style="background:#1d2671;" aria-hidden="true">NT</span>
+                    <span class="contributor-badge" style="background:#2c5364;" aria-hidden="true">NT</span>
                     <span class="contributor-name">Nathan Trevivian</span>
                 </a>
             
                 <a class="contributor-card" href="https://github.com/AymanDF" rel="noopener" target="_blank">
-                    <span class="contributor-badge" style="background:#3b1f5b;" aria-hidden="true">AG</span>
+                    <span class="contributor-badge" style="background:#1d2671;" aria-hidden="true">AG</span>
                     <span class="contributor-name">Ayman Abdel Ghany</span>
                 </a>
             
                 <a class="contributor-card" href="https://github.com/Brijeshthummar02" rel="noopener" target="_blank">
-                    <span class="contributor-badge" style="background:#3b1f5b;" aria-hidden="true">BT</span>
+                    <span class="contributor-badge" style="background:#1f4068;" aria-hidden="true">BT</span>
                     <span class="contributor-name">Brijesh Thummar</span>
                 </a>
             
                 <a class="contributor-card" href="https://github.com/joshfischer1108" rel="noopener" target="_blank">
-                    <span class="contributor-badge" style="background:#2c5364;" aria-hidden="true">JF</span>
+                    <span class="contributor-badge" style="background:#1d2671;" aria-hidden="true">JF</span>
                     <span class="contributor-name">Josh Fischer</span>
                 </a>
             
                 <a class="contributor-card" href="https://github.com/sam-ulrich1" rel="noopener" target="_blank">
-                    <span class="contributor-badge" style="background:#1d2671;" aria-hidden="true">SU</span>
+                    <span class="contributor-badge" style="background:#6a3093;" aria-hidden="true">SU</span>
                     <span class="contributor-name">Sam Ulrich</span>
                 </a>
             
                 <a class="contributor-card" href="https://github.com/syefimov" rel="noopener" target="_blank">
-                    <span class="contributor-badge" style="background:#0f2027;" aria-hidden="true">SY</span>
+                    <span class="contributor-badge" style="background:#1d2671;" aria-hidden="true">SY</span>
                     <span class="contributor-name">syefimov</span>
                 </a>
             
                 <a class="contributor-card" href="https://github.com/TamimEhsan" rel="noopener" target="_blank">
-                    <span class="contributor-badge" style="background:#373b44;" aria-hidden="true">TA</span>
-                    <span class="contributor-name">TamimEhsan</span>
+                    <span class="contributor-badge" style="background:#6a3093;" aria-hidden="true">ME</span>
+                    <span class="contributor-name">Mohammad Tamimul Ehsan</span>
                 </a>
             
                 <a class="contributor-card" href="https://github.com/allfro" rel="noopener" target="_blank">
-                    <span class="contributor-badge" style="background:#1f4068;" aria-hidden="true">AL</span>
+                    <span class="contributor-badge" style="background:#5614b0;" aria-hidden="true">AL</span>
                     <span class="contributor-name">allfro</span>
                 </a>
             
                 <a class="contributor-card" href="https://github.com/Ayman-Abdelghany" rel="noopener" target="_blank">
-                    <span class="contributor-badge" style="background:#11324d;" aria-hidden="true">AA</span>
+                    <span class="contributor-badge" style="background:#3a1c71;" aria-hidden="true">AA</span>
                     <span class="contributor-name">Ayman Abdelghany</span>
                 </a>
             
                 <a class="contributor-card" href="https://github.com/chhsiao90" rel="noopener" target="_blank">
-                    <span class="contributor-badge" style="background:#373b44;" aria-hidden="true">CH</span>
+                    <span class="contributor-badge" style="background:#283c86;" aria-hidden="true">CH</span>
                     <span class="contributor-name">Chun-Han, Hsiao</span>
                 </a>
             
                 <a class="contributor-card" href="https://github.com/klockla" rel="noopener" target="_blank">
-                    <span class="contributor-badge" style="background:#5614b0;" aria-hidden="true">LK</span>
+                    <span class="contributor-badge" style="background:#283c86;" aria-hidden="true">LK</span>
                     <span class="contributor-name">Laurent Klock</span>
                 </a>
             
                 <a class="contributor-card" href="https://github.com/kunalpal97" rel="noopener" target="_blank">
-                    <span class="contributor-badge" style="background:#5614b0;" aria-hidden="true">KP</span>
+                    <span class="contributor-badge" style="background:#16222a;" aria-hidden="true">KP</span>
                     <span class="contributor-name">Kunal Pal</span>
                 </a>
             
                 <a class="contributor-card" href="https://github.com/wombat" rel="noopener" target="_blank">
-                    <span class="contributor-badge" style="background:#11324d;" aria-hidden="true">DS</span>
+                    <span class="contributor-badge" style="background:#16222a;" aria-hidden="true">DS</span>
                     <span class="contributor-name">Daniel Sachse</span>
                 </a>
             
                 <a class="contributor-card" href="https://github.com/anuq" rel="noopener" target="_blank">
-                    <span class="contributor-badge" style="background:#6a3093;" aria-hidden="true">AS</span>
-                    <span class="contributor-name">Anup Shetye</span>
+                    <span class="contributor-badge" style="background:#373b44;" aria-hidden="true">AN</span>
+                    <span class="contributor-name">Anup</span>
+                </a>
+            
+                <a class="contributor-card" href="https://github.com/asf-gitbox-commits" rel="noopener" target="_blank">
+                    <span class="contributor-badge" style="background:#3b1f5b;" aria-hidden="true">TF</span>
+                    <span class="contributor-name">The Apache Software Foundation</span>
                 </a>
             
                 <a class="contributor-card" href="https://github.com/cruftex" rel="noopener" target="_blank">
-                    <span class="contributor-badge" style="background:#283c86;" aria-hidden="true">JW</span>
+                    <span class="contributor-badge" style="background:#3a1c71;" aria-hidden="true">JW</span>
                     <span class="contributor-name">Jens Wilke</span>
                 </a>
             
@@ -316,123 +349,148 @@
                 </a>
             
                 <a class="contributor-card" href="https://github.com/evanhalley" rel="noopener" target="_blank">
-                    <span class="contributor-badge" style="background:#1f4068;" aria-hidden="true">EH</span>
+                    <span class="contributor-badge" style="background:#16222a;" aria-hidden="true">EH</span>
                     <span class="contributor-name">Evan Halley</span>
                 </a>
             
                 <a class="contributor-card" href="https://github.com/Evergreenies" rel="noopener" target="_blank">
-                    <span class="contributor-badge" style="background:#11324d;" aria-hidden="true">SS</span>
+                    <span class="contributor-badge" style="background:#283c86;" aria-hidden="true">SS</span>
                     <span class="contributor-name">Suyog Shimpi</span>
                 </a>
             
                 <a class="contributor-card" href="https://github.com/HrishikeshUchake" rel="noopener" target="_blank">
-                    <span class="contributor-badge" style="background:#373b44;" aria-hidden="true">HU</span>
+                    <span class="contributor-badge" style="background:#3a1c71;" aria-hidden="true">HU</span>
                     <span class="contributor-name">Hrishikesh Uchake</span>
                 </a>
             
                 <a class="contributor-card" href="https://github.com/HyemIin" rel="noopener" target="_blank">
-                    <span class="contributor-badge" style="background:#3b1f5b;" aria-hidden="true">HA</span>
+                    <span class="contributor-badge" style="background:#0f2027;" aria-hidden="true">HA</span>
                     <span class="contributor-name">Harry</span>
                 </a>
             
                 <a class="contributor-card" href="https://github.com/isspek" rel="noopener" target="_blank">
-                    <span class="contributor-badge" style="background:#11324d;" aria-hidden="true">IS</span>
+                    <span class="contributor-badge" style="background:#283c86;" aria-hidden="true">IS</span>
                     <span class="contributor-name">isspek</span>
                 </a>
             
                 <a class="contributor-card" href="https://github.com/JacobsonMT" rel="noopener" target="_blank">
-                    <span class="contributor-badge" style="background:#3b1f5b;" aria-hidden="true">MJ</span>
+                    <span class="contributor-badge" style="background:#1d2671;" aria-hidden="true">MJ</span>
                     <span class="contributor-name">Matthew Jacobson</span>
                 </a>
             
                 <a class="contributor-card" href="https://github.com/JLLeitschuh" rel="noopener" target="_blank">
-                    <span class="contributor-badge" style="background:#11324d;" aria-hidden="true">JL</span>
+                    <span class="contributor-badge" style="background:#3a1c71;" aria-hidden="true">JL</span>
                     <span class="contributor-name">Jonathan Leitschuh</span>
                 </a>
             
                 <a class="contributor-card" href="https://github.com/king-of-the-ring" rel="noopener" target="_blank">
-                    <span class="contributor-badge" style="background:#16222a;" aria-hidden="true">KI</span>
+                    <span class="contributor-badge" style="background:#373b44;" aria-hidden="true">KI</span>
                     <span class="contributor-name">king-of-the-ring</span>
                 </a>
             
+                <a class="contributor-card" href="https://github.com/leedongkyu0407" rel="noopener" target="_blank">
+                    <span class="contributor-badge" style="background:#16222a;" aria-hidden="true">DL</span>
+                    <span class="contributor-name">DONGGYU LEE</span>
+                </a>
+            
                 <a class="contributor-card" href="https://github.com/matiascrespof" rel="noopener" target="_blank">
-                    <span class="contributor-badge" style="background:#1f4068;" aria-hidden="true">MC</span>
+                    <span class="contributor-badge" style="background:#6a3093;" aria-hidden="true">MC</span>
                     <span class="contributor-name">Matias Crespo</span>
                 </a>
             
                 <a class="contributor-card" href="https://github.com/msghasan" rel="noopener" target="_blank">
-                    <span class="contributor-badge" style="background:#2c5364;" aria-hidden="true">MH</span>
+                    <span class="contributor-badge" style="background:#6a3093;" aria-hidden="true">MH</span>
                     <span class="contributor-name">Maimur Hasan</span>
                 </a>
             
                 <a class="contributor-card" href="https://github.com/mstrewe" rel="noopener" target="_blank">
-                    <span class="contributor-badge" style="background:#3a1c71;" aria-hidden="true">MP</span>
+                    <span class="contributor-badge" style="background:#3b1f5b;" aria-hidden="true">MP</span>
                     <span class="contributor-name">Maik Piel</span>
                 </a>
             
                 <a class="contributor-card" href="https://github.com/nfalaki" rel="noopener" target="_blank">
-                    <span class="contributor-badge" style="background:#6a3093;" aria-hidden="true">NF</span>
+                    <span class="contributor-badge" style="background:#11324d;" aria-hidden="true">NF</span>
                     <span class="contributor-name">Nima Falaki</span>
                 </a>
             
                 <a class="contributor-card" href="https://github.com/niallkp" rel="noopener" target="_blank">
-                    <span class="contributor-badge" style="background:#0f2027;" aria-hidden="true">NP</span>
+                    <span class="contributor-badge" style="background:#1d2671;" aria-hidden="true">NP</span>
                     <span class="contributor-name">Niall Pemberton</span>
                 </a>
             
+                <a class="contributor-card" href="https://github.com/nicoscandolo" rel="noopener" target="_blank">
+                    <span class="contributor-badge" style="background:#373b44;" aria-hidden="true">NS</span>
+                    <span class="contributor-name">Nico Scandolo</span>
+                </a>
+            
+                <a class="contributor-card" href="https://github.com/potiuk" rel="noopener" target="_blank">
+                    <span class="contributor-badge" style="background:#2c5364;" aria-hidden="true">JP</span>
+                    <span class="contributor-name">Jarek Potiuk</span>
+                </a>
+            
+                <a class="contributor-card" href="https://github.com/preko-p" rel="noopener" target="_blank">
+                    <span class="contributor-badge" style="background:#373b44;" aria-hidden="true">PR</span>
+                    <span class="contributor-name">preko-p</span>
+                </a>
+            
                 <a class="contributor-card" href="https://github.com/prokopidis" rel="noopener" target="_blank">
-                    <span class="contributor-badge" style="background:#1d2671;" aria-hidden="true">PP</span>
+                    <span class="contributor-badge" style="background:#1f4068;" aria-hidden="true">PP</span>
                     <span class="contributor-name">Prokopis Prokopidis</span>
                 </a>
             
                 <a class="contributor-card" href="https://github.com/psxjoy" rel="noopener" target="_blank">
-                    <span class="contributor-badge" style="background:#1d2671;" aria-hidden="true">SP</span>
+                    <span class="contributor-badge" style="background:#2c5364;" aria-hidden="true">SP</span>
                     <span class="contributor-name">Shuxin Pan</span>
                 </a>
             
                 <a class="contributor-card" href="https://github.com/pxtxs" rel="noopener" target="_blank">
-                    <span class="contributor-badge" style="background:#3a1c71;" aria-hidden="true">PX</span>
+                    <span class="contributor-badge" style="background:#11324d;" aria-hidden="true">PX</span>
                     <span class="contributor-name">pxtxs</span>
                 </a>
             
                 <a class="contributor-card" href="https://github.com/quangdutran" rel="noopener" target="_blank">
-                    <span class="contributor-badge" style="background:#2c5364;" aria-hidden="true">TD</span>
+                    <span class="contributor-badge" style="background:#11324d;" aria-hidden="true">TD</span>
                     <span class="contributor-name">Trần Quang Dự</span>
                 </a>
             
                 <a class="contributor-card" href="https://github.com/rajucomp" rel="noopener" target="_blank">
-                    <span class="contributor-badge" style="background:#373b44;" aria-hidden="true">RG</span>
+                    <span class="contributor-badge" style="background:#283c86;" aria-hidden="true">RG</span>
                     <span class="contributor-name">Raju Gupta</span>
                 </a>
             
+                <a class="contributor-card" href="https://github.com/SSDWGG" rel="noopener" target="_blank">
+                    <span class="contributor-badge" style="background:#373b44;" aria-hidden="true">RY</span>
+                    <span class="contributor-name">Ren yiwei</span>
+                </a>
+            
                 <a class="contributor-card" href="https://github.com/stfnwp" rel="noopener" target="_blank">
-                    <span class="contributor-badge" style="background:#5614b0;" aria-hidden="true">ST</span>
+                    <span class="contributor-badge" style="background:#3b1f5b;" aria-hidden="true">ST</span>
                     <span class="contributor-name">stfnwp</span>
                 </a>
             
                 <a class="contributor-card" href="https://github.com/SturmCamper" rel="noopener" target="_blank">
-                    <span class="contributor-badge" style="background:#5614b0;" aria-hidden="true">PA</span>
-                    <span class="contributor-name">Patrick</span>
+                    <span class="contributor-badge" style="background:#2c5364;" aria-hidden="true">ST</span>
+                    <span class="contributor-name">SturmCamper</span>
                 </a>
             
                 <a class="contributor-card" href="https://github.com/SyBen" rel="noopener" target="_blank">
-                    <span class="contributor-badge" style="background:#3b1f5b;" aria-hidden="true">SB</span>
-                    <span class="contributor-name">Sylvain Benhamiche</span>
+                    <span class="contributor-badge" style="background:#16222a;" aria-hidden="true">SY</span>
+                    <span class="contributor-name">SyBen</span>
                 </a>
             
                 <a class="contributor-card" href="https://github.com/vitos73" rel="noopener" target="_blank">
-                    <span class="contributor-badge" style="background:#283c86;" aria-hidden="true">VM</span>
-                    <span class="contributor-name">Vitaly Maslyaninov</span>
+                    <span class="contributor-badge" style="background:#373b44;" aria-hidden="true">VI</span>
+                    <span class="contributor-name">vitos73</span>
                 </a>
             
                 <a class="contributor-card" href="https://github.com/wowasa" rel="noopener" target="_blank">
-                    <span class="contributor-badge" style="background:#283c86;" aria-hidden="true">WS</span>
-                    <span class="contributor-name">Wolfgang Walter SAUER</span>
+                    <span class="contributor-badge" style="background:#2c5364;" aria-hidden="true">WO</span>
+                    <span class="contributor-name">wowasa</span>
                 </a>
             
                 <a class="contributor-card" href="https://github.com/XciD" rel="noopener" target="_blank">
-                    <span class="contributor-badge" style="background:#1d2671;" aria-hidden="true">AD</span>
-                    <span class="contributor-name">Adrien</span>
+                    <span class="contributor-badge" style="background:#283c86;" aria-hidden="true">XC</span>
+                    <span class="contributor-name">XciD</span>
                 </a>
             
         </div>
@@ -440,24 +498,71 @@
 
     
         <p class="team-last-updated">
-            Last updated: <time datetime="2026-05-01 18:59 UTC">2026-05-01 18:59 UTC</time>
+            Last updated: <time datetime="2026-07-16 18:52 UTC">2026-07-16 18:52 UTC</time>
         </p>
     
-</div>
+
 
       </main>
+    
 
     <footer class="site-footer">
-&copy; 2026 <a href="https://www.apache.org/">The Apache Software Foundation</a><br/><br/>
-Licensed under the <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License, Version 2.0</a>. <br/> Apache StormCrawler, StormCrawler, the Apache logo are trademarks of The Apache Software Foundation. <br/> All other marks mentioned may be trademarks or registered trademarks of their respective owners. <br/><br/>
-	<a href="https://privacy.apache.org/policies/privacy-policy-public.html">Privacy Policy</a> | <a href="https://www.apache.org/security/">Security</a> | <a href="https://www.apache.org/foundation/sponsorship">Sponsorship</a> | <a href="https://www.apache.org/foundation/sponsors">Sponsors</a><br/><br/>
-	<div class="footer-widget">
-		<a class="acevent" data-format="wide" data-mode="dark"></a>
-	</div>
+  <div class="site-footer__inner">
+    <div class="site-footer__cols">
+      <div class="site-footer__brand">
+        <a href="/" aria-label="Apache StormCrawler home">
+          <img src="/img/logo-dark.png" alt="Apache StormCrawler">
+        </a>
+        <a class="site-footer__tag" href="https://www.apache.org/" target="_blank" rel="noopener">
+          <img class="site-footer__oakleaf" src="/img/asf-oakleaf.svg" alt="" height="20">
+          An Apache Software Foundation project
+        </a>
+        <a class="icon-btn" href="https://github.com/apache/stormcrawler" aria-label="Apache StormCrawler on GitHub" title="GitHub">
+          <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+        </a>
+        <div class="footer-widget">
+          <a class="acevent" data-format="wide" data-mode="dark"></a>
+        </div>
+      </div>
+      <div class="site-footer__col">
+        <h3>Project</h3>
+        <ul>
+          <li><a href="/download/">Download</a></li>
+          <li><a href="/docs/">Documentation</a></li>
+          <li><a href="/docs/latest/index.html#_quick_start">Quick Start</a></li>
+          <li><a href="/team/">Team</a></li>
+        </ul>
+      </div>
+      <div class="site-footer__col">
+        <h3>Community</h3>
+        <ul>
+          <li><a href="/contribute/">Contribute</a></li>
+          <li><a href="/support/">Support</a></li>
+          <li><a href="/security/">Security</a></li>
+          <li><a href="https://lists.apache.org/list.html?dev@stormcrawler.apache.org" target="_blank" rel="noopener">Mailing lists &#8599;</a></li>
+        </ul>
+      </div>
+      <div class="site-footer__col">
+        <h3>Foundation</h3>
+        <ul>
+          <li><a href="https://www.apache.org/" target="_blank" rel="noopener">Apache Home &#8599;</a></li>
+          <li><a href="https://www.apache.org/licenses/LICENSE-2.0" target="_blank" rel="noopener">License &#8599;</a></li>
+          <li><a href="https://privacy.apache.org/policies/privacy-policy-public.html" target="_blank" rel="noopener">Privacy Policy &#8599;</a></li>
+          <li><a href="https://www.apache.org/security/" target="_blank" rel="noopener">Security &#8599;</a></li>
+          <li><a href="https://www.apache.org/foundation/sponsorship" target="_blank" rel="noopener">Sponsorship &#8599;</a></li>
+          <li><a href="https://www.apache.org/foundation/sponsors" target="_blank" rel="noopener">Sponsors &#8599;</a></li>
+          <li><a href="https://www.apache.org/foundation/thanks" target="_blank" rel="noopener">Thanks &#8599;</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="site-footer__legal">
+      <p>&copy; 2026 <a href="https://www.apache.org/">The Apache Software Foundation</a><br/>
+      Licensed under the <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License, Version 2.0</a>. <br/> Apache StormCrawler, StormCrawler, the Apache logo are trademarks of The Apache Software Foundation. <br/> All other marks mentioned may be trademarks or registered trademarks of their respective owners.</p>
+      <p><a href="https://privacy.apache.org/policies/privacy-policy-public.html">Privacy Policy</a> | <a href="https://www.apache.org/security/">Security</a> | <a href="https://www.apache.org/foundation/sponsorship">Sponsorship</a> | <a href="https://www.apache.org/foundation/sponsors">Sponsors</a></p>
+    </div>
+  </div>
 </footer>
 
-
-    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">&#9790;</button>
 
     <script>
       (function() {
@@ -466,22 +571,25 @@ Licensed under the <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 
         var stored = localStorage.getItem('theme');
         if (stored === 'dark' || (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
           root.setAttribute('data-theme', 'dark');
-          toggle.textContent = '\u2600';
+          toggle.textContent = '☀';
         }
         toggle.addEventListener('click', function() {
           var isDark = root.getAttribute('data-theme') === 'dark';
           if (isDark) {
             root.removeAttribute('data-theme');
             localStorage.setItem('theme', 'light');
-            toggle.textContent = '\u263E';
+            toggle.textContent = '☾';
           } else {
             root.setAttribute('data-theme', 'dark');
             localStorage.setItem('theme', 'dark');
-            toggle.textContent = '\u2600';
+            toggle.textContent = '☀';
           }
         });
       })();
     </script>
+
+    <script src="/js/site.js" defer></script>
+    
 
   </body>
 

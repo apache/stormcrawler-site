@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" class="no-js">
 
   <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#FBFCFF">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0B0E1A">
 
   <title>Documentation of Apache StormCrawler</title>
   <meta name="description" content="Apache StormCrawler is collection of resources for building low-latency, scalable web crawlers on Apache Storm
@@ -27,184 +29,243 @@
 
   <body class="documentation">
 
-    <header class="site-header">
-  <div class="site-header__wrap">
+    <header class="site-header" id="site-header">
+  <div class="site-header__inner">
     <div class="site-header__logo">
-      <a href="/">
+      <a href="/" aria-label="Apache StormCrawler home">
         <img class="logo-light" src="/img/logo.png" alt="Apache StormCrawler">
         <img class="logo-dark" src="/img/logo-dark.png" alt="Apache StormCrawler">
       </a>
     </div>
+    <div class="site-header__actions">
+      <a class="icon-btn" href="https://github.com/apache/stormcrawler" aria-label="Apache StormCrawler on GitHub" title="GitHub">
+        <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+      </a>
+      <button class="icon-btn theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">&#9790;</button>
+      <a class="icon-btn" href="/download/" aria-label="Download" title="Download">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11m0 0-5-5m5 5 5-5M4 20h16"/></svg>
+      </a>
+      <button class="icon-btn nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="mobile-nav" aria-label="Menu">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M2 4.5h14M2 9h14M2 13.5h14"/></svg>
+      </button>
+    </div>
   </div>
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Main menu">
+    <ul>
+      <li><a href="/index.html">Home</a></li>
+      <li><a href="/download/index.html">Download</a></li>
+      <li><a href="/docs/latest/index.html#_quick_start">Quick Start</a></li>
+      <li><a href="/docs/" class="active">Documentation</a></li>
+      <li><a href="/contribute/">Contribute</a></li>
+      <li><a href="/security/">Security</a></li>
+      <li><a href="/support/">Support</a></li>
+      <li><a href="/team/">Team</a></li>
+    </ul>
+  </nav>
 </header>
-<nav class="site-nav">
-  <ul>
-    <li><a href="/index.html">Home</a>
-    <li><a href="/download/index.html">Download</a>
-    <li><a href="/docs/3.5.1/index.html#_quick_start">Quick Start</a>
-    <li><a href="/docs/">Documentation</a></li>
-    <li><a href="/contribute/">Contribute</a></li>
-    <li><a href="/security/">Security</a></li>
-    <li><a href="/support/">Support</a></li>
-    <li><a href="/team/">Team</a></li>
-  </ul>
-</nav>
-<span id="forkongithub"><a href="https://github.com/apache/incubator-stormcrawler">Fork me on GitHub</a></span>
 
 
-      <main class="main-content">    
-        <div class="row row-col">
-    <h1>Documentation</h1>
+    
+      <div class="page-hero">
+        <div class="page-hero__inner">
+          
+          <p class="eyebrow">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2 4.5 13.5H11L9.5 22 19 10h-6.5L13 2Z"/></svg>
+            Documentation
+          </p>
+          
+          <h1>Documentation</h1>
+          <p class="page-hero__sub">User guides, versioned reference documentation and the API Javadoc for Apache StormCrawler.</p>
+        </div>
+      </div>
+      <div class="strip strip--page" aria-hidden="true"></div>
+      <main class="main-content page-content">
+        <h2>User Documentation</h2>
 
-    <p>
-        This page provides documentation resources for Apache StormCrawler
-    </p>
+<p>
+    Additional documentation, including configuration guides and usage examples,
+    is available in the versioned documentation pages:
+</p>
 
-    <h2>User Documentation</h2>
-
-    <p>
-        Additional documentation, including configuration guides and usage examples,
-        is available in the versioned documentation pages:
-    </p>
-
-    <ul>
-        <li>
-            <a href="/docs/3.5.1/index.html" target="_blank">
-                <b>3.5.1 (current)</b>
-            </a>
-        </li>
-    </ul>
-
-    </p>
-
-    <h2>Javadoc</h2>
-
-    <p>
-        The full API reference for Apache StormCrawler Javadoc.io:
-    </p>
-
-    <ul>
-        <li>
-            <a href="https://javadoc.io/doc/org.apache.stormcrawler/stormcrawler-core/3.5.1/index.htm" target="_blank"
-               rel="noopener">
-                <b>3.5.1 (current)</b>
-            </a>
-
-        </li>
-        <li>
-            <a href="https://javadoc.io/doc/org.apache.stormcrawler/stormcrawler-core/3.5.0/index.htm" target="_blank"
-               rel="noopener">
-                <b>3.5.0</b>
-            </a>
-
-        </li>
-        <li>
-            <a href="https://javadoc.io/doc/org.apache.stormcrawler/stormcrawler-core/3.4.0/index.htm" target="_blank"
-               rel="noopener">
-                <b>3.4.0</b>
-            </a>
-
-        </li>
-    </ul>
-
-    <h2>FAQ</h2>
-    <br>
-
-    <p><strong>Q: Topologies? Spouts? Bolts? I’m confused!</strong></p>
-    <p>
-        A: If you’re new to these concepts, it’s worth starting with
-        <a href="http://storm.apache.org/" target="_blank">Apache Storm®</a>. The
-        <a href="http://storm.apache.org/releases/current/Tutorial.html" target="_blank">tutorial</a>
-        and <a href="http://storm.apache.org/documentation/Concepts.html" target="_blank">concept pages</a>
-        provide a good introduction. In addition, you can have a look at our own documentation, which provides a quick overview.
-    </p>
-
-    <p><strong>Q: Do I need an Apache Storm® cluster to run StormCrawler?</strong></p>
-    <p>
-        A: Not necessarily. StormCrawler can run in local mode, using Storm libraries as dependencies.
-        However, installing Storm in pseudo-distributed mode is useful if you want to use its UI
-        to monitor topologies.
-    </p>
-
-    <p><strong>Q: Why use Apache Storm®?</strong></p>
-    <p>
-        A: Apache Storm® is a robust, fault-tolerant framework for distributed stream processing.
-        It guarantees data processing, is simple to understand, actively maintained, and licensed under ASF 2.0.
-    </p>
-
-    <p id="howfast"><strong>Q: How fast is StormCrawler?</strong></p>
-    <p>
-        A: Speed depends on the diversity of hostnames, your politeness settings and execution environment. For example,
-        if you have 1 million URLs from the same host and set a 1-second delay between requests,
-        you can fetch a maximum of ~86,400 pages per day. Actual performance will vary depending
-        on network speed, document size, parsing, and indexing overhead. This is true for any crawler.
-    </p>
-
-    <p><strong>Q: Why choose StormCrawler over Apache Nutch?</strong></p>
-    <p>
-        A: StormCrawler processes URLs as a continuous stream, indexing them as they are fetched.
-        Nutch uses batch steps, which can slow down as the crawl grows and resources are unevenly used.
-        StormCrawler can handle streaming URLs or low-latency use cases efficiently. It is also more modern, modular,
-        and actively maintained, though Nutch excels in advanced scoring and deduplication.
-    </p>
-    <p>
-        Tutorials comparing both are available here:
-        <a href="http://digitalpebble.blogspot.co.uk/2015/09/index-web-with-aws-cloudsearch.html"  target="_blank">Nutch & SC with
-            CloudSearch</a>
-        and a benchmark study:
-        <a href="http://digitalpebble.blogspot.co.uk/2017/01/the-battle-of-crawlers-apache-nutch-vs.html"  target="_blank">Crawlers
-            benchmark</a>.
-    </p>
-
-    <p><strong>Q: Do I need external storage? Which type?</strong></p>
-    <p>
-        A: Yes, StormCrawler needs storage for URLs. The type depends on your crawl:
-    </p>
-    <ul>
-        <li>
-            <strong>Non-recursive crawls:</strong> Messaging queues like
-            <a href="https://www.rabbitmq.com/"  target="_blank">RabbitMQ</a>,
-            <a href="https://aws.amazon.com/sqs/"  target="_blank">AWS SQS</a>, or
-            <a href="http://kafka.apache.org"  target="_blank">Apache Kafka®</a> work well. Use a Spout implementation to read from the
-            queue.
-        </li>
-        <li>
-            <strong>Recursive crawls:</strong> Use storage with unique keys (e.g., a database)
-            to avoid duplicate URLs. StormCrawler provides external modules for
-            <a href="https://github.com/apache/stormcrawler/tree/master/external"  target="_blank">Apache SOLR, OpenSearch, SQL</a>.
-        </li>
-    </ul>
-    <p>
-        The modularity of StormCrawler lets you plug in almost any storage backend.
-    </p>
-
-    <p><strong>Q: Is StormCrawler polite?</strong></p>
-    <p>
-        A: Yes. It respects the <a href="http://www.robotstxt.org/"  target="_blank">robots.txt</a> protocol
-        and can be configured with a politness dely between requests to the same host or domain.
-    </p>
-
-    <p><strong>Q: How do I know when a crawl is finished?</strong></p>
-    <p>
-        A: Storm topologies run continuously by design, so there is no automatic “finished” state.
-        You need to monitor progress and stop the crawl manually or implement a custom termination mechanism.
-    </p>
-
+<div class="version-cards">
+    <div class="card version-card card--highlight">
+        <div class="version-card__head">
+            <span class="version-card__name">3.6.0</span>
+            <span class="badge">Current</span>
+        </div>
+        <p class="card__copy">The latest release, also served as <code>docs/latest</code>.</p>
+        <div class="chip-cluster">
+            <a class="chip" href="/docs/latest/index.html" target="_blank">Read the docs &rarr;</a>
+            <a class="chip" href="/docs/3.6.0/index.html" target="_blank">Pinned 3.6.0 &rarr;</a>
+        </div>
+    </div>
+    <div class="card version-card">
+        <div class="version-card__head">
+            <span class="version-card__name">3.5.1</span>
+            <span class="badge badge--muted">Previous</span>
+        </div>
+        <p class="card__copy">Documentation for the previous release.</p>
+        <div class="chip-cluster">
+            <a class="chip" href="/docs/3.5.1/index.html" target="_blank">Read the docs &rarr;</a>
+        </div>
+    </div>
 </div>
 
+<h2>Javadoc</h2>
+
+<p>
+    The full API reference for Apache StormCrawler Javadoc.io:
+</p>
+
+<div class="chip-cluster" style="margin-bottom:1.25rem;">
+    <a class="chip" href="https://javadoc.io/doc/org.apache.stormcrawler/stormcrawler-core/3.6.0/index.htm" target="_blank" rel="noopener">3.6.0 (current) <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+    <a class="chip" href="https://javadoc.io/doc/org.apache.stormcrawler/stormcrawler-core/3.5.1/index.htm" target="_blank" rel="noopener">3.5.1 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+    <a class="chip" href="https://javadoc.io/doc/org.apache.stormcrawler/stormcrawler-core/3.5.0/index.htm" target="_blank" rel="noopener">3.5.0 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+    <a class="chip" href="https://javadoc.io/doc/org.apache.stormcrawler/stormcrawler-core/3.4.0/index.htm" target="_blank" rel="noopener">3.4.0 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+</div>
+
+<h2>FAQ</h2>
+
+<p><strong>Q: Topologies? Spouts? Bolts? I’m confused!</strong></p>
+<p>
+    A: If you’re new to these concepts, it’s worth starting with
+    <a href="http://storm.apache.org/" target="_blank">Apache Storm®</a>. The
+    <a href="http://storm.apache.org/releases/current/Tutorial.html" target="_blank">tutorial</a>
+    and <a href="http://storm.apache.org/documentation/Concepts.html" target="_blank">concept pages</a>
+    provide a good introduction. In addition, you can have a look at our own documentation, which provides a quick overview.
+</p>
+
+<p><strong>Q: Do I need an Apache Storm® cluster to run StormCrawler?</strong></p>
+<p>
+    A: Not necessarily. StormCrawler can run in local mode, using Storm libraries as dependencies.
+    However, installing Storm in pseudo-distributed mode is useful if you want to use its UI
+    to monitor topologies.
+</p>
+
+<p><strong>Q: Why use Apache Storm®?</strong></p>
+<p>
+    A: Apache Storm® is a robust, fault-tolerant framework for distributed stream processing.
+    It guarantees data processing, is simple to understand, actively maintained, and licensed under ASF 2.0.
+</p>
+
+<p id="howfast"><strong>Q: How fast is StormCrawler?</strong></p>
+<p>
+    A: Speed depends on the diversity of hostnames, your politeness settings and execution environment. For example,
+    if you have 1 million URLs from the same host and set a 1-second delay between requests,
+    you can fetch a maximum of ~86,400 pages per day. Actual performance will vary depending
+    on network speed, document size, parsing, and indexing overhead. This is true for any crawler.
+</p>
+
+<p><strong>Q: Why choose StormCrawler over Apache Nutch?</strong></p>
+<p>
+    A: StormCrawler processes URLs as a continuous stream, indexing them as they are fetched.
+    Nutch uses batch steps, which can slow down as the crawl grows and resources are unevenly used.
+    StormCrawler can handle streaming URLs or low-latency use cases efficiently. It is also more modern, modular,
+    and actively maintained, though Nutch excels in advanced scoring and deduplication.
+</p>
+<p>
+    Tutorials comparing both are available here:
+    <a href="http://digitalpebble.blogspot.co.uk/2015/09/index-web-with-aws-cloudsearch.html"  target="_blank">Nutch & SC with
+        CloudSearch</a>
+    and a benchmark study:
+    <a href="http://digitalpebble.blogspot.co.uk/2017/01/the-battle-of-crawlers-apache-nutch-vs.html"  target="_blank">Crawlers
+        benchmark</a>.
+</p>
+
+<p><strong>Q: Do I need external storage? Which type?</strong></p>
+<p>
+    A: Yes, StormCrawler needs storage for URLs. The type depends on your crawl:
+</p>
+<ul>
+    <li>
+        <strong>Non-recursive crawls:</strong> Messaging queues like
+        <a href="https://www.rabbitmq.com/"  target="_blank">RabbitMQ</a>,
+        <a href="https://aws.amazon.com/sqs/"  target="_blank">AWS SQS</a>, or
+        <a href="http://kafka.apache.org"  target="_blank">Apache Kafka®</a> work well. Use a Spout implementation to read from the
+        queue.
+    </li>
+    <li>
+        <strong>Recursive crawls:</strong> Use storage with unique keys (e.g., a database)
+        to avoid duplicate URLs. StormCrawler provides external modules for
+        <a href="https://github.com/apache/stormcrawler/tree/master/external"  target="_blank">Apache SOLR, OpenSearch, SQL</a>.
+    </li>
+</ul>
+<p>
+    The modularity of StormCrawler lets you plug in almost any storage backend.
+</p>
+
+<p><strong>Q: Is StormCrawler polite?</strong></p>
+<p>
+    A: Yes. It respects the <a href="http://www.robotstxt.org/"  target="_blank">robots.txt</a> protocol
+    and can be configured with a politness dely between requests to the same host or domain.
+</p>
+
+<p><strong>Q: How do I know when a crawl is finished?</strong></p>
+<p>
+    A: Storm topologies run continuously by design, so there is no automatic “finished” state.
+    You need to monitor progress and stop the crawl manually or implement a custom termination mechanism.
+</p>
+
       </main>
+    
 
     <footer class="site-footer">
-&copy; 2026 <a href="https://www.apache.org/">The Apache Software Foundation</a><br/><br/>
-Licensed under the <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License, Version 2.0</a>. <br/> Apache StormCrawler, StormCrawler, the Apache logo are trademarks of The Apache Software Foundation. <br/> All other marks mentioned may be trademarks or registered trademarks of their respective owners. <br/><br/>
-	<a href="https://privacy.apache.org/policies/privacy-policy-public.html">Privacy Policy</a> | <a href="https://www.apache.org/security/">Security</a> | <a href="https://www.apache.org/foundation/sponsorship">Sponsorship</a> | <a href="https://www.apache.org/foundation/sponsors">Sponsors</a><br/><br/>
-	<div class="footer-widget">
-		<a class="acevent" data-format="wide" data-mode="dark"></a>
-	</div>
+  <div class="site-footer__inner">
+    <div class="site-footer__cols">
+      <div class="site-footer__brand">
+        <a href="/" aria-label="Apache StormCrawler home">
+          <img src="/img/logo-dark.png" alt="Apache StormCrawler">
+        </a>
+        <a class="site-footer__tag" href="https://www.apache.org/" target="_blank" rel="noopener">
+          <img class="site-footer__oakleaf" src="/img/asf-oakleaf.svg" alt="" height="20">
+          An Apache Software Foundation project
+        </a>
+        <a class="icon-btn" href="https://github.com/apache/stormcrawler" aria-label="Apache StormCrawler on GitHub" title="GitHub">
+          <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+        </a>
+        <div class="footer-widget">
+          <a class="acevent" data-format="wide" data-mode="dark"></a>
+        </div>
+      </div>
+      <div class="site-footer__col">
+        <h3>Project</h3>
+        <ul>
+          <li><a href="/download/">Download</a></li>
+          <li><a href="/docs/">Documentation</a></li>
+          <li><a href="/docs/latest/index.html#_quick_start">Quick Start</a></li>
+          <li><a href="/team/">Team</a></li>
+        </ul>
+      </div>
+      <div class="site-footer__col">
+        <h3>Community</h3>
+        <ul>
+          <li><a href="/contribute/">Contribute</a></li>
+          <li><a href="/support/">Support</a></li>
+          <li><a href="/security/">Security</a></li>
+          <li><a href="https://lists.apache.org/list.html?dev@stormcrawler.apache.org" target="_blank" rel="noopener">Mailing lists &#8599;</a></li>
+        </ul>
+      </div>
+      <div class="site-footer__col">
+        <h3>Foundation</h3>
+        <ul>
+          <li><a href="https://www.apache.org/" target="_blank" rel="noopener">Apache Home &#8599;</a></li>
+          <li><a href="https://www.apache.org/licenses/LICENSE-2.0" target="_blank" rel="noopener">License &#8599;</a></li>
+          <li><a href="https://privacy.apache.org/policies/privacy-policy-public.html" target="_blank" rel="noopener">Privacy Policy &#8599;</a></li>
+          <li><a href="https://www.apache.org/security/" target="_blank" rel="noopener">Security &#8599;</a></li>
+          <li><a href="https://www.apache.org/foundation/sponsorship" target="_blank" rel="noopener">Sponsorship &#8599;</a></li>
+          <li><a href="https://www.apache.org/foundation/sponsors" target="_blank" rel="noopener">Sponsors &#8599;</a></li>
+          <li><a href="https://www.apache.org/foundation/thanks" target="_blank" rel="noopener">Thanks &#8599;</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="site-footer__legal">
+      <p>&copy; 2026 <a href="https://www.apache.org/">The Apache Software Foundation</a><br/>
+      Licensed under the <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License, Version 2.0</a>. <br/> Apache StormCrawler, StormCrawler, the Apache logo are trademarks of The Apache Software Foundation. <br/> All other marks mentioned may be trademarks or registered trademarks of their respective owners.</p>
+      <p><a href="https://privacy.apache.org/policies/privacy-policy-public.html">Privacy Policy</a> | <a href="https://www.apache.org/security/">Security</a> | <a href="https://www.apache.org/foundation/sponsorship">Sponsorship</a> | <a href="https://www.apache.org/foundation/sponsors">Sponsors</a></p>
+    </div>
+  </div>
 </footer>
 
-
-    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">&#9790;</button>
 
     <script>
       (function() {
@@ -213,22 +274,25 @@ Licensed under the <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 
         var stored = localStorage.getItem('theme');
         if (stored === 'dark' || (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
           root.setAttribute('data-theme', 'dark');
-          toggle.textContent = '\u2600';
+          toggle.textContent = '☀';
         }
         toggle.addEventListener('click', function() {
           var isDark = root.getAttribute('data-theme') === 'dark';
           if (isDark) {
             root.removeAttribute('data-theme');
             localStorage.setItem('theme', 'light');
-            toggle.textContent = '\u263E';
+            toggle.textContent = '☾';
           } else {
             root.setAttribute('data-theme', 'dark');
             localStorage.setItem('theme', 'dark');
-            toggle.textContent = '\u2600';
+            toggle.textContent = '☀';
           }
         });
       })();
     </script>
+
+    <script src="/js/site.js" defer></script>
+    
 
   </body>
 

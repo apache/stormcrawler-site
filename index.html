@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" class="no-js">
 
   <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#FBFCFF">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0B0E1A">
 
   <title>Apache StormCrawler</title>
   <meta name="description" content="Apache StormCrawler is collection of resources for building low-latency, scalable web crawlers on Apache Storm
@@ -27,85 +29,386 @@
 
   <body class="home">
 
-    <header class="site-header">
-  <div class="site-header__wrap">
+    <header class="site-header" id="site-header">
+  <div class="site-header__inner">
     <div class="site-header__logo">
-      <a href="/">
+      <a href="/" aria-label="Apache StormCrawler home">
         <img class="logo-light" src="/img/logo.png" alt="Apache StormCrawler">
         <img class="logo-dark" src="/img/logo-dark.png" alt="Apache StormCrawler">
       </a>
     </div>
-  </div>
-</header>
-<nav class="site-nav">
-  <ul>
-    <li><a href="/index.html">Home</a>
-    <li><a href="/download/index.html">Download</a>
-    <li><a href="/docs/3.5.1/index.html#_quick_start">Quick Start</a>
-    <li><a href="/docs/">Documentation</a></li>
-    <li><a href="/contribute/">Contribute</a></li>
-    <li><a href="/security/">Security</a></li>
-    <li><a href="/support/">Support</a></li>
-    <li><a href="/team/">Team</a></li>
-  </ul>
-</nav>
-<span id="forkongithub"><a href="https://github.com/apache/incubator-stormcrawler">Fork me on GitHub</a></span>
-
-
-      <main class="main-content">    
-        <div class="page-title">
-  <h1>A collection of resources for building low-latency, scalable web crawlers.</h1>
-</div>
-</div>
-<div class="row row-col">
-  <p><strong>Apache StormCrawler</strong> is an open source SDK for building distributed web crawlers based on <a href="http://storm.apache.org">Apache Storm®</a>. The project is under Apache License v2 and consists of a collection of reusable resources and components, written mostly in Java.</p>
-  <p>The aim of Apache StormCrawler is to help build web crawlers that are:</p>
-  <ul>
-    <li>scalable</li>
-    <li>resilient</li>
-    <li>low latency</li>
-    <li>easy to extend</li>
-    <li>polite yet efficient</li>
-  </ul>
-  <p><strong>Apache StormCrawler</strong> is a library and collection of resources that developers can leverage to build their own crawlers. The good news is that doing so can be pretty straightforward! Have a look at the <a href="getting-started/">Getting Started</a> section for more details.</p>
-  <p>Apart from the core components, we provide some <a href="https://github.com/apache/incubator-stormcrawler/tree/main/external">external resources</a> that you can reuse in your project, like for instance our spout and bolts for <a href="https://opensearch.org/">OpenSearch®</a> or a ParserBolt which uses <a href="http://tika.apache.org">Apache Tika®</a> to parse various document formats.</p>
-  <p><strong>Apache StormCrawler</strong> is perfectly suited to use cases where the URL to fetch and parse come as streams but is also an appropriate solution for large scale recursive crawls, particularly where low latency is required. The project is used in production by <a href="https://github.com/apache/incubator-stormcrawler/wiki/Powered-By">many organisations</a> and is actively developed and maintained.</p>
-  <p>The <a href="https://github.com/apache/incubator-stormcrawler/wiki/Presentations">Presentations</a> page contains links to some recent presentations made about this project.</p>
-</div>
-
-<div class="row row-col">
-    <div class="used-by-panel">
-      <h2>Used by</h2>
-       <a href="https://pixray.com/" target="_blank">
-        <img src="/img/pixray.png" alt="Pixray" height=80>
-       </a>
-       <a href="https://www.gov.nt.ca/" target="_blank">
-        <img src="/img/gnwt.png" alt="Government of Northwest Territories">
-       </a>
-       <a href="https://www.stolencamerafinder.com/" target="_blank">
-       <img src="/img/stolen-camera-finder.png" alt="StolenCameraFinder">
+    <div class="site-header__actions">
+      <a class="icon-btn" href="https://github.com/apache/stormcrawler" aria-label="Apache StormCrawler on GitHub" title="GitHub">
+        <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
       </a>
-       <a href="https://www.polecat.com/" target="_blank">
-        <img src="/img/polecat.svg" alt="Polecat" height=70>
+      <button class="icon-btn theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">&#9790;</button>
+      <a class="icon-btn" href="/download/" aria-label="Download" title="Download">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11m0 0-5-5m5 5 5-5M4 20h16"/></svg>
       </a>
-     <br>
-     <a href="http://github.com/apache/incubator-stormcrawler/wiki/Powered-By">and many more...</a>
+      <button class="icon-btn nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="mobile-nav" aria-label="Menu">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M2 4.5h14M2 9h14M2 13.5h14"/></svg>
+      </button>
     </div>
-</div>
+  </div>
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Main menu">
+    <ul>
+      <li><a href="/index.html" class="active">Home</a></li>
+      <li><a href="/download/index.html">Download</a></li>
+      <li><a href="/docs/latest/index.html#_quick_start">Quick Start</a></li>
+      <li><a href="/docs/">Documentation</a></li>
+      <li><a href="/contribute/">Contribute</a></li>
+      <li><a href="/security/">Security</a></li>
+      <li><a href="/support/">Support</a></li>
+      <li><a href="/team/">Team</a></li>
+    </ul>
+  </nav>
+</header>
+
+
+    
+      <main class="main-content">
+        <!-- ============================== Hero ============================== -->
+<section class="hero" id="top">
+  <canvas class="hero-rain" aria-hidden="true"></canvas>
+  <div class="hero__inner">
+    <div class="hero__copy">
+      <h1 class="hero__title">Build web crawlers that ride the <span class="grad-word">storm</span>.</h1>
+      <p class="hero__lede"><strong>Apache StormCrawler</strong> is an open source SDK for building distributed web crawlers based on <a href="https://storm.apache.org" style="color:inherit;text-decoration:underline;text-underline-offset:3px;">Apache Storm&reg;</a>. Low-latency, scalable and polite: a collection of reusable components, written mostly in Java, under Apache License v2.</p>
+      <div class="hero__ctas">
+        <a class="btn btn--solid shimmer" href="/docs/latest/index.html#_quick_start">Get started &rarr;</a>
+        <a class="btn btn--ghost" href="/download/">Download 3.6.0</a>
+      </div>
+      <p class="hero__assurance">
+        <span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5 9.5 18 20 6"/></svg> Apache License v2</span>
+        <span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5 9.5 18 20 6"/></svg> Java, on Apache Storm&reg;</span>
+        <span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5 9.5 18 20 6"/></svg> Community-governed</span>
+      </p>
+    </div>
+
+    <aside class="hero__panel reveal">
+      <div class="topology-panel">
+        <p class="topology-panel__caption">The crawl topology</p>
+        <div class="topology">
+          <svg class="topology__return" viewBox="0 0 20 460" preserveAspectRatio="none" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+            <path d="M18 452 C 2 420, 2 40, 18 8" vector-effect="non-scaling-stroke"/>
+            <path d="M18 8 l-8 1 M18 8 l-2 7" vector-effect="non-scaling-stroke"/>
+          </svg>
+          <div class="topo-node topo-node--ext">
+            <span class="topo-node__icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><ellipse cx="12" cy="5.5" rx="8" ry="2.8"/><path d="M4 5.5V18.5c0 1.5 3.6 2.8 8 2.8s8-1.3 8-2.8V5.5M4 12c0 1.5 3.6 2.8 8 2.8s8-1.3 8-2.8"/></svg></span>
+            <span class="topo-node__text"><strong>Frontier</strong><small>the URL store</small></span>
+            <span class="topo-badge topo-badge--ext">Store</span>
+          </div>
+          <div class="connector" aria-hidden="true"></div>
+          <div class="topo-node">
+            <span class="topo-node__icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2 4.5 13.5H11L9.5 22 19 10h-6.5L13 2Z"/></svg></span>
+            <span class="topo-node__text"><strong>FrontierSpout</strong><small>emits URLs due for fetching</small></span>
+            <span class="topo-badge topo-badge--spout">Spout</span>
+          </div>
+          <div class="connector" aria-hidden="true" style="--d:.5s"></div>
+          <div class="topo-node">
+            <span class="topo-node__icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.9 5.7 3.9 9S14.5 18.4 12 21c-2.5-2.6-3.9-5.7-3.9-9S9.5 5.6 12 3Z"/></svg></span>
+            <span class="topo-node__text"><strong>Fetcher</strong><small>polite, robots.txt-aware fetching</small></span>
+            <span class="topo-badge">Bolt</span>
+          </div>
+          <div class="connector" aria-hidden="true" style="--d:.9s"></div>
+          <div class="topo-node">
+            <span class="topo-node__icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6V3Z"/><path d="M14.5 3v4.5H19M9 12h6M9 15.5h6"/></svg></span>
+            <span class="topo-node__text"><strong>Parser bolt</strong><small>SiteMapParser, JSoupParser, TikaParser &amp; more: link extraction, sitemaps, Apache Tika&reg;</small></span>
+            <span class="topo-badge">Bolt</span>
+          </div>
+          <div class="connector" aria-hidden="true" style="--d:1.2s"></div>
+          <div class="topo-node beam">
+            <span class="topo-node__icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-9-9"/><path d="M11 8v5h5M21 3l-9 9"/></svg></span>
+            <span class="topo-node__text"><strong>Indexer</strong><small>documents to storage: OpenSearch&reg;, Apache Solr&trade;, &hellip;</small></span>
+            <span class="topo-badge">Bolt</span>
+          </div>
+        </div>
+      </div>
+      <p class="hero__panel-link">
+        <a class="chip" href="/docs/latest/index.html">See the full architecture <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+      </p>
+    </aside>
+  </div>
+</section>
+
+<div class="strip strip--hero" aria-hidden="true"></div>
+
+<!-- ============================== Features ============================== -->
+<section class="section" id="features">
+  <div class="section__inner">
+    <div class="section-head reveal">
+      <div class="bolt-divider" aria-hidden="true"></div>
+      <p class="eyebrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2 4.5 13.5H11L9.5 22 19 10h-6.5L13 2Z"/></svg> Why StormCrawler</p>
+      <h2>Built for crawling at scale.</h2>
+      <p>Everything a production crawler needs, as ordinary Storm spouts and bolts you assemble your own way.</p>
+    </div>
+    <div class="features-grid">
+      <div class="card card--grid reveal" style="--i:0">
+        <span class="icon-chip"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span>
+        <h3 class="card__title">Scalable</h3>
+        <p class="card__copy">Fetch and parse across a whole Storm cluster; add workers, not complexity.</p>
+      </div>
+      <div class="card card--grid reveal" style="--i:1">
+        <span class="icon-chip"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4.5 6v5c0 4.5 3 8.5 7.5 10 4.5-1.5 7.5-5.5 7.5-10V6L12 3Z"/><path d="M9 12l2 2 4-4.5"/></svg></span>
+        <h3 class="card__title">Resilient</h3>
+        <p class="card__copy">Storm's guaranteed processing means no URL is silently lost.</p>
+      </div>
+      <div class="card card--grid reveal" style="--i:2">
+        <span class="icon-chip"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2 4.5 13.5H11L9.5 22 19 10h-6.5L13 2Z"/></svg></span>
+        <h3 class="card__title">Low latency</h3>
+        <p class="card__copy">URLs are processed as streams: crawl continuously, not in batches.</p>
+      </div>
+      <div class="card card--grid reveal" style="--i:3">
+        <span class="icon-chip"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3v5M15 3v5M7 8h10v4a5 5 0 0 1-10 0V8ZM12 17v4"/></svg></span>
+        <h3 class="card__title">Easy to extend</h3>
+        <p class="card__copy">Pluggable protocols, parsers, filters and indexers, mostly plain Java.</p>
+      </div>
+      <div class="card card--grid reveal" style="--i:4">
+        <span class="icon-chip"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg></span>
+        <h3 class="card__title">Polite yet efficient</h3>
+        <p class="card__copy">robots.txt, delays and politeness settings built in from the start.</p>
+      </div>
+      <div class="card card--grid card--highlight reveal" style="--i:5">
+        <h3 class="card__title">In production since 2014</h3>
+        <p class="card__copy">Battle-tested by search engines, archives, researchers and monitoring platforms.</p>
+        <a class="chip" href="/docs/latest/powered-by.html">Who uses it <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== Quick start ============================== -->
+<section class="section section--alt" id="quick-start">
+  <div class="section__inner">
+    <div class="section-head reveal">
+      <div class="bolt-divider" aria-hidden="true"></div>
+      <p class="eyebrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2 4.5 13.5H11L9.5 22 19 10h-6.5L13 2Z"/></svg> Get started</p>
+      <h2>From zero to crawling in minutes.</h2>
+      <p>One Maven command bootstraps a working crawler project, and <a href="/docs/latest/index.html#_quick_start">the Quick Start guide &rarr;</a> walks you through the rest.</p>
+    </div>
+    <div class="quickstart reveal">
+      <div class="code-row">
+        <pre id="archetype-cmd"><code>mvn archetype:generate -DarchetypeGroupId=org.apache.stormcrawler \
+  -DarchetypeArtifactId=stormcrawler-archetype -DarchetypeVersion=3.6.0</code></pre>
+        <button class="copy-chip" data-copy="#archetype-cmd" hidden>Copy</button>
+      </div>
+      <ol class="steps">
+        <li class="step">
+          <span class="step__num" aria-hidden="true">1</span>
+          <span class="step__label">Generate a crawler project from the Maven archetype</span>
+          <a class="chip" href="/docs/latest/index.html#_quick_start">Docs &rarr;</a>
+        </li>
+        <li class="step">
+          <span class="step__num" aria-hidden="true">2</span>
+          <span class="step__label">Configure seeds and politeness</span>
+          <a class="chip" href="/docs/latest/index.html#_configuration">Docs &rarr;</a>
+        </li>
+        <li class="step">
+          <span class="step__num" aria-hidden="true">3</span>
+          <span class="step__label">Run locally, then submit to a Storm cluster</span>
+          <a class="chip" href="/docs/latest/index.html#_run_your_first_crawl">Docs &rarr;</a>
+        </li>
+      </ol>
+      <div class="chip-row">
+        <a class="chip" href="/docs/latest/index.html#_quick_start">Quick Start &rarr;</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== Ecosystem ============================== -->
+<section class="section" id="ecosystem">
+  <div class="section__inner">
+    <div class="section-head reveal">
+      <div class="bolt-divider" aria-hidden="true"></div>
+      <p class="eyebrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2 4.5 13.5H11L9.5 22 19 10h-6.5L13 2Z"/></svg> Ecosystem</p>
+      <h2>Plugs into the stack you already run.</h2>
+      <p>A collection of external modules extends the core with protocol, parsing and indexing integrations. <a class="chip" href="https://github.com/apache/stormcrawler/tree/main/external" target="_blank" rel="noopener">Browse external modules <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a></p>
+    </div>
+    <div class="runtime-card reveal">
+      <span class="icon-chip"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.5 18.5H7a4.5 4.5 0 1 1 .8-8.9A5.5 5.5 0 0 1 18.4 10a4.3 4.3 0 0 1-.9 8.5Z"/><path d="M12.5 11.5 10 15h3l-2 3.5" stroke-width="1.6"/></svg></span>
+      <span class="runtime-card__text">
+        <span class="mono-name">Apache Storm&reg;</span>
+        <span class="card__copy">The distributed runtime underneath every topology. StormCrawler components are ordinary Storm spouts and bolts.</span>
+      </span>
+      <a class="chip" href="https://storm.apache.org" target="_blank" rel="noopener">storm.apache.org <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+    </div>
+    <div class="ecosystem-grid">
+      <div class="card card--grid reveal" style="--i:0">
+        <div class="eco-card__head"><span class="mono-name">OpenSearch&reg;</span><span class="ext-badge">Ext</span></div>
+        <p class="card__copy">Index documents and monitor crawl status and metrics.</p>
+        <a class="chip" href="https://github.com/apache/stormcrawler/tree/main/external/opensearch" target="_blank" rel="noopener">Module <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+      </div>
+      <div class="card card--grid reveal" style="--i:1">
+        <div class="eco-card__head"><span class="mono-name">Apache Tika&reg;</span><span class="ext-badge">Ext</span></div>
+        <p class="card__copy">Parse any document format the crawler fetches.</p>
+        <a class="chip" href="https://github.com/apache/stormcrawler/tree/main/external/tika" target="_blank" rel="noopener">Module <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+      </div>
+      <div class="card card--grid reveal" style="--i:2">
+        <div class="eco-card__head"><span class="mono-name">Apache Solr&trade;</span><span class="ext-badge">Ext</span></div>
+        <p class="card__copy">Alternative indexing and status backend.</p>
+        <a class="chip" href="https://github.com/apache/stormcrawler/tree/main/external/solr" target="_blank" rel="noopener">Module <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+      </div>
+      <div class="card card--grid reveal" style="--i:3">
+        <div class="eco-card__head"><span class="mono-name">Playwright</span><span class="ext-badge">Ext</span></div>
+        <p class="card__copy">Fetch JavaScript-heavy pages with a headless browser.</p>
+        <a class="chip" href="https://github.com/apache/stormcrawler/tree/main/external/playwright" target="_blank" rel="noopener">Module <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+      </div>
+      <div class="card card--grid reveal" style="--i:4">
+        <div class="eco-card__head"><span class="mono-name">URL Frontier</span><span class="ext-badge">Ext</span></div>
+        <p class="card__copy">Language-neutral crawl-frontier service.</p>
+        <a class="chip" href="https://github.com/apache/stormcrawler/tree/main/external/urlfrontier" target="_blank" rel="noopener">Module <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+      </div>
+      <div class="card card--grid reveal" style="--i:5">
+        <div class="eco-card__head"><span class="mono-name">WARC</span><span class="ext-badge">Ext</span></div>
+        <p class="card__copy">Write web-archive files as you crawl.</p>
+        <a class="chip" href="https://github.com/apache/stormcrawler/tree/main/external/warc" target="_blank" rel="noopener">Module <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== Community ============================== -->
+<section class="section section--alt" id="community">
+  <div class="section__inner">
+    <div class="section-head reveal">
+      <div class="bolt-divider" aria-hidden="true"></div>
+      <p class="eyebrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2 4.5 13.5H11L9.5 22 19 10h-6.5L13 2Z"/></svg> Community</p>
+      <h2>Built in the open, the Apache Way.</h2>
+      <p>Apache StormCrawler is developed by a community of volunteers at the <a href="https://www.apache.org/" target="_blank" rel="noopener">Apache Software Foundation</a>, following <a href="https://www.apache.org/theapacheway/" target="_blank" rel="noopener">the Apache Way</a>.</p>
+    </div>
+    <div class="community-grid">
+      <div class="card card--grid reveal" style="--i:0">
+        <span class="icon-chip"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="5" r="2.5"/><circle cx="6" cy="19" r="2.5"/><circle cx="18" cy="9" r="2.5"/><path d="M6 7.5v9M18 11.5c0 3-2.5 4.5-5.5 4.5H8.5"/></svg></span>
+        <h3 class="card__title">Contribute</h3>
+        <p class="card__copy">Issues, pull requests and documentation are all welcome; no contribution is too small.</p>
+        <span class="chip-cluster">
+          <a class="chip" href="/contribute/">Contributing guide &rarr;</a>
+          <a class="chip" href="https://github.com/apache/stormcrawler" target="_blank" rel="noopener">GitHub <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+        </span>
+      </div>
+      <div class="card card--grid reveal" style="--i:1">
+        <span class="icon-chip"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12c0 4-4 7-9 7-1 0-2-.1-2.9-.35L4 20l1.3-3.1C3.9 15.6 3 13.9 3 12c0-4 4-7 9-7s9 3 9 7Z"/></svg></span>
+        <h3 class="card__title">Get support</h3>
+        <p class="card__copy">Ask the community on the mailing lists or GitHub, or find commercial help.</p>
+        <span class="chip-cluster">
+          <a class="chip" href="/support/">Community support &rarr;</a>
+          <a class="chip" href="/support/">Commercial support &rarr;</a>
+        </span>
+      </div>
+      <div class="card card--grid reveal" style="--i:2">
+        <span class="icon-chip"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4.5" y="10" width="15" height="10" rx="2"/><path d="M8 10V7a4 4 0 1 1 8 0v3"/></svg></span>
+        <h3 class="card__title">Security</h3>
+        <p class="card__copy">Found a vulnerability? Report it privately.</p>
+        <span class="chip-cluster">
+          <a class="chip" href="/security/">Security policy &rarr;</a>
+        </span>
+      </div>
+      <div class="card card--grid reveal" style="--i:3">
+        <span class="icon-chip"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 20c.6-3.2 2.9-5 5.5-5s4.9 1.8 5.5 5M16 5.5a3.2 3.2 0 0 1 0 5.6M17.5 15.2c1.7.7 2.7 2.3 3 4.8"/></svg></span>
+        <h3 class="card__title">Meet the team</h3>
+        <p class="card__copy">Committers, PMC and contributors.</p>
+        <span class="chip-cluster">
+          <a class="chip" href="/team/">The team &rarr;</a>
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== Powered by ============================== -->
+<section class="section" id="powered-by">
+  <div class="section__inner">
+    <div class="section-head reveal">
+      <div class="bolt-divider" aria-hidden="true"></div>
+      <p class="eyebrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2 4.5 13.5H11L9.5 22 19 10h-6.5L13 2Z"/></svg> In production</p>
+      <h2>Who's crawling with StormCrawler?</h2>
+    </div>
+    <div class="logo-band reveal">
+      <a href="https://pixray.com/" target="_blank" rel="noopener"><img src="/img/pixray.png" alt="Pixray"></a>
+      <a href="https://www.gov.nt.ca/" target="_blank" rel="noopener"><img src="/img/gnwt.png" alt="Government of Northwest Territories"></a>
+      <a href="https://www.stolencamerafinder.com/" target="_blank" rel="noopener"><img src="/img/stolen-camera-finder.png" alt="StolenCameraFinder"></a>
+      <a href="https://www.polecat.com/" target="_blank" rel="noopener"><img src="/img/polecat.svg" alt="Polecat"></a>
+    </div>
+    <p class="logo-band-more">
+      <a class="chip" href="/docs/latest/powered-by.html">&hellip;and many more <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+    </p>
+  </div>
+</section>
+
+<!-- ============================== CTA ============================== -->
+<div class="strip strip--cta" aria-hidden="true"></div>
+<section class="cta-band">
+  <div class="cta-band__inner">
+    <h2>Ready to unleash the storm?</h2>
+    <p>Spin up a distributed crawler on infrastructure you control.</p>
+    <div class="hero__ctas">
+      <a class="btn btn--solid" href="/docs/latest/index.html#_quick_start">Get started &rarr;</a>
+      <a class="btn btn--ghost" href="/download/">Download &rarr;</a>
+    </div>
+  </div>
+</section>
 
       </main>
+    
 
     <footer class="site-footer">
-&copy; 2026 <a href="https://www.apache.org/">The Apache Software Foundation</a><br/><br/>
-Licensed under the <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License, Version 2.0</a>. <br/> Apache StormCrawler, StormCrawler, the Apache logo are trademarks of The Apache Software Foundation. <br/> All other marks mentioned may be trademarks or registered trademarks of their respective owners. <br/><br/>
-	<a href="https://privacy.apache.org/policies/privacy-policy-public.html">Privacy Policy</a> | <a href="https://www.apache.org/security/">Security</a> | <a href="https://www.apache.org/foundation/sponsorship">Sponsorship</a> | <a href="https://www.apache.org/foundation/sponsors">Sponsors</a><br/><br/>
-	<div class="footer-widget">
-		<a class="acevent" data-format="wide" data-mode="dark"></a>
-	</div>
+  <div class="site-footer__inner">
+    <div class="site-footer__cols">
+      <div class="site-footer__brand">
+        <a href="/" aria-label="Apache StormCrawler home">
+          <img src="/img/logo-dark.png" alt="Apache StormCrawler">
+        </a>
+        <a class="site-footer__tag" href="https://www.apache.org/" target="_blank" rel="noopener">
+          <img class="site-footer__oakleaf" src="/img/asf-oakleaf.svg" alt="" height="20">
+          An Apache Software Foundation project
+        </a>
+        <a class="icon-btn" href="https://github.com/apache/stormcrawler" aria-label="Apache StormCrawler on GitHub" title="GitHub">
+          <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+        </a>
+        <div class="footer-widget">
+          <a class="acevent" data-format="wide" data-mode="dark"></a>
+        </div>
+      </div>
+      <div class="site-footer__col">
+        <h3>Project</h3>
+        <ul>
+          <li><a href="/download/">Download</a></li>
+          <li><a href="/docs/">Documentation</a></li>
+          <li><a href="/docs/latest/index.html#_quick_start">Quick Start</a></li>
+          <li><a href="/team/">Team</a></li>
+        </ul>
+      </div>
+      <div class="site-footer__col">
+        <h3>Community</h3>
+        <ul>
+          <li><a href="/contribute/">Contribute</a></li>
+          <li><a href="/support/">Support</a></li>
+          <li><a href="/security/">Security</a></li>
+          <li><a href="https://lists.apache.org/list.html?dev@stormcrawler.apache.org" target="_blank" rel="noopener">Mailing lists &#8599;</a></li>
+        </ul>
+      </div>
+      <div class="site-footer__col">
+        <h3>Foundation</h3>
+        <ul>
+          <li><a href="https://www.apache.org/" target="_blank" rel="noopener">Apache Home &#8599;</a></li>
+          <li><a href="https://www.apache.org/licenses/LICENSE-2.0" target="_blank" rel="noopener">License &#8599;</a></li>
+          <li><a href="https://privacy.apache.org/policies/privacy-policy-public.html" target="_blank" rel="noopener">Privacy Policy &#8599;</a></li>
+          <li><a href="https://www.apache.org/security/" target="_blank" rel="noopener">Security &#8599;</a></li>
+          <li><a href="https://www.apache.org/foundation/sponsorship" target="_blank" rel="noopener">Sponsorship &#8599;</a></li>
+          <li><a href="https://www.apache.org/foundation/sponsors" target="_blank" rel="noopener">Sponsors &#8599;</a></li>
+          <li><a href="https://www.apache.org/foundation/thanks" target="_blank" rel="noopener">Thanks &#8599;</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="site-footer__legal">
+      <p>&copy; 2026 <a href="https://www.apache.org/">The Apache Software Foundation</a><br/>
+      Licensed under the <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License, Version 2.0</a>. <br/> Apache StormCrawler, StormCrawler, the Apache logo are trademarks of The Apache Software Foundation. <br/> All other marks mentioned may be trademarks or registered trademarks of their respective owners.</p>
+      <p><a href="https://privacy.apache.org/policies/privacy-policy-public.html">Privacy Policy</a> | <a href="https://www.apache.org/security/">Security</a> | <a href="https://www.apache.org/foundation/sponsorship">Sponsorship</a> | <a href="https://www.apache.org/foundation/sponsors">Sponsors</a></p>
+    </div>
+  </div>
 </footer>
 
-
-    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">&#9790;</button>
 
     <script>
       (function() {
@@ -114,22 +417,25 @@ Licensed under the <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 
         var stored = localStorage.getItem('theme');
         if (stored === 'dark' || (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
           root.setAttribute('data-theme', 'dark');
-          toggle.textContent = '\u2600';
+          toggle.textContent = '☀';
         }
         toggle.addEventListener('click', function() {
           var isDark = root.getAttribute('data-theme') === 'dark';
           if (isDark) {
             root.removeAttribute('data-theme');
             localStorage.setItem('theme', 'light');
-            toggle.textContent = '\u263E';
+            toggle.textContent = '☾';
           } else {
             root.setAttribute('data-theme', 'dark');
             localStorage.setItem('theme', 'dark');
-            toggle.textContent = '\u2600';
+            toggle.textContent = '☀';
           }
         });
       })();
     </script>
+
+    <script src="/js/site.js" defer></script>
+    <script src="/js/hero-rain.js" defer></script>
 
   </body>
 

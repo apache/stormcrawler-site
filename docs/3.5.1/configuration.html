@@ -627,7 +627,7 @@ Allow: /publications/</pre>
 <div class="sect2">
 <h3 id="_proxy">Proxy</h3>
 <div class="paragraph">
-<p>StormCrawler&#8217;s proxy system is built on top of the <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/proxy/SCProxy.java">SCProxy</a> class and the <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/proxy/ProxyManager.java">ProxyManager</a> interface. Every proxy used in the system is formatted as a <strong>SCProxy</strong>. The <strong>ProxyManager</strong> implementations handle the management and delegation of their internal proxies. At the call of <code>Protocol#getProtocolOutput()</code>, the <code>ProxyManager.getProxy()</code> is called to retrieve a proxy for the individual request.</p>
+<p>StormCrawler&#8217;s proxy system is built on top of the <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.5.1/core/src/main/java/org/apache/stormcrawler/proxy/SCProxy.java">SCProxy</a> class and the <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.5.1/core/src/main/java/org/apache/stormcrawler/proxy/ProxyManager.java">ProxyManager</a> interface. Every proxy used in the system is formatted as a <strong>SCProxy</strong>. The <strong>ProxyManager</strong> implementations handle the management and delegation of their internal proxies. At the call of <code>Protocol#getProtocolOutput()</code>, the <code>ProxyManager.getProxy()</code> is called to retrieve a proxy for the individual request.</p>
 </div>
 <div class="paragraph">
 <p>The <strong>ProxyManager</strong> interface can be implemented in a custom class to create custom logic for proxy management and load balancing. The default <strong>ProxyManager</strong> implementation is <strong>SingleProxyManager</strong>. This ensures backwards compatibility for prior StormCrawler releases. To use <strong>MultiProxyManager</strong> or custom implementations, pass the class path and name via the config parameter <code>http.proxy.manager</code>:</p>
@@ -643,7 +643,7 @@ Allow: /publications/</pre>
 <div class="ulist">
 <ul>
 <li>
-<p><a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/proxy/SingleProxyManager.java">SingleProxyManager</a>
+<p><a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.5.1/core/src/main/java/org/apache/stormcrawler/proxy/SingleProxyManager.java">SingleProxyManager</a>
 Manages a single proxy passed by the backwards compatible proxy fields in the configuration:</p>
 <div class="literalblock">
 <div class="content">
@@ -658,7 +658,7 @@ http.proxy.pass (optional)
 </div>
 </li>
 <li>
-<p><a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/proxy/MultiProxyManager.java">MultiProxyManager</a>
+<p><a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.5.1/core/src/main/java/org/apache/stormcrawler/proxy/MultiProxyManager.java">MultiProxyManager</a>
 Manages multiple proxies passed through a TXT file. The file should contain connection strings for all proxies including the protocol and authentication (if needed). The file supports comment lines (<code>//</code> or <code>#</code>) and empty lines. The file path should be passed via the config at the below field. The TXT file must be available to all nodes participating in the topology:</p>
 <div class="literalblock">
 <div class="content">
@@ -724,7 +724,7 @@ Selects the proxy with the least amount of usage. This is performed lazily for s
 <div class="sect3">
 <h4 id="_metadatatransfer">MetadataTransfer</h4>
 <div class="paragraph">
-<p>The class <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/util/MetadataTransfer.java">MetadataTransfer</a> is an important part of the framework and is used in key parts of a pipeline:</p>
+<p>The class <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.5.1/core/src/main/java/org/apache/stormcrawler/util/MetadataTransfer.java">MetadataTransfer</a> is an important part of the framework and is used in key parts of a pipeline:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -764,10 +764,10 @@ Selects the proxy with the least amount of usage. This is performed lazily for s
 </ul>
 </div>
 <div class="paragraph">
-<p>The former is used when creating <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/parse/Outlink.java">Outlinks</a>, i.e., in the parsing bolts but also for handling redirections in the [[FetcherBolt(s)]].</p>
+<p>The former is used when creating <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.5.1/core/src/main/java/org/apache/stormcrawler/parse/Outlink.java">Outlinks</a>, i.e., in the parsing bolts but also for handling redirections in the [[FetcherBolt(s)]].</p>
 </div>
 <div class="paragraph">
-<p>The latter is used by extensions of the <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/persistence/AbstractStatusUpdaterBolt.java">AbstractStatusUpdaterBolt</a> class to determine which <strong>Metadata</strong> should be persisted.</p>
+<p>The latter is used by extensions of the <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.5.1/core/src/main/java/org/apache/stormcrawler/persistence/AbstractStatusUpdaterBolt.java">AbstractStatusUpdaterBolt</a> class to determine which <strong>Metadata</strong> should be persisted.</p>
 </div>
 <div class="paragraph">
 <p>The behavior of the default <strong>MetadataTransfer</strong> class is driven by configuration only. It has the following options:</p>
@@ -775,10 +775,10 @@ Selects the proxy with the least amount of usage. This is performed lazily for s
 <div class="ulist">
 <ul>
 <li>
-<p><code>metadata.transfer</code>:: list of metadata key values to filter or transfer to the outlinks. Please see the corresponding comments in <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/resources/crawler-default.yaml">crawler-default.yaml</a></p>
+<p><code>metadata.transfer</code>:: list of metadata key values to filter or transfer to the outlinks. Please see the corresponding comments in <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.5.1/core/src/main/resources/crawler-default.yaml">crawler-default.yaml</a></p>
 </li>
 <li>
-<p><code>metadata.persist</code>:: list of metadata key values to persist in the status storage. Please see the corresponding comments in <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/resources/crawler-default.yaml">crawler-default.yaml</a></p>
+<p><code>metadata.persist</code>:: list of metadata key values to persist in the status storage. Please see the corresponding comments in <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.5.1/core/src/main/resources/crawler-default.yaml">crawler-default.yaml</a></p>
 </li>
 <li>
 <p><code>metadata.track.path</code>:: whether to track the URL path or not. Boolean value, true by default.</p>
@@ -1186,7 +1186,7 @@ header.</p></td>
 <h4 id="_status_persistence">Status Persistence</h4>
 <div class="paragraph">
 <p>This refers to persisting the status of a URL (e.g. ERROR, DISCOVERED etc.) along with asomething like a <code>nextFetchDate</code>
-that is being calculated by a <a href="https://github.com/apache/stormcrawler/blob/main/core/src/main/java/org/apache/stormcrawler/persistence/DefaultScheduler.java">Scheduler</a>.</p>
+that is being calculated by a <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.5.1/core/src/main/java/org/apache/stormcrawler/persistence/DefaultScheduler.java">Scheduler</a>.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
