@@ -6,7 +6,7 @@
 
 // ---------------------------------------------------------------------------
 // "electric-storm" — Apache StormCrawler site theme
-// Graphite storm-gray surfaces, deep spider-red accent, lightning-silver arcs.
+// Dark-first storm-indigo surface, volt-violet accent, arc-cyan lightning.
 // All components consume CSS custom properties; SCSS vars hold raw hex only.
 // ---------------------------------------------------------------------------
 
@@ -16,41 +16,35 @@
 
 // --- Raw scales (SCSS source of truth) --------------------------------------
 
-// Storm gray — graphite neutrals
-$storm-950: #101113;
-$storm-900: #16181B;
-$storm-850: #1C1F23;
-$storm-800: #24272C;
-$storm-700: #33373E;
-$storm-600: #4A505A;
-$storm-400: #848B95;
-$storm-200: #CDD2D9;
-$storm-100: #E9EBEE;
-$storm-50:  #F4F5F7;
+// Storm indigo — cool neutrals
+$storm-950: #070A14;
+$storm-900: #0B0E1A;
+$storm-850: #111527;
+$storm-800: #181E36;
+$storm-700: #232B4A;
+$storm-600: #38416B;
+$storm-400: #7B86AD;
+$storm-200: #C7CEE8;
+$storm-100: #E8ECF8;
+$storm-50:  #F1F3FC;
 
-// Spider red — brand accent; $brand-600 is the logo red itself.
-// Deep maroon darks and muted rose tints on graphite, never red-on-black-on-white.
-$brand-50:  #FBEDED;
-$brand-100: #F5D6D6;
-$brand-200: #E8A9AB;
-$brand-300: #DC7F82;
-$brand-400: #C94F53;
-$brand-500: #B03036;
-$brand-600: #99181C;
-$brand-700: #7C1114;
-$brand-800: #5A0E12;
-$brand-900: #3B0A0D;
+// Volt violet — brand accent
+$violet-50:  #F0EDFF;
+$violet-100: #DED6FF;
+$violet-200: #BFAEFF;
+$violet-300: #9D85FB;
+$violet-400: #7C5CFF;
+$violet-500: #6A3DF5;
+$violet-600: #5B2EDB;
+$violet-700: #4A22B4;
+$violet-800: #37187F;
+$violet-900: #221052;
 
-// Lightning silver — arcs and sparks
-$arc-glow:       #DDE3EB; // decorative only, never text
-$arc-mid:        #B9C2CE; // decorative only, never text
-$arc-text-light: #5A6470; // text-safe on light (>=4.5:1 on --bg and --bg-alt)
-$arc-text-dark:  #C9D1DB; // text-safe on dark
-
-// Aliases for the eyebrow/divider accents (same red family)
-$red-brand:     #99181C; // logo red, text-safe on light backgrounds
-$red-mid:       #B03036; // decorative only
-$red-text-dark: #DC7F82; // text-safe on dark
+// Arc cyan — lightning
+$cyan-glow:       #35E0FF; // decorative only, never text
+$cyan-mid:        #22C8EC; // decorative only, never text
+$cyan-text-light: #097591; // text-safe on light (>=4.5:1 on --bg and --bg-alt)
+$cyan-text-dark:  #6FE6FF; // text-safe on dark
 
 // Font stacks
 $font-display: "Space Grotesk", "Segoe UI", system-ui, sans-serif;
@@ -60,40 +54,38 @@ $font-mono: "Ubuntu Mono", ui-monospace, monospace;
 // --- Semantic tokens ---------------------------------------------------------
 
 :root {
-	--bg: #FAFAFB;
+	--bg: #FBFCFF;
 	--bg-alt: #{$storm-50};
 	--surface: #FFFFFF;
 	--surface-raised: #{$storm-50};
-	--text: #17191D;
-	--text-secondary: #4C525B;
-	--muted: #6B7280;
-	--border: #E0E3E8;
-	--border-strong: #{$brand-200};
-	--accent: #{$brand-600};
-	--accent-hover: #{$brand-700};
-	--accent-2: #{$arc-text-light};
-	--accent-2-glow: #{$arc-mid};
-	--chip-bg: #{$brand-50};
-	--chip-border: #{$brand-200};
-	--chip-text: #{$brand-700};
-	--icon-chip-bg: #{$brand-100};
-	--icon-chip-fg: #{$brand-700};
+	--text: #131629;
+	--text-secondary: #4B5273;
+	--muted: #666E92;
+	--border: #DDE2F2;
+	--border-strong: #{$violet-200};
+	--accent: #{$violet-600};
+	--accent-hover: #{$violet-700};
+	--accent-2: #{$cyan-text-light};
+	--accent-2-glow: #{$cyan-mid};
+	--chip-bg: #{$violet-50};
+	--chip-border: #{$violet-200};
+	--chip-text: #{$violet-700};
+	--icon-chip-bg: #{$violet-100};
+	--icon-chip-fg: #{$violet-700};
 	--code-bg: #{$storm-50};
-	--nav-bg: rgba(250,250,251,.92);
-	--focus-ring: #{$arc-text-light};
-	--shadow-sm: 0 1px 2px rgba(22,24,27,.08);
-	--shadow-md: 0 4px 16px -2px rgba(22,24,27,.14);
+	--nav-bg: rgba(251,252,255,.92);
+	--focus-ring: #{$cyan-text-light};
+	--shadow-sm: 0 1px 2px rgba(11,14,26,.08);
+	--shadow-md: 0 4px 16px -2px rgba(11,14,26,.14);
 	--success: #177A4C;
 	--warning: #B26E00;
 	--error: #C0332B;
-	--brand-red: #{$red-brand};
-	--brand-red-glow: #{$red-mid};
 
 	// Theme-invariant tokens: identical in both themes, used by the dark
 	// bookends (hero, CTA band, footer, topology panel).
 	--invariant-bg-deep: #{$storm-950};
 	--invariant-surface: #{$storm-850};
-	--invariant-surface-glass: rgba(28,31,35,.65);
+	--invariant-surface-glass: rgba(24,30,54,.65);
 	--invariant-border: #{$storm-600};
 	--invariant-text: #{$storm-100};
 	--invariant-text-secondary: #{$storm-200};
@@ -103,31 +95,29 @@ $font-mono: "Ubuntu Mono", ui-monospace, monospace;
 	--bg: #{$storm-900};
 	--bg-alt: #{$storm-850};
 	--surface: #{$storm-800};
-	--surface-raised: #22252A;
+	--surface-raised: #1E2542;
 	--text: #{$storm-100};
 	--text-secondary: #{$storm-200};
 	--muted: #{$storm-400};
 	--border: #{$storm-700};
-	--border-strong: #{$brand-600};
-	--accent: #{$brand-300};
-	--accent-hover: #{$brand-200};
-	--accent-2: #{$arc-text-dark};
-	--accent-2-glow: #{$arc-glow};
-	--chip-bg: rgba(176,48,54,.18);
-	--chip-border: #{$brand-700};
-	--chip-text: #{$brand-200};
-	--icon-chip-bg: #{$brand-900};
-	--icon-chip-fg: #{$brand-200};
-	--code-bg: #141619;
-	--nav-bg: rgba(22,24,27,.88);
-	--focus-ring: #{$arc-glow};
+	--border-strong: #{$violet-600};
+	--accent: #{$violet-300};
+	--accent-hover: #{$violet-200};
+	--accent-2: #{$cyan-text-dark};
+	--accent-2-glow: #{$cyan-glow};
+	--chip-bg: rgba(106,61,245,.16);
+	--chip-border: #{$violet-700};
+	--chip-text: #{$violet-200};
+	--icon-chip-bg: #{$violet-900};
+	--icon-chip-fg: #{$violet-200};
+	--code-bg: #0F1322;
+	--nav-bg: rgba(11,14,26,.88);
+	--focus-ring: #{$cyan-glow};
 	--shadow-sm: 0 1px 2px rgba(0,0,0,.5);
 	--shadow-md: 0 4px 20px -4px rgba(0,0,0,.6);
 	--success: #2BB673;
 	--warning: #F5A623;
 	--error: #F0564A;
-	--brand-red: #{$red-text-dark};
-	--brand-red-glow: #{$red-mid};
 }
 
 // --- Reset & base ------------------------------------------------------------
@@ -201,10 +191,10 @@ code, pre, kbd, samp {
 }
 
 .btn--solid {
-	background: #{$brand-500};
+	background: #{$violet-500};
 	color: #fff;
 	&:hover {
-		background: #{$brand-600};
+		background: #{$violet-600};
 		color: #fff;
 		transform: translateY(-1px);
 	}
@@ -225,7 +215,7 @@ code, pre, kbd, samp {
 .shimmer {
 	position: relative;
 	overflow: hidden;
-	background: #{$brand-500};
+	background: #{$violet-500};
 	border-radius: 8px;
 	color: #fff;
 	&::before {
@@ -237,7 +227,7 @@ code, pre, kbd, samp {
 		pointer-events: none;
 	}
 	&:hover {
-		background: #{$brand-600};
+		background: #{$violet-600};
 		transform: translateY(-1px);
 	}
 }
@@ -276,7 +266,7 @@ code, pre, kbd, samp {
 	font-family: $font-display;
 	font-weight: 700;
 	font-size: .75rem;
-	background: #{$brand-500};
+	background: #{$violet-500};
 	color: #fff;
 }
 
@@ -307,7 +297,7 @@ code, pre, kbd, samp {
 	width: 48px;
 	height: 1px;
 	margin: 0 auto 1rem;
-	background: linear-gradient(90deg, transparent, var(--brand-red-glow), transparent);
+	background: linear-gradient(90deg, transparent, var(--accent-2-glow), transparent);
 }
 
 .eyebrow {
@@ -320,8 +310,8 @@ code, pre, kbd, samp {
 	line-height: 1.33;
 	letter-spacing: .08em;
 	text-transform: uppercase;
-	color: var(--brand-red);
-	svg { color: var(--brand-red-glow); }
+	color: var(--accent-2);
+	svg { color: var(--accent-2-glow); }
 }
 
 // Section scaffolding
@@ -417,11 +407,11 @@ code, pre, kbd, samp {
 	height: 6rem;
 }
 
-.strip--hero { background: linear-gradient(to bottom, #{$brand-800}, var(--bg)); }
+.strip--hero { background: linear-gradient(to bottom, #{$violet-800}, var(--bg)); }
 .strip--cta { background: linear-gradient(to bottom, var(--bg-alt), #{$storm-950}); }
 .strip--page {
 	height: 3rem;
-	background: linear-gradient(to bottom, #{$brand-800}, var(--bg));
+	background: linear-gradient(to bottom, #{$violet-800}, var(--bg));
 }
 
 // --- Header ------------------------------------------------------------------
@@ -530,8 +520,8 @@ code, pre, kbd, samp {
 	position: relative;
 	overflow: hidden;
 	background:
-		radial-gradient(60% 45% at 50% 108%, rgba(221,227,235,.14), transparent 70%),
-		linear-gradient(to bottom, #{$storm-950} 0%, #2A1214 55%, #{$brand-800} 100%);
+		radial-gradient(60% 45% at 50% 108%, rgba(53,224,255,.22), transparent 70%),
+		linear-gradient(to bottom, #{$storm-950} 0%, #180F3E 55%, #{$violet-800} 100%);
 }
 
 .hero-rain {
@@ -575,7 +565,7 @@ code, pre, kbd, samp {
 }
 
 .grad-word {
-	background: linear-gradient(100deg, #F2F4F8 0%, #{$brand-300} 55%, #{$brand-400} 100%);
+	background: linear-gradient(90deg, #{$violet-300}, #{$cyan-glow});
 	-webkit-background-clip: text;
 	background-clip: text;
 	-webkit-text-fill-color: transparent;
@@ -585,7 +575,7 @@ code, pre, kbd, samp {
 	.grad-word {
 		background: none;
 		-webkit-text-fill-color: currentColor;
-		color: #{$brand-300};
+		color: #{$violet-300};
 	}
 }
 
@@ -614,7 +604,7 @@ code, pre, kbd, samp {
 		align-items: center;
 		gap: .375rem;
 	}
-	svg { color: #{$arc-glow}; flex: 0 0 auto; }
+	svg { color: #{$cyan-glow}; flex: 0 0 auto; }
 }
 
 // Topology panel — the signature element
@@ -631,7 +621,7 @@ code, pre, kbd, samp {
 
 .topology-panel {
 	background: var(--invariant-surface-glass);
-	border: 1px solid rgba(220,127,130,.35);
+	border: 1px solid rgba(157,133,251,.35);
 	border-radius: 16px;
 	padding: 2rem 1.5rem;
 	backdrop-filter: blur(8px);
@@ -639,7 +629,7 @@ code, pre, kbd, samp {
 }
 
 @supports not ((backdrop-filter: blur(8px)) or (-webkit-backdrop-filter: blur(8px))) {
-	.topology-panel { background: rgba(28,31,35,.92); }
+	.topology-panel { background: rgba(17,21,39,.92); }
 }
 
 .topology-panel__caption {
@@ -647,7 +637,7 @@ code, pre, kbd, samp {
 	font-weight: 500;
 	letter-spacing: .08em;
 	text-transform: uppercase;
-	color: #{$arc-text-dark};
+	color: #{$cyan-text-dark};
 	margin-bottom: 1.25rem;
 }
 
@@ -665,7 +655,7 @@ code, pre, kbd, samp {
 	top: 32px;
 	height: calc(100% - 64px);
 	width: 20px;
-	color: rgba(220,127,130,.6);
+	color: rgba(157,133,251,.65);
 }
 
 .topo-node {
@@ -689,13 +679,8 @@ code, pre, kbd, samp {
 	width: 36px;
 	height: 36px;
 	border-radius: 50%;
-	background: #{$brand-900};
-	color: #{$brand-200};
-}
-
-// The spout carries the mascot's red lightning
-.topo-node__icon--spout {
-	color: #{$red-text-dark};
+	background: #{$violet-900};
+	color: #{$violet-200};
 }
 
 .topo-node__text {
@@ -727,8 +712,8 @@ code, pre, kbd, samp {
 }
 
 .topo-badge--spout {
-	border-color: rgba(201,210,221,.5);
-	color: #{$arc-text-dark};
+	border-color: rgba(53,224,255,.5);
+	color: #{$cyan-text-dark};
 }
 
 // External systems (the Frontier) are not part of the topology itself
@@ -763,8 +748,8 @@ code, pre, kbd, samp {
 		width: 4px;
 		height: 6px;
 		border-radius: 2px;
-		background: #{$arc-glow};
-		box-shadow: 0 0 8px #{$arc-glow};
+		background: #{$cyan-glow};
+		box-shadow: 0 0 8px #{$cyan-glow};
 		animation: tuple 2.4s linear infinite;
 		animation-delay: var(--d, 0s);
 	}
@@ -792,7 +777,7 @@ code, pre, kbd, samp {
 	inset: 0;
 	border-radius: inherit;
 	padding: 1.5px;
-	background: conic-gradient(from var(--beam-angle, 0deg), transparent 0 82%, #{$brand-500} 90%, #{$arc-glow} 97%, transparent 100%);
+	background: conic-gradient(from var(--beam-angle, 0deg), transparent 0 82%, #{$violet-500} 90%, #{$cyan-glow} 97%, transparent 100%);
 	-webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
 	-webkit-mask-composite: xor;
 	mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
@@ -938,9 +923,9 @@ code, pre, kbd, samp {
 	font-size: 1.125rem;
 }
 
-.step:nth-child(1) .step__num { background: #{$brand-600}; }
-.step:nth-child(2) .step__num { background: #{$brand-500}; }
-.step:nth-child(3) .step__num { background: #{$brand-400}; }
+.step:nth-child(1) .step__num { background: #{$violet-600}; }
+.step:nth-child(2) .step__num { background: #{$violet-500}; }
+.step:nth-child(3) .step__num { background: #{$violet-400}; }
 
 .step__label {
 	font-size: .9375rem;
@@ -1006,7 +991,7 @@ code, pre, kbd, samp {
 
 // Bottom CTA band
 .cta-band {
-	background: linear-gradient(135deg, #{$storm-950}, #{$brand-900} 60%, #{$brand-800});
+	background: linear-gradient(135deg, #{$storm-950}, #{$violet-900} 60%, #{$violet-800});
 	position: relative;
 	padding: 6rem 2rem;
 	text-align: center;
@@ -1076,13 +1061,13 @@ code, pre, kbd, samp {
 		gap: .5rem;
 		font-size: .75rem;
 		color: #{$storm-400};
-		&:hover { color: #{$brand-200}; }
+		&:hover { color: #{$violet-200}; }
 	}
 	.site-footer__oakleaf { height: 20px; width: auto; }
 	.icon-btn {
 		border-color: #{$storm-700};
 		color: #{$storm-400};
-		&:hover { border-color: #{$brand-300}; color: #{$brand-200}; }
+		&:hover { border-color: #{$violet-300}; color: #{$violet-200}; }
 	}
 }
 
@@ -1102,7 +1087,7 @@ code, pre, kbd, samp {
 	a {
 		color: #{$storm-400};
 		transition: color .15s ease;
-		&:hover { color: #{$brand-200}; }
+		&:hover { color: #{$violet-200}; }
 	}
 }
 
@@ -1116,7 +1101,7 @@ code, pre, kbd, samp {
 		color: #{$storm-400};
 		text-decoration: underline;
 		text-underline-offset: 3px;
-		&:hover { color: #{$brand-200}; }
+		&:hover { color: #{$violet-200}; }
 	}
 	p { margin-bottom: .75rem; }
 }
@@ -1130,8 +1115,8 @@ code, pre, kbd, samp {
 .page-hero {
 	position: relative;
 	background:
-		radial-gradient(60% 45% at 50% 108%, rgba(221,227,235,.07), transparent 70%),
-		linear-gradient(to bottom, #2A1214, #{$brand-800});
+		radial-gradient(60% 45% at 50% 108%, rgba(53,224,255,.09), transparent 70%),
+		linear-gradient(to bottom, #180F3E, #{$violet-800});
 	padding: 3.5rem 2rem 3rem;
 	@media (max-width: 720px) { padding: 2.5rem 1rem 2rem; }
 }
@@ -1139,7 +1124,7 @@ code, pre, kbd, samp {
 .page-hero__inner {
 	max-width: 800px;
 	margin: 0 auto;
-	.eyebrow { color: #{$red-text-dark}; svg { color: #{$red-text-dark}; } }
+	.eyebrow { color: #{$cyan-text-dark}; }
 	h1 {
 		color: #fff;
 		font-weight: 700;
