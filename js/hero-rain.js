@@ -50,7 +50,7 @@
       p.y += p.vy;
       if (p.y - p.len > h) { p.y = -p.len; p.x = rand(0, w); }
       var dx = 0.12 * p.vy * p.len;
-      ctx.strokeStyle = 'rgba(199,206,232,' + p.alpha.toFixed(3) + ')';
+      ctx.strokeStyle = 'rgba(205,210,217,' + p.alpha.toFixed(3) + ')';
       ctx.lineWidth = 1;
       ctx.beginPath();
       ctx.moveTo(p.x, p.y - p.len);
@@ -71,8 +71,8 @@
       } else {
         var a = 0.35 * Math.sin(Math.PI * e);
         var g = ctx.createRadialGradient(flicker.x, flicker.y, 0, flicker.x, flicker.y, 120);
-        g.addColorStop(0, 'rgba(53,224,255,' + a.toFixed(3) + ')');
-        g.addColorStop(1, 'rgba(53,224,255,0)');
+        g.addColorStop(0, 'rgba(221,227,235,' + a.toFixed(3) + ')');
+        g.addColorStop(1, 'rgba(221,227,235,0)');
         ctx.fillStyle = g;
         ctx.fillRect(flicker.x - 120, flicker.y - 120, 240, 240);
       }
