@@ -10,9 +10,7 @@
 // All components consume CSS custom properties; SCSS vars hold raw hex only.
 // ---------------------------------------------------------------------------
 
-// Fonts (self-hosted, ASF content policy)
-@import url(/css/resources/electric-storm-fonts.css);
-@import url(/css/resources/ubuntu-mono.css);
+// Fonts: native system stack — no web fonts, no external requests.
 
 // --- Raw scales (SCSS source of truth) --------------------------------------
 
@@ -52,10 +50,10 @@ $red-brand:     #99181C; // logo red, text-safe on light backgrounds
 $red-mid:       #B03036; // decorative only
 $red-text-dark: #DC7F82; // text-safe on dark
 
-// Font stacks
-$font-display: "Space Grotesk", "Segoe UI", system-ui, sans-serif;
-$font-body: "Inter", system-ui, sans-serif;
-$font-mono: "Ubuntu Mono", ui-monospace, monospace;
+// Font stacks — native system UI fonts (matching a plain, classic look)
+$font-display: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+$font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+$font-mono: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 
 // --- Semantic tokens ---------------------------------------------------------
 
@@ -79,7 +77,8 @@ $font-mono: "Ubuntu Mono", ui-monospace, monospace;
 	--icon-chip-bg: #{$brand-100};
 	--icon-chip-fg: #{$brand-700};
 	--code-bg: #{$storm-50};
-	--nav-bg: rgba(250,250,251,.92);
+	--nav-bg: rgba(255,255,255,.9);
+	--header-border: #{$storm-200};
 	--focus-ring: #{$arc-text-light};
 	--shadow-sm: 0 1px 2px rgba(22,24,27,.08);
 	--shadow-md: 0 4px 16px -2px rgba(22,24,27,.14);
@@ -119,7 +118,8 @@ $font-mono: "Ubuntu Mono", ui-monospace, monospace;
 	--icon-chip-bg: #{$brand-900};
 	--icon-chip-fg: #{$brand-200};
 	--code-bg: #141619;
-	--nav-bg: rgba(22,24,27,.88);
+	--nav-bg: rgba(36,39,44,.92);
+	--header-border: #{$storm-600};
 	--focus-ring: #{$arc-glow};
 	--shadow-sm: 0 1px 2px rgba(0,0,0,.5);
 	--shadow-md: 0 4px 20px -4px rgba(0,0,0,.6);
@@ -174,11 +174,6 @@ code, pre, kbd, samp {
 :focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
 
 @media (prefers-reduced-motion: reduce) {
-	.hero-rain { display: none; }            /* static gradient remains */
-	.shimmer::before,
-	.beam::after,
-	.connector::after { animation: none; }
-	.reveal { opacity: 1; transform: none; filter: none; transition: none; }
 	html { scroll-behavior: auto; }
 }
 
@@ -219,32 +214,6 @@ code, pre, kbd, samp {
 		color: #fff;
 		transform: translateY(-1px);
 	}
-}
-
-// Shimmer button — hero primary CTA, single instance site-wide
-.shimmer {
-	position: relative;
-	overflow: hidden;
-	background: #{$brand-500};
-	border-radius: 8px;
-	color: #fff;
-	&::before {
-		content: "";
-		position: absolute;
-		inset: -40%;
-		background: linear-gradient(115deg, transparent 40%, rgba(255,255,255,.35) 50%, transparent 60%);
-		animation: shimmer 3.2s ease-in-out infinite;
-		pointer-events: none;
-	}
-	&:hover {
-		background: #{$brand-600};
-		transform: translateY(-1px);
-	}
-}
-
-@keyframes shimmer {
-	0%, 20% { transform: translateX(-120%); }
-	60%, 100% { transform: translateX(120%); }
 }
 
 // Chip-link
@@ -395,23 +364,6 @@ code, pre, kbd, samp {
 	border: 2px solid var(--chip-border);
 }
 
-// BlurFade reveal
-.reveal {
-	opacity: 0;
-	transform: translateY(10px);
-	filter: blur(6px);
-	transition: opacity .45s ease, transform .45s ease, filter .45s ease;
-	transition-delay: calc(var(--i, 0) * 60ms);
-}
-
-.reveal.in-view {
-	opacity: 1;
-	transform: none;
-	filter: none;
-}
-
-.no-js .reveal { opacity: 1; transform: none; filter: none; }
-
 // Transition strips
 .strip {
 	height: 6rem;
@@ -433,7 +385,8 @@ code, pre, kbd, samp {
 	background: var(--nav-bg);
 	backdrop-filter: blur(12px);
 	-webkit-backdrop-filter: blur(12px);
-	border-bottom: 1px solid var(--border);
+	border-bottom: 1px solid var(--header-border);
+	box-shadow: var(--shadow-sm);
 }
 
 .site-header__inner {
@@ -528,18 +481,7 @@ code, pre, kbd, samp {
 
 .hero {
 	position: relative;
-	overflow: hidden;
-	background:
-		radial-gradient(60% 45% at 50% 108%, rgba(221,227,235,.14), transparent 70%),
-		linear-gradient(to bottom, #{$storm-950} 0%, #2A1214 55%, #{$brand-800} 100%);
-}
-
-.hero-rain {
-	position: absolute;
-	inset: 0;
-	width: 100%;
-	height: 100%;
-	pointer-events: none;
+	background: #{$storm-950};
 }
 
 .hero__inner {
@@ -574,21 +516,6 @@ code, pre, kbd, samp {
 	letter-spacing: -.03em;
 }
 
-.grad-word {
-	background: linear-gradient(100deg, #F2F4F8 0%, #{$brand-300} 55%, #{$brand-400} 100%);
-	-webkit-background-clip: text;
-	background-clip: text;
-	-webkit-text-fill-color: transparent;
-}
-
-@supports not ((-webkit-background-clip: text) or (background-clip: text)) {
-	.grad-word {
-		background: none;
-		-webkit-text-fill-color: currentColor;
-		color: #{$brand-300};
-	}
-}
-
 .hero__lede {
 	font-size: 1.125rem;
 	line-height: 1.6;
@@ -620,189 +547,16 @@ code, pre, kbd, samp {
 // Topology panel — the signature element
 .hero__panel {
 	flex: 0 0 auto;
-	width: 100%;
-	max-width: 400px;
-	min-width: 0;
-	@media (max-width: 960px) {
-		margin: 0 auto;
-		max-width: 420px;
-	}
-}
-
-.topology-panel {
-	background: var(--invariant-surface-glass);
-	border: 1px solid rgba(220,127,130,.35);
-	border-radius: 16px;
-	padding: 2rem 1.5rem;
-	backdrop-filter: blur(8px);
-	-webkit-backdrop-filter: blur(8px);
-}
-
-@supports not ((backdrop-filter: blur(8px)) or (-webkit-backdrop-filter: blur(8px))) {
-	.topology-panel { background: rgba(28,31,35,.92); }
-}
-
-.topology-panel__caption {
-	font-size: .75rem;
-	font-weight: 500;
-	letter-spacing: .08em;
-	text-transform: uppercase;
-	color: #{$arc-text-dark};
-	margin-bottom: 1.25rem;
-}
-
-.topology {
-	position: relative;
 	display: flex;
-	flex-direction: column;
-	padding-left: 14px; // room for the return arc
-}
-
-// The return arc is the URL-status stream (purple in the docs diagram)
-.topology__return {
-	position: absolute;
-	left: -6px;
-	top: 32px;
-	height: calc(100% - 64px);
-	width: 20px;
-	color: rgba(220,127,130,.6);
-}
-
-.topo-node {
-	position: relative;
-	display: flex;
-	align-items: center;
-	gap: .75rem;
-	min-height: 64px;
-	background: var(--invariant-surface);
-	border: 1px solid var(--invariant-border);
-	border-radius: 12px;
-	padding: .75rem 1.25rem;
-	box-shadow: var(--shadow-sm);
-}
-
-.topo-node__icon {
-	display: inline-flex;
-	align-items: center;
 	justify-content: center;
-	flex: 0 0 auto;
-	width: 36px;
-	height: 36px;
-	border-radius: 50%;
-	background: #{$brand-900};
-	color: #{$brand-200};
+	@media (max-width: 960px) { margin: 0 auto; }
 }
 
-// The spout carries the mascot's red lightning
-.topo-node__icon--spout {
-	color: #{$red-text-dark};
-}
-
-.topo-node__text {
-	display: flex;
-	flex-direction: column;
-	min-width: 0;
-	strong {
-		font-size: .875rem;
-		font-weight: 600;
-		color: var(--invariant-text);
-		line-height: 1.35;
-	}
-	small {
-		font-size: .75rem;
-		line-height: 1.4;
-		color: var(--invariant-text-secondary);
-	}
-}
-
-.topo-badge {
-	margin-left: auto;
-	flex: 0 0 auto;
-	border: 1px solid var(--invariant-border);
-	border-radius: 6px;
-	padding: .125rem .5rem;
-	font-family: $font-mono;
-	font-size: .6875rem;
-	color: var(--invariant-text-secondary);
-}
-
-.topo-badge--spout {
-	border-color: rgba(201,210,221,.5);
-	color: #{$arc-text-dark};
-}
-
-// External systems (the Frontier) are not part of the topology itself
-.topo-node--ext {
-	background: transparent;
-	border-style: dashed;
-	box-shadow: none;
-	.topo-node__icon {
-		background: transparent;
-		border: 1px dashed var(--invariant-border);
-		color: var(--invariant-text-secondary);
-	}
-}
-
-.topo-badge--ext {
-	border-style: dashed;
-}
-
-
-// Tuple pulse — connectors between topology nodes
-.connector {
-	position: relative;
-	width: 2px;
-	height: 20px;
-	margin: 0 auto;
-	background: var(--invariant-border);
-	&::after {
-		content: "";
-		position: absolute;
-		top: -6px;
-		left: -1px;
-		width: 4px;
-		height: 6px;
-		border-radius: 2px;
-		background: #{$arc-glow};
-		box-shadow: 0 0 8px #{$arc-glow};
-		animation: tuple 2.4s linear infinite;
-		animation-delay: var(--d, 0s);
-	}
-}
-
-@keyframes tuple {
-	to { transform: translateY(26px); opacity: .2; }
-}
-
-.hero__panel-link {
-	margin-top: 1rem;
-	text-align: center;
-}
-
-// BorderBeam — exactly one instance site-wide (Index bolt node)
-@property --beam-angle {
-	syntax: "<angle>";
-	initial-value: 0deg;
-	inherits: false;
-}
-
-.beam::after {
-	content: "";
-	position: absolute;
-	inset: 0;
-	border-radius: inherit;
-	padding: 1.5px;
-	background: conic-gradient(from var(--beam-angle, 0deg), transparent 0 82%, #{$brand-500} 90%, #{$arc-glow} 97%, transparent 100%);
-	-webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-	-webkit-mask-composite: xor;
-	mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-	mask-composite: exclude;
-	animation: beam 7s linear infinite;
-	pointer-events: none;
-}
-
-@keyframes beam {
-	to { --beam-angle: 360deg; }
+.hero__mark {
+	width: 100%;
+	max-width: 340px;
+	height: auto;
+	@media (max-width: 960px) { max-width: 240px; }
 }
 
 // --- Landing sections ----------------------------------------------------------
@@ -1006,19 +760,11 @@ code, pre, kbd, samp {
 
 // Bottom CTA band
 .cta-band {
-	background: linear-gradient(135deg, #{$storm-950}, #{$brand-900} 60%, #{$brand-800});
+	background: #{$storm-950};
 	position: relative;
 	padding: 6rem 2rem;
 	text-align: center;
 	@media (max-width: 720px) { padding: 3.5rem 1rem; }
-	&::before {
-		content: "";
-		position: absolute;
-		inset: 0;
-		background-image: radial-gradient(rgba(199,206,232,.14) 1px, transparent 1px);
-		background-size: 26px 26px;
-		pointer-events: none;
-	}
 }
 
 .cta-band__inner {
@@ -1129,9 +875,7 @@ code, pre, kbd, samp {
 
 .page-hero {
 	position: relative;
-	background:
-		radial-gradient(60% 45% at 50% 108%, rgba(221,227,235,.07), transparent 70%),
-		linear-gradient(to bottom, #2A1214, #{$brand-800});
+	background: #{$storm-950};
 	padding: 3.5rem 2rem 3rem;
 	@media (max-width: 720px) { padding: 2.5rem 1rem 2rem; }
 }

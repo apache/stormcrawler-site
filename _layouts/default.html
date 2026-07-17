@@ -24,7 +24,6 @@
           {% if page.description %}<p class="page-hero__sub">{{ page.description }}</p>{% endif %}
         </div>
       </div>
-      <div class="strip strip--page" aria-hidden="true"></div>
       <main class="main-content page-content">
         {{ content }}
       </main>
@@ -57,7 +56,6 @@
     </script>
 
     <script src="{{ site.baseurl }}/js/site.js" defer></script>
-    {% if page.slug == 'home' %}<script src="{{ site.baseurl }}/js/hero-rain.js" defer></script>{% endif %}
 
   </body>
 
