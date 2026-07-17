@@ -26,14 +26,41 @@ slug: home
 </section>
 
 
+<!-- ============================== What is ============================== -->
+<section class="section" id="what-is">
+  <div class="section__inner">
+    <div class="section-head reveal">
+      <div class="bolt-divider" aria-hidden="true"></div>
+      <p class="eyebrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2 4.5 13.5H11L9.5 22 19 10h-6.5L13 2Z"/></svg> What is StormCrawler</p>
+      <h2>What is StormCrawler?</h2>
+      <p>A collection of resources for building low-latency, scalable web crawlers.</p>
+    </div>
+    <div class="about-grid">
+      <div class="card reveal" style="--i:0">
+        <h3 class="card__title">A library to build on</h3>
+        <p class="card__copy">Apache StormCrawler is a library and collection of resources that developers can leverage to build their own crawlers. The good news is that doing so can be pretty straightforward.</p>
+        <a class="chip" href="{{ site.baseurl }}/docs/latest/index.html#_quick_start">Getting Started <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+      </div>
+      <div class="card reveal" style="--i:1">
+        <h3 class="card__title">Reusable external resources</h3>
+        <p class="card__copy">Apart from the core components, we provide external resources you can reuse in your project: for instance our spout and bolts for OpenSearch&reg;, or a ParserBolt that uses Apache Tika&reg; to parse various document formats.</p>
+      </div>
+      <div class="card reveal" style="--i:2">
+        <h3 class="card__title">Streams and large-scale crawls</h3>
+        <p class="card__copy">Apache StormCrawler is perfectly suited to use cases where the URLs to fetch and parse come as streams, but is also an appropriate solution for large-scale recursive crawls, particularly where low latency is required. The project is used in production by many organisations and is actively developed and maintained.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ============================== Features ============================== -->
-<section class="section" id="features">
+<section class="section section--alt" id="features">
   <div class="section__inner">
     <div class="section-head reveal">
       <div class="bolt-divider" aria-hidden="true"></div>
       <p class="eyebrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2 4.5 13.5H11L9.5 22 19 10h-6.5L13 2Z"/></svg> Why StormCrawler</p>
       <h2>Built for crawling at scale.</h2>
-      <p>Everything a production-ready crawler needs.</p>
+      <p>The aim of Apache StormCrawler is to help build web crawlers that are:</p>
     </div>
     <div class="features-grid">
       <div class="card card--grid reveal" style="--i:0">
@@ -71,7 +98,7 @@ slug: home
 </section>
 
 <!-- ============================== Quick start ============================== -->
-<section class="section section--alt" id="quick-start">
+<section class="section" id="quick-start">
   <div class="section__inner">
     <div class="section-head reveal">
       <div class="bolt-divider" aria-hidden="true"></div>
@@ -104,54 +131,6 @@ slug: home
       </ol>
       <div class="chip-row">
         <a class="chip" href="{{ site.baseurl }}/docs/latest/index.html#_quick_start">Quick Start &rarr;</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================== Community ============================== -->
-<section class="section" id="community">
-  <div class="section__inner">
-    <div class="section-head reveal">
-      <div class="bolt-divider" aria-hidden="true"></div>
-      <p class="eyebrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2 4.5 13.5H11L9.5 22 19 10h-6.5L13 2Z"/></svg> Community</p>
-      <h2>Built in the open.</h2>
-      <p>Apache StormCrawler is developed by a community of volunteers at the <a href="https://www.apache.org/" target="_blank" rel="noopener">Apache Software Foundation</a>, following <a href="https://www.apache.org/theapacheway/" target="_blank" rel="noopener">the Apache Way</a>.</p>
-    </div>
-    <div class="community-grid">
-      <div class="card card--grid reveal" style="--i:0">
-        <span class="icon-chip"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="5" r="2.5"/><circle cx="6" cy="19" r="2.5"/><circle cx="18" cy="9" r="2.5"/><path d="M6 7.5v9M18 11.5c0 3-2.5 4.5-5.5 4.5H8.5"/></svg></span>
-        <h3 class="card__title">Contribute</h3>
-        <p class="card__copy">Issues, pull requests and documentation are all welcome; no contribution is too small.</p>
-        <span class="chip-cluster">
-          <a class="chip" href="{{ site.baseurl }}/contribute/">Contributing guide &rarr;</a>
-          <a class="chip" href="https://github.com/apache/stormcrawler" target="_blank" rel="noopener">GitHub <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
-        </span>
-      </div>
-      <div class="card card--grid reveal" style="--i:1">
-        <span class="icon-chip"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12c0 4-4 7-9 7-1 0-2-.1-2.9-.35L4 20l1.3-3.1C3.9 15.6 3 13.9 3 12c0-4 4-7 9-7s9 3 9 7Z"/></svg></span>
-        <h3 class="card__title">Get support</h3>
-        <p class="card__copy">Ask the community on the mailing lists or GitHub, or find commercial help.</p>
-        <span class="chip-cluster">
-          <a class="chip" href="{{ site.baseurl }}/support/">Community support &rarr;</a>
-          <a class="chip" href="{{ site.baseurl }}/support/">Commercial support &rarr;</a>
-        </span>
-      </div>
-      <div class="card card--grid reveal" style="--i:2">
-        <span class="icon-chip"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4.5" y="10" width="15" height="10" rx="2"/><path d="M8 10V7a4 4 0 1 1 8 0v3"/></svg></span>
-        <h3 class="card__title">Security</h3>
-        <p class="card__copy">Found a vulnerability? Report it privately.</p>
-        <span class="chip-cluster">
-          <a class="chip" href="{{ site.baseurl }}/security/">Security policy &rarr;</a>
-        </span>
-      </div>
-      <div class="card card--grid reveal" style="--i:3">
-        <span class="icon-chip"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 20c.6-3.2 2.9-5 5.5-5s4.9 1.8 5.5 5M16 5.5a3.2 3.2 0 0 1 0 5.6M17.5 15.2c1.7.7 2.7 2.3 3 4.8"/></svg></span>
-        <h3 class="card__title">Meet the team</h3>
-        <p class="card__copy">Committers, PMC and contributors.</p>
-        <span class="chip-cluster">
-          <a class="chip" href="{{ site.baseurl }}/team/">The team &rarr;</a>
-        </span>
       </div>
     </div>
   </div>

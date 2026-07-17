@@ -569,6 +569,13 @@ code, pre, kbd, samp {
 	@media (max-width: 720px) { grid-template-columns: 1fr; }
 }
 
+.about-grid {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 1rem;
+	@media (max-width: 900px) { grid-template-columns: 1fr; }
+}
+
 // Quick start
 .quickstart {
 	max-width: 760px;
