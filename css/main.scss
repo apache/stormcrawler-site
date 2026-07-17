@@ -572,8 +572,16 @@ code, pre, kbd, samp {
 .about-grid {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
+	grid-auto-rows: 1fr;
 	gap: 1rem;
 	@media (max-width: 900px) { grid-template-columns: 1fr; }
+	.card {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: .75rem;
+	}
+	.card .chip { margin-top: auto; }
 }
 
 // Quick start
