@@ -611,7 +611,7 @@ make sure Docker is installed on your operating system.</p>
 </div>
 </details>
 <div class="paragraph">
-<p>Be sure to replace <code>&lt;CURRENT_VERSION&gt;</code> with the latest released version, which you can find on <a href="https://central.sonatype.com/artifact/org.apache.stormcrawler/stormcrawler-archetype">central.sonatype.com</a>.</p>
+<p>Be sure to replace <code>&lt;CURRENT_VERSION&gt;</code> with the latest released version of StormCrawler, which you can find on <a href="https://search.maven.org/artifact/org.apache.stormcrawler/stormcrawler-archetype">search.maven.org</a>.</p>
 </div>
 <div class="paragraph">
 <p>During the process, you’ll be prompted to provide the following:</p>
@@ -707,7 +707,7 @@ By exploring that part of the documentation, you can gain a better understanding
   <span class="key">supervisor</span>:
     <span class="key">image</span>: <span class="string"><span class="content">storm:latest</span></span>
     <span class="key">container_name</span>: <span class="string"><span class="content">supervisor</span></span>
-    <span class="key">command</span>: <span class="string"><span class="content">storm supervisor -c worker.childopts=-Xmx2g -c storm.local.hostname=localhost</span></span>
+    <span class="key">command</span>: <span class="string"><span class="content">storm supervisor -c worker.childopts=-Xmx2g</span></span>
     <span class="key">depends_on</span>:
       - <span class="string"><span class="content">nimbus</span></span>
       - <span class="string"><span class="content">zookeeper</span></span>
@@ -722,16 +722,6 @@ By exploring that part of the documentation, you can gain a better understanding
     <span class="key">restart</span>: <span class="string"><span class="content">always</span></span>
     <span class="key">ports</span>:
       - <span class="string"><span class="delimiter">&quot;</span><span class="content">127.0.0.1:8080:8080</span><span class="delimiter">&quot;</span></span>
-
-  <span class="key">logviewer</span>:
-    <span class="key">image</span>: <span class="string"><span class="content">storm:latest</span></span>
-    <span class="key">container_name</span>: <span class="string"><span class="content">logviewer</span></span>
-    <span class="key">command</span>: <span class="string"><span class="content">storm logviewer</span></span>
-    <span class="key">depends_on</span>:
-      - <span class="string"><span class="content">supervisor</span></span>
-    <span class="key">restart</span>: <span class="string"><span class="content">always</span></span>
-    <span class="key">ports</span>:
-      - <span class="string"><span class="delimiter">&quot;</span><span class="content">127.0.0.1:8000:8000</span><span class="delimiter">&quot;</span></span>
 
   <span class="key">urlfrontier</span>:
     <span class="key">image</span>: <span class="string"><span class="content">crawlercommons/url-frontier:latest</span></span>
@@ -914,7 +904,7 @@ In a Storm topology defined with Flux, parallelism specifies the number of tasks
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-07-29 14:14:21 +0200
+Last updated 2026-05-22 14:49:42 +0200
 </div>
 </div>
 </body>

@@ -894,7 +894,7 @@ make sure Docker is installed on your operating system.</p>
 </div>
 </details>
 <div class="paragraph">
-<p>Be sure to replace <code>&lt;CURRENT_VERSION&gt;</code> with the latest released version, which you can find on <a href="https://central.sonatype.com/artifact/org.apache.stormcrawler/stormcrawler-archetype">central.sonatype.com</a>.</p>
+<p>Be sure to replace <code>&lt;CURRENT_VERSION&gt;</code> with the latest released version of StormCrawler, which you can find on <a href="https://search.maven.org/artifact/org.apache.stormcrawler/stormcrawler-archetype">search.maven.org</a>.</p>
 </div>
 <div class="paragraph">
 <p>During the process, you’ll be prompted to provide the following:</p>
@@ -990,7 +990,7 @@ By exploring that part of the documentation, you can gain a better understanding
   <span class="key">supervisor</span>:
     <span class="key">image</span>: <span class="string"><span class="content">storm:latest</span></span>
     <span class="key">container_name</span>: <span class="string"><span class="content">supervisor</span></span>
-    <span class="key">command</span>: <span class="string"><span class="content">storm supervisor -c worker.childopts=-Xmx2g -c storm.local.hostname=localhost</span></span>
+    <span class="key">command</span>: <span class="string"><span class="content">storm supervisor -c worker.childopts=-Xmx2g</span></span>
     <span class="key">depends_on</span>:
       - <span class="string"><span class="content">nimbus</span></span>
       - <span class="string"><span class="content">zookeeper</span></span>
@@ -1005,16 +1005,6 @@ By exploring that part of the documentation, you can gain a better understanding
     <span class="key">restart</span>: <span class="string"><span class="content">always</span></span>
     <span class="key">ports</span>:
       - <span class="string"><span class="delimiter">&quot;</span><span class="content">127.0.0.1:8080:8080</span><span class="delimiter">&quot;</span></span>
-
-  <span class="key">logviewer</span>:
-    <span class="key">image</span>: <span class="string"><span class="content">storm:latest</span></span>
-    <span class="key">container_name</span>: <span class="string"><span class="content">logviewer</span></span>
-    <span class="key">command</span>: <span class="string"><span class="content">storm logviewer</span></span>
-    <span class="key">depends_on</span>:
-      - <span class="string"><span class="content">supervisor</span></span>
-    <span class="key">restart</span>: <span class="string"><span class="content">always</span></span>
-    <span class="key">ports</span>:
-      - <span class="string"><span class="delimiter">&quot;</span><span class="content">127.0.0.1:8000:8000</span><span class="delimiter">&quot;</span></span>
 
   <span class="key">urlfrontier</span>:
     <span class="key">image</span>: <span class="string"><span class="content">crawlercommons/url-frontier:latest</span></span>
@@ -1368,10 +1358,10 @@ interpreted</strong>.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>As you can see for instance in <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/bolt/SimpleFetcherBolt.java#L149">SimpleFetcherBolt</a>.</p>
+<p>As you can see for instance in <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/bolt/SimpleFetcherBolt.java#L149">SimpleFetcherBolt</a>.</p>
 </div>
 <div class="paragraph">
-<p>The <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/persistence/Status.java">Status</a> enum has the following values:</p>
+<p>The <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/persistence/Status.java">Status</a> enum has the following values:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -1396,18 +1386,18 @@ interpreted</strong>.</p>
 <p>The difference between FETCH_ERROR and ERROR is that the former is possibly transient whereas the latter is terminal. The bolt which is in charge of updating the status (see below) can then decide when and whether to schedule a new fetch for a URL based on the status value.</p>
 </div>
 <div class="paragraph">
-<p>The <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/indexing/DummyIndexer.java">DummyIndexer</a> is useful for notifying the storage layer that a URL has been successfully processed, i.e., fetched, parsed, and anything else we want to do with the main content. It must be placed just before the StatusUpdaterBolt and sends a tuple for the URL on the status stream with a Status value of <code>fetched</code>.</p>
+<p>The <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/indexing/DummyIndexer.java">DummyIndexer</a> is useful for notifying the storage layer that a URL has been successfully processed, i.e., fetched, parsed, and anything else we want to do with the main content. It must be placed just before the StatusUpdaterBolt and sends a tuple for the URL on the status stream with a Status value of <code>fetched</code>.</p>
 </div>
 <div class="paragraph">
-<p>The class <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/persistence/AbstractStatusUpdaterBolt.java">AbstractStatusUpdaterBolt</a> can be extended to handle status updates for a specific backend. It has an internal cache of URLs with a <code>discovered</code> status so that they don&#8217;t get added to the backend if they already exist, which is a simple but efficient optimisation. It also uses <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/persistence/DefaultScheduler.java">DefaultScheduler</a> to compute a next fetch date and calls MetadataTransfer to filter the metadata that will be stored in the backend.</p>
+<p>The class <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/persistence/AbstractStatusUpdaterBolt.java">AbstractStatusUpdaterBolt</a> can be extended to handle status updates for a specific backend. It has an internal cache of URLs with a <code>discovered</code> status so that they don&#8217;t get added to the backend if they already exist, which is a simple but efficient optimisation. It also uses <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/persistence/DefaultScheduler.java">DefaultScheduler</a> to compute a next fetch date and calls MetadataTransfer to filter the metadata that will be stored in the backend.</p>
 </div>
 <div class="paragraph">
-<p>In most cases, the extending classes will just need to implement the method <code>store(String URL, Status status, Metadata metadata, Date nextFetch)</code> and handle their own initialisation in <code>prepare()</code>. You can find an example of a class which extends it in the <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/external/opensearch/src/main/java/org/apache/stormcrawler/opensearch/persistence/StatusUpdaterBolt.java">StatusUpdaterBolt</a> for OpenSearch.</p>
+<p>In most cases, the extending classes will just need to implement the method <code>store(String URL, Status status, Metadata metadata, Date nextFetch)</code> and handle their own initialisation in <code>prepare()</code>. You can find an example of a class which extends it in the <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/external/opensearch/src/main/java/org/apache/stormcrawler/opensearch/persistence/StatusUpdaterBolt.java">StatusUpdaterBolt</a> for OpenSearch.</p>
 </div>
 <div class="sect3">
 <h4 id="_adaptivescheduler">5.1.1. AdaptiveScheduler</h4>
 <div class="paragraph">
-<p>The <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/persistence/AdaptiveScheduler.java">AdaptiveScheduler</a> extends the <code>DefaultScheduler</code> and adjusts the fetch interval based on whether a page has changed since the last fetch (detected via MD5 signature comparison). If the page changed, the interval shrinks toward a minimum; if unchanged, it grows toward a maximum. This avoids unnecessary re-fetches of static pages while keeping dynamic pages fresh.</p>
+<p>The <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/persistence/AdaptiveScheduler.java">AdaptiveScheduler</a> extends the <code>DefaultScheduler</code> and adjusts the fetch interval based on whether a page has changed since the last fetch (detected via MD5 signature comparison). If the page changed, the interval shrinks toward a minimum; if unchanged, it grows toward a maximum. This avoids unnecessary re-fetches of static pages while keeping dynamic pages fresh.</p>
 </div>
 <div class="paragraph">
 <p>Configuration example:</p>
@@ -1419,19 +1409,11 @@ interpreted</strong>.</p>
 <span class="key">scheduler.adaptive.fetchInterval.min</span>: <span class="string"><span class="content">60</span></span>
 <span class="key">scheduler.adaptive.fetchInterval.max</span>: <span class="string"><span class="content">20160</span></span>
 <span class="key">scheduler.adaptive.fetchInterval.rate.incr</span>: <span class="string"><span class="content">.5</span></span>
-<span class="key">scheduler.adaptive.fetchInterval.rate.decr</span>: <span class="string"><span class="content">.5</span></span>
-
-<span class="key">metadata.persist</span>:
-  - <span class="string"><span class="content">signature</span></span>
-  - <span class="string"><span class="content">fetch.statusCode</span></span>
-  - <span class="string"><span class="content">fetchInterval</span></span>
-  - <span class="string"><span class="content">signatureChangeDate</span></span>
-  - <span class="string"><span class="content">last-modified</span></span>
-  - <span class="string"><span class="content">protocol.etag</span></span></code></pre>
+<span class="key">scheduler.adaptive.fetchInterval.rate.decr</span>: <span class="string"><span class="content">.5</span></span></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The <code>AdaptiveScheduler</code> requires the <code>MD5SignatureParseFilter</code> to be configured so that the <code>signature</code> metadata field is populated. The scheduler also persists its current <code>fetchInterval</code> and the metadata used to detect content changes. The <code>last-modified</code> field (written when <code>scheduler.adaptive.setLastModified</code> is enabled) and <code>protocol.etag</code> allow conditional requests (<code>If-Modified-Since</code> / <code>If-None-Match</code>).</p>
+<p>The <code>AdaptiveScheduler</code> requires the <code>MD5SignatureParseFilter</code> to be configured so that the <code>signature</code> metadata field is populated.</p>
 </div>
 </div>
 </div>
@@ -1445,10 +1427,10 @@ interpreted</strong>.</p>
 <div class="ulist">
 <ul>
 <li>
-<p><a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/bolt/SimpleFetcherBolt.java">SimpleFetcherBolt</a></p>
+<p><a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/bolt/SimpleFetcherBolt.java">SimpleFetcherBolt</a></p>
 </li>
 <li>
-<p><a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/bolt/FetcherBolt.java">FetcherBolt</a></p>
+<p><a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/bolt/FetcherBolt.java">FetcherBolt</a></p>
 </li>
 </ul>
 </div>
@@ -1473,10 +1455,10 @@ declarer.declareStream(
 <p>The <strong>FetcherBolt</strong> has an internal set of queues where the incoming URLs are placed based on their hostname/domain/IP (see config <code>fetcher.queue.mode</code>) and a number of <strong>FetchingThreads</strong> (config <code>fetcher.threads.number</code> – 10 by default) which pull the URLs to fetch from the <strong>FetchQueues</strong>. When doing so, they make sure that a minimal amount of time (set with <code>fetcher.server.delay</code> – default 1 sec) has passed since the previous URL was fetched from the same queue. This mechanism ensures that we can control the rate at which requests are sent to the servers. A <strong>FetchQueue</strong> can also be used by more than one <strong>FetchingThread</strong> at a time (in which case <code>fetcher.server.min.delay</code> is used), based on the value of <code>fetcher.threads.per.queue</code>.</p>
 </div>
 <div class="paragraph">
-<p>Incoming tuples spend very little time in the <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/bolt/FetcherBolt.java#L768">execute</a> method of the <strong>FetcherBolt</strong> as they are put in the FetchQueues, which is why you&#8217;ll find that the value of <strong>Execute latency</strong> in the Storm UI is pretty low. They get acked later on, after they&#8217;ve been fetched. The metric to watch for in the Storm UI is <strong>Process latency</strong>.</p>
+<p>Incoming tuples spend very little time in the <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/bolt/FetcherBolt.java#L768">execute</a> method of the <strong>FetcherBolt</strong> as they are put in the FetchQueues, which is why you&#8217;ll find that the value of <strong>Execute latency</strong> in the Storm UI is pretty low. They get acked later on, after they&#8217;ve been fetched. The metric to watch for in the Storm UI is <strong>Process latency</strong>.</p>
 </div>
 <div class="paragraph">
-<p>The <strong>SimpleFetcherBolt</strong> does not do any of this, hence its name. It just fetches incoming tuples in its <code>execute</code> method and does not do multi-threading. It does enforce politeness by checking when a URL can be fetched and will wait until it is the case. It is up to the user to declare multiple instances of the bolt in the Topology class and to manage how the URLs get distributed across the instances of <strong>SimpleFetcherBolt</strong>, often with the help of the <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/util/URLPartitioner.java">URLPartitioner</a>.</p>
+<p>The <strong>SimpleFetcherBolt</strong> does not do any of this, hence its name. It just fetches incoming tuples in its <code>execute</code> method and does not do multi-threading. It does enforce politeness by checking when a URL can be fetched and will wait until it is the case. It is up to the user to declare multiple instances of the bolt in the Topology class and to manage how the URLs get distributed across the instances of <strong>SimpleFetcherBolt</strong>, often with the help of the <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/util/URLPartitioner.java">URLPartitioner</a>.</p>
 </div>
 </div>
 </div>
@@ -1488,21 +1470,21 @@ declarer.declareStream(
 <div class="ulist">
 <ul>
 <li>
-<p><a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/external/solr/src/main/java/org/apache/stormcrawler/solr/bolt/IndexerBolt.java">Apache SOLR</a></p>
+<p><a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/external/solr/src/main/java/org/apache/stormcrawler/solr/bolt/IndexerBolt.java">Apache SOLR</a></p>
 </li>
 <li>
-<p><a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/external/opensearch/src/main/java/org/apache/stormcrawler/opensearch/bolt/IndexerBolt.java">OpenSearch</a></p>
+<p><a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/external/opensearch/src/main/java/org/apache/stormcrawler/opensearch/bolt/IndexerBolt.java">OpenSearch</a></p>
 </li>
 <li>
-<p><a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/external/aws/src/main/java/org/apache/stormcrawler/aws/bolt/CloudSearchIndexerBolt.java">AWS CloudSearch</a> (deprecated, will be removed in the next major release)</p>
+<p><a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/external/aws/src/main/java/org/apache/stormcrawler/aws/bolt/CloudSearchIndexerBolt.java">AWS CloudSearch</a></p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>All of these extend the class <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/indexing/AbstractIndexerBolt.java">AbstractIndexerBolt</a>.</p>
+<p>All of these extend the class <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/indexing/AbstractIndexerBolt.java">AbstractIndexerBolt</a>.</p>
 </div>
 <div class="paragraph">
-<p>The core module also contains a <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/indexing/StdOutIndexer.java">simple indexer</a> which dumps the documents into the standard output – useful for debugging – as well as a <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/indexing/DummyIndexer.java">DummyIndexer</a>.</p>
+<p>The core module also contains a <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/indexing/StdOutIndexer.java">simple indexer</a> which dumps the documents into the standard output – useful for debugging – as well as a <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/indexing/DummyIndexer.java">DummyIndexer</a>.</p>
 </div>
 <div class="paragraph">
 <p>The basic functionalities of filtering a document to index, mapping the metadata (which determines which metadata to keep for indexing and under what field name), or using the canonical tag (if any) are handled by the abstract class. This allows implementations to focus on communication with the indexing APIs.</p>
@@ -1520,7 +1502,7 @@ declarer.declareStream(
 </div>
 </div>
 <div class="paragraph">
-<p>The <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/indexing/DummyIndexer.java">DummyIndexer</a> is used for cases where no actual indexing is required. It simply generates a tuple on the <em>status</em> stream so that any StatusUpdater bolt knows that the URL was processed successfully and can update its status and scheduling in the corresponding backend.</p>
+<p>The <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/indexing/DummyIndexer.java">DummyIndexer</a> is used for cases where no actual indexing is required. It simply generates a tuple on the <em>status</em> stream so that any StatusUpdater bolt knows that the URL was processed successfully and can update its status and scheduling in the corresponding backend.</p>
 </div>
 <div class="paragraph">
 <p>You can easily build your own custom indexer to integrate with other storage systems, such as a vector database for semantic search, a graph database for network analysis, or any other specialized data store. By extending AbstractIndexerBolt, you only need to implement the logic to communicate with your target system, while StormCrawler handles the rest of the pipeline and status updates.</p>
@@ -1531,19 +1513,19 @@ declarer.declareStream(
 <div class="sect3">
 <h4 id="_jsoupparserbolt">5.4.1. JSoupParserBolt</h4>
 <div class="paragraph">
-<p>The <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/bolt/JSoupParserBolt.java">JSoupParserBolt</a> can be used to parse HTML documents and extract the outlinks, text, and metadata it contains. <code>text/plain</code> content is also handled: since there is no markup to parse, the content is used directly as the text and no outlinks are extracted. If you want to parse other non-HTML documents, use the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/external/tika/src/main/java/org/apache/stormcrawler/tika">Tika-based ParserBolt</a> from the external modules.</p>
+<p>The <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/bolt/JSoupParserBolt.java">JSoupParserBolt</a> can be used to parse HTML documents and extract the outlinks, text, and metadata it contains. If you want to parse non-HTML documents, use the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.6.0/external/tika/src/main/java/org/apache/stormcrawler/tika">Tika-based ParserBolt</a> from the external modules.</p>
 </div>
 <div class="paragraph">
 <p>This parser calls the <a href="#urlfilters">URLFilters</a> and <a href="#parsefilters">ParseFilters</a> defined in the configuration. Please note that it calls <a href="#metadatatransfer">MetadataTransfer</a> prior to calling the <a href="#parsefilters">ParseFilters</a>. If you create new Outlinks in your <a id="ParseFilters"></a>, you&#8217;ll need to make sure that you use MetadataTransfer there to inherit the Metadata from the parent document.</p>
 </div>
 <div class="paragraph">
-<p>The <strong>JSoupParserBolt</strong> automatically identifies the charset of the documents. It uses the status stream to report parsing errors but also for the outlinks it extracts from a page. These would typically be used by an extension of <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/persistence/AbstractStatusUpdaterBolt.java">AbstractStatusUpdaterBolt</a> and persisted in some form of storage.</p>
+<p>The <strong>JSoupParserBolt</strong> automatically identifies the charset of the documents. It uses the status stream to report parsing errors but also for the outlinks it extracts from a page. These would typically be used by an extension of <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/persistence/AbstractStatusUpdaterBolt.java">AbstractStatusUpdaterBolt</a> and persisted in some form of storage.</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_sitemapparserbolt">5.4.2. SiteMapParserBolt</h4>
 <div class="paragraph">
-<p>StormCrawler can handle sitemap files thanks to the <strong>SiteMapParserBolt</strong>. This bolt should be placed before the standard <strong>ParserBolt</strong> in the topology, as illustrated in the <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/archetype/src/main/resources/archetype-resources/crawler.flux">crawler Flux topology</a>.</p>
+<p>StormCrawler can handle sitemap files thanks to the <strong>SiteMapParserBolt</strong>. This bolt should be placed before the standard <strong>ParserBolt</strong> in the topology, as illustrated in <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/archetype/src/main/resources/archetype-resources/crawler.flux">crawler.flux topology</a>.</p>
 </div>
 <div class="paragraph">
 <p>The reason for this is that the <strong>SiteMapParserBolt</strong> acts as a filter: it passes on any incoming tuples to the default stream so that they get processed by the <strong>ParserBolt</strong>, unless the tuple contains <code>isSitemap=true</code> in its metadata, in which case the <strong>SiteMapParserBolt</strong> will parse it itself. Any outlinks found in the sitemap files are then emitted on the <a id="StatusStream"></a>.</p>
@@ -1555,19 +1537,19 @@ declarer.declareStream(
 <div class="sect3">
 <h4 id="_feedparserbolt">5.4.3. FeedParserBolt</h4>
 <div class="paragraph">
-<p>The <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/bolt/FeedParserBolt.java">FeedParserBolt</a> handles RSS and Atom feeds. Like the <strong>SiteMapParserBolt</strong>, it acts as a filter in the topology: it passes non-feed tuples through on the default stream, and only parses tuples whose metadata contains <code>isFeed=true</code>. Discovered feed entries are emitted on the status stream. The bolt is configured with <code>feed.sniffContent</code> (to auto-detect feeds) and <code>feed.filter.hours.since.published</code> (to discard old entries).</p>
+<p>The <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/bolt/FeedParserBolt.java">FeedParserBolt</a> handles RSS and Atom feeds. Like the <strong>SiteMapParserBolt</strong>, it acts as a filter in the topology: it passes non-feed tuples through on the default stream, and only parses tuples whose metadata contains <code>isFeed=true</code>. Discovered feed entries are emitted on the status stream. The bolt is configured with <code>feed.sniffContent</code> (to auto-detect feeds) and <code>feed.filter.hours.since.published</code> (to discard old entries).</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_urlpartitionerbolt">5.4.4. URLPartitionerBolt</h4>
 <div class="paragraph">
-<p>The <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/bolt/URLPartitionerBolt.java">URLPartitionerBolt</a> partitions incoming URLs by host, domain, or IP address (controlled by <code>partition.url.mode</code>). It is typically placed before a fetcher bolt to ensure that URLs destined for the same server are routed to the same bolt instance, enabling effective politeness enforcement. It uses the <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/util/URLPartitioner.java">URLPartitioner</a> utility internally.</p>
+<p>The <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/bolt/URLPartitionerBolt.java">URLPartitionerBolt</a> partitions incoming URLs by host, domain, or IP address (controlled by <code>partition.url.mode</code>). It is typically placed before a fetcher bolt to ensure that URLs destined for the same server are routed to the same bolt instance, enabling effective politeness enforcement. It uses the <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/util/URLPartitioner.java">URLPartitioner</a> utility internally.</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_statusemitterbolt">5.4.5. StatusEmitterBolt</h4>
 <div class="paragraph">
-<p>The <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/bolt/StatusEmitterBolt.java">StatusEmitterBolt</a> is an abstract base class for bolts that emit tuples on both the default stream and the status stream. It provides utility methods for emitting status updates (e.g., errors, redirections, discovered URLs). The fetcher and parser bolts (<code>FetcherBolt</code>, <code>SimpleFetcherBolt</code>, <code>JSoupParserBolt</code>, <code>SiteMapParserBolt</code>, <code>FeedParserBolt</code>) all extend this class.</p>
+<p>The <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/bolt/StatusEmitterBolt.java">StatusEmitterBolt</a> is an abstract base class for bolts that emit tuples on both the default stream and the status stream. It provides utility methods for emitting status updates (e.g., errors, redirections, discovered URLs). The fetcher and parser bolts (<code>FetcherBolt</code>, <code>SimpleFetcherBolt</code>, <code>JSoupParserBolt</code>, <code>SiteMapParserBolt</code>, <code>FeedParserBolt</code>) all extend this class.</p>
 </div>
 </div>
 </div>
@@ -1579,19 +1561,19 @@ declarer.declareStream(
 <div class="sect3">
 <h4 id="_filespout">5.5.1. FileSpout</h4>
 <div class="paragraph">
-<p>The <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/spout/FileSpout.java">FileSpout</a> reads seed URLs from UTF-8 text files and loads them into memory. Each line is parsed using <code>StringTabScheme</code> into a URL and optional metadata (tab-separated). This is useful for one-off crawls with a known list of URLs.</p>
+<p>The <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/spout/FileSpout.java">FileSpout</a> reads seed URLs from UTF-8 text files and loads them into memory. Each line is parsed using <code>StringTabScheme</code> into a URL and optional metadata (tab-separated). This is useful for one-off crawls with a known list of URLs.</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_memoryspout">5.5.2. MemorySpout</h4>
 <div class="paragraph">
-<p>The <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/spout/MemorySpout.java">MemorySpout</a> stores URLs in an in-memory priority queue. It is intended for testing and debugging in local mode or with a single worker. It can be used with <code>MemoryStatusUpdater</code> to emulate a recursive crawl without an external storage backend.</p>
+<p>The <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/spout/MemorySpout.java">MemorySpout</a> stores URLs in an in-memory priority queue. It is intended for testing and debugging in local mode or with a single worker. It can be used with <code>MemoryStatusUpdater</code> to emulate a recursive crawl without an external storage backend.</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_abstractqueryingspout">5.5.3. AbstractQueryingSpout</h4>
 <div class="paragraph">
-<p>The <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/persistence/AbstractQueryingSpout.java">AbstractQueryingSpout</a> is the abstract base class for spouts that query a storage backend for URLs to fetch. External module spouts such as <code>AggregationSpout</code> (OpenSearch), <code>SolrSpout</code>, <code>SQLSpout</code>, and the URLFrontier <code>Spout</code> all extend this class. It handles throttling, acking, and coordination with the URL buffer (<code>urlbuffer.class</code>).</p>
+<p>The <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/persistence/AbstractQueryingSpout.java">AbstractQueryingSpout</a> is the abstract base class for spouts that query a storage backend for URLs to fetch. External module spouts such as <code>AggregationSpout</code> (OpenSearch), <code>SolrSpout</code>, <code>SQLSpout</code>, and the URLFrontier <code>Spout</code> all extend this class. It handles throttling, acking, and coordination with the URL buffer (<code>urlbuffer.class</code>).</p>
 </div>
 </div>
 </div>
@@ -1600,10 +1582,10 @@ declarer.declareStream(
 <div class="sect3">
 <h4 id="parsefilters">5.6.1. Parse Filters</h4>
 <div class="paragraph">
-<p>ParseFilters are called from parsing bolts such as <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/bolt/JSoupParserBolt.java">JSoupParserBolt</a> and <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/bolt/SiteMapParserBolt.java">SiteMapParserBolt</a> to extract data from web pages. The extracted data is stored in the Metadata object. ParseFilters can also modify the Outlinks and, in that sense, act as URLFilters.</p>
+<p>ParseFilters are called from parsing bolts such as <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/bolt/JSoupParserBolt.java">JSoupParserBolt</a> and <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/bolt/SiteMapParserBolt.java">SiteMapParserBolt</a> to extract data from web pages. The extracted data is stored in the Metadata object. ParseFilters can also modify the Outlinks and, in that sense, act as URLFilters.</p>
 </div>
 <div class="paragraph">
-<p>ParseFilters need to implement the interface <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/parse/ParseFilter.java">ParseFilter</a>, which defines three methods:</p>
+<p>ParseFilters need to implement the interface <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/parse/ParseFilter.java">ParseFilter</a>, which defines three methods:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1628,14 +1610,14 @@ declarer.declareStream(
 </ul>
 </div>
 <div class="paragraph">
-<p>The archetype includes a default <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/archetype/src/main/resources/archetype-resources/src/main/resources/parsefilters.json">JSON configuration file</a> for ParseFilters. The configuration allows multiple instances of the same filter class with different parameters and supports complex parameter objects. ParseFilters are executed in the order they appear in the JSON file.</p>
+<p>Here is the default <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/archetype/src/main/resources/archetype-resources/src/main/resources/parsefilters.json">JSON configuration file</a> for ParseFilters. The configuration allows multiple instances of the same filter class with different parameters and supports complex parameter objects. ParseFilters are executed in the order they appear in the JSON file.</p>
 </div>
 <div class="sect4">
 <h5 id="_provided_parsefilters">Provided ParseFilters</h5>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>CollectionTagger</strong> – <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/parse/filter/CollectionTagger.java">CollectionTagger</a> assigns one or more tags to the metadata of a document based on URL patterns defined in a JSON resource file. The resource file supports both include and exclude regular expressions:</p>
+<p><strong>CollectionTagger</strong> – <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/parse/filter/CollectionTagger.java">CollectionTagger</a> assigns one or more tags to the metadata of a document based on URL patterns defined in a JSON resource file. The resource file supports both include and exclude regular expressions:</p>
 </li>
 </ul>
 </div>
@@ -1659,28 +1641,28 @@ declarer.declareStream(
 <div class="ulist">
 <ul>
 <li>
-<p><strong>CommaSeparatedToMultivaluedMetadata</strong> – <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/parse/filter/CommaSeparatedToMultivaluedMetadata.java">CommaSeparatedToMultivaluedMetadata</a> rewrites single metadata values containing comma-separated entries into multiple values for the same key, useful for keyword tags.</p>
+<p><strong>CommaSeparatedToMultivaluedMetadata</strong> – <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/parse/filter/CommaSeparatedToMultivaluedMetadata.java">CommaSeparatedToMultivaluedMetadata</a> rewrites single metadata values containing comma-separated entries into multiple values for the same key, useful for keyword tags.</p>
 </li>
 <li>
-<p><strong>DebugParseFilter</strong> – <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/parse/filter/DebugParseFilter.java">DebugParseFilter</a> dumps an XML representation of the DOM structure to a temporary file.</p>
+<p><strong>DebugParseFilter</strong> – <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/parse/filter/DebugParseFilter.java">DebugParseFilter</a> dumps an XML representation of the DOM structure to a temporary file.</p>
 </li>
 <li>
-<p><strong>DomainParseFilter</strong> – <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/parse/filter/DomainParseFilter.java">DomainParseFilter</a> stores the domain or host name in the metadata for later indexing.</p>
+<p><strong>DomainParseFilter</strong> – <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/parse/filter/DomainParseFilter.java">DomainParseFilter</a> stores the domain or host name in the metadata for later indexing.</p>
 </li>
 <li>
-<p><strong>LDJsonParseFilter</strong> – <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/parse/filter/LDJsonParseFilter.java">LDJsonParseFilter</a> extracts data from JSON-LD representations.</p>
+<p><strong>LDJsonParseFilter</strong> – <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/parse/filter/LDJsonParseFilter.java">LDJsonParseFilter</a> extracts data from JSON-LD representations.</p>
 </li>
 <li>
-<p><strong>LinkParseFilter</strong> – <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/parse/filter/LinkParseFilter.java">LinkParseFilter</a> extracts outlinks from documents using XPath expressions defined in the configuration.</p>
+<p><strong>LinkParseFilter</strong> – <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/parse/filter/LinkParseFilter.java">LinkParseFilter</a> extracts outlinks from documents using XPath expressions defined in the configuration.</p>
 </li>
 <li>
-<p><strong>MD5SignatureParseFilter</strong> – <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/parse/filter/MD5SignatureParseFilter.java">MD5SignatureParseFilter</a> generates an MD5 signature of a document based on the binary content, text, or URL (as a last resort). It can be combined with content filtering to exclude boilerplate text.</p>
+<p><strong>MD5SignatureParseFilter</strong> – <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/parse/filter/MD5SignatureParseFilter.java">MD5SignatureParseFilter</a> generates an MD5 signature of a document based on the binary content, text, or URL (as a last resort). It can be combined with content filtering to exclude boilerplate text.</p>
 </li>
 <li>
-<p><strong>MimeTypeNormalization</strong> – <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/parse/filter/MimeTypeNormalization.java">MimeTypeNormalization</a> converts server-reported or inferred mime-type values into human-readable values such as <em>pdf</em>, <em>html</em>, or <em>image</em> and stores them in the metadata, useful for indexing and filtering search results.</p>
+<p><strong>MimeTypeNormalization</strong> – <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/parse/filter/MimeTypeNormalization.java">MimeTypeNormalization</a> converts server-reported or inferred mime-type values into human-readable values such as <em>pdf</em>, <em>html</em>, or <em>image</em> and stores them in the metadata, useful for indexing and filtering search results.</p>
 </li>
 <li>
-<p><strong>XPathFilter</strong> – <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/parse/filter/XPathFilter.java">XPathFilter</a> allows extraction of data using XPath expressions and storing them in the Metadata object.</p>
+<p><strong>XPathFilter</strong> – <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/parse/filter/XPathFilter.java">XPathFilter</a> allows extraction of data using XPath expressions and storing them in the Metadata object.</p>
 </li>
 </ul>
 </div>
@@ -1696,7 +1678,7 @@ By implementing the ParseFilter interface and configuring the filter in the JSON
 <p>The URL filters can be used to both remove or modify incoming URLs (unlike Nutch where these functionalities are separated between URLFilters and URLNormalizers). This is generally used within a parsing bolt to normalize and filter outgoing URLs, but is also called within the FetcherBolt to handle redirections.</p>
 </div>
 <div class="paragraph">
-<p>URLFilters need to implement the interface <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/filtering/URLFilter.java">URLFilter</a> which defines a single method:</p>
+<p>URLFilters need to implement the interface <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/filtering/URLFilter.java">URLFilter</a> which defines a single method:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1705,7 +1687,7 @@ By implementing the ParseFilter interface and configuring the filter in the JSON
 </div>
 </div>
 <div class="paragraph">
-<p>and inherits a default one from <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/util/Configurable.java">Configurable</a>:</p>
+<p>and inherits a default one from <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/util/Configurable.java">Configurable</a>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1713,10 +1695,10 @@ By implementing the ParseFilter interface and configuring the filter in the JSON
 </div>
 </div>
 <div class="paragraph">
-<p>The configuration is done via a JSON file which is loaded by the wrapper class <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/filtering/URLFilters.java">URLFilters</a>. The URLFilter instances can be used directly, but it is easier to use the class URLFilters instead. Some filter implementations can also be configured with the <a href="#configuration.adoc">standard configuration mechanism</a>.</p>
+<p>The configuration is done via a JSON file which is loaded by the wrapper class <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/filtering/URLFilters.java">URLFilters</a>. The URLFilter instances can be used directly, but it is easier to use the class URLFilters instead. Some filter implementations can also be configured with the <a href="configuration.html">standard configuration mechanism</a>.</p>
 </div>
 <div class="paragraph">
-<p>Here is an example of a <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/archetype/src/main/resources/archetype-resources/src/main/resources/urlfilters.json">JSON configuration file</a>.</p>
+<p>Here is an example of a <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/archetype/src/main/resources/archetype-resources/src/main/resources/urlfilters.json">JSON configuration file</a>.</p>
 </div>
 <div class="paragraph">
 <p>The JSON configuration allows loading several instances of the same filtering class with different parameters and can handle complex configuration objects since it makes no assumptions about the content of the field <code>param</code>. The URLFilters are executed in the order in which they are defined in the JSON file.</p>
@@ -1726,16 +1708,16 @@ By implementing the ParseFilter interface and configuring the filter in the JSON
 <div class="sect5">
 <h6 id="_basic">Basic</h6>
 <div class="paragraph">
-<p>The <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/filtering/basic/BasicURLFilter.java">BasicURLFilter</a> filters based on the length of the URL and the repetition of path elements.</p>
+<p>The <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/filtering/basic/BasicURLFilter.java">BasicURLFilter</a> filters based on the length of the URL and the repetition of path elements.</p>
 </div>
 <div class="paragraph">
-<p>The <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/filtering/basic/BasicURLNormalizer.java">BasicURLNormalizer</a> removes the anchor part of URLs based on the value of the parameter <code>removeAnchorPart</code>. It also removes query elements based on the configuration and whether their value corresponds to a 32-bit hash.</p>
+<p>The <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/filtering/basic/BasicURLNormalizer.java">BasicURLNormalizer</a> removes the anchor part of URLs based on the value of the parameter <code>removeAnchorPart</code>. It also removes query elements based on the configuration and whether their value corresponds to a 32-bit hash.</p>
 </div>
 </div>
 <div class="sect5">
 <h6 id="_fasturlfilter">FastURLFilter</h6>
 <div class="paragraph">
-<p>The <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/filtering/regex/FastURLFilter.java">FastURLFilter</a> is based on regex patterns and organized by scope (host | domain | metadata | global). For a given URL, the scopes are tried in the order given above and the URL is kept or removed based on the first matching rule. The default policy is to accept a URL if no match is found.</p>
+<p>The <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/filtering/regex/FastURLFilter.java">FastURLFilter</a> is based on regex patterns and organized by scope (host | domain | metadata | global). For a given URL, the scopes are tried in the order given above and the URL is kept or removed based on the first matching rule. The default policy is to accept a URL if no match is found.</p>
 </div>
 <div class="paragraph">
 <p>The resource file is in JSON and looks like this:</p>
@@ -1770,13 +1752,13 @@ By implementing the ParseFilter interface and configuring the filter in the JSON
 <div class="sect5">
 <h6 id="_host">Host</h6>
 <div class="paragraph">
-<p>The <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/filtering/host/HostURLFilter.java">HostURLFilter</a> filters URLs based on whether they belong to the same host or domain name as the source URL. This is configured with the parameters <code>ignoreOutsideDomain</code> and <code>ignoreOutsideHost</code>. The latter takes precedence over the former.</p>
+<p>The <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/filtering/host/HostURLFilter.java">HostURLFilter</a> filters URLs based on whether they belong to the same host or domain name as the source URL. This is configured with the parameters <code>ignoreOutsideDomain</code> and <code>ignoreOutsideHost</code>. The latter takes precedence over the former.</p>
 </div>
 </div>
 <div class="sect5">
 <h6 id="_maxdepth">MaxDepth</h6>
 <div class="paragraph">
-<p>The <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/filtering/depth/MaxDepthFilter.java">MaxDepthFilter</a> is configured with the parameter <code>maxDepth</code> and requires <code>metadata.track.depth</code> to be set to true in the Configuration. This removes outlinks found too far from the seed URL and controls the expansion of the crawl.</p>
+<p>The <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/filtering/depth/MaxDepthFilter.java">MaxDepthFilter</a> is configured with the parameter <code>maxDepth</code> and requires <code>metadata.track.depth</code> to be set to true in the Configuration. This removes outlinks found too far from the seed URL and controls the expansion of the crawl.</p>
 </div>
 <div class="paragraph">
 <p>If the filter is configured with a value of 0, all outlinks will be removed, regardless of whether the depth is being tracked.</p>
@@ -1788,13 +1770,13 @@ By implementing the ParseFilter interface and configuring the filter in the JSON
 <div class="sect5">
 <h6 id="_metadata">Metadata</h6>
 <div class="paragraph">
-<p>The <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/filtering/metadata/MetadataFilter.java">MetadataFilter</a> filters URLs based on metadata in the source document.</p>
+<p>The <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/filtering/metadata/MetadataFilter.java">MetadataFilter</a> filters URLs based on metadata in the source document.</p>
 </div>
 </div>
 <div class="sect5">
 <h6 id="_regexurlfilter">RegexURLFilter</h6>
 <div class="paragraph">
-<p>The <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/filtering/regex/RegexURLFilter.java">RegexURLFilter</a> uses a configuration file or a JSON ArrayNode containing regular expressions to determine whether a URL should be kept or not. The most specific rule must be placed first as a URL is kept or removed based on the first matching rule.</p>
+<p>The <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/filtering/regex/RegexURLFilter.java">RegexURLFilter</a> uses a configuration file or a JSON ArrayNode containing regular expressions to determine whether a URL should be kept or not. The most specific rule must be placed first as a URL is kept or removed based on the first matching rule.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1810,7 +1792,7 @@ By implementing the ParseFilter interface and configuring the filter in the JSON
 <div class="sect5">
 <h6 id="_regexurlnormalizer">RegexURLNormalizer</h6>
 <div class="paragraph">
-<p>The <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/filtering/regex/RegexURLNormalizer.java">RegexURLNormalizer</a> uses a configuration file or a JSON ArrayNode containing regular expressions and replacements to normalize URLs.</p>
+<p>The <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/filtering/regex/RegexURLNormalizer.java">RegexURLNormalizer</a> uses a configuration file or a JSON ArrayNode containing regular expressions and replacements to normalize URLs.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1832,19 +1814,19 @@ By implementing the ParseFilter interface and configuring the filter in the JSON
 <div class="sect5">
 <h6 id="_robotsfilter">RobotsFilter</h6>
 <div class="paragraph">
-<p>The <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/filtering/robots/RobotsFilter.java">RobotsFilter</a> discards URLs based on the robots.txt directives. This is meant for small, limited crawls where the number of hosts is finite. Using this on a larger or open crawl would impact performance as the filter tries to retrieve the robots.txt files for any host found.</p>
+<p>The <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/filtering/robots/RobotsFilter.java">RobotsFilter</a> discards URLs based on the robots.txt directives. This is meant for small, limited crawls where the number of hosts is finite. Using this on a larger or open crawl would impact performance as the filter tries to retrieve the robots.txt files for any host found.</p>
 </div>
 </div>
 <div class="sect5">
 <h6 id="_selfurlfilter">SelfURLFilter</h6>
 <div class="paragraph">
-<p>The <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/filtering/basic/SelfURLFilter.java">SelfURLFilter</a> removes self-referential URLs, i.e., outlinks that point back to the same page they were discovered on (after normalization).</p>
+<p>The <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/filtering/basic/SelfURLFilter.java">SelfURLFilter</a> removes self-referential URLs, i.e., outlinks that point back to the same page they were discovered on (after normalization).</p>
 </div>
 </div>
 <div class="sect5">
 <h6 id="_sitemapfilter">SitemapFilter</h6>
 <div class="paragraph">
-<p>The <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/filtering/sitemap/SitemapFilter.java">SitemapFilter</a> discards the outlinks of URLs which are not sitemaps when sitemaps have been found.</p>
+<p>The <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/filtering/sitemap/SitemapFilter.java">SitemapFilter</a> discards the outlinks of URLs which are not sitemaps when sitemaps have been found.</p>
 </div>
 </div>
 </div>
@@ -1853,7 +1835,7 @@ By implementing the ParseFilter interface and configuring the filter in the JSON
 <div class="sect2">
 <h3 id="metadatatransfer">5.7. Metadata Transfer</h3>
 <div class="paragraph">
-<p>The class <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/util/MetadataTransfer.java">MetadataTransfer</a> is an important part of the framework and is used in key parts of a pipeline.</p>
+<p>The class <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/util/MetadataTransfer.java">MetadataTransfer</a> is an important part of the framework and is used in key parts of a pipeline.</p>
 </div>
 <div class="ulist">
 <ul>
@@ -1885,8 +1867,8 @@ By implementing the ParseFilter interface and configuring the filter in the JSON
 </ul>
 </div>
 <div class="paragraph">
-<p>The former is used when creating <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/parse/Outlink.java">Outlinks</a> i.e. in the parsing bolts but also for handling redirections in the FetcherBolt(s)
-The latter is used by extensions of the <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/persistence/AbstractStatusUpdaterBolt.java">AbstractStatusUpdaterBolt</a> class to determine which <strong>Metadata</strong> should be persisted.</p>
+<p>The former is used when creating <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/parse/Outlink.java">Outlinks</a> i.e. in the parsing bolts but also for handling redirections in the FetcherBolt(s)
+The latter is used by extensions of the <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/persistence/AbstractStatusUpdaterBolt.java">AbstractStatusUpdaterBolt</a> class to determine which <strong>Metadata</strong> should be persisted.</p>
 </div>
 <div class="paragraph">
 <p>The behavior of the default MetadataTransfer class is driven by configuration only. It has the following options.</p>
@@ -1894,10 +1876,10 @@ The latter is used by extensions of the <a href="https://github.com/apache/storm
 <div class="ulist">
 <ul>
 <li>
-<p><code>metadata.transfer</code> list of metadata key values to filter or transfer to the outlinks. See <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/resources/crawler-default.yaml#L70">crawler-default.yaml</a></p>
+<p><code>metadata.transfer</code> list of metadata key values to filter or transfer to the outlinks. See <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/resources/crawler-default.yaml#L70">crawler-default.yaml</a></p>
 </li>
 <li>
-<p><code>metadata.persist</code> list of metadata key values to persist in the status storage. See <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/resources/crawler-default.yaml#L75">crawler-default.yaml</a></p>
+<p><code>metadata.persist</code> list of metadata key values to persist in the status storage. See <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/resources/crawler-default.yaml#L75">crawler-default.yaml</a></p>
 </li>
 <li>
 <p><code>metadata.track.path</code> whether to track the URL path or not. Boolean value, true by default.</p>
@@ -1953,7 +1935,7 @@ While HTTP and HTTPS are the most commonly used, other protocols like <code>file
 <div class="ulist">
 <ul>
 <li>
-<p><a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/protocol/file/FileProtocol.java">FileProtocol</a></p>
+<p><a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/protocol/file/FileProtocol.java">FileProtocol</a></p>
 </li>
 </ul>
 </div>
@@ -1961,13 +1943,13 @@ While HTTP and HTTPS are the most commonly used, other protocols like <code>file
 <div class="sect4">
 <h5 id="_delegatorprotocol">DelegatorProtocol</h5>
 <div class="paragraph">
-<p>The <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/protocol/DelegatorProtocol.java">DelegatorProtocol</a> enables selection from a collection of sub-protocols using filters based on metadata and URL patterns. The last protocol in the list acts as the default. This is useful when certain URLs need to be fetched with a browser-based protocol (e.g., Playwright) while the majority use a standard HTTP client.</p>
+<p>The <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/protocol/DelegatorProtocol.java">DelegatorProtocol</a> enables selection from a collection of sub-protocols using filters based on metadata and URL patterns. The last protocol in the list acts as the default. This is useful when certain URLs need to be fetched with a browser-based protocol (e.g., Selenium) while the majority use a standard HTTP client.</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="yaml"><span class="key">http.protocol.implementation</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">org.apache.stormcrawler.protocol.DelegatorProtocol</span><span class="delimiter">&quot;</span></span>
 <span class="key">protocol.delegator.config</span>:
-  - <span class="string"><span class="content">className: &quot;org.apache.stormcrawler.protocol.playwright.HttpProtocol&quot;</span></span>
+  - <span class="string"><span class="content">className: &quot;org.apache.stormcrawler.protocol.httpclient.HttpProtocol&quot;</span></span>
     <span class="key">filters</span>:
       <span class="key">domain</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">example.com</span><span class="delimiter">&quot;</span></span>
   - <span class="string"><span class="content">className: &quot;org.apache.stormcrawler.protocol.okhttp.HttpProtocol&quot;</span></span></code></pre>
@@ -1994,13 +1976,13 @@ While HTTP and HTTPS are the most commonly used, other protocols like <code>file
 <div class="ulist">
 <ul>
 <li>
-<p><a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/protocol/httpclient/HttpProtocol.java">HttpClient</a> (<strong>deprecated</strong> — will be removed in the next major release; use OKHttp instead)</p>
+<p><a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/protocol/httpclient/HttpProtocol.java">HttpClient</a></p>
 </li>
 <li>
-<p><a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/external/selenium/src/main/java/org/apache/stormcrawler/protocol/selenium/SeleniumProtocol.java">Selenium</a></p>
+<p><a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/external/selenium/src/main/java/org/apache/stormcrawler/protocol/selenium/SeleniumProtocol.java">Selenium</a></p>
 </li>
 <li>
-<p><a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/protocol/okhttp/HttpProtocol.java">OKHttp</a></p>
+<p><a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/protocol/okhttp/HttpProtocol.java">OKHttp</a></p>
 </li>
 </ul>
 </div>
@@ -2116,18 +2098,18 @@ While HTTP and HTTPS are the most commonly used, other protocols like <code>file
 <div class="ulist">
 <ul>
 <li>
-<p>The <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/protocol/okhttp/HttpProtocol.java">OKHttp</a> protocol supports <a href="https://en.wikipedia.org/wiki/HTTP/2">HTTP/2</a> if the JDK includes <a href="https://en.wikipedia.org/wiki/Application-Layer_Protocol_Negotiation">ALPN</a> (Java 9 and upwards or Java 8 builds starting early/mid 2020).</p>
+<p>The <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/protocol/okhttp/HttpProtocol.java">OKHttp</a> protocol supports <a href="https://en.wikipedia.org/wiki/HTTP/2">HTTP/2</a> if the JDK includes <a href="https://en.wikipedia.org/wiki/Application-Layer_Protocol_Negotiation">ALPN</a> (Java 9 and upwards or Java 8 builds starting early/mid 2020).</p>
 </li>
 <li>
-<p><a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/protocol/httpclient/HttpProtocol.java">HttpClient</a> does not yet support HTTP/2.</p>
+<p><a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/protocol/httpclient/HttpProtocol.java">HttpClient</a> does not yet support HTTP/2.</p>
 </li>
 <li>
-<p><a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/external/selenium/src/main/java/org/apache/stormcrawler/protocol/selenium/SeleniumProtocol.java">Selenium</a>: whether HTTP/2 is used or not depends on the used driver.</p>
+<p><a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/external/selenium/src/main/java/org/apache/stormcrawler/protocol/selenium/SeleniumProtocol.java">Selenium</a>: whether HTTP/2 is used or not depends on the used driver.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>Since <a href="https://github.com/apache/stormcrawler/pull/829">#829</a>, the HTTP protocol version used is configurable via <code>http.protocol.versions</code> (see also comments in <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/resources/crawler-default.yaml">crawler-default.yaml</a>).</p>
+<p>Since <a href="https://github.com/apache/stormcrawler/pull/829">#829</a>, the HTTP protocol version used is configurable via <code>http.protocol.versions</code> (see also comments in <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/resources/crawler-default.yaml">crawler-default.yaml</a>).</p>
 </div>
 <div class="paragraph">
 <p>For example, to force that only HTTP/1.1 is used:</p>
@@ -2142,7 +2124,7 @@ While HTTP and HTTPS are the most commonly used, other protocols like <code>file
 <div class="sect3">
 <h4 id="_metadata_dependent_behavior_for_http_protocols">5.8.5. Metadata-dependent Behavior For HTTP Protocols</h4>
 <div class="paragraph">
-<p>The <code>metadata</code> argument to <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/protocol/Protocol.java#L53">HTTPProtocol.getProtocolOutput()</a> can affect the behavior of the protocol. The following metadata keys are detected by <code>HTTPProtocol</code> implementations and utilized in performing the request:</p>
+<p>The <code>metadata</code> argument to <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/protocol/Protocol.java#L53">HTTPProtocol.getProtocolOutput()</a> can affect the behavior of the protocol. The following metadata keys are detected by <code>HTTPProtocol</code> implementations and utilized in performing the request:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -2169,15 +2151,6 @@ While HTTP and HTTPS are the most commonly used, other protocols like <code>file
 </li>
 <li>
 <p><code>protocol.set-headers</code>: If this key is present in metadata, the protocol adds the specified headers to the request. See <a href="https://github.com/apache/stormcrawler/pull/993">#993</a></p>
-</li>
-<li>
-<p><code>http.proxy.skip</code>: If this key is set to <code>true</code> in <code>metadata</code>, the built-in proxy managers return no proxy for the request, even when a default proxy, proxy rotation, or metadata proxy override is configured. If present, the value must be <code>true</code> or <code>false</code>.</p>
-</li>
-<li>
-<p><code>http.proxy</code>: If this key is present in <code>metadata</code>, the built-in proxy managers use it as a full proxy connection string for the request, e.g. <code>http://user:pass@proxy.example.com:8080</code>. It takes precedence over component proxy metadata keys. Invalid values throw <code>IllegalArgumentException</code>.</p>
-</li>
-<li>
-<p><code>http.proxy.host</code>, <code>http.proxy.port</code>, <code>http.proxy.type</code>, <code>http.proxy.user</code>, <code>http.proxy.pass</code>: If these keys are present in <code>metadata</code>, the built-in proxy managers build a per-request proxy from the component values. These metadata keys use the same names and defaults as the proxy configuration keys, except blank <code>http.proxy.user</code> and <code>http.proxy.pass</code> values are treated as unset, and non-blank authentication values must be supplied together. Component metadata values are trimmed. The <code>http.proxy.port</code> value must be an integer from <code>1</code> through <code>65535</code>. Use the component keys for credentials containing URL-reserved separator characters such as <code>:</code> or <code>@</code>; those characters are preserved in component values, while full <code>http.proxy</code> values are parsed as <strong>SCProxy</strong> connection strings. Invalid values throw <code>IllegalArgumentException</code>.</p>
 </li>
 </ul>
 </div>
@@ -2317,10 +2290,10 @@ Allow: /publications/</pre>
 <div class="sect2">
 <h3 id="_proxy">6.2. Proxy</h3>
 <div class="paragraph">
-<p>StormCrawler&#8217;s proxy system is built on top of the <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/proxy/SCProxy.java">SCProxy</a> class and the <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/proxy/ProxyManager.java">ProxyManager</a> interface. Every proxy used in the system is formatted as a <strong>SCProxy</strong>. The <strong>ProxyManager</strong> implementations handle the management and delegation of their internal proxies. At the call of <code>Protocol#getProtocolOutput()</code>, the <code>ProxyManager.getProxy()</code> is called to retrieve a proxy for the individual request.</p>
+<p>StormCrawler&#8217;s proxy system is built on top of the <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/proxy/SCProxy.java">SCProxy</a> class and the <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/proxy/ProxyManager.java">ProxyManager</a> interface. Every proxy used in the system is formatted as a <strong>SCProxy</strong>. The <strong>ProxyManager</strong> implementations handle the management and delegation of their internal proxies. At the call of <code>Protocol#getProtocolOutput()</code>, the <code>ProxyManager.getProxy()</code> is called to retrieve a proxy for the individual request.</p>
 </div>
 <div class="paragraph">
-<p>The <strong>ProxyManager</strong> interface can be implemented in a custom class to create custom logic for proxy management and load balancing. When <code>http.proxy.manager</code> is omitted, the core HTTP protocol implementations create <strong>SingleProxyManager</strong> only if <code>http.proxy.host</code> is configured. To use <strong>SingleProxyManager</strong> with only a full <code>http.proxy</code> connection string, or to use <strong>MultiProxyManager</strong> or custom implementations, pass the class path and name via the config parameter <code>http.proxy.manager</code>:</p>
+<p>The <strong>ProxyManager</strong> interface can be implemented in a custom class to create custom logic for proxy management and load balancing. The default <strong>ProxyManager</strong> implementation is <strong>SingleProxyManager</strong>. This ensures backwards compatibility for prior StormCrawler releases. To use <strong>MultiProxyManager</strong> or custom implementations, pass the class path and name via the config parameter <code>http.proxy.manager</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2333,12 +2306,11 @@ Allow: /publications/</pre>
 <div class="ulist">
 <ul>
 <li>
-<p><a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/proxy/SingleProxyManager.java">SingleProxyManager</a>
+<p><a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/proxy/SingleProxyManager.java">SingleProxyManager</a>
 Manages a single proxy passed by the backwards compatible proxy fields in the configuration:</p>
 <div class="literalblock">
 <div class="content">
 <pre>----
-http.proxy
 http.proxy.host
 http.proxy.port
 http.proxy.type
@@ -2349,7 +2321,7 @@ http.proxy.pass (optional)
 </div>
 </li>
 <li>
-<p><a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/proxy/MultiProxyManager.java">MultiProxyManager</a>
+<p><a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/proxy/MultiProxyManager.java">MultiProxyManager</a>
 Manages multiple proxies passed through a TXT file. The file should contain connection strings for all proxies including the protocol and authentication (if needed). The file supports comment lines (<code>//</code> or <code>#</code>) and empty lines. The file path should be passed via the config at the below field. The TXT file must be available to all nodes participating in the topology:</p>
 <div class="literalblock">
 <div class="content">
@@ -2383,21 +2355,6 @@ Selects the proxy with the least amount of usage. This is performed lazily for s
 <div class="paragraph">
 <p>The <strong>SCProxy</strong> class contains all of the information associated with proxy connection. In addition, it tracks the total usage of the proxy and optionally tracks the location of the proxy IP. Usage information is used for the <strong>LEAST_USED</strong> load balancing scheme. The location information is currently unused but left to enable custom implementations the ability to select proxies by location.</p>
 </div>
-<div class="paragraph">
-<p>The built-in proxy managers also support per-URL proxy selection from metadata. Metadata is checked before configured defaults or rotation. Set <code>http.proxy.skip</code> to <code>true</code> in a URL&#8217;s metadata to fetch that URL without a proxy; this takes precedence over both metadata overrides and configured proxies. To override the proxy, either set <code>http.proxy</code> to a full proxy connection string such as <code>http://user:pass@proxy.example.com:8080</code>, or use the same component keys as the configuration: <code>http.proxy.host</code>, <code>http.proxy.port</code>, <code>http.proxy.type</code>, <code>http.proxy.user</code>, and <code>http.proxy.pass</code>. When both forms are present, the full <code>http.proxy</code> connection string takes precedence over component keys. Component metadata values are trimmed, blank host, type, and port values are rejected, and component <code>http.proxy.port</code> must be an integer from 1 through 65535. Invalid metadata proxy values throw <code>IllegalArgumentException</code> instead of falling back to the configured proxy.</p>
-</div>
-<div class="paragraph">
-<p>When credentials contain URL-reserved separator characters such as <code>:</code> or <code>@</code>, prefer the component keys (<code>http.proxy.user</code> and <code>http.proxy.pass</code>) so the values are passed as fields. Component key values preserve those separator characters but trim leading and trailing whitespace. Full <code>http.proxy</code> connection strings and <code>http.proxy.file</code> entries are parsed as <strong>SCProxy</strong> connection strings.</p>
-</div>
-<div class="paragraph">
-<p>Metadata component authentication is fail-fast: blank <code>http.proxy.user</code> and <code>http.proxy.pass</code> values are treated as unset, but if either non-blank value is set, both must be non-blank. Configured <strong>SingleProxyManager</strong> component authentication is more permissive for backwards compatibility and uses unauthenticated proxying unless both configured values are non-empty.</p>
-</div>
-<div class="paragraph">
-<p>With <strong>SingleProxyManager</strong>, explicitly configuring <code>http.proxy.manager</code> without a default proxy is valid. URLs with proxy metadata use the metadata proxy, and URLs without proxy metadata return no proxy.</p>
-</div>
-<div class="paragraph">
-<p>With <strong>MultiProxyManager</strong>, a metadata proxy matching one of the configured proxies reuses the configured <code>SCProxy</code> instance so usage accounting remains meaningful. Metadata proxies outside the configured rotation are allowed and are used only for that request.</p>
-</div>
 </div>
 <div class="sect2">
 <h3 id="_metadata_2">6.3. Metadata</h3>
@@ -2430,7 +2387,7 @@ Selects the proxy with the least amount of usage. This is performed lazily for s
 <div class="sect3">
 <h4 id="_metadatatransfer">6.3.2. MetadataTransfer</h4>
 <div class="paragraph">
-<p>The class <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/util/MetadataTransfer.java">MetadataTransfer</a> is an important part of the framework and is used in key parts of a pipeline:</p>
+<p>The class <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/util/MetadataTransfer.java">MetadataTransfer</a> is an important part of the framework and is used in key parts of a pipeline:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -2470,10 +2427,10 @@ Selects the proxy with the least amount of usage. This is performed lazily for s
 </ul>
 </div>
 <div class="paragraph">
-<p>The former is used when creating <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/parse/Outlink.java">Outlinks</a>, i.e., in the parsing bolts but also for handling redirections in the [[FetcherBolt(s)]].</p>
+<p>The former is used when creating <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/parse/Outlink.java">Outlinks</a>, i.e., in the parsing bolts but also for handling redirections in the [[FetcherBolt(s)]].</p>
 </div>
 <div class="paragraph">
-<p>The latter is used by extensions of the <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/persistence/AbstractStatusUpdaterBolt.java">AbstractStatusUpdaterBolt</a> class to determine which <strong>Metadata</strong> should be persisted.</p>
+<p>The latter is used by extensions of the <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/persistence/AbstractStatusUpdaterBolt.java">AbstractStatusUpdaterBolt</a> class to determine which <strong>Metadata</strong> should be persisted.</p>
 </div>
 <div class="paragraph">
 <p>The behavior of the default <strong>MetadataTransfer</strong> class is driven by configuration only. It has the following options:</p>
@@ -2481,10 +2438,10 @@ Selects the proxy with the least amount of usage. This is performed lazily for s
 <div class="ulist">
 <ul>
 <li>
-<p><code>metadata.transfer</code>:: list of metadata key values to filter or transfer to the outlinks. Please see the corresponding comments in <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/resources/crawler-default.yaml">crawler-default.yaml</a></p>
+<p><code>metadata.transfer</code>:: list of metadata key values to filter or transfer to the outlinks. Please see the corresponding comments in <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/resources/crawler-default.yaml">crawler-default.yaml</a></p>
 </li>
 <li>
-<p><code>metadata.persist</code>:: list of metadata key values to persist in the status storage. Please see the corresponding comments in <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/resources/crawler-default.yaml">crawler-default.yaml</a></p>
+<p><code>metadata.persist</code>:: list of metadata key values to persist in the status storage. Please see the corresponding comments in <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/resources/crawler-default.yaml">crawler-default.yaml</a></p>
 </li>
 <li>
 <p><code>metadata.track.path</code>:: whether to track the URL path or not. Boolean value, true by default.</p>
@@ -2534,7 +2491,7 @@ features you are using in your Apache StormCrawler topology. Some external modul
 <td class="tableblock halign-left valign-top"><p class="tableblock">fetcher.max.crawl.delay.force</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Configures the behavior of fetcher if the robots.txt crawl-delay exceeds fetcher.max.crawl.delay. If false: the tuple is emitted to the StatusStream
-as an ERROR. If true: the fetcher caps its local delay and emits the requested delay in whole seconds as <code>robots.crawl.delay</code>; an explicitly enabled URLFrontier <code>QueueRegulatorBolt</code> can forward a capped value to the host queue.</p></td>
+as an ERROR. If true: the queue delay is set to fetcher.max.crawl.delay.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">fetcher.max.queue.size</p></td>
@@ -2649,56 +2606,29 @@ is defined.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">http.protocol.implementation</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">org.apache.stormcrawler.protocol.okhttp.HttpProtocol</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">org.apache.stormcrawler.protocol.httpclient.HttpProtocol</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">HTTP Protocol
-implementation. Note: the Apache HttpClient implementation
-(<code>org.apache.stormcrawler.protocol.httpclient.HttpProtocol</code>) is <strong>deprecated</strong> and will be removed in
-the next major release.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">http.proxy</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Full <strong>SCProxy</strong> connection string read by SingleProxyManager when that manager is selected, e.g. <code>http://user:pass@proxy.example.com:8080</code>.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">http.proxy.file</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Proxy connection-string file read by MultiProxyManager when that manager is selected.</p></td>
+implementation.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">http.proxy.host</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SingleProxyManager component proxy host.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">http.proxy.manager</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ProxyManager implementation class. If omitted, the core HTTP protocols create SingleProxyManager only when <code>http.proxy.host</code> is set.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HTTP proxy host.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">http.proxy.pass</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SingleProxyManager component proxy password, used with <code>http.proxy.user</code>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Proxy password.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">http.proxy.port</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">8080</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SingleProxyManager component proxy port. Must be from 1 through 65535.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">http.proxy.rotation</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ROUND_ROBIN</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">MultiProxyManager proxy rotation scheme when that manager is selected.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">http.proxy.type</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">HTTP</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SingleProxyManager component proxy type.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Proxy port.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">http.proxy.user</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SingleProxyManager component proxy username, used with <code>http.proxy.pass</code>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Proxy username.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">http.retry.on.connection.failure</p></td>
@@ -2767,11 +2697,9 @@ the next major release.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">https.protocol.implementation</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">org.apache.stormcrawler.protocol.okhttp.HttpProtocol</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">org.apache.stormcrawler.protocol.httpclient.HttpProtocol</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">HTTPS Protocol
-implementation. Note: the Apache HttpClient implementation
-(<code>org.apache.stormcrawler.protocol.httpclient.HttpProtocol</code>) is <strong>deprecated</strong> and will be removed in
-the next major release.</p></td>
+implementation.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">partition.url.mode</p></td>
@@ -2843,11 +2771,6 @@ the next major release.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">HTTP protocol versions in order of preference (h2, http/1.1, http/1.0, h2c). If empty, uses implementation defaults.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">http.robots.parser.class</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">org.apache.stormcrawler.protocol.HttpRobotRulesParser</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Implementation to use for parsing robots.txt files.</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">robots.cache.spec</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">maximumSize=10000,expireAfterWrite=6h</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">CacheBuilder configuration for robots cache.</p></td>
@@ -2888,16 +2811,6 @@ header.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">http.content.partial.as.trimmed</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Accepts partially fetched content in OKHTTP.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">http.filter.ipaddress.include</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">(OkHttp only) Comma-separated list (or YAML list) of allowed IP ranges. If empty, all addresses are allowed unless excluded. See <a href="#IP Address Filtering">[IP Address Filtering]</a>.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">http.filter.ipaddress.exclude</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">(OkHttp only) Comma-separated list (or YAML list) of blocked IP ranges. See <a href="#IP Address Filtering">[IP Address Filtering]</a>.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">http.trust.everything</p></td>
@@ -2952,77 +2865,6 @@ header.</p></td>
 </tr>
 </tbody>
 </table>
-<div class="paragraph">
-<p>[[IP Address Filtering]]
-===== IP Address Filtering</p>
-</div>
-<div class="paragraph">
-<p>The OkHttp protocol implementation (<code>org.apache.stormcrawler.protocol.okhttp.HttpProtocol</code>) can
-optionally limit or block connections to IP address ranges. Because a DNS entry of an arbitrary host
-name may resolve to a private or loopback address, filtering URLs is not sufficient to prevent
-information leakage to a public search index or web archive. The filtering therefore happens at the
-protocol level, once the IP address is known.</p>
-</div>
-<div class="paragraph">
-<p>Two properties control the behaviour:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>http.filter.ipaddress.include</code> — defines the allowed IP ranges. If empty, all addresses are
-allowed unless explicitly excluded.</p>
-</li>
-<li>
-<p><code>http.filter.ipaddress.exclude</code> — defines the blocked IP ranges. An excluded address is always
-blocked, even if it also matches an include rule.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Each property accepts a comma-separated string or a YAML list of rules. A rule can be:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>a single IP address, e.g. <code>127.0.0.1</code> or <code>::1</code></p>
-</li>
-<li>
-<p>a CIDR block, e.g. <code>192.168.0.0/16</code> or <code>fd00::/8</code></p>
-</li>
-<li>
-<p><code>localhost</code> or <code>loopback</code> — matches any loopback address (<code>InetAddress.isLoopbackAddress()</code>)</p>
-</li>
-<li>
-<p><code>sitelocal</code> — matches any site-local address (<code>InetAddress.isSiteLocalAddress()</code>)</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>For example, to block crawling of localhost and private address spaces:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="yaml"><span class="key">http.filter.ipaddress.exclude</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">localhost,sitelocal</span><span class="delimiter">&quot;</span></span></code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>When a connection to a blocked address is attempted, the fetch fails with an <code>IOException</code> and a
-warning is logged. If neither property is set, no IP filtering is performed.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-When a proxy is configured, the connection is established to the proxy and the filter sees the
-proxy&#8217;s IP address rather than the target host&#8217;s resolved address. IP filtering is therefore
-effectively disabled for proxied fetches.
-</td>
-</tr>
-</table>
-</div>
 </div>
 <div class="sect3">
 <h4 id="_indexing">6.4.3. Indexing</h4>
@@ -3054,11 +2896,6 @@ effectively disabled for proxied fetches.
 <td class="tableblock halign-left valign-top"><p class="tableblock">If true, skip fields with empty values when indexing.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">indexer.md.docid</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Metadata key whose value, if present, is SHA-256 digested and used as the document ID instead of the default SHA-256 digest of the URL. Useful e.g. for content-based deduplication when a <code>ParseFilter</code> stores a content hash in the metadata.</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">indexer.md.filter</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">YAML list of key=value filters for metadata-based indexing.</p></td>
@@ -3085,22 +2922,12 @@ effectively disabled for proxied fetches.
 </tr>
 </tbody>
 </table>
-<div class="paragraph">
-<p>Note: <code>indexer.md.docid</code> is never used raw: the matching value is passed through SHA-256
-(the same digest used for the default URL-based ID), except for CloudSearch, whose
-<code>CloudSearchIndexerBolt</code> re-digests it with SHA-512 via <code>CloudSearchUtils.getID</code> to satisfy
-CloudSearch&#8217;s ID constraints. It is only honoured by backends whose bolts call
-<code>AbstractIndexerBolt#getDocumentID</code> under the hood: the OpenSearch and OpenSearch-Java
-<code>IndexerBolt</code>/<code>DeletionBolt</code> pairs, and the CloudSearch <code>CloudSearchIndexerBolt</code>. The Solr and
-SQL indexers build their document/row key directly from the URL and never call
-<code>getDocumentID()</code>, so this setting is silently ignored for those two backends.</p>
-</div>
 </div>
 <div class="sect3">
 <h4 id="_status_persistence">6.4.4. Status Persistence</h4>
 <div class="paragraph">
 <p>This refers to persisting the status of a URL (e.g. ERROR, DISCOVERED etc.) along with something like a <code>nextFetchDate</code>
-that is being calculated by a <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/persistence/DefaultScheduler.java">Scheduler</a>.</p>
+that is being calculated by a <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/persistence/DefaultScheduler.java">Scheduler</a>.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -3211,12 +3038,12 @@ that is being calculated by a <a href="https://github.com/apache/stormcrawler/bl
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">jsoup.treat.non.html.as.error</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">If true, non-HTML content is treated as an error by JSoupParserBolt. Note that <code>text/plain</code> is always handled directly (the content is used as the text) and never treated as an error. Its stored text honors <code>textextractor.no.text</code> and is capped at <code>textextractor.skip.after</code>; the raw fetched size is bounded by <code>http.content.limit</code>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If true, non-HTML content is treated as an error by JSoupParserBolt.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">parsefilters.config.file</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">parsefilters.json</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Path to JSON config defining ParseFilters. See <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/archetype/src/main/resources/archetype-resources/src/main/resources/parsefilters.json">default parsefilters.json</a>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Path to JSON config defining ParseFilters. See <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/archetype/src/main/resources/archetype-resources/src/main/resources/parsefilters.json">default parsefilters.json</a>.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">parser.emitOutlinks</p></td>
@@ -3271,7 +3098,7 @@ that is being calculated by a <a href="https://github.com/apache/stormcrawler/bl
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">urlfilters.config.file</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">urlfilters.json</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">JSON file defining URL filters. See <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/archetype/src/main/resources/archetype-resources/src/main/resources/urlfilters.json">default urlfilters.json</a>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">JSON file defining URL filters. See <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/archetype/src/main/resources/archetype-resources/src/main/resources/urlfilters.json">default urlfilters.json</a>.</p></td>
 </tr>
 </tbody>
 </table>
@@ -3341,7 +3168,7 @@ For full setup instructions, see the README in each module&#8217;s directory.</p
 <h4 id="_opensearch">6.5.1. OpenSearch</h4>
 <div class="paragraph">
 <p>Integration with <a href="https://opensearch.org/">OpenSearch</a> for indexing, URL status persistence, and metrics.
-See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/external/opensearch">opensearch module</a> for full details.</p>
+See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.6.0/external/opensearch">opensearch module</a> for full details.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -3459,7 +3286,7 @@ See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/
 <h4 id="_solr">6.5.2. Solr</h4>
 <div class="paragraph">
 <p>Integration with <a href="https://solr.apache.org/">Apache Solr</a> for indexing, URL status persistence, and metrics.
-See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/external/solr">solr module</a> for full details. Supports both standalone Solr and SolrCloud (via ZooKeeper).</p>
+See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.6.0/external/solr">solr module</a> for full details. Supports both standalone Solr and SolrCloud (via ZooKeeper).</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -3537,7 +3364,7 @@ See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/
 <h4 id="_sql">6.5.3. SQL</h4>
 <div class="paragraph">
 <p>Integration with relational databases via JDBC for URL status persistence, indexing, and metrics.
-See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/external/sql">sql module</a> for full details and table creation scripts.</p>
+See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.6.0/external/sql">sql module</a> for full details and table creation scripts.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -3600,20 +3427,7 @@ See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/
 <h4 id="_urlfrontier">6.5.4. URLFrontier</h4>
 <div class="paragraph">
 <p>Integration with <a href="https://github.com/crawler-commons/url-frontier">URLFrontier</a>, a language-agnostic API for URL management and scheduling.
-See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/external/urlfrontier">urlfrontier module</a> for full details.</p>
-</div>
-<div class="paragraph">
-<p><code>QueueRegulatorBolt</code> consumes the <code>queue</code> stream from the URLFrontier status updater and applies
-rate-limit blocks or robots.txt pacing. Robots pacing is enabled when both
-<code>urlfrontier.robots.crawl.delay.enabled</code> and <code>fetcher.max.crawl.delay.force</code> are <code>true</code>. It requires <code>partition.url.mode: byHost</code>,
-<code>urlfrontier.max.urls.per.bucket: 1</code>, <code>robots.crawl.delay</code> in <code>metadata.persist</code>, and a single
-URLFrontier endpoint (at most one <code>urlfrontier.address</code> entry). The same key
-must not match <code>metadata.transfer</code>, including wildcards such as <code>robots.*</code>, because it is a
-per-host control signal. The bolt probes these requirements at startup. A batch size of one
-bounds each frontier hand-out but does not recall URLs already emitted or eliminate concurrent
-requests while the new delay is reaching the frontier. A custom <code>metadata.transfer.class</code> is
-responsible for preserving the same persist-only contract for all URLs and values; the startup
-probe exercises only representative metadata.</p>
+See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.6.0/external/urlfrontier">urlfrontier module</a> for full details.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -3640,11 +3454,6 @@ probe exercises only representative metadata.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock">URLFrontier service port.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">urlfrontier.address</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">URLFrontier service address (can be used instead of host and port).</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">urlfrontier.max.buckets</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">10</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Number of buckets to request from the frontier.</p></td>
@@ -3652,92 +3461,7 @@ probe exercises only representative metadata.</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">urlfrontier.max.urls.per.bucket</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">10</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Maximum URLs per bucket. Must be 1 when robots crawl-delay pacing is enabled so one request cannot hand out several URLs from the same host.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">urlfrontier.robots.crawl.delay.enabled</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Enables forwarding long robots.txt Crawl-delays from the queue stream to URLFrontier. Also requires <code>fetcher.max.crawl.delay.force: true</code> and the validated configuration described above.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">urlfrontier.robots.delay.max.secs</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">86400</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Upper bound in seconds for a robots crawl-delay forwarded to the frontier.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">urlfrontier.robots.delay.decay.secs</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1800</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Deduplication window in seconds after which an unchanged robots crawl-delay is re-sent to the frontier.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">urlfrontier.delay.requestable</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Time in seconds for which the URLs are locked in URLFrontier.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">urlfrontier.cache.expireafter.sec</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Time in seconds after which the cache expires.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">urlfrontier.max.messages.in.flight</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Maximum number of messages in flight for the StatusUpdater.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">urlfrontier.throttling.time.msec</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Time in ms to throttle the StatusUpdater.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">urlfrontier.updater.max.messages</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Maximum number of messages to process at once by the StatusUpdater.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">urlfrontier.crawlid</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Crawl ID.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">urlfrontier.max.retry.after</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">86400</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Maximum delay in seconds honoured when a server requests a back-off via the Retry-After HTTP response header. -1 disables the cap.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">urlfrontier.backoff.base.secs</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">60</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">First block duration in seconds applied when a host rate-limits without a usable Retry-After header. 0 disables the adaptive back-off.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">urlfrontier.backoff.factor</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2.0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Multiplicative increase applied to the block duration on each new pressure event for the same host.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">urlfrontier.backoff.max.secs</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">86400</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Upper bound in seconds for the escalated block duration.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">urlfrontier.backoff.decay.secs</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1800</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Quiet window in seconds after which its escalation is forgotten and the next pressure event starts again from the base duration.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">urlfrontier.backoff.on.exceptions</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Whether fetch exceptions count as pressure events and escalate the host&#8217;s block.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">urlfrontier.backoff.jitter</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">0.1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Random extra fraction added to every computed block duration.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">urlfrontier.backoff.status.codes</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">429, 503</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">HTTP status codes treated as a rate-limit signal by the QueueRegulatorBolt.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Maximum URLs per bucket.</p></td>
 </tr>
 </tbody>
 </table>
@@ -3746,7 +3470,7 @@ probe exercises only representative metadata.</p>
 <h4 id="_tika">6.5.5. Tika</h4>
 <div class="paragraph">
 <p>Apache Tika integration for parsing non-HTML documents (PDF, Word, etc.).
-See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/external/tika">tika module</a> for full details.</p>
+See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.6.0/external/tika">tika module</a> for full details.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -3791,19 +3515,7 @@ When using the Tika <code>ParserBolt</code> alongside <code>JSoupParserBolt</cod
 <h4 id="_aws">6.5.6. AWS</h4>
 <div class="paragraph">
 <p>Integration with AWS services: CloudSearch for indexing and S3 for content caching.
-See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/external/aws">aws module</a> for full details.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-AWS CloudSearch support (the <code>cloudsearch.*</code> settings below) is deprecated and will be removed in the next major release of StormCrawler.
-</td>
-</tr>
-</table>
+See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.6.0/external/aws">aws module</a> for full details.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -3859,11 +3571,6 @@ AWS CloudSearch support (the <code>cloudsearch.*</code> settings below) is depre
 <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Custom S3 endpoint (optional, for S3-compatible services).</p></td>
 </tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">s3.path.style.access</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Use path-style access (<code>http://host/bucket</code>) instead of virtual-hosted style. Required for S3-compatible endpoints such as LocalStack or MinIO.</p></td>
-</tr>
 </tbody>
 </table>
 </div>
@@ -3871,7 +3578,7 @@ AWS CloudSearch support (the <code>cloudsearch.*</code> settings below) is depre
 <h4 id="_ai_llm_text_extraction">6.5.7. AI (LLM Text Extraction)</h4>
 <div class="paragraph">
 <p>LLM-based text extraction using OpenAI-compatible APIs (including local models via Ollama).
-See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/external/ai">ai module</a> for full details.</p>
+See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.6.0/external/ai">ai module</a> for full details.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -3934,7 +3641,7 @@ See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/
 <h4 id="_playwright">6.5.8. Playwright</h4>
 <div class="paragraph">
 <p>Browser-based fetching using <a href="https://playwright.dev/">Playwright</a> for JavaScript-rendered pages.
-See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/external/playwright">playwright module</a> for full details.</p>
+See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.6.0/external/playwright">playwright module</a> for full details.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -4073,7 +3780,7 @@ so one bad action cannot abort the rest of the chain.</p>
 </tbody>
 </table>
 <div class="paragraph">
-<p>See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/external/playwright">playwright module README</a> for the full parameter list of each built-in action and a guide on writing your own.</p>
+<p>See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.6.0/external/playwright">playwright module README</a> for the full parameter list of each built-in action and a guide on writing your own.</p>
 </div>
 </div>
 <div class="sect4">
@@ -4082,7 +3789,7 @@ so one bad action cannot abort the rest of the chain.</p>
 <p>Browser fetching is much more expensive than a plain HTTP fetch, so most operators only want
 Playwright on URLs that actually need it. The <code>JsRenderingDetector</code> parse filter inspects the
 parsed page from a cheap fetch and sets a metadata flag (default <code>fetch.with=playwright</code>) on URLs
-that look JavaScript-rendered. Pair it with <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/protocol/DelegatorProtocol.java">DelegatorProtocol</a>
+that look JavaScript-rendered. Pair it with <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/protocol/DelegatorProtocol.java">DelegatorProtocol</a>
 to route subsequent fetches of those URLs to the Playwright protocol while leaving everything else
 on a fast HTTP client.</p>
 </div>
@@ -4150,7 +3857,7 @@ on the current fetch, and <code>DefaultScheduler</code> reschedules the URL acco
 fetch interval (<code>fetchInterval.fetch.with=playwright: 5</code>) or drop <code>JsRenderingRedirectionBolt</code>
 between the parser and indexer. The bolt reads the routing flag and, on hit, emits only to the
 status stream with <code>Status.FETCHED</code> so the stub document never reaches the index. The full
-parameter list and tuning notes are in the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/external/playwright">playwright module README</a>.</p>
+parameter list and tuning notes are in the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.6.0/external/playwright">playwright module README</a>.</p>
 </div>
 </div>
 </div>
@@ -4158,7 +3865,7 @@ parameter list and tuning notes are in the <a href="https://github.com/apache/st
 <h4 id="_language_id">6.5.9. Language ID</h4>
 <div class="paragraph">
 <p>Language identification for crawled documents using the lang-detect library.
-See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/external/langid">langid module</a> source code for details.</p>
+See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.6.0/external/langid">langid module</a> source code for details.</p>
 </div>
 <div class="paragraph">
 <p>The <code>LanguageID</code> parse filter is configured in <code>parsefilters.json</code>:</p>
@@ -4194,7 +3901,7 @@ See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/
 <h4 id="_warc">6.5.10. WARC</h4>
 <div class="paragraph">
 <p>Reading and writing <a href="https://iipc.github.io/warc-specifications/specifications/warc-format/warc-1.1/">WARC</a> (Web ARChive) files for archival and replay.
-See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/external/warc">warc module</a> for full details.</p>
+See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.6.0/external/warc">warc module</a> for full details.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -4444,13 +4151,13 @@ For complete WARC records, set <code>http.store.headers</code> to <code>true</co
 </div>
 </div>
 <div class="paragraph">
-<p>Use the <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/protocol/DelegatorProtocol.java">DelegatorProtocol</a> when you need to route URLs to different protocol implementations based on metadata or URL patterns.</p>
+<p>Use the <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/protocol/DelegatorProtocol.java">DelegatorProtocol</a> when you need to route URLs to different protocol implementations based on metadata or URL patterns.</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_custom_page_action_playwright">7.1.4. Custom Page Action (Playwright)</h4>
 <div class="paragraph">
-<p>The <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/external/playwright">Playwright protocol</a> exposes a <code>PageAction</code> extension point so you can plug site-specific post-navigate behaviour (tab/accordion expansion, cookie-banner dismissal, infinite-scroll, custom <code>evaluate()</code> calls, screenshotting, &#8230;&#8203;) into the protocol without subclassing it. Actions are loaded as an ordered chain from a JSON file referenced by <code>playwright.page.actions.config.file</code> and follow the same <code>Configurable</code> lifecycle as URL/parse filters. The chain runs after <code>page.navigate()</code> succeeds and before <code>page.content()</code> is captured, so any DOM mutations land in the rendered content returned by the protocol.</p>
+<p>The <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.6.0/external/playwright">Playwright protocol</a> exposes a <code>PageAction</code> extension point so you can plug site-specific post-navigate behaviour (tab/accordion expansion, cookie-banner dismissal, infinite-scroll, custom <code>evaluate()</code> calls, screenshotting, &#8230;&#8203;) into the protocol without subclassing it. Actions are loaded as an ordered chain from a JSON file referenced by <code>playwright.page.actions.config.file</code> and follow the same <code>Configurable</code> lifecycle as URL/parse filters. The chain runs after <code>page.navigate()</code> succeeds and before <code>page.content()</code> is captured, so any DOM mutations land in the rendered content returned by the protocol.</p>
 </div>
 <div class="paragraph">
 <p>A handful of built-in actions ship with the module — <code>DismissOverlayAction</code>, <code>ExpandClickablesAction</code>, <code>ScrollToBottomAction</code>, <code>EvaluateAction</code>, <code>WaitForSelectorAction</code>, <code>ScreenshotAction</code>. Reach for a custom action when none of those fit. Extend <code>PageAction</code> and implement <code>apply</code>:</p>
@@ -4506,7 +4213,7 @@ For complete WARC records, set <code>http.store.headers</code> to <code>true</co
 <div class="sect3">
 <h4 id="_custom_bolt_or_spout">7.1.5. Custom Bolt or Spout</h4>
 <div class="paragraph">
-<p>For a bolt that emits on the status stream (like fetchers and parsers), extend <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/bolt/StatusEmitterBolt.java">StatusEmitterBolt</a>:</p>
+<p>For a bolt that emits on the status stream (like fetchers and parsers), extend <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/bolt/StatusEmitterBolt.java">StatusEmitterBolt</a>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -4538,7 +4245,7 @@ For complete WARC records, set <code>http.store.headers</code> to <code>true</co
 </div>
 </div>
 <div class="paragraph">
-<p>For a custom spout, extend <code>BaseRichSpout</code> and implement <code>open()</code>, <code>nextTuple()</code>, <code>ack()</code>, <code>fail()</code>, and <code>declareOutputFields()</code>. See <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/spout/FileSpout.java">FileSpout</a> for a simple example. For spouts backed by a storage layer, extend <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/persistence/AbstractQueryingSpout.java">AbstractQueryingSpout</a> instead.</p>
+<p>For a custom spout, extend <code>BaseRichSpout</code> and implement <code>open()</code>, <code>nextTuple()</code>, <code>ack()</code>, <code>fail()</code>, and <code>declareOutputFields()</code>. See <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/spout/FileSpout.java">FileSpout</a> for a simple example. For spouts backed by a storage layer, extend <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/persistence/AbstractQueryingSpout.java">AbstractQueryingSpout</a> instead.</p>
 </div>
 </div>
 </div>
@@ -4600,7 +4307,7 @@ For complete WARC records, set <code>http.store.headers</code> to <code>true</co
 <p><code>fetcher.max.crawl.delay.force: false</code> (default) — the queue is skipped and the URL gets an ERROR status</p>
 </li>
 <li>
-<p><code>fetcher.max.crawl.delay.force: true</code> — the fetcher caps its local delay at <code>fetcher.max.crawl.delay</code> and reports the requested delay in whole seconds as <code>robots.crawl.delay</code>; when <code>QueueRegulatorBolt</code> is wired and <code>urlfrontier.robots.crawl.delay.enabled: true</code>, a value capped by <code>urlfrontier.robots.delay.max.secs</code> is forwarded to the host queue in the frontier</p>
+<p><code>fetcher.max.crawl.delay.force: true</code> — the delay is capped at <code>fetcher.max.crawl.delay</code></p>
 </li>
 </ul>
 </div>
@@ -4758,7 +4465,7 @@ For complete WARC records, set <code>http.store.headers</code> to <code>true</co
 </div>
 </div>
 <div class="paragraph">
-<p>StormCrawler provides MetricsConsumer implementations for <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/external/opensearch">OpenSearch</a>, <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/external/solr">Solr</a>, and <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/external/sql">SQL</a>.</p>
+<p>StormCrawler provides MetricsConsumer implementations for <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.6.0/external/opensearch">OpenSearch</a>, <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.6.0/external/solr">Solr</a>, and <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.6.0/external/sql">SQL</a>.</p>
 </div>
 <div class="paragraph">
 <p>The <strong>Storm UI</strong> (default port 8080) provides real-time visibility into topology health, including execute/process latency, emit counts, and error rates per bolt and spout.</p>
@@ -4979,9 +4686,6 @@ If your organization is also making use of Apache StormCrawler, we’d love to h
 <li>
 <p><a href="https://www.kodis.iao.fraunhofer.de/de/projekte/SPIDERWISE.html">Fraunhofer IAO - KODIS</a></p>
 </li>
-<li>
-<p><a href="https://www.thegreenwebfoundation.org/">Green Web Foundation</a></p>
-</li>
 </ul>
 </div>
 <div class="paragraph">
@@ -5058,7 +4762,7 @@ If your organization is also making use of Apache StormCrawler, we’d love to h
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-07-29 14:14:21 +0200
+Last updated 2026-05-22 14:49:42 +0200
 </div>
 </div>
 </body>

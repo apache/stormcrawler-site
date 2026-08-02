@@ -628,10 +628,10 @@ Allow: /publications/</pre>
 <div class="sect2">
 <h3 id="_proxy">Proxy</h3>
 <div class="paragraph">
-<p>StormCrawler&#8217;s proxy system is built on top of the <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/proxy/SCProxy.java">SCProxy</a> class and the <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/proxy/ProxyManager.java">ProxyManager</a> interface. Every proxy used in the system is formatted as a <strong>SCProxy</strong>. The <strong>ProxyManager</strong> implementations handle the management and delegation of their internal proxies. At the call of <code>Protocol#getProtocolOutput()</code>, the <code>ProxyManager.getProxy()</code> is called to retrieve a proxy for the individual request.</p>
+<p>StormCrawler&#8217;s proxy system is built on top of the <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/proxy/SCProxy.java">SCProxy</a> class and the <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/proxy/ProxyManager.java">ProxyManager</a> interface. Every proxy used in the system is formatted as a <strong>SCProxy</strong>. The <strong>ProxyManager</strong> implementations handle the management and delegation of their internal proxies. At the call of <code>Protocol#getProtocolOutput()</code>, the <code>ProxyManager.getProxy()</code> is called to retrieve a proxy for the individual request.</p>
 </div>
 <div class="paragraph">
-<p>The <strong>ProxyManager</strong> interface can be implemented in a custom class to create custom logic for proxy management and load balancing. When <code>http.proxy.manager</code> is omitted, the core HTTP protocol implementations create <strong>SingleProxyManager</strong> only if <code>http.proxy.host</code> is configured. To use <strong>SingleProxyManager</strong> with only a full <code>http.proxy</code> connection string, or to use <strong>MultiProxyManager</strong> or custom implementations, pass the class path and name via the config parameter <code>http.proxy.manager</code>:</p>
+<p>The <strong>ProxyManager</strong> interface can be implemented in a custom class to create custom logic for proxy management and load balancing. The default <strong>ProxyManager</strong> implementation is <strong>SingleProxyManager</strong>. This ensures backwards compatibility for prior StormCrawler releases. To use <strong>MultiProxyManager</strong> or custom implementations, pass the class path and name via the config parameter <code>http.proxy.manager</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -644,12 +644,11 @@ Allow: /publications/</pre>
 <div class="ulist">
 <ul>
 <li>
-<p><a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/proxy/SingleProxyManager.java">SingleProxyManager</a>
+<p><a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/proxy/SingleProxyManager.java">SingleProxyManager</a>
 Manages a single proxy passed by the backwards compatible proxy fields in the configuration:</p>
 <div class="literalblock">
 <div class="content">
 <pre>----
-http.proxy
 http.proxy.host
 http.proxy.port
 http.proxy.type
@@ -660,7 +659,7 @@ http.proxy.pass (optional)
 </div>
 </li>
 <li>
-<p><a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/proxy/MultiProxyManager.java">MultiProxyManager</a>
+<p><a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/proxy/MultiProxyManager.java">MultiProxyManager</a>
 Manages multiple proxies passed through a TXT file. The file should contain connection strings for all proxies including the protocol and authentication (if needed). The file supports comment lines (<code>//</code> or <code>#</code>) and empty lines. The file path should be passed via the config at the below field. The TXT file must be available to all nodes participating in the topology:</p>
 <div class="literalblock">
 <div class="content">
@@ -694,21 +693,6 @@ Selects the proxy with the least amount of usage. This is performed lazily for s
 <div class="paragraph">
 <p>The <strong>SCProxy</strong> class contains all of the information associated with proxy connection. In addition, it tracks the total usage of the proxy and optionally tracks the location of the proxy IP. Usage information is used for the <strong>LEAST_USED</strong> load balancing scheme. The location information is currently unused but left to enable custom implementations the ability to select proxies by location.</p>
 </div>
-<div class="paragraph">
-<p>The built-in proxy managers also support per-URL proxy selection from metadata. Metadata is checked before configured defaults or rotation. Set <code>http.proxy.skip</code> to <code>true</code> in a URL&#8217;s metadata to fetch that URL without a proxy; this takes precedence over both metadata overrides and configured proxies. To override the proxy, either set <code>http.proxy</code> to a full proxy connection string such as <code><a href="http://user:pass@proxy.example.com:8080" class="bare">http://user:pass@proxy.example.com:8080</a></code>, or use the same component keys as the configuration: <code>http.proxy.host</code>, <code>http.proxy.port</code>, <code>http.proxy.type</code>, <code>http.proxy.user</code>, and <code>http.proxy.pass</code>. When both forms are present, the full <code>http.proxy</code> connection string takes precedence over component keys. Component metadata values are trimmed, blank host, type, and port values are rejected, and component <code>http.proxy.port</code> must be an integer from 1 through 65535. Invalid metadata proxy values throw <code>IllegalArgumentException</code> instead of falling back to the configured proxy.</p>
-</div>
-<div class="paragraph">
-<p>When credentials contain URL-reserved separator characters such as <code>:</code> or <code>@</code>, prefer the component keys (<code>http.proxy.user</code> and <code>http.proxy.pass</code>) so the values are passed as fields. Component key values preserve those separator characters but trim leading and trailing whitespace. Full <code>http.proxy</code> connection strings and <code>http.proxy.file</code> entries are parsed as <strong>SCProxy</strong> connection strings.</p>
-</div>
-<div class="paragraph">
-<p>Metadata component authentication is fail-fast: blank <code>http.proxy.user</code> and <code>http.proxy.pass</code> values are treated as unset, but if either non-blank value is set, both must be non-blank. Configured <strong>SingleProxyManager</strong> component authentication is more permissive for backwards compatibility and uses unauthenticated proxying unless both configured values are non-empty.</p>
-</div>
-<div class="paragraph">
-<p>With <strong>SingleProxyManager</strong>, explicitly configuring <code>http.proxy.manager</code> without a default proxy is valid. URLs with proxy metadata use the metadata proxy, and URLs without proxy metadata return no proxy.</p>
-</div>
-<div class="paragraph">
-<p>With <strong>MultiProxyManager</strong>, a metadata proxy matching one of the configured proxies reuses the configured <code>SCProxy</code> instance so usage accounting remains meaningful. Metadata proxies outside the configured rotation are allowed and are used only for that request.</p>
-</div>
 </div>
 <div class="sect2">
 <h3 id="_metadata">Metadata</h3>
@@ -741,7 +725,7 @@ Selects the proxy with the least amount of usage. This is performed lazily for s
 <div class="sect3">
 <h4 id="_metadatatransfer">MetadataTransfer</h4>
 <div class="paragraph">
-<p>The class <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/util/MetadataTransfer.java">MetadataTransfer</a> is an important part of the framework and is used in key parts of a pipeline:</p>
+<p>The class <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/util/MetadataTransfer.java">MetadataTransfer</a> is an important part of the framework and is used in key parts of a pipeline:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -781,10 +765,10 @@ Selects the proxy with the least amount of usage. This is performed lazily for s
 </ul>
 </div>
 <div class="paragraph">
-<p>The former is used when creating <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/parse/Outlink.java">Outlinks</a>, i.e., in the parsing bolts but also for handling redirections in the [[FetcherBolt(s)]].</p>
+<p>The former is used when creating <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/parse/Outlink.java">Outlinks</a>, i.e., in the parsing bolts but also for handling redirections in the [[FetcherBolt(s)]].</p>
 </div>
 <div class="paragraph">
-<p>The latter is used by extensions of the <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/persistence/AbstractStatusUpdaterBolt.java">AbstractStatusUpdaterBolt</a> class to determine which <strong>Metadata</strong> should be persisted.</p>
+<p>The latter is used by extensions of the <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/persistence/AbstractStatusUpdaterBolt.java">AbstractStatusUpdaterBolt</a> class to determine which <strong>Metadata</strong> should be persisted.</p>
 </div>
 <div class="paragraph">
 <p>The behavior of the default <strong>MetadataTransfer</strong> class is driven by configuration only. It has the following options:</p>
@@ -792,10 +776,10 @@ Selects the proxy with the least amount of usage. This is performed lazily for s
 <div class="ulist">
 <ul>
 <li>
-<p><code>metadata.transfer</code>:: list of metadata key values to filter or transfer to the outlinks. Please see the corresponding comments in <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/resources/crawler-default.yaml">crawler-default.yaml</a></p>
+<p><code>metadata.transfer</code>:: list of metadata key values to filter or transfer to the outlinks. Please see the corresponding comments in <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/resources/crawler-default.yaml">crawler-default.yaml</a></p>
 </li>
 <li>
-<p><code>metadata.persist</code>:: list of metadata key values to persist in the status storage. Please see the corresponding comments in <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/resources/crawler-default.yaml">crawler-default.yaml</a></p>
+<p><code>metadata.persist</code>:: list of metadata key values to persist in the status storage. Please see the corresponding comments in <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/resources/crawler-default.yaml">crawler-default.yaml</a></p>
 </li>
 <li>
 <p><code>metadata.track.path</code>:: whether to track the URL path or not. Boolean value, true by default.</p>
@@ -845,7 +829,7 @@ features you are using in your Apache StormCrawler topology. Some external modul
 <td class="tableblock halign-left valign-top"><p class="tableblock">fetcher.max.crawl.delay.force</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Configures the behavior of fetcher if the robots.txt crawl-delay exceeds fetcher.max.crawl.delay. If false: the tuple is emitted to the StatusStream
-as an ERROR. If true: the fetcher caps its local delay and emits the requested delay in whole seconds as <code>robots.crawl.delay</code>; an explicitly enabled URLFrontier <code>QueueRegulatorBolt</code> can forward a capped value to the host queue.</p></td>
+as an ERROR. If true: the queue delay is set to fetcher.max.crawl.delay.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">fetcher.max.queue.size</p></td>
@@ -960,56 +944,29 @@ is defined.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">http.protocol.implementation</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">org.apache.stormcrawler.protocol.okhttp.HttpProtocol</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">org.apache.stormcrawler.protocol.httpclient.HttpProtocol</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">HTTP Protocol
-implementation. Note: the Apache HttpClient implementation
-(<code>org.apache.stormcrawler.protocol.httpclient.HttpProtocol</code>) is <strong>deprecated</strong> and will be removed in
-the next major release.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">http.proxy</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Full <strong>SCProxy</strong> connection string read by SingleProxyManager when that manager is selected, e.g. <code><a href="http://user:pass@proxy.example.com:8080" class="bare">http://user:pass@proxy.example.com:8080</a></code>.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">http.proxy.file</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Proxy connection-string file read by MultiProxyManager when that manager is selected.</p></td>
+implementation.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">http.proxy.host</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SingleProxyManager component proxy host.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">http.proxy.manager</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ProxyManager implementation class. If omitted, the core HTTP protocols create SingleProxyManager only when <code>http.proxy.host</code> is set.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HTTP proxy host.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">http.proxy.pass</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SingleProxyManager component proxy password, used with <code>http.proxy.user</code>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Proxy password.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">http.proxy.port</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">8080</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SingleProxyManager component proxy port. Must be from 1 through 65535.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">http.proxy.rotation</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ROUND_ROBIN</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">MultiProxyManager proxy rotation scheme when that manager is selected.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">http.proxy.type</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">HTTP</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SingleProxyManager component proxy type.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Proxy port.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">http.proxy.user</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SingleProxyManager component proxy username, used with <code>http.proxy.pass</code>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Proxy username.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">http.retry.on.connection.failure</p></td>
@@ -1078,11 +1035,9 @@ the next major release.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">https.protocol.implementation</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">org.apache.stormcrawler.protocol.okhttp.HttpProtocol</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">org.apache.stormcrawler.protocol.httpclient.HttpProtocol</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">HTTPS Protocol
-implementation. Note: the Apache HttpClient implementation
-(<code>org.apache.stormcrawler.protocol.httpclient.HttpProtocol</code>) is <strong>deprecated</strong> and will be removed in
-the next major release.</p></td>
+implementation.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">partition.url.mode</p></td>
@@ -1154,11 +1109,6 @@ the next major release.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">HTTP protocol versions in order of preference (h2, http/1.1, http/1.0, h2c). If empty, uses implementation defaults.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">http.robots.parser.class</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">org.apache.stormcrawler.protocol.HttpRobotRulesParser</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Implementation to use for parsing robots.txt files.</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">robots.cache.spec</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">maximumSize=10000,expireAfterWrite=6h</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">CacheBuilder configuration for robots cache.</p></td>
@@ -1199,16 +1149,6 @@ header.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">http.content.partial.as.trimmed</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Accepts partially fetched content in OKHTTP.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">http.filter.ipaddress.include</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">(OkHttp only) Comma-separated list (or YAML list) of allowed IP ranges. If empty, all addresses are allowed unless excluded. See <a href="#IP Address Filtering">[IP Address Filtering]</a>.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">http.filter.ipaddress.exclude</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">(OkHttp only) Comma-separated list (or YAML list) of blocked IP ranges. See <a href="#IP Address Filtering">[IP Address Filtering]</a>.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">http.trust.everything</p></td>
@@ -1263,77 +1203,6 @@ header.</p></td>
 </tr>
 </tbody>
 </table>
-<div class="paragraph">
-<p>[[IP Address Filtering]]
-===== IP Address Filtering</p>
-</div>
-<div class="paragraph">
-<p>The OkHttp protocol implementation (<code>org.apache.stormcrawler.protocol.okhttp.HttpProtocol</code>) can
-optionally limit or block connections to IP address ranges. Because a DNS entry of an arbitrary host
-name may resolve to a private or loopback address, filtering URLs is not sufficient to prevent
-information leakage to a public search index or web archive. The filtering therefore happens at the
-protocol level, once the IP address is known.</p>
-</div>
-<div class="paragraph">
-<p>Two properties control the behaviour:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>http.filter.ipaddress.include</code> — defines the allowed IP ranges. If empty, all addresses are
-allowed unless explicitly excluded.</p>
-</li>
-<li>
-<p><code>http.filter.ipaddress.exclude</code> — defines the blocked IP ranges. An excluded address is always
-blocked, even if it also matches an include rule.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Each property accepts a comma-separated string or a YAML list of rules. A rule can be:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>a single IP address, e.g. <code>127.0.0.1</code> or <code>::1</code></p>
-</li>
-<li>
-<p>a CIDR block, e.g. <code>192.168.0.0/16</code> or <code>fd00::/8</code></p>
-</li>
-<li>
-<p><code>localhost</code> or <code>loopback</code> — matches any loopback address (<code>InetAddress.isLoopbackAddress()</code>)</p>
-</li>
-<li>
-<p><code>sitelocal</code> — matches any site-local address (<code>InetAddress.isSiteLocalAddress()</code>)</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>For example, to block crawling of localhost and private address spaces:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="yaml"><span class="key">http.filter.ipaddress.exclude</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">localhost,sitelocal</span><span class="delimiter">&quot;</span></span></code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>When a connection to a blocked address is attempted, the fetch fails with an <code>IOException</code> and a
-warning is logged. If neither property is set, no IP filtering is performed.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-When a proxy is configured, the connection is established to the proxy and the filter sees the
-proxy&#8217;s IP address rather than the target host&#8217;s resolved address. IP filtering is therefore
-effectively disabled for proxied fetches.
-</td>
-</tr>
-</table>
-</div>
 </div>
 <div class="sect3">
 <h4 id="_indexing">Indexing</h4>
@@ -1365,11 +1234,6 @@ effectively disabled for proxied fetches.
 <td class="tableblock halign-left valign-top"><p class="tableblock">If true, skip fields with empty values when indexing.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">indexer.md.docid</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Metadata key whose value, if present, is SHA-256 digested and used as the document ID instead of the default SHA-256 digest of the URL. Useful e.g. for content-based deduplication when a <code>ParseFilter</code> stores a content hash in the metadata.</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">indexer.md.filter</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">YAML list of key=value filters for metadata-based indexing.</p></td>
@@ -1396,22 +1260,12 @@ effectively disabled for proxied fetches.
 </tr>
 </tbody>
 </table>
-<div class="paragraph">
-<p>Note: <code>indexer.md.docid</code> is never used raw: the matching value is passed through SHA-256
-(the same digest used for the default URL-based ID), except for CloudSearch, whose
-<code>CloudSearchIndexerBolt</code> re-digests it with SHA-512 via <code>CloudSearchUtils.getID</code> to satisfy
-CloudSearch&#8217;s ID constraints. It is only honoured by backends whose bolts call
-<code>AbstractIndexerBolt#getDocumentID</code> under the hood: the OpenSearch and OpenSearch-Java
-<code>IndexerBolt</code>/<code>DeletionBolt</code> pairs, and the CloudSearch <code>CloudSearchIndexerBolt</code>. The Solr and
-SQL indexers build their document/row key directly from the URL and never call
-<code>getDocumentID()</code>, so this setting is silently ignored for those two backends.</p>
-</div>
 </div>
 <div class="sect3">
 <h4 id="_status_persistence">Status Persistence</h4>
 <div class="paragraph">
 <p>This refers to persisting the status of a URL (e.g. ERROR, DISCOVERED etc.) along with something like a <code>nextFetchDate</code>
-that is being calculated by a <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/persistence/DefaultScheduler.java">Scheduler</a>.</p>
+that is being calculated by a <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/persistence/DefaultScheduler.java">Scheduler</a>.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -1522,12 +1376,12 @@ that is being calculated by a <a href="https://github.com/apache/stormcrawler/bl
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">jsoup.treat.non.html.as.error</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">If true, non-HTML content is treated as an error by JSoupParserBolt. Note that <code>text/plain</code> is always handled directly (the content is used as the text) and never treated as an error. Its stored text honors <code>textextractor.no.text</code> and is capped at <code>textextractor.skip.after</code>; the raw fetched size is bounded by <code>http.content.limit</code>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If true, non-HTML content is treated as an error by JSoupParserBolt.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">parsefilters.config.file</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">parsefilters.json</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Path to JSON config defining ParseFilters. See <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/archetype/src/main/resources/archetype-resources/src/main/resources/parsefilters.json">default parsefilters.json</a>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Path to JSON config defining ParseFilters. See <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/archetype/src/main/resources/archetype-resources/src/main/resources/parsefilters.json">default parsefilters.json</a>.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">parser.emitOutlinks</p></td>
@@ -1582,7 +1436,7 @@ that is being calculated by a <a href="https://github.com/apache/stormcrawler/bl
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">urlfilters.config.file</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">urlfilters.json</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">JSON file defining URL filters. See <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/archetype/src/main/resources/archetype-resources/src/main/resources/urlfilters.json">default urlfilters.json</a>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">JSON file defining URL filters. See <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/archetype/src/main/resources/archetype-resources/src/main/resources/urlfilters.json">default urlfilters.json</a>.</p></td>
 </tr>
 </tbody>
 </table>
@@ -1652,7 +1506,7 @@ For full setup instructions, see the README in each module&#8217;s directory.</p
 <h4 id="_opensearch">OpenSearch</h4>
 <div class="paragraph">
 <p>Integration with <a href="https://opensearch.org/">OpenSearch</a> for indexing, URL status persistence, and metrics.
-See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/external/opensearch">opensearch module</a> for full details.</p>
+See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.6.0/external/opensearch">opensearch module</a> for full details.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -1770,7 +1624,7 @@ See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/
 <h4 id="_solr">Solr</h4>
 <div class="paragraph">
 <p>Integration with <a href="https://solr.apache.org/">Apache Solr</a> for indexing, URL status persistence, and metrics.
-See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/external/solr">solr module</a> for full details. Supports both standalone Solr and SolrCloud (via ZooKeeper).</p>
+See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.6.0/external/solr">solr module</a> for full details. Supports both standalone Solr and SolrCloud (via ZooKeeper).</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -1848,7 +1702,7 @@ See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/
 <h4 id="_sql">SQL</h4>
 <div class="paragraph">
 <p>Integration with relational databases via JDBC for URL status persistence, indexing, and metrics.
-See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/external/sql">sql module</a> for full details and table creation scripts.</p>
+See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.6.0/external/sql">sql module</a> for full details and table creation scripts.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -1911,20 +1765,7 @@ See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/
 <h4 id="_urlfrontier">URLFrontier</h4>
 <div class="paragraph">
 <p>Integration with <a href="https://github.com/crawler-commons/url-frontier">URLFrontier</a>, a language-agnostic API for URL management and scheduling.
-See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/external/urlfrontier">urlfrontier module</a> for full details.</p>
-</div>
-<div class="paragraph">
-<p><code>QueueRegulatorBolt</code> consumes the <code>queue</code> stream from the URLFrontier status updater and applies
-rate-limit blocks or robots.txt pacing. Robots pacing is enabled when both
-<code>urlfrontier.robots.crawl.delay.enabled</code> and <code>fetcher.max.crawl.delay.force</code> are <code>true</code>. It requires <code>partition.url.mode: byHost</code>,
-<code>urlfrontier.max.urls.per.bucket: 1</code>, <code>robots.crawl.delay</code> in <code>metadata.persist</code>, and a single
-URLFrontier endpoint (at most one <code>urlfrontier.address</code> entry). The same key
-must not match <code>metadata.transfer</code>, including wildcards such as <code>robots.*</code>, because it is a
-per-host control signal. The bolt probes these requirements at startup. A batch size of one
-bounds each frontier hand-out but does not recall URLs already emitted or eliminate concurrent
-requests while the new delay is reaching the frontier. A custom <code>metadata.transfer.class</code> is
-responsible for preserving the same persist-only contract for all URLs and values; the startup
-probe exercises only representative metadata.</p>
+See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.6.0/external/urlfrontier">urlfrontier module</a> for full details.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -1951,11 +1792,6 @@ probe exercises only representative metadata.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock">URLFrontier service port.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">urlfrontier.address</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">URLFrontier service address (can be used instead of host and port).</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">urlfrontier.max.buckets</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">10</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Number of buckets to request from the frontier.</p></td>
@@ -1963,92 +1799,7 @@ probe exercises only representative metadata.</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">urlfrontier.max.urls.per.bucket</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">10</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Maximum URLs per bucket. Must be 1 when robots crawl-delay pacing is enabled so one request cannot hand out several URLs from the same host.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">urlfrontier.robots.crawl.delay.enabled</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Enables forwarding long robots.txt Crawl-delays from the queue stream to URLFrontier. Also requires <code>fetcher.max.crawl.delay.force: true</code> and the validated configuration described above.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">urlfrontier.robots.delay.max.secs</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">86400</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Upper bound in seconds for a robots crawl-delay forwarded to the frontier.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">urlfrontier.robots.delay.decay.secs</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1800</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Deduplication window in seconds after which an unchanged robots crawl-delay is re-sent to the frontier.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">urlfrontier.delay.requestable</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Time in seconds for which the URLs are locked in URLFrontier.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">urlfrontier.cache.expireafter.sec</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Time in seconds after which the cache expires.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">urlfrontier.max.messages.in.flight</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Maximum number of messages in flight for the StatusUpdater.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">urlfrontier.throttling.time.msec</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Time in ms to throttle the StatusUpdater.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">urlfrontier.updater.max.messages</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Maximum number of messages to process at once by the StatusUpdater.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">urlfrontier.crawlid</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Crawl ID.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">urlfrontier.max.retry.after</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">86400</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Maximum delay in seconds honoured when a server requests a back-off via the Retry-After HTTP response header. -1 disables the cap.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">urlfrontier.backoff.base.secs</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">60</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">First block duration in seconds applied when a host rate-limits without a usable Retry-After header. 0 disables the adaptive back-off.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">urlfrontier.backoff.factor</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2.0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Multiplicative increase applied to the block duration on each new pressure event for the same host.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">urlfrontier.backoff.max.secs</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">86400</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Upper bound in seconds for the escalated block duration.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">urlfrontier.backoff.decay.secs</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1800</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Quiet window in seconds after which its escalation is forgotten and the next pressure event starts again from the base duration.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">urlfrontier.backoff.on.exceptions</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Whether fetch exceptions count as pressure events and escalate the host&#8217;s block.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">urlfrontier.backoff.jitter</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">0.1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Random extra fraction added to every computed block duration.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">urlfrontier.backoff.status.codes</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">429, 503</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">HTTP status codes treated as a rate-limit signal by the QueueRegulatorBolt.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Maximum URLs per bucket.</p></td>
 </tr>
 </tbody>
 </table>
@@ -2057,7 +1808,7 @@ probe exercises only representative metadata.</p>
 <h4 id="_tika">Tika</h4>
 <div class="paragraph">
 <p>Apache Tika integration for parsing non-HTML documents (PDF, Word, etc.).
-See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/external/tika">tika module</a> for full details.</p>
+See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.6.0/external/tika">tika module</a> for full details.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -2102,19 +1853,7 @@ When using the Tika <code>ParserBolt</code> alongside <code>JSoupParserBolt</cod
 <h4 id="_aws">AWS</h4>
 <div class="paragraph">
 <p>Integration with AWS services: CloudSearch for indexing and S3 for content caching.
-See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/external/aws">aws module</a> for full details.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-AWS CloudSearch support (the <code>cloudsearch.*</code> settings below) is deprecated and will be removed in the next major release of StormCrawler.
-</td>
-</tr>
-</table>
+See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.6.0/external/aws">aws module</a> for full details.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -2170,11 +1909,6 @@ AWS CloudSearch support (the <code>cloudsearch.*</code> settings below) is depre
 <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Custom S3 endpoint (optional, for S3-compatible services).</p></td>
 </tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">s3.path.style.access</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Use path-style access (<code><a href="http://host/bucket" class="bare">http://host/bucket</a></code>) instead of virtual-hosted style. Required for S3-compatible endpoints such as LocalStack or MinIO.</p></td>
-</tr>
 </tbody>
 </table>
 </div>
@@ -2182,7 +1916,7 @@ AWS CloudSearch support (the <code>cloudsearch.*</code> settings below) is depre
 <h4 id="_ai_llm_text_extraction">AI (LLM Text Extraction)</h4>
 <div class="paragraph">
 <p>LLM-based text extraction using OpenAI-compatible APIs (including local models via Ollama).
-See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/external/ai">ai module</a> for full details.</p>
+See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.6.0/external/ai">ai module</a> for full details.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -2245,7 +1979,7 @@ See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/
 <h4 id="_playwright">Playwright</h4>
 <div class="paragraph">
 <p>Browser-based fetching using <a href="https://playwright.dev/">Playwright</a> for JavaScript-rendered pages.
-See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/external/playwright">playwright module</a> for full details.</p>
+See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.6.0/external/playwright">playwright module</a> for full details.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -2384,7 +2118,7 @@ so one bad action cannot abort the rest of the chain.</p>
 </tbody>
 </table>
 <div class="paragraph">
-<p>See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/external/playwright">playwright module README</a> for the full parameter list of each built-in action and a guide on writing your own.</p>
+<p>See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.6.0/external/playwright">playwright module README</a> for the full parameter list of each built-in action and a guide on writing your own.</p>
 </div>
 </div>
 <div class="sect4">
@@ -2393,7 +2127,7 @@ so one bad action cannot abort the rest of the chain.</p>
 <p>Browser fetching is much more expensive than a plain HTTP fetch, so most operators only want
 Playwright on URLs that actually need it. The <code>JsRenderingDetector</code> parse filter inspects the
 parsed page from a cheap fetch and sets a metadata flag (default <code>fetch.with=playwright</code>) on URLs
-that look JavaScript-rendered. Pair it with <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/protocol/DelegatorProtocol.java">DelegatorProtocol</a>
+that look JavaScript-rendered. Pair it with <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.6.0/core/src/main/java/org/apache/stormcrawler/protocol/DelegatorProtocol.java">DelegatorProtocol</a>
 to route subsequent fetches of those URLs to the Playwright protocol while leaving everything else
 on a fast HTTP client.</p>
 </div>
@@ -2461,7 +2195,7 @@ on the current fetch, and <code>DefaultScheduler</code> reschedules the URL acco
 fetch interval (<code>fetchInterval.fetch.with=playwright: 5</code>) or drop <code>JsRenderingRedirectionBolt</code>
 between the parser and indexer. The bolt reads the routing flag and, on hit, emits only to the
 status stream with <code>Status.FETCHED</code> so the stub document never reaches the index. The full
-parameter list and tuning notes are in the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/external/playwright">playwright module README</a>.</p>
+parameter list and tuning notes are in the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.6.0/external/playwright">playwright module README</a>.</p>
 </div>
 </div>
 </div>
@@ -2469,7 +2203,7 @@ parameter list and tuning notes are in the <a href="https://github.com/apache/st
 <h4 id="_language_id">Language ID</h4>
 <div class="paragraph">
 <p>Language identification for crawled documents using the lang-detect library.
-See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/external/langid">langid module</a> source code for details.</p>
+See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.6.0/external/langid">langid module</a> source code for details.</p>
 </div>
 <div class="paragraph">
 <p>The <code>LanguageID</code> parse filter is configured in <code>parsefilters.json</code>:</p>
@@ -2505,7 +2239,7 @@ See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/
 <h4 id="_warc">WARC</h4>
 <div class="paragraph">
 <p>Reading and writing <a href="https://iipc.github.io/warc-specifications/specifications/warc-format/warc-1.1/">WARC</a> (Web ARChive) files for archival and replay.
-See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/external/warc">warc module</a> for full details.</p>
+See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.6.0/external/warc">warc module</a> for full details.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -2589,7 +2323,7 @@ For complete WARC records, set <code>http.store.headers</code> to <code>true</co
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-07-29 14:14:21 +0200
+Last updated 2026-05-22 14:49:42 +0200
 </div>
 </div>
 </body>
