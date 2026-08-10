@@ -2,51 +2,73 @@
 layout: default
 slug: download
 title: Download
-eyebrow: Download
+eyebrow: DOWNLOAD
 heading: Download
 description: Verified source releases of StormCrawler, signed by the release managers.
 ---
 
-<h2>Release Integrity</h2>
-<div class="callout">
-    <p>You <b>must</b> <a href="https://www.apache.org/info/verification.html">verify</a> the integrity of the
-        downloaded files. We provide OpenPGP signatures (*.asc files) for every release file. This signature should be
-        matched against <a href="https://downloads.apache.org/stormcrawler/KEYS">KEYS</a> file which contains the
-        OpenPGP keys of StormCrawler’s Release Managers. We also provide SHA-512 checksums for every release file.
-        After you download the file, you should calculate a checksum for your download, and make sure it is the same as
-        ours. </p>
-    <p>More information about release signing and verifying signatures can be found <a
-            href="https://www.apache.org/dev/release-signing.html">here</a>.</p>
-</div>
-
-<h2>Downloads</h2>
-
-<p>StormCrawler™ software is an open source SDK for building low-latency, scalable web crawlers based on Apache
-    Storm®. You can <a
-        href="https://www.apache.org/dyn/closer.lua/stormcrawler/stormcrawler-3.7.0/apache-stormcrawler-3.7.0-source-release.tar.gz">download
-    StormCrawler™ software here</a> (latest release: 3.7.0), or pick individual artifacts below.</p>
+<p>StormCrawler&trade; software is an open source SDK for building low-latency, scalable web crawlers based on <a href="https://storm.apache.org/" target="_blank" rel="noopener">Apache Storm&reg;</a>. You can <a href="https://www.apache.org/dyn/closer.lua/stormcrawler/stormcrawler-3.7.0/apache-stormcrawler-3.7.0-source-release.tar.gz">download StormCrawler&trade; software here</a> (latest release: 3.7.0), or pick individual artifacts below.</p>
 
 <div class="release-card">
-    <div class="version-card__head">
-        <span class="badge">3.7.0</span>
-        <h3 style="margin:0;">Apache StormCrawler 3.7.0</h3>
-    </div>
-    <p style="margin:.75rem 0 0;">Source release, signed and checksummed:</p>
-    <div class="chip-cluster">
-        <a class="chip" href="https://www.apache.org/dyn/closer.lua/stormcrawler/stormcrawler-3.7.0/apache-stormcrawler-3.7.0-source-release.tar.gz">apache-stormcrawler-3.7.0-source-release.tar.gz &rarr;</a>
-        <a class="chip" href="https://downloads.apache.org/stormcrawler/stormcrawler-3.7.0/apache-stormcrawler-3.7.0-source-release.tar.gz.sha512">sha512 &rarr;</a>
-        <a class="chip" href="https://downloads.apache.org/stormcrawler/stormcrawler-3.7.0/apache-stormcrawler-3.7.0-source-release.tar.gz.asc">asc &rarr;</a>
-        <a class="chip" href="https://downloads.apache.org/stormcrawler/KEYS">KEYS &rarr;</a>
-        <a class="chip" href="https://github.com/apache/stormcrawler/releases/tag/stormcrawler-3.7.0" target="_blank" rel="noopener">Release notes <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
-        <a class="chip" href="https://search.maven.org/search?q=org.apache.stormcrawler" target="_blank" rel="noopener">Maven Central <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
-    </div>
+  <h3>Apache StormCrawler 3.7.0 <span class="badge">LATEST</span></h3>
+  <p style="margin:0;">Source release, signed and checksummed:</p>
+  <div class="chip-cluster">
+    <a class="chip" href="https://www.apache.org/dyn/closer.lua/stormcrawler/stormcrawler-3.7.0/apache-stormcrawler-3.7.0-source-release.tar.gz">SOURCE TAR.GZ</a>
+    <a class="chip" href="https://github.com/apache/stormcrawler/releases/tag/stormcrawler-3.7.0" target="_blank" rel="noopener">RELEASE NOTES &#8599;</a>
+    <a class="chip" href="https://search.maven.org/search?q=org.apache.stormcrawler" target="_blank" rel="noopener">MAVEN CENTRAL &#8599;</a>
+  </div>
 </div>
 
+<h2>Chain of trust</h2>
+<p>You <b>must</b> <a href="https://www.apache.org/info/verification.html">verify</a> the integrity of the downloaded files &mdash; every release ships with everything you need to prove it came from us. The chain has four links:</p>
+
+<div class="vchain">
+  <div class="vlink">
+    <p class="slabel">01 &mdash; GET</p>
+    <h3>Source archive</h3>
+    <p>Fetch the tar.gz from an Apache mirror.</p>
+    <div class="chip-cluster">
+      <a class="chip" href="https://www.apache.org/dyn/closer.lua/stormcrawler/stormcrawler-3.7.0/apache-stormcrawler-3.7.0-source-release.tar.gz">TAR.GZ</a>
+    </div>
+  </div>
+  <div class="vlink">
+    <p class="slabel">02 &mdash; CHECK</p>
+    <h3>Integrity</h3>
+    <p>Your SHA-512 checksum must match ours.</p>
+    <div class="chip-cluster">
+      <a class="chip" href="https://downloads.apache.org/stormcrawler/stormcrawler-3.7.0/apache-stormcrawler-3.7.0-source-release.tar.gz.sha512">SHA512</a>
+    </div>
+  </div>
+  <div class="vlink">
+    <p class="slabel">03 &mdash; PROVE</p>
+    <h3>Authenticity</h3>
+    <p>The OpenPGP signature (*.asc) is made by a release manager.</p>
+    <div class="chip-cluster">
+      <a class="chip" href="https://downloads.apache.org/stormcrawler/stormcrawler-3.7.0/apache-stormcrawler-3.7.0-source-release.tar.gz.asc">ASC</a>
+    </div>
+  </div>
+  <div class="vlink">
+    <p class="slabel">04 &mdash; TRUST</p>
+    <h3>Key ring</h3>
+    <p>Match the signature against the project's KEYS file.</p>
+    <div class="chip-cluster">
+      <a class="chip" href="https://downloads.apache.org/stormcrawler/KEYS">KEYS</a>
+    </div>
+  </div>
+</div>
+
+<h3>Verify like a release manager</h3>
+<div class="codebox">
+  <pre id="verify-cmd">$ sha512sum -c apache-stormcrawler-3.7.0-source-release.tar.gz.sha512
+$ gpg --import KEYS
+$ gpg --verify apache-stormcrawler-3.7.0-source-release.tar.gz.asc</pre>
+  <button class="copy-chip" data-copy="#verify-cmd" hidden style="position:absolute;top:10px;right:10px;">copy</button>
+</div>
+
+<p>More information about release signing and verifying signatures can be found <a href="https://www.apache.org/dev/release-signing.html">here</a>.</p>
+
 <h3>Maven</h3>
-<p>Artifacts are available via <a href="https://search.maven.org/search?q=org.apache.stormcrawler">Maven
-    Central</a></p>
+<p>Artifacts are available via <a href="https://search.maven.org/search?q=org.apache.stormcrawler">Maven Central</a>.</p>
 
 <h3>Older Releases</h3>
-
-<p>Previous <b>non</b>-ASF releases can be found <a
-        href="https://search.maven.org/search?q=g:com.digitalpebble.stormcrawler">here</a>.</p>
+<p>Previous <b>non</b>-ASF releases can be found <a href="https://search.maven.org/search?q=g:com.digitalpebble.stormcrawler">here</a>.</p>
