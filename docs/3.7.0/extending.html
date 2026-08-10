@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.23">
+<title>Extending and Operating StormCrawler</title>
+<link rel="stylesheet" href="/css/docs.css">
+<script>(function(){try{var t=localStorage.getItem('theme');if(t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();</script>
+<meta name="theme-color" content="#C33540">
+<script src="/js/darkmode-docs.js"></script><link rel="canonical" href="https://stormcrawler.apache.org/docs/latest/extending.html"></head>
+<body class="article">
+<style>
+.sc-docheader{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:16px;height:60px;padding:0 28px;background:rgba(247,247,243,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+[data-theme="dark"] .sc-docheader{background:rgba(20,19,18,.92)}
+.sc-docheader img{height:30px;display:block}
+.sc-docheader .logo-d{display:none}
+[data-theme="dark"] .sc-docheader .logo-l{display:none}
+[data-theme="dark"] .sc-docheader .logo-d{display:block}
+.sc-docheader .crumb{font-family:"JetBrains Mono",SFMono-Regular,Menlo,monospace;font-size:12px;color:var(--muted)}
+.sc-docheader .crumb b{color:var(--acc)}
+.sc-docheader .right{margin-left:auto;display:flex;align-items:center;gap:14px}
+.sc-docheader .right a{font-size:13.5px;font-weight:500;color:var(--copy)}
+.sc-docheader .right a:hover{color:var(--acc);text-decoration:none}
+.sc-docheader .crumb-sep{border-left:1px solid var(--line);padding-left:16px}
+.verwrap{position:relative;display:flex;align-items:center}
+.verwrap summary{list-style:none;cursor:pointer;font-family:"JetBrains Mono",SFMono-Regular,Menlo,monospace;font-size:11.5px;font-weight:600;color:var(--ink);border:1px solid var(--line);border-radius:100px;padding:6px 12px;background:var(--bg);display:inline-flex;align-items:center;gap:6px;line-height:1.4}
+.verwrap summary::-webkit-details-marker{display:none}
+.verwrap summary b{color:var(--acc)}
+.vermenu{position:absolute;top:calc(100% + 6px);left:0;min-width:190px;background:var(--bg);border:1px solid var(--line);border-radius:12px;box-shadow:0 8px 28px rgba(28,29,25,.12);padding:6px;z-index:40}
+.vermenu a{display:flex;justify-content:space-between;gap:12px;font-family:"JetBrains Mono",SFMono-Regular,Menlo,monospace;font-size:12px;color:var(--copy);padding:8px 10px;border-radius:8px}
+.vermenu a:hover{background:var(--panel);text-decoration:none}
+.vermenu a.cur{color:var(--ink);font-weight:600;background:var(--acc-soft)}
+.vermenu .all{border-top:1px solid var(--line);margin-top:4px;padding-top:8px;color:var(--acc)}
+[data-theme="dark"] .vermenu{box-shadow:0 8px 28px rgba(0,0,0,.5)}
+</style>
+<header class="sc-docheader">
+<a href="/"><img class="logo-l" src="/img/logo.png" alt="Apache StormCrawler"><img class="logo-d" src="/img/logo-dark.svg" alt="Apache StormCrawler"></a>
+<a class="crumb crumb-sep" href="/docs/">Documentation</a>
+<details class="verwrap">
+<summary>v <b>3.7.0</b> &#9662;</summary>
+<div class="vermenu">
+<a href="/docs/latest/extending.html">latest</a>
+<a class="cur" href="/docs/3.7.0/extending.html">3.7.0 <span>current</span></a>
+<a href="/docs/3.6.0/extending.html">3.6.0</a>
+<a href="/docs/3.5.1/index.html">3.5.1</a>
+<a class="all" href="/docs/">All versions &#8599;</a>
+</div>
+</details>
+<nav class="right">
+<a href="/">Website</a>
+<a href="https://javadoc.io/doc/org.apache.stormcrawler/stormcrawler-core/3.7.0" target="_blank" rel="noopener">Javadoc &#8599;</a>
+<a href="https://github.com/apache/stormcrawler" target="_blank" rel="noopener">GitHub &#8599;</a>
+</nav>
+</header>
+<div id="header">
+<div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_extending_and_operating_stormcrawler">Extending and Operating StormCrawler</a>
+<ul class="sectlevel2">
+<li><a href="#_writing_custom_components">Writing Custom Components</a></li>
+<li><a href="#_politeness_and_rate_limiting">Politeness and Rate Limiting</a></li>
+<li><a href="#_error_handling_and_retry_logic">Error Handling and Retry Logic</a></li>
+<li><a href="#_monitoring_and_metrics">Monitoring and Metrics</a></li>
+<li><a href="#_scaling_and_tuning">Scaling and Tuning</a></li>
+<li><a href="#_security_considerations">Security Considerations</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="_extending_and_operating_stormcrawler">Extending and Operating StormCrawler</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This section provides practical guides for extending StormCrawler with custom components, tuning crawl performance, and operating crawlers in production.</p>
+</div>
+<div class="sect2">
+<h3 id="_writing_custom_components">Writing Custom Components</h3>
+<div class="sect3">
+<h4 id="_custom_url_filter">Custom URL Filter</h4>
+<div class="paragraph">
+<p>URL filters accept, reject, or modify URLs during parsing and redirection handling. To create a custom filter, extend the abstract <code>URLFilter</code> class and implement the <code>filter</code> method.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">import</span> <span class="include">org.apache.stormcrawler.filtering.URLFilter</span>;
+<span class="keyword">import</span> <span class="include">org.apache.stormcrawler.Metadata</span>;
+<span class="keyword">import</span> <span class="include">com.fasterxml.jackson.databind.JsonNode</span>;
+<span class="keyword">import</span> <span class="include">java.net.URL</span>;
+<span class="keyword">import</span> <span class="include">java.util.Map</span>;
+
+<span class="directive">public</span> <span class="type">class</span> <span class="class">MyURLFilter</span> <span class="directive">extends</span> URLFilter {
+
+    <span class="directive">private</span> <span class="type">int</span> maxLength;
+
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> <span class="type">void</span> configure(<span class="predefined-type">Map</span>&lt;<span class="predefined-type">String</span>, <span class="predefined-type">Object</span>&gt; stormConf, JsonNode paramNode) {
+        maxLength = paramNode.path(<span class="string"><span class="delimiter">&quot;</span><span class="content">maxLength</span><span class="delimiter">&quot;</span></span>).asInt(<span class="integer">1024</span>);
+    }
+
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> <span class="predefined-type">String</span> filter(<span class="predefined-type">URL</span> sourceUrl, Metadata sourceMetadata, <span class="predefined-type">String</span> urlToFilter) {
+        <span class="keyword">if</span> (urlToFilter.length() &gt; maxLength) {
+            <span class="keyword">return</span> <span class="predefined-constant">null</span>; <span class="comment">// reject</span>
+        }
+        <span class="keyword">return</span> urlToFilter; <span class="comment">// accept (or return a normalized version)</span>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Register the filter in <code>urlfilters.json</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="json">{
+  <span class="key"><span class="delimiter">&quot;</span><span class="content">org.apache.stormcrawler.filtering.URLFilters</span><span class="delimiter">&quot;</span></span>: [
+    {
+      <span class="key"><span class="delimiter">&quot;</span><span class="content">class</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">com.example.MyURLFilter</span><span class="delimiter">&quot;</span></span>,
+      <span class="key"><span class="delimiter">&quot;</span><span class="content">name</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">MyURLFilter</span><span class="delimiter">&quot;</span></span>,
+      <span class="key"><span class="delimiter">&quot;</span><span class="content">params</span><span class="delimiter">&quot;</span></span>: {
+        <span class="key"><span class="delimiter">&quot;</span><span class="content">maxLength</span><span class="delimiter">&quot;</span></span>: <span class="integer">2048</span>
+      }
+    }
+  ]
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Filters are executed in the order they appear in the JSON file. Return <code>null</code> to reject a URL, or return the (possibly modified) URL string to accept it.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_custom_parse_filter">Custom Parse Filter</h4>
+<div class="paragraph">
+<p>Parse filters extract data from fetched documents and can modify metadata and outlinks. Extend <code>ParseFilter</code> and implement the <code>filter</code> method.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">import</span> <span class="include">org.apache.stormcrawler.parse.ParseFilter</span>;
+<span class="keyword">import</span> <span class="include">org.apache.stormcrawler.parse.ParseResult</span>;
+<span class="keyword">import</span> <span class="include">com.fasterxml.jackson.databind.JsonNode</span>;
+<span class="keyword">import</span> <span class="include">org.w3c.dom.DocumentFragment</span>;
+<span class="keyword">import</span> <span class="include">java.util.Map</span>;
+
+<span class="directive">public</span> <span class="type">class</span> <span class="class">MyParseFilter</span> <span class="directive">extends</span> ParseFilter {
+
+    <span class="directive">private</span> <span class="predefined-type">String</span> metadataKey;
+
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> <span class="type">void</span> configure(<span class="predefined-type">Map</span>&lt;<span class="predefined-type">String</span>, <span class="predefined-type">Object</span>&gt; stormConf, JsonNode paramNode) {
+        metadataKey = paramNode.path(<span class="string"><span class="delimiter">&quot;</span><span class="content">key</span><span class="delimiter">&quot;</span></span>).asText(<span class="string"><span class="delimiter">&quot;</span><span class="content">custom-field</span><span class="delimiter">&quot;</span></span>);
+    }
+
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> <span class="type">boolean</span> needsDOM() {
+        <span class="keyword">return</span> <span class="predefined-constant">false</span>; <span class="comment">// set to true if you need the DOM tree</span>
+    }
+
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> <span class="type">void</span> filter(<span class="predefined-type">String</span> url, <span class="type">byte</span><span class="type">[]</span> content, DocumentFragment doc,
+                       ParseResult parse) {
+        <span class="comment">// Extract data and store in metadata</span>
+        parse.get(url).getMetadata().setValue(metadataKey, <span class="string"><span class="delimiter">&quot;</span><span class="content">extracted-value</span><span class="delimiter">&quot;</span></span>);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Register it in <code>parsefilters.json</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="json">{
+  <span class="key"><span class="delimiter">&quot;</span><span class="content">org.apache.stormcrawler.parse.ParseFilters</span><span class="delimiter">&quot;</span></span>: [
+    {
+      <span class="key"><span class="delimiter">&quot;</span><span class="content">class</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">com.example.MyParseFilter</span><span class="delimiter">&quot;</span></span>,
+      <span class="key"><span class="delimiter">&quot;</span><span class="content">name</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">MyParseFilter</span><span class="delimiter">&quot;</span></span>,
+      <span class="key"><span class="delimiter">&quot;</span><span class="content">params</span><span class="delimiter">&quot;</span></span>: {
+        <span class="key"><span class="delimiter">&quot;</span><span class="content">key</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">custom-field</span><span class="delimiter">&quot;</span></span>
+      }
+    }
+  ]
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If <code>needsDOM()</code> returns <code>false</code> for all configured parse filters, the parsing bolt skips DOM generation entirely, improving performance.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_custom_protocol">Custom Protocol</h4>
+<div class="paragraph">
+<p>Protocol implementations define how content is fetched. Implement the <code>Protocol</code> interface:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">import</span> <span class="include">org.apache.stormcrawler.protocol.Protocol</span>;
+<span class="keyword">import</span> <span class="include">org.apache.stormcrawler.protocol.ProtocolResponse</span>;
+<span class="keyword">import</span> <span class="include">org.apache.stormcrawler.Metadata</span>;
+<span class="keyword">import</span> <span class="include">crawlercommons.robots.BaseRobotRules</span>;
+<span class="keyword">import</span> <span class="include">org.apache.storm.Config</span>;
+
+<span class="directive">public</span> <span class="type">class</span> <span class="class">MyProtocol</span> <span class="directive">implements</span> Protocol {
+
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> <span class="type">void</span> configure(Config conf) {
+        <span class="comment">// Initialize from Storm configuration</span>
+    }
+
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> ProtocolResponse getProtocolOutput(<span class="predefined-type">String</span> url, Metadata metadata)
+            <span class="directive">throws</span> <span class="exception">Exception</span> {
+        <span class="type">byte</span><span class="type">[]</span> content = <span class="comment">/* fetch content */</span>;
+        <span class="type">int</span> statusCode = <span class="integer">200</span>;
+        Metadata responseMeta = <span class="keyword">new</span> Metadata();
+        <span class="keyword">return</span> <span class="keyword">new</span> ProtocolResponse(content, statusCode, responseMeta);
+    }
+
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> BaseRobotRules getRobotRules(<span class="predefined-type">String</span> url) {
+        <span class="keyword">return</span> RobotRulesParser.EMPTY_RULES;
+    }
+
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> <span class="type">void</span> cleanup() {}
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Register it in your configuration YAML:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="yaml"><span class="key">http.protocol.implementation</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">com.example.MyProtocol</span><span class="delimiter">&quot;</span></span>
+<span class="key">https.protocol.implementation</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">com.example.MyProtocol</span><span class="delimiter">&quot;</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Use the <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/protocol/DelegatorProtocol.java">DelegatorProtocol</a> when you need to route URLs to different protocol implementations based on metadata or URL patterns.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_custom_page_action_playwright">Custom Page Action (Playwright)</h4>
+<div class="paragraph">
+<p>The <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/external/playwright">Playwright protocol</a> exposes a <code>PageAction</code> extension point so you can plug site-specific post-navigate behaviour (tab/accordion expansion, cookie-banner dismissal, infinite-scroll, custom <code>evaluate()</code> calls, screenshotting, &#8230;&#8203;) into the protocol without subclassing it. Actions are loaded as an ordered chain from a JSON file referenced by <code>playwright.page.actions.config.file</code> and follow the same <code>Configurable</code> lifecycle as URL/parse filters. The chain runs after <code>page.navigate()</code> succeeds and before <code>page.content()</code> is captured, so any DOM mutations land in the rendered content returned by the protocol.</p>
+</div>
+<div class="paragraph">
+<p>A handful of built-in actions ship with the module — <code>DismissOverlayAction</code>, <code>ExpandClickablesAction</code>, <code>ScrollToBottomAction</code>, <code>EvaluateAction</code>, <code>WaitForSelectorAction</code>, <code>ScreenshotAction</code>. Reach for a custom action when none of those fit. Extend <code>PageAction</code> and implement <code>apply</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">import</span> <span class="include">org.apache.stormcrawler.protocol.playwright.PageAction</span>;
+<span class="keyword">import</span> <span class="include">org.apache.stormcrawler.Metadata</span>;
+<span class="keyword">import</span> <span class="include">com.fasterxml.jackson.databind.JsonNode</span>;
+<span class="keyword">import</span> <span class="include">com.microsoft.playwright.Page</span>;
+<span class="keyword">import</span> <span class="include">java.util.Map</span>;
+
+<span class="directive">public</span> <span class="type">class</span> <span class="class">MyPageAction</span> <span class="directive">extends</span> PageAction {
+
+    <span class="directive">private</span> <span class="predefined-type">String</span> selector;
+
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> <span class="type">void</span> configure(<span class="predefined-type">Map</span>&lt;<span class="predefined-type">String</span>, <span class="predefined-type">Object</span>&gt; stormConf, JsonNode params) {
+        <span class="keyword">if</span> (!params.has(<span class="string"><span class="delimiter">&quot;</span><span class="content">selector</span><span class="delimiter">&quot;</span></span>)) {
+            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="exception">IllegalArgumentException</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">MyPageAction requires 'selector'</span><span class="delimiter">&quot;</span></span>);
+        }
+        <span class="local-variable">this</span>.selector = params.get(<span class="string"><span class="delimiter">&quot;</span><span class="content">selector</span><span class="delimiter">&quot;</span></span>).asText();
+    }
+
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> <span class="type">void</span> apply(Page page, <span class="predefined-type">String</span> url,
+                      Metadata sourceMetadata, Metadata responseMetadata) {
+        page.locator(selector).click();
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Reference the action by its fully-qualified class name in the chain JSON:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="json">{
+  <span class="key"><span class="delimiter">&quot;</span><span class="content">org.apache.stormcrawler.protocol.playwright.PageActions</span><span class="delimiter">&quot;</span></span>: [
+    {
+      <span class="key"><span class="delimiter">&quot;</span><span class="content">class</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">com.example.MyPageAction</span><span class="delimiter">&quot;</span></span>,
+      <span class="key"><span class="delimiter">&quot;</span><span class="content">name</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">my-action</span><span class="delimiter">&quot;</span></span>,
+      <span class="key"><span class="delimiter">&quot;</span><span class="content">params</span><span class="delimiter">&quot;</span></span>: { <span class="key"><span class="delimiter">&quot;</span><span class="content">selector</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">#load-more</span><span class="delimiter">&quot;</span></span> }
+    }
+  ]
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Per-action failures in <code>apply()</code> are logged and swallowed by the chain wrapper so one bad action cannot abort the rest. If you need a hard failure on misconfiguration, throw from <code>configure()</code> — that propagates at topology start-up, before any URL is fetched.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_custom_bolt_or_spout">Custom Bolt or Spout</h4>
+<div class="paragraph">
+<p>For a bolt that emits on the status stream (like fetchers and parsers), extend <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/bolt/StatusEmitterBolt.java">StatusEmitterBolt</a>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">import</span> <span class="include">org.apache.stormcrawler.bolt.StatusEmitterBolt</span>;
+<span class="keyword">import</span> <span class="include">org.apache.storm.tuple.Tuple</span>;
+
+<span class="directive">public</span> <span class="type">class</span> <span class="class">MyBolt</span> <span class="directive">extends</span> StatusEmitterBolt {
+
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> <span class="type">void</span> execute(Tuple tuple) {
+        <span class="predefined-type">String</span> url = tuple.getStringByField(<span class="string"><span class="delimiter">&quot;</span><span class="content">url</span><span class="delimiter">&quot;</span></span>);
+        <span class="type">byte</span><span class="type">[]</span> content = tuple.getBinaryByField(<span class="string"><span class="delimiter">&quot;</span><span class="content">content</span><span class="delimiter">&quot;</span></span>);
+        Metadata metadata = (Metadata) tuple.getValueByField(<span class="string"><span class="delimiter">&quot;</span><span class="content">metadata</span><span class="delimiter">&quot;</span></span>);
+
+        <span class="comment">// Process content...</span>
+
+        collector.emit(tuple, <span class="keyword">new</span> Values(url, content, metadata));
+        collector.ack(tuple);
+    }
+
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> <span class="type">void</span> declareOutputFields(OutputFieldsDeclarer declarer) {
+        declarer.declare(<span class="keyword">new</span> Fields(<span class="string"><span class="delimiter">&quot;</span><span class="content">url</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">content</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">metadata</span><span class="delimiter">&quot;</span></span>));
+        declarer.declareStream(
+            org.apache.stormcrawler.Constants.StatusStreamName,
+            <span class="keyword">new</span> Fields(<span class="string"><span class="delimiter">&quot;</span><span class="content">url</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">metadata</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">status</span><span class="delimiter">&quot;</span></span>));
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For a custom spout, extend <code>BaseRichSpout</code> and implement <code>open()</code>, <code>nextTuple()</code>, <code>ack()</code>, <code>fail()</code>, and <code>declareOutputFields()</code>. See <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/spout/FileSpout.java">FileSpout</a> for a simple example. For spouts backed by a storage layer, extend <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/persistence/AbstractQueryingSpout.java">AbstractQueryingSpout</a> instead.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_politeness_and_rate_limiting">Politeness and Rate Limiting</h3>
+<div class="paragraph">
+<p>StormCrawler enforces politeness at multiple levels to avoid overloading target servers.</p>
+</div>
+<div class="sect3">
+<h4 id="_queue_based_politeness">Queue-Based Politeness</h4>
+<div class="paragraph">
+<p>The <strong>FetcherBolt</strong> groups incoming URLs into queues based on the <code>fetcher.queue.mode</code> setting:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>byHost</code> (default) — one queue per hostname</p>
+</li>
+<li>
+<p><code>byDomain</code> — one queue per registered domain (e.g., <code>sub.example.com</code> and <code>example.com</code> share a queue)</p>
+</li>
+<li>
+<p><code>byIP</code> — one queue per resolved IP address</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Each queue enforces a minimum delay between consecutive requests. The delay is determined by:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>The <code>Crawl-delay</code> directive in the site&#8217;s <code>robots.txt</code> (if present and within limits)</p>
+</li>
+<li>
+<p>The <code>fetcher.server.delay</code> default (1 second)</p>
+</li>
+<li>
+<p>For multi-threaded queues, <code>fetcher.server.min.delay</code> is used instead</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_crawl_delay_handling">Crawl-Delay Handling</h4>
+<div class="paragraph">
+<p>When <code>robots.txt</code> specifies a <code>Crawl-delay</code>:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>If the delay is <strong>smaller</strong> than <code>fetcher.server.delay</code> and <code>fetcher.server.delay.force</code> is <code>true</code>, the larger default delay is used instead</p>
+</li>
+<li>
+<p>If the delay is <strong>larger</strong> than <code>fetcher.max.crawl.delay</code>:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>fetcher.max.crawl.delay.force: false</code> (default) — the queue is skipped and the URL gets an ERROR status</p>
+</li>
+<li>
+<p><code>fetcher.max.crawl.delay.force: true</code> — the fetcher caps its local delay at <code>fetcher.max.crawl.delay</code> and reports the requested delay in whole seconds as <code>robots.crawl.delay</code>; when <code>QueueRegulatorBolt</code> is wired and <code>urlfrontier.robots.crawl.delay.enabled: true</code>, a value capped by <code>urlfrontier.robots.delay.max.secs</code> is forwarded to the host queue in the frontier</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_robots_txt_compliance">Robots.txt Compliance</h4>
+<div class="paragraph">
+<p>StormCrawler fetches and caches <code>robots.txt</code> rules per host. The cache is configured via:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>robots.cache.spec</code> — Guava cache spec for valid rules (default: 6 hour expiry, 10000 entries)</p>
+</li>
+<li>
+<p><code>robots.error.cache.spec</code> — cache spec for error responses (default: 1 hour expiry)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Individual aspects of robot compliance can be toggled:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>http.robots.file.skip</code> — ignore <code>robots.txt</code> entirely</p>
+</li>
+<li>
+<p><code>http.robots.headers.skip</code> — ignore <code>X-Robots-Tag</code> HTTP headers</p>
+</li>
+<li>
+<p><code>http.robots.meta.skip</code> — ignore <code>&lt;meta name="robots"&gt;</code> HTML tags</p>
+</li>
+<li>
+<p><code>robots.noFollow.strict</code> — if <code>true</code>, remove all outlinks from pages marked as <code>noFollow</code></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_error_handling_and_retry_logic">Error Handling and Retry Logic</h3>
+<div class="paragraph">
+<p>StormCrawler uses a status-based system to handle errors and schedule retries.</p>
+</div>
+<div class="sect3">
+<h4 id="_status_lifecycle">Status Lifecycle</h4>
+<div class="paragraph">
+<p>Each URL has a <code>Status</code> value that drives scheduling:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>DISCOVERED</strong> — new URL, not yet fetched</p>
+</li>
+<li>
+<p><strong>FETCHED</strong> — successfully retrieved and processed</p>
+</li>
+<li>
+<p><strong>FETCH_ERROR</strong> — transient error (network timeout, HTTP 5xx). Will be retried.</p>
+</li>
+<li>
+<p><strong>ERROR</strong> — terminal error (too many retries, HTTP 4xx). Not retried by default.</p>
+</li>
+<li>
+<p><strong>REDIRECTION</strong> — HTTP 3xx redirect encountered</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_retry_mechanism">Retry Mechanism</h4>
+<div class="paragraph">
+<p>When a URL receives <code>FETCH_ERROR</code> status, the <code>AbstractStatusUpdaterBolt</code> increments a <code>fetch.error.count</code> counter in the URL&#8217;s metadata. Once this counter reaches <code>max.fetch.errors</code> (default: 3), the status is escalated to <code>ERROR</code>.</p>
+</div>
+<div class="paragraph">
+<p>The <code>DefaultScheduler</code> computes the next fetch date based on status:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>FETCHED</strong> — <code>fetchInterval.default</code> (default: 1440 minutes = 1 day)</p>
+</li>
+<li>
+<p><strong>FETCH_ERROR</strong> — <code>fetchInterval.fetch.error</code> (default: 120 minutes = 2 hours)</p>
+</li>
+<li>
+<p><strong>ERROR</strong> — <code>fetchInterval.error</code> (default: -1 = never refetch)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>On a successful fetch, the error counter and error metadata (<code>error.cause</code>, <code>error.message</code>, <code>error.source</code>) are cleared automatically.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_custom_fetch_intervals">Custom Fetch Intervals</h4>
+<div class="paragraph">
+<p>You can set fetch intervals based on metadata key-value pairs:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="yaml"><span class="comment"># All feeds refetch every 10 minutes</span>
+<span class="error">fetchInterval.isFeed=true</span>: <span class="error">10</span>
+
+<span class="comment"># Feeds with fetch errors retry after 60 minutes</span>
+<span class="error">fetchInterval.FETCH_ERROR.isFeed=true</span>: <span class="error">60</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_monitoring_and_metrics">Monitoring and Metrics</h3>
+<div class="paragraph">
+<p>StormCrawler exposes metrics through Apache Storm&#8217;s built-in metrics system. Bolts register counters, gauges, and averages which are reported at configurable intervals.</p>
+</div>
+<div class="sect3">
+<h4 id="_key_fetcher_metrics">Key Fetcher Metrics</h4>
+<div class="paragraph">
+<p>The <code>FetcherBolt</code> tracks:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>fetcher_counter</code> — event counts (fetched, error, redirection, robots_rules_fetches)</p>
+</li>
+<li>
+<p><code>fetcher_average</code> — averaged values (download_time, queue_wait_time)</p>
+</li>
+<li>
+<p><code>fetcher_average_persec</code> — throughput rates (fetched_per_sec, error_per_sec)</p>
+</li>
+<li>
+<p><code>activethreads</code> — number of currently active fetching threads</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The reporting interval is controlled by <code>fetcher.metrics.time.bucket.secs</code> (default: 10 seconds).</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_metrics_consumers">Metrics Consumers</h4>
+<div class="paragraph">
+<p>To persist metrics, register a <code>MetricsConsumer</code> in your topology configuration:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="yaml"><span class="key">topology.metrics.consumer.register</span>:
+  - <span class="string"><span class="content">class: &quot;org.apache.stormcrawler.opensearch.metrics.MetricsConsumer&quot;</span></span>
+    <span class="key">parallelism.hint</span>: <span class="string"><span class="content">1</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>StormCrawler provides MetricsConsumer implementations for <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/external/opensearch">OpenSearch</a>, <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/external/solr">Solr</a>, and <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/external/sql">SQL</a>.</p>
+</div>
+<div class="paragraph">
+<p>The <strong>Storm UI</strong> (default port 8080) provides real-time visibility into topology health, including execute/process latency, emit counts, and error rates per bolt and spout.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_scaling_and_tuning">Scaling and Tuning</h3>
+<div class="sect3">
+<h4 id="_thread_and_parallelism_tuning">Thread and Parallelism Tuning</h4>
+<div class="ulist">
+<ul>
+<li>
+<p><code>fetcher.threads.number</code> — total fetching threads across all queues (default: 10). Increase for broader crawls.</p>
+</li>
+<li>
+<p><code>fetcher.threads.per.queue</code> — threads per host/domain/IP queue (default: 1). Increase only for sites that allow aggressive crawling.</p>
+</li>
+<li>
+<p><code>fetcher.maxThreads.host/domain/ip</code> — override threads for a specific queue.</p>
+</li>
+<li>
+<p><code>protocol.instances.num</code> — number of protocol instances (default: 1). Increase for OkHttp connection pool efficiency.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>In Flux or topology code, set <code>parallelism</code> for each bolt to control Storm executor allocation. Increase spout parallelism when the frontier is the bottleneck.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_queue_and_buffer_tuning">Queue and Buffer Tuning</h4>
+<div class="ulist">
+<ul>
+<li>
+<p><code>fetcher.max.urls.in.queues</code> — caps total queued URLs to prevent memory exhaustion. -1 for unlimited.</p>
+</li>
+<li>
+<p><code>fetcher.max.queue.size</code> — caps individual queue length.</p>
+</li>
+<li>
+<p><code>urlbuffer.class</code> — URL buffer implementation used by spouts. The default <code>SimpleURLBuffer</code> is suitable for most use cases.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_memory_and_connection_pooling_okhttp">Memory and Connection Pooling (OkHttp)</h4>
+<div class="paragraph">
+<p>For crawls with many concurrent hosts, tune OkHttp&#8217;s connection pool:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="yaml"><span class="key">okhttp.protocol.connection.pool</span>:
+  <span class="key">max.idle.connections</span>: <span class="string"><span class="content">5</span></span>
+  <span class="key">connection.keep.alive</span>: <span class="string"><span class="content">300</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Keep the pool size (idle + active) under 1000. For large crawls, increase <code>protocol.instances.num</code> to distribute connections across multiple pools.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_security_considerations">Security Considerations</h3>
+<div class="sect3">
+<h4 id="_ssltls">SSL/TLS</h4>
+<div class="paragraph">
+<p>By default, StormCrawler&#8217;s OkHttp protocol trusts all certificates (<code>http.trust.everything: true</code>). For production crawls over untrusted networks, consider setting this to <code>false</code> and configuring a proper trust store.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_authentication">Authentication</h4>
+<div class="paragraph">
+<p><strong>Basic Authentication</strong> is supported via:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="yaml"><span class="key">http.basicauth.user</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">username</span><span class="delimiter">&quot;</span></span>
+<span class="key">http.basicauth.password</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">password</span><span class="delimiter">&quot;</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>These credentials are sent as an <code>Authorization</code> header with every request. For per-site authentication, use metadata-driven headers instead (see <a href="#Metadata-dependent Behavior For HTTP Protocols">[Metadata-dependent Behavior For HTTP Protocols]</a> in the Internals section).</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_proxy_authentication">Proxy Authentication</h4>
+<div class="paragraph">
+<p>Proxy credentials can be configured via:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="yaml"><span class="key">http.proxy.host</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">proxy.example.com</span><span class="delimiter">&quot;</span></span>
+<span class="key">http.proxy.port</span>: <span class="string"><span class="content">8080</span></span>
+<span class="key">http.proxy.user</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">proxyuser</span><span class="delimiter">&quot;</span></span>
+<span class="key">http.proxy.pass</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">proxypass</span><span class="delimiter">&quot;</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For rotating proxies, use the <code>MultiProxyManager</code> with a proxy list file. See the <a href="configuration.html">Proxy configuration section</a> for details.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2026-07-29 14:14:21 +0200
+</div>
+</div>
+<script>(function(){var links=[].slice.call(document.querySelectorAll('#toc a[href^="#"]'));if(!links.length)return;var map=links.map(function(a){var t=document.getElementById(decodeURIComponent(a.getAttribute('href')).slice(1));return t?{a:a,t:t}:null}).filter(Boolean);function on(){var y=window.pageYOffset+90,cur=map[0];map.forEach(function(m){if(m.t.offsetTop<=y)cur=m});links.forEach(function(a){a.classList.toggle('active',cur&&a===cur.a)})}window.addEventListener('scroll',on,{passive:true});on();})();</script>
+<script>(function(){if(!navigator.clipboard)return;document.querySelectorAll('.listingblock pre').forEach(function(pre){var b=document.createElement('button');b.className='sc-copy';b.textContent='copy';b.addEventListener('click',function(){navigator.clipboard.writeText(pre.textContent).then(function(){b.textContent='copied \u26A1';setTimeout(function(){b.textContent='copy'},1500)})});pre.closest('.listingblock').appendChild(b)})})();</script>
+</body>
+</html>
