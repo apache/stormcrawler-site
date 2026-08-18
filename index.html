@@ -13,12 +13,12 @@ description: Apache StormCrawler is an open source SDK for building low-latency,
   </div>
   <div class="hero__grid">
     <div class="hero__copy">
-      <p class="eyebrow" style="margin-bottom:20px;">Apache StormCrawler &middot; <span class="pill">v3.7.0</span></p>
-      <h1 class="hero__title">Every web<br>has its<br>spider<span class="dot">.</span></h1>
+      <p class="eyebrow" style="margin-bottom:20px;">Apache StormCrawler &middot; <span class="pill">v{{ site.version }}</span></p>
+      <h1 class="hero__title"><span class="hero__line">Every web</span><br><span class="hero__line">has its</span><br><span class="hero__line">spider<span class="dot">.</span></span></h1>
       <p class="hero__lede"><strong>Apache StormCrawler</strong> is an open source SDK for building distributed web crawlers based on <a href="https://storm.apache.org/" target="_blank" rel="noopener">Apache Storm&reg;</a>. Low-latency, scalable and polite: a collection of reusable components, written mostly in Java, under Apache License v2.</p>
       <div class="hero__ctas">
         <a class="btn btn--solid" href="#quick-start">Get started <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="flex:0 0 auto;"><path d="M13 2 4.5 13.5H11L9.5 22 19 10h-6.5L13 2Z"/></svg></a>
-        <a class="btn btn--ghost" href="{{ site.baseurl }}/download/">Download 3.7.0</a>
+        <a class="btn btn--ghost" href="{{ site.baseurl }}/download/">Download {{ site.version }}</a>
       </div>
       <p class="hero__assurance" style="margin:18px 0 0;"><span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5 9.5 18 20 6"/></svg> Apache License v2</span> &nbsp;&nbsp; <span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5 9.5 18 20 6"/></svg> Java, on Apache Storm&reg;</span></p>
     </div>
@@ -27,32 +27,34 @@ description: Apache StormCrawler is an open source SDK for building low-latency,
 
 <!-- ============================== Pipeline ============================== -->
 <div class="rail">
+  <div class="rail__thread" aria-hidden="true"></div>
+  <span class="rail__crawler" aria-hidden="true"></span>
   <div class="stage reveal" style="border-top:0;">
     <span class="stage__node stage__node--accent">01</span>
-    <p class="slabel">SEED &mdash; START FROM A LIBRARY</p>
+    <p class="slabel">SEED &middot; START FROM A LIBRARY</p>
     <h2 class="stage__title">Feed it URLs, get a crawler.</h2>
-    <p class="stage__copy"><strong>Apache StormCrawler</strong> is a library and collection of resources that developers leverage to build their own crawlers. The good news: doing so can be pretty straightforward &mdash; seed it with your URLs and let the topology do the rest.</p>
+    <p class="stage__copy"><strong>Apache StormCrawler</strong> is a library and collection of resources that developers leverage to build their own crawlers. The good news: doing so can be pretty straightforward. Seed it with your URLs and let the topology do the rest.</p>
     <a class="slink" href="{{ site.baseurl }}/docs/latest/index.html#_quick_start">READ THE FULL GUIDE <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
   </div>
   <div class="stage reveal">
     <span class="stage__node">02</span>
-    <p class="slabel">FETCH &mdash; POLITE, AT SCALE</p>
+    <p class="slabel">FETCH &middot; POLITE, AT SCALE</p>
     <h2 class="stage__title">Crawl continuously, not in batches.</h2>
-    <p class="stage__copy">URLs are processed as streams across a whole <a href="https://storm.apache.org/" target="_blank" rel="noopener">Storm</a> cluster &mdash; add workers, not complexity. Storm's <a href="https://storm.apache.org/releases/current/Guaranteeing-message-processing.html" target="_blank" rel="noopener">guaranteed processing</a> means no URL is silently lost, and <a href="https://www.rfc-editor.org/rfc/rfc9309" target="_blank" rel="noopener">robots.txt</a>, delays and politeness settings are built in from the start.</p>
+    <p class="stage__copy">URLs are processed as streams across a whole <a href="https://storm.apache.org/" target="_blank" rel="noopener">Apache Storm&reg;</a> cluster: add workers, not complexity. Storm's <a href="https://storm.apache.org/releases/current/Guaranteeing-message-processing.html" target="_blank" rel="noopener">guaranteed processing</a> means no URL is silently lost, and <a href="https://www.rfc-editor.org/rfc/rfc9309" target="_blank" rel="noopener">robots.txt</a>, delays and politeness settings are built in from the start.</p>
     <a class="slink" href="{{ site.baseurl }}/docs/latest/index.html#_configuration">CONFIGURATION <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
   </div>
   <div class="stage reveal">
     <span class="stage__node">03</span>
-    <p class="slabel">PARSE &mdash; REUSABLE MODULES</p>
-    <h2 class="stage__title">Tika, sitemaps, feeds &mdash; plug them in.</h2>
-    <p class="stage__copy">Apart from the core components, we provide external resources you can reuse in your project: a ParserBolt that uses <a href="https://tika.apache.org/" target="_blank" rel="noopener">Apache Tika&reg;</a> to parse various document formats, sitemap and feed parsers, filters and much more &mdash; pluggable, mostly plain Java.</p>
+    <p class="slabel">PARSE &middot; REUSABLE MODULES</p>
+    <h2 class="stage__title">Apache Tika&reg;, sitemaps, feeds: plug them in.</h2>
+    <p class="stage__copy">Apart from the core components, we provide external resources you can reuse in your project: a ParserBolt that uses <a href="https://tika.apache.org/" target="_blank" rel="noopener">Apache Tika&reg;</a> to parse various document formats, sitemap and feed parsers, filters and much more. Pluggable, mostly plain Java.</p>
     <a class="slink" href="https://github.com/apache/stormcrawler/tree/main/external/tika" target="_blank" rel="noopener">EXTERNAL MODULES <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
   </div>
   <div class="stage" style="padding-bottom:76px;">
     <span class="stage__node">04</span>
-    <p class="slabel">INDEX &mdash; YOUR BACKEND</p>
-    <h2 class="stage__title">Straight into OpenSearch, Solr or SQL.</h2>
-    <p class="stage__copy">Spouts and bolts for <a href="https://opensearch.org/" target="_blank" rel="noopener">OpenSearch&reg;</a>, <a href="https://solr.apache.org/" target="_blank" rel="noopener">Apache Solr&reg;</a> and SQL storage ship as external modules &mdash; index documents as they are fetched, whether you crawl a stream of URLs or run large-scale recursive crawls where low latency is required.</p>
+    <p class="slabel">INDEX &middot; YOUR BACKEND</p>
+    <h2 class="stage__title">Straight into OpenSearch&reg;, Apache Solr&reg; or SQL.</h2>
+    <p class="stage__copy">Spouts and bolts for <a href="https://opensearch.org/" target="_blank" rel="noopener">OpenSearch&reg;</a>, <a href="https://solr.apache.org/" target="_blank" rel="noopener">Apache Solr&reg;</a> and SQL storage ship as external modules, so documents are indexed as they are fetched, whether you crawl a stream of URLs or run large-scale recursive crawls where low latency is required.</p>
     <a class="slink" href="https://github.com/apache/stormcrawler/tree/main/external" target="_blank" rel="noopener">STORAGE MODULES <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
   </div>
 </div>
@@ -66,7 +68,7 @@ description: Apache StormCrawler is an open source SDK for building low-latency,
         <pre id="archetype-cmd">$ mvn archetype:generate \
    -DarchetypeGroupId=<span class="hl">org.apache.stormcrawler</span> \
    -DarchetypeArtifactId=stormcrawler-archetype \
-   -DarchetypeVersion=<span class="hl">3.7.0</span></pre>
+   -DarchetypeVersion=<span class="hl">{{ site.version }}</span></pre>
         <button class="copy-chip" data-copy="#archetype-cmd" hidden>copy</button>
       </div>
       <ol class="steps">
@@ -94,7 +96,7 @@ description: Apache StormCrawler is an open source SDK for building low-latency,
 <div class="section">
   <div class="section__inner">
     <h2 class="display-h2" style="text-align:center;margin-bottom:6px;">Caught in the web<span style="color:var(--accent-ink);">.</span></h2>
-    <p class="slabel" style="display:block;text-align:center;color:var(--text-secondary);">IN PRODUCTION SINCE 2014 &mdash; SEARCH ENGINES, ARCHIVES, RESEARCH &amp; MONITORING</p>
+    <p class="slabel" style="display:block;text-align:center;color:var(--text-secondary);">IN PRODUCTION SINCE 2014 &middot; SEARCH ENGINES, ARCHIVES, RESEARCH &amp; MONITORING</p>
     <div class="logo-hang reveal">
       <a href="https://pixray.com/" target="_blank" rel="noopener"><img src="{{ site.baseurl }}/img/pixray.png" alt="Pixray"></a>
       <a href="https://www.gov.nt.ca/" target="_blank" rel="noopener"><img src="{{ site.baseurl }}/img/gnwt.png" alt="Government of Northwest Territories" style="max-height:46px;"></a>
