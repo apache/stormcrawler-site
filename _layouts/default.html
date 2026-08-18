@@ -5,10 +5,12 @@
 
   <body{% if page.slug %} class="{{ page.slug }}"{% endif %}>
 
+    <a class="skip-link" href="#main">Skip to content</a>
+
     {% include header.html %}
 
     {% if page.slug == 'home' %}
-      <main class="main-content">
+      <main class="main-content" id="main">
         {{ content }}
       </main>
     {% else %}
@@ -24,7 +26,7 @@
           {% if page.description %}<p class="page-hero__sub">{{ page.description }}</p>{% endif %}
         </div>
       </div>
-      <main class="main-content page-content">
+      <main class="main-content page-content" id="main">
         {{ content }}
       </main>
     {% endif %}
@@ -56,6 +58,7 @@
     </script>
 
     <script src="{{ site.baseurl }}/js/site.js" defer></script>
+    <script src="https://www.apachecon.com/event-images/snippet.js" defer></script>
 
   </body>
 
