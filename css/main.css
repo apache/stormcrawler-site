@@ -1151,7 +1151,7 @@ html:not(.no-js) .hero__webbox .hero__mark {
   margin: 0; }
 
 .faq .faq__q::before {
-  content: "$ ";
+  content: "Q: ";
   color: var(--accent-ink); }
 
 .faq .faq__a {
