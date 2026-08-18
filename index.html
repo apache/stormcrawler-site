@@ -8,14 +8,49 @@
   <meta name="theme-color" media="(prefers-color-scheme: light)" content="#F7F7F3">
   <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#141312">
 
+  
+  
+  
+  
+
   <title>Apache StormCrawler</title>
-  <meta name="description" content="Apache StormCrawler is collection of resources for building low-latency, scalable web crawlers on Apache Storm
-">
+  <meta name="description" content="Apache StormCrawler is an open source SDK for building low-latency, scalable, polite web crawlers on Apache Storm. Java, Apache License v2.">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Apache StormCrawler">
+  <meta property="og:title" content="Apache StormCrawler">
+  <meta property="og:description" content="Apache StormCrawler is an open source SDK for building low-latency, scalable, polite web crawlers on Apache Storm. Java, Apache License v2.">
+  <meta property="og:url" content="https://stormcrawler.apache.org/">
+  <meta property="og:image" content="https://stormcrawler.apache.org/img/social-card.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Apache StormCrawler — every web has its spider">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Apache StormCrawler">
+  <meta name="twitter:description" content="Apache StormCrawler is an open source SDK for building low-latency, scalable, polite web crawlers on Apache Storm. Java, Apache License v2.">
+  <meta name="twitter:image" content="https://stormcrawler.apache.org/img/social-card.png">
 
   <link rel="stylesheet" href="/css/main.css">
   <link rel="canonical" href="https://stormcrawler.apache.org/">
   <link rel="alternate" type="application/rss+xml" title="Apache StormCrawler" href="https://stormcrawler.apache.org/feed.xml">
-  <link rel="icon" type="/image/png" href="/img/favicon.png" />
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <link rel="sitemap" type="application/xml" href="/sitemap.xml">
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Apache StormCrawler",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Cross-platform (JVM)",
+    "softwareVersion": "3.7.0",
+    "license": "https://www.apache.org/licenses/LICENSE-2.0",
+    "url": "https://stormcrawler.apache.org/",
+    "sameAs": ["https://github.com/apache/stormcrawler"],
+    "description": "Apache StormCrawler is an open source SDK for building low-latency, scalable, polite web crawlers on Apache Storm. Java, Apache License v2."
+  }
+  </script>
+  
   <script>
     (function() {
       var t = localStorage.getItem('theme');
@@ -29,11 +64,13 @@
 
   <body class="home">
 
+    <a class="skip-link" href="#main">Skip to content</a>
+
     <header class="site-header" id="site-header">
   <div class="site-header__inner">
     <div class="site-header__logo">
       <a href="/" aria-label="Apache StormCrawler home">
-        <img class="only-light" src="/img/logo.png" alt="Apache StormCrawler">
+        <img class="only-light" src="/img/logo-light.svg" alt="Apache StormCrawler">
         <img class="only-dark" src="/img/logo-dark.svg" alt="Apache StormCrawler">
       </a>
     </div>
@@ -60,7 +97,7 @@
 
 
     
-      <main class="main-content">
+      <main class="main-content" id="main">
         <!-- ============================== Hero ============================== -->
 <div class="hero">
   <div class="hero__webbox" aria-hidden="true">
@@ -71,7 +108,7 @@
   <div class="hero__grid">
     <div class="hero__copy">
       <p class="eyebrow" style="margin-bottom:20px;">Apache StormCrawler &middot; <span class="pill">v3.7.0</span></p>
-      <h1 class="hero__title">Every web<br>has its<br>spider<span class="dot">.</span></h1>
+      <h1 class="hero__title"><span class="hero__line">Every web</span><br><span class="hero__line">has its</span><br><span class="hero__line">spider<span class="dot">.</span></span></h1>
       <p class="hero__lede"><strong>Apache StormCrawler</strong> is an open source SDK for building distributed web crawlers based on <a href="https://storm.apache.org/" target="_blank" rel="noopener">Apache Storm&reg;</a>. Low-latency, scalable and polite: a collection of reusable components, written mostly in Java, under Apache License v2.</p>
       <div class="hero__ctas">
         <a class="btn btn--solid" href="#quick-start">Get started <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="flex:0 0 auto;"><path d="M13 2 4.5 13.5H11L9.5 22 19 10h-6.5L13 2Z"/></svg></a>
@@ -84,32 +121,34 @@
 
 <!-- ============================== Pipeline ============================== -->
 <div class="rail">
+  <div class="rail__thread" aria-hidden="true"></div>
+  <span class="rail__crawler" aria-hidden="true"></span>
   <div class="stage reveal" style="border-top:0;">
     <span class="stage__node stage__node--accent">01</span>
-    <p class="slabel">SEED &mdash; START FROM A LIBRARY</p>
+    <p class="slabel">SEED &middot; START FROM A LIBRARY</p>
     <h2 class="stage__title">Feed it URLs, get a crawler.</h2>
-    <p class="stage__copy"><strong>Apache StormCrawler</strong> is a library and collection of resources that developers leverage to build their own crawlers. The good news: doing so can be pretty straightforward &mdash; seed it with your URLs and let the topology do the rest.</p>
+    <p class="stage__copy"><strong>Apache StormCrawler</strong> is a library and collection of resources that developers leverage to build their own crawlers. The good news: doing so can be pretty straightforward. Seed it with your URLs and let the topology do the rest.</p>
     <a class="slink" href="/docs/latest/index.html#_quick_start">READ THE FULL GUIDE <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
   </div>
   <div class="stage reveal">
     <span class="stage__node">02</span>
-    <p class="slabel">FETCH &mdash; POLITE, AT SCALE</p>
+    <p class="slabel">FETCH &middot; POLITE, AT SCALE</p>
     <h2 class="stage__title">Crawl continuously, not in batches.</h2>
-    <p class="stage__copy">URLs are processed as streams across a whole <a href="https://storm.apache.org/" target="_blank" rel="noopener">Storm</a> cluster &mdash; add workers, not complexity. Storm's <a href="https://storm.apache.org/releases/current/Guaranteeing-message-processing.html" target="_blank" rel="noopener">guaranteed processing</a> means no URL is silently lost, and <a href="https://www.rfc-editor.org/rfc/rfc9309" target="_blank" rel="noopener">robots.txt</a>, delays and politeness settings are built in from the start.</p>
+    <p class="stage__copy">URLs are processed as streams across a whole <a href="https://storm.apache.org/" target="_blank" rel="noopener">Apache Storm&reg;</a> cluster: add workers, not complexity. Storm's <a href="https://storm.apache.org/releases/current/Guaranteeing-message-processing.html" target="_blank" rel="noopener">guaranteed processing</a> means no URL is silently lost, and <a href="https://www.rfc-editor.org/rfc/rfc9309" target="_blank" rel="noopener">robots.txt</a>, delays and politeness settings are built in from the start.</p>
     <a class="slink" href="/docs/latest/index.html#_configuration">CONFIGURATION <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
   </div>
   <div class="stage reveal">
     <span class="stage__node">03</span>
-    <p class="slabel">PARSE &mdash; REUSABLE MODULES</p>
-    <h2 class="stage__title">Tika, sitemaps, feeds &mdash; plug them in.</h2>
-    <p class="stage__copy">Apart from the core components, we provide external resources you can reuse in your project: a ParserBolt that uses <a href="https://tika.apache.org/" target="_blank" rel="noopener">Apache Tika&reg;</a> to parse various document formats, sitemap and feed parsers, filters and much more &mdash; pluggable, mostly plain Java.</p>
+    <p class="slabel">PARSE &middot; REUSABLE MODULES</p>
+    <h2 class="stage__title">Apache Tika&reg;, sitemaps, feeds: plug them in.</h2>
+    <p class="stage__copy">Apart from the core components, we provide external resources you can reuse in your project: a ParserBolt that uses <a href="https://tika.apache.org/" target="_blank" rel="noopener">Apache Tika&reg;</a> to parse various document formats, sitemap and feed parsers, filters and much more. Pluggable, mostly plain Java.</p>
     <a class="slink" href="https://github.com/apache/stormcrawler/tree/main/external/tika" target="_blank" rel="noopener">EXTERNAL MODULES <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
   </div>
   <div class="stage" style="padding-bottom:76px;">
     <span class="stage__node">04</span>
-    <p class="slabel">INDEX &mdash; YOUR BACKEND</p>
-    <h2 class="stage__title">Straight into OpenSearch, Solr or SQL.</h2>
-    <p class="stage__copy">Spouts and bolts for <a href="https://opensearch.org/" target="_blank" rel="noopener">OpenSearch&reg;</a>, <a href="https://solr.apache.org/" target="_blank" rel="noopener">Apache Solr&reg;</a> and SQL storage ship as external modules &mdash; index documents as they are fetched, whether you crawl a stream of URLs or run large-scale recursive crawls where low latency is required.</p>
+    <p class="slabel">INDEX &middot; YOUR BACKEND</p>
+    <h2 class="stage__title">Straight into OpenSearch&reg;, Apache Solr&reg; or SQL.</h2>
+    <p class="stage__copy">Spouts and bolts for <a href="https://opensearch.org/" target="_blank" rel="noopener">OpenSearch&reg;</a>, <a href="https://solr.apache.org/" target="_blank" rel="noopener">Apache Solr&reg;</a> and SQL storage ship as external modules, so documents are indexed as they are fetched, whether you crawl a stream of URLs or run large-scale recursive crawls where low latency is required.</p>
     <a class="slink" href="https://github.com/apache/stormcrawler/tree/main/external" target="_blank" rel="noopener">STORAGE MODULES <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
   </div>
 </div>
@@ -151,7 +190,7 @@
 <div class="section">
   <div class="section__inner">
     <h2 class="display-h2" style="text-align:center;margin-bottom:6px;">Caught in the web<span style="color:var(--accent-ink);">.</span></h2>
-    <p class="slabel" style="display:block;text-align:center;color:var(--text-secondary);">IN PRODUCTION SINCE 2014 &mdash; SEARCH ENGINES, ARCHIVES, RESEARCH &amp; MONITORING</p>
+    <p class="slabel" style="display:block;text-align:center;color:var(--text-secondary);">IN PRODUCTION SINCE 2014 &middot; SEARCH ENGINES, ARCHIVES, RESEARCH &amp; MONITORING</p>
     <div class="logo-hang reveal">
       <a href="https://pixray.com/" target="_blank" rel="noopener"><img src="/img/pixray.png" alt="Pixray"></a>
       <a href="https://www.gov.nt.ca/" target="_blank" rel="noopener"><img src="/img/gnwt.png" alt="Government of Northwest Territories" style="max-height:46px;"></a>
@@ -194,17 +233,18 @@
           <a class="icon-btn" href="https://github.com/apache/stormcrawler" target="_blank" rel="noopener" title="GitHub" aria-label="Apache StormCrawler on GitHub">
             <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
           </a>
-          <a class="icon-btn" href="https://infra.apache.org/slack.html" target="_blank" rel="noopener" title="Slack &mdash; #stormcrawler" aria-label="ASF Slack">
+          <a class="icon-btn" href="https://infra.apache.org/slack.html" target="_blank" rel="noopener" title="Slack &middot; #stormcrawler" aria-label="ASF Slack">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5.04 15.17a2.52 2.52 0 1 1-2.52-2.53h2.52v2.53Zm1.27 0a2.52 2.52 0 0 1 5.05 0v6.31a2.52 2.52 0 1 1-5.05 0v-6.31ZM8.83 5.04a2.52 2.52 0 1 1 2.53-2.52v2.52H8.83Zm0 1.27a2.52 2.52 0 0 1 0 5.05H2.52a2.52 2.52 0 1 1 0-5.05h6.31Zm10.13 2.52a2.52 2.52 0 1 1 2.52 2.53h-2.52V8.83Zm-1.27 0a2.52 2.52 0 0 1-5.05 0V2.52a2.52 2.52 0 1 1 5.05 0v6.31Zm-2.52 10.13a2.52 2.52 0 1 1-2.53 2.52v-2.52h2.53Zm0-1.27a2.52 2.52 0 0 1 0-5.05h6.31a2.52 2.52 0 1 1 0 5.05h-6.31Z"/></svg>
           </a>
-          <a class="icon-btn" href="http://stackoverflow.com/questions/tagged/stormcrawler" target="_blank" rel="noopener" title="Stack Overflow &mdash; tag stormcrawler" aria-label="Stack Overflow">
+          <a class="icon-btn" href="https://stackoverflow.com/questions/tagged/stormcrawler" target="_blank" rel="noopener" title="Stack Overflow &middot; tag stormcrawler" aria-label="Stack Overflow">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.4 20.4H6.6v-5H5v6.6h14v-6.6h-1.6v5ZM8.7 14.2h6.6v1.6H8.7v-1.6Zm.2-3 6.4 1.4.3-1.6-6.4-1.3-.3 1.5Zm.9-3.5 6 2.8.6-1.4-6-2.8-.6 1.4Zm1.9-3.2 5 4.2 1-1.2-5-4.2-1 1.2Z"/></svg>
           </a>
           <a class="icon-btn" href="mailto:dev-subscribe@stormcrawler.apache.org" title="Subscribe to the dev mailing list" aria-label="Subscribe to the dev mailing list">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
           </a>
-          <a class="coc-pill" href="https://communityovercode.org/" target="_blank" rel="noopener"><span class="coc-dot"></span>COMMUNITY OVER CODE &#8599;</a>
         </div>
+        <!-- Current ASF event banner: image and target managed remotely by ASF M&P via snippet.js -->
+        <a class="acevent" data-format="wide" data-mode="dark" target="_blank" rel="noopener"></a>
       </div>
       <div class="fcol">
         <h3>Project</h3>
@@ -267,6 +307,7 @@
     </script>
 
     <script src="/js/site.js" defer></script>
+    <script src="https://www.apachecon.com/event-images/snippet.js" defer></script>
 
   </body>
 

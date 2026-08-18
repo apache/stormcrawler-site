@@ -1,6 +1,7 @@
 (function () {
   'use strict';
   document.documentElement.classList.remove('no-js');
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   // --- Nav: burger below 1060px ----------------------------------------------
   var header = document.querySelector('.site-header');
@@ -62,8 +63,11 @@
   }
 
   // --- Orb web (hero + closing band) ---------------------------------------
-  function orbWeb(svg, nodeColor, accStroke) {
+  // draw:true animates the web spinning itself in: spokes first, then rings,
+  // via stroke-dashoffset on the two compound paths (subpaths draw in order).
+  function orbWeb(svg, nodeColor, accStroke, draw) {
     if (!svg) return;
+    draw = draw && !reduceMotion;
     var c = 360, spokes = 14, rings = [58, 96, 136, 178, 222, 268, 316];
     var NS = 'http://www.w3.org/2000/svg';
     function ang(i) { return i * 2 * Math.PI / spokes - Math.PI / 2 + (i % 3) * 0.02; }
@@ -88,16 +92,31 @@
       el.setAttribute('stroke-width', w);
       el.setAttribute('fill', 'none');
       svg.appendChild(el);
+      return el;
     }
-    path(radii, '1.4');
-    path(spiral, '1.1');
-    // dew drops
+    function drawIn(el, dur, delay) {
+      var len = el.getTotalLength();
+      el.style.strokeDasharray = len + ' ' + len;
+      el.style.strokeDashoffset = len;
+      el.style.transition = 'stroke-dashoffset ' + dur + 's ease-out ' + delay + 's';
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () { el.style.strokeDashoffset = '0'; });
+      });
+    }
+    var pRadii = path(radii, '1.4');
+    var pSpiral = path(spiral, '1.1');
+    if (draw) {
+      drawIn(pRadii, 0.9, 0);
+      drawIn(pSpiral, 1.25, 0.35);
+    }
+    // dew drops (fade in after the draw via .web-dew CSS)
     [[2, 136], [5, 222], [9, 178], [12, 268], [7, 96]].forEach(function (n) {
       var q = pt(n[0], n[1]), el = document.createElementNS(NS, 'circle');
       el.setAttribute('cx', q[0].toFixed(1));
       el.setAttribute('cy', q[1].toFixed(1));
       el.setAttribute('r', '3.5');
       el.setAttribute('fill', nodeColor);
+      if (draw) el.setAttribute('class', 'web-dew');
       svg.appendChild(el);
     });
     // one accent node
@@ -110,21 +129,74 @@
       acc.setAttribute('stroke', accStroke);
       acc.setAttribute('stroke-width', '1.5');
     }
+    if (draw) acc.setAttribute('class', 'web-acc');
     svg.appendChild(acc);
-    // impulse running a thread
-    var dot = document.createElementNS(NS, 'circle');
-    dot.setAttribute('r', '4');
-    dot.setAttribute('fill', 'var(--accent)');
-    var mo = document.createElementNS(NS, 'animateMotion');
-    mo.setAttribute('dur', '7s');
-    mo.setAttribute('repeatCount', 'indefinite');
-    var sp = pt(4, 346);
-    mo.setAttribute('path', 'M' + c + ' ' + c + ' L' + sp[0].toFixed(1) + ' ' + sp[1].toFixed(1) + ' L' + c + ' ' + c);
-    dot.appendChild(mo);
-    svg.appendChild(dot);
+    // impulse running a thread — skipped entirely for reduced motion
+    if (!reduceMotion) {
+      var dot = document.createElementNS(NS, 'circle');
+      dot.setAttribute('r', '4');
+      dot.setAttribute('fill', 'var(--accent)');
+      var mo = document.createElementNS(NS, 'animateMotion');
+      mo.setAttribute('dur', '7s');
+      mo.setAttribute('repeatCount', 'indefinite');
+      if (draw) mo.setAttribute('begin', '2.2s');
+      var sp = pt(4, 346);
+      mo.setAttribute('path', 'M' + c + ' ' + c + ' L' + sp[0].toFixed(1) + ' ' + sp[1].toFixed(1) + ' L' + c + ' ' + c);
+      dot.appendChild(mo);
+      svg.appendChild(dot);
+    }
   }
-  orbWeb(document.getElementById('webHero'), 'var(--text)', 'var(--text)');
-  orbWeb(document.getElementById('webCta'), '#8B8E7D', '');
+  orbWeb(document.getElementById('webHero'), 'var(--text)', 'var(--text)', true);
+  // the closing band's web spins itself in when scrolled near
+  var webCta = document.getElementById('webCta');
+  if (webCta) {
+    var ctaBand = webCta.closest('.cta-band');
+    if (!reduceMotion && 'IntersectionObserver' in window && ctaBand) {
+      var ctaIo = new IntersectionObserver(function (entries) {
+        if (entries.some(function (e) { return e.isIntersecting; })) {
+          ctaIo.disconnect();
+          orbWeb(webCta, '#8B8E7D', '', true);
+        }
+      }, { rootMargin: '0px 0px -15% 0px' });
+      ctaIo.observe(ctaBand);
+    } else {
+      orbWeb(webCta, '#8B8E7D', '', false);
+    }
+  }
+
+  // --- Pipeline rail: silk thread follows the scroll ------------------------
+  var rail = document.querySelector('.rail');
+  if (rail && !reduceMotion) {
+    var thread = rail.querySelector('.rail__thread');
+    var crawler = rail.querySelector('.rail__crawler');
+    var railNodes = rail.querySelectorAll('.stage__node');
+    if (thread && crawler) {
+      var railTicking = false;
+      var railUpdate = function () {
+        railTicking = false;
+        var r = rail.getBoundingClientRect();
+        var p = (window.innerHeight * 0.62 - r.top) / r.height;
+        p = Math.max(0, Math.min(1, p));
+        var y = p * r.height;
+        thread.style.transform = 'scaleY(' + p + ')';
+        crawler.style.transform = 'translateY(' + y.toFixed(1) + 'px)';
+        crawler.style.opacity = (p > 0.005 && p < 0.995) ? '1' : '0';
+        railNodes.forEach(function (n) {
+          var nt = n.getBoundingClientRect().top - r.top;
+          n.classList.toggle('is-passed', y >= nt + 10);
+        });
+      };
+      var onRailScroll = function () {
+        if (!railTicking) {
+          railTicking = true;
+          requestAnimationFrame(railUpdate);
+        }
+      };
+      window.addEventListener('scroll', onRailScroll, { passive: true });
+      window.addEventListener('resize', onRailScroll);
+      railUpdate();
+    }
+  }
 
   // --- Smooth scroll to #quick-start ---------------------------------------
   document.querySelectorAll('a[href="#quick-start"]').forEach(function (a) {

@@ -8,14 +8,34 @@
   <meta name="theme-color" media="(prefers-color-scheme: light)" content="#F7F7F3">
   <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#141312">
 
+  
+  
+  
+  
+
   <title>Documentation of Apache StormCrawler</title>
-  <meta name="description" content="Apache StormCrawler is collection of resources for building low-latency, scalable web crawlers on Apache Storm
-">
+  <meta name="description" content="Guides, configuration reference and Javadoc for every release.">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Apache StormCrawler">
+  <meta property="og:title" content="Documentation of Apache StormCrawler">
+  <meta property="og:description" content="Guides, configuration reference and Javadoc for every release.">
+  <meta property="og:url" content="https://stormcrawler.apache.org/docs/">
+  <meta property="og:image" content="https://stormcrawler.apache.org/img/social-card.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Apache StormCrawler — every web has its spider">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Documentation of Apache StormCrawler">
+  <meta name="twitter:description" content="Guides, configuration reference and Javadoc for every release.">
+  <meta name="twitter:image" content="https://stormcrawler.apache.org/img/social-card.png">
 
   <link rel="stylesheet" href="/css/main.css">
   <link rel="canonical" href="https://stormcrawler.apache.org/docs/">
   <link rel="alternate" type="application/rss+xml" title="Apache StormCrawler" href="https://stormcrawler.apache.org/feed.xml">
-  <link rel="icon" type="/image/png" href="/img/favicon.png" />
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <link rel="sitemap" type="application/xml" href="/sitemap.xml">
+  
   <script>
     (function() {
       var t = localStorage.getItem('theme');
@@ -29,11 +49,13 @@
 
   <body class="documentation">
 
+    <a class="skip-link" href="#main">Skip to content</a>
+
     <header class="site-header" id="site-header">
   <div class="site-header__inner">
     <div class="site-header__logo">
       <a href="/" aria-label="Apache StormCrawler home">
-        <img class="only-light" src="/img/logo.png" alt="Apache StormCrawler">
+        <img class="only-light" src="/img/logo-light.svg" alt="Apache StormCrawler">
         <img class="only-dark" src="/img/logo-dark.svg" alt="Apache StormCrawler">
       </a>
     </div>
@@ -72,7 +94,7 @@
           <p class="page-hero__sub">Guides, configuration reference and Javadoc for every release.</p>
         </div>
       </div>
-      <main class="main-content page-content">
+      <main class="main-content page-content" id="main">
         <h2>Start where you are</h2>
 <div class="doors">
   <div class="door">
@@ -84,13 +106,13 @@
   <div class="door">
     <p class="slabel">TUNING</p>
     <h3>Configuration</h3>
-    <p>Seeds, politeness, fetch intervals, filters &mdash; every knob of the crawl, explained.</p>
+    <p>Seeds, politeness, fetch intervals, filters: every knob of the crawl, explained.</p>
     <a class="slink" href="/docs/latest/index.html#_configuration">CONFIGURATION <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
   </div>
   <div class="door">
     <p class="slabel">INTEGRATING</p>
     <h3>External modules</h3>
-    <p><a href="https://opensearch.org/" target="_blank" rel="noopener">OpenSearch&reg;</a>, <a href="https://solr.apache.org/" target="_blank" rel="noopener">Apache Solr&reg;</a>, <a href="https://tika.apache.org/" target="_blank" rel="noopener">Apache Tika&reg;</a>, sitemaps, feeds &mdash; plug-in resources maintained by the project.</p>
+    <p><a href="https://opensearch.org/" target="_blank" rel="noopener">OpenSearch&reg;</a>, <a href="https://solr.apache.org/" target="_blank" rel="noopener">Apache Solr&reg;</a>, <a href="https://tika.apache.org/" target="_blank" rel="noopener">Apache Tika&reg;</a>, sitemaps, feeds: plug-in resources maintained by the project.</p>
     <a class="slink" href="https://github.com/apache/stormcrawler/tree/main/external" target="_blank" rel="noopener">MODULES <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
   </div>
 </div>
@@ -102,6 +124,7 @@
   <a class="chip" href="/docs/3.7.0/index.html">3.7.0</a>
   <a class="chip" href="/docs/3.6.0/index.html">3.6.0</a>
   <a class="chip" href="/docs/3.5.1/index.html">3.5.1</a>
+  
 </div>
 
 <h2>Javadoc</h2>
@@ -112,6 +135,7 @@
   <a class="chip" href="https://javadoc.io/doc/org.apache.stormcrawler/stormcrawler-core/3.5.1" target="_blank" rel="noopener">3.5.1 &#8599;</a>
   <a class="chip" href="https://javadoc.io/doc/org.apache.stormcrawler/stormcrawler-core/3.5.0" target="_blank" rel="noopener">3.5.0 &#8599;</a>
   <a class="chip" href="https://javadoc.io/doc/org.apache.stormcrawler/stormcrawler-core/3.4.0" target="_blank" rel="noopener">3.4.0 &#8599;</a>
+  
 </div>
 
 <h2>Presentations</h2>
@@ -119,8 +143,34 @@
 
 <h2>FAQ</h2>
 <div class="faq">
+  <p class="faq__q">Topologies? Spouts? Bolts? I'm confused!</p>
+  <p class="faq__a">If you're new to these concepts, it's worth starting with <a href="https://storm.apache.org/" target="_blank" rel="noopener">Apache Storm&reg;</a>. The <a href="https://storm.apache.org/releases/current/Tutorial.html" target="_blank" rel="noopener">tutorial</a> and <a href="https://storm.apache.org/releases/current/Concepts.html" target="_blank" rel="noopener">concept pages</a> provide a good introduction. In addition, you can have a look at our own documentation, which provides a quick overview.</p>
+</div>
+<div class="faq">
   <p class="faq__q">Do I need an <a href="https://storm.apache.org/" target="_blank" rel="noopener">Apache Storm&reg;</a> cluster to run StormCrawler?</p>
   <p class="faq__a">Not necessarily. StormCrawler can run in local mode, using Storm libraries as dependencies. However, installing <a href="https://storm.apache.org/" target="_blank" rel="noopener">Storm</a> in pseudo-distributed mode is useful if you want to use its UI to monitor topologies.</p>
+</div>
+<div class="faq">
+  <p class="faq__q">Why use Apache Storm&reg;?</p>
+  <p class="faq__a">Apache Storm&reg; is a robust, fault-tolerant framework for distributed stream processing. It guarantees data processing, is simple to understand, actively maintained, and licensed under ASF 2.0.</p>
+</div>
+<div class="faq" id="howfast">
+  <p class="faq__q">How fast is StormCrawler?</p>
+  <p class="faq__a">Speed depends on the diversity of hostnames, your politeness settings and execution environment. For example, if you have 1 million URLs from the same host and set a 1-second delay between requests, you can fetch a maximum of ~86,400 pages per day. Actual performance will vary depending on network speed, document size, parsing, and indexing overhead. This is true for any crawler.</p>
+</div>
+<div class="faq">
+  <p class="faq__q">Why choose StormCrawler over Apache Nutch?</p>
+  <p class="faq__a">StormCrawler processes URLs as a continuous stream, indexing them as they are fetched. Nutch uses batch steps, which can slow down as the crawl grows and resources are unevenly used. StormCrawler can handle streaming URLs or low-latency use cases efficiently. It is also more modern, modular, and actively maintained, though Nutch excels in advanced scoring and deduplication.</p>
+  <p class="faq__a">Tutorials comparing both are available here: <a href="https://digitalpebble.blogspot.co.uk/2015/09/index-web-with-aws-cloudsearch.html" target="_blank" rel="noopener">Nutch &amp; SC with CloudSearch</a> and a benchmark study: <a href="https://digitalpebble.blogspot.co.uk/2017/01/the-battle-of-crawlers-apache-nutch-vs.html" target="_blank" rel="noopener">Crawlers benchmark</a>.</p>
+</div>
+<div class="faq">
+  <p class="faq__q">Do I need external storage? Which type?</p>
+  <p class="faq__a">Yes, StormCrawler needs storage for URLs. The type depends on your crawl:</p>
+  <ul>
+    <li><strong>Non-recursive crawls:</strong> Messaging queues like <a href="https://www.rabbitmq.com/" target="_blank" rel="noopener">RabbitMQ</a>, <a href="https://aws.amazon.com/sqs/" target="_blank" rel="noopener">AWS SQS</a>, or <a href="https://kafka.apache.org/" target="_blank" rel="noopener">Apache Kafka&reg;</a> work well. Use a Spout implementation to read from the queue.</li>
+    <li><strong>Recursive crawls:</strong> Use storage with unique keys (e.g., a database) to avoid duplicate URLs. StormCrawler provides external modules for <a href="https://github.com/apache/stormcrawler/tree/main/external" target="_blank" rel="noopener">Apache Solr&reg;, OpenSearch&reg; and SQL</a>.</li>
+  </ul>
+  <p class="faq__a">The modularity of StormCrawler lets you plug in almost any storage backend.</p>
 </div>
 <div class="faq">
   <p class="faq__q">Is StormCrawler polite?</p>
@@ -150,17 +200,18 @@
           <a class="icon-btn" href="https://github.com/apache/stormcrawler" target="_blank" rel="noopener" title="GitHub" aria-label="Apache StormCrawler on GitHub">
             <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
           </a>
-          <a class="icon-btn" href="https://infra.apache.org/slack.html" target="_blank" rel="noopener" title="Slack &mdash; #stormcrawler" aria-label="ASF Slack">
+          <a class="icon-btn" href="https://infra.apache.org/slack.html" target="_blank" rel="noopener" title="Slack &middot; #stormcrawler" aria-label="ASF Slack">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5.04 15.17a2.52 2.52 0 1 1-2.52-2.53h2.52v2.53Zm1.27 0a2.52 2.52 0 0 1 5.05 0v6.31a2.52 2.52 0 1 1-5.05 0v-6.31ZM8.83 5.04a2.52 2.52 0 1 1 2.53-2.52v2.52H8.83Zm0 1.27a2.52 2.52 0 0 1 0 5.05H2.52a2.52 2.52 0 1 1 0-5.05h6.31Zm10.13 2.52a2.52 2.52 0 1 1 2.52 2.53h-2.52V8.83Zm-1.27 0a2.52 2.52 0 0 1-5.05 0V2.52a2.52 2.52 0 1 1 5.05 0v6.31Zm-2.52 10.13a2.52 2.52 0 1 1-2.53 2.52v-2.52h2.53Zm0-1.27a2.52 2.52 0 0 1 0-5.05h6.31a2.52 2.52 0 1 1 0 5.05h-6.31Z"/></svg>
           </a>
-          <a class="icon-btn" href="http://stackoverflow.com/questions/tagged/stormcrawler" target="_blank" rel="noopener" title="Stack Overflow &mdash; tag stormcrawler" aria-label="Stack Overflow">
+          <a class="icon-btn" href="https://stackoverflow.com/questions/tagged/stormcrawler" target="_blank" rel="noopener" title="Stack Overflow &middot; tag stormcrawler" aria-label="Stack Overflow">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.4 20.4H6.6v-5H5v6.6h14v-6.6h-1.6v5ZM8.7 14.2h6.6v1.6H8.7v-1.6Zm.2-3 6.4 1.4.3-1.6-6.4-1.3-.3 1.5Zm.9-3.5 6 2.8.6-1.4-6-2.8-.6 1.4Zm1.9-3.2 5 4.2 1-1.2-5-4.2-1 1.2Z"/></svg>
           </a>
           <a class="icon-btn" href="mailto:dev-subscribe@stormcrawler.apache.org" title="Subscribe to the dev mailing list" aria-label="Subscribe to the dev mailing list">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
           </a>
-          <a class="coc-pill" href="https://communityovercode.org/" target="_blank" rel="noopener"><span class="coc-dot"></span>COMMUNITY OVER CODE &#8599;</a>
         </div>
+        <!-- Current ASF event banner: image and target managed remotely by ASF M&P via snippet.js -->
+        <a class="acevent" data-format="wide" data-mode="dark" target="_blank" rel="noopener"></a>
       </div>
       <div class="fcol">
         <h3>Project</h3>
@@ -223,6 +274,7 @@
     </script>
 
     <script src="/js/site.js" defer></script>
+    <script src="https://www.apachecon.com/event-images/snippet.js" defer></script>
 
   </body>
 
