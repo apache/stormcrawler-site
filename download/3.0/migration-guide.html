@@ -1,12 +1,12 @@
 ---
 layout: default
 slug: migration-guide
-title: Migration Guide
+title: Migration Guide - Apache StormCrawler
+eyebrow: DOWNLOAD
+heading: Migration Guide
+description: Moving from a pre-Apache (DigitalPebble) StormCrawler release to 3.x under the Apache umbrella.
 ---
-<div class="row row-col">
-<h1>Apache StormCrawler Migration Guide</h1>
 
-<h2>Introduction</h2>
 <p>This guide provides step-by-step instructions for migrating your project from older versions of StormCrawler to the new version under the Apache umbrella. Key changes include updates to the group and artifact IDs, as well as the removal of the Elasticsearch module.</p>
 
 <h2>Group ID and Artifact ID Changes</h2>
@@ -18,62 +18,61 @@ title: Migration Guide
 <p>The artifact ID has changed from <code>storm-crawler</code> to <code>stormcrawler</code>.</p>
 
 <h3>Maven Configuration</h3>
-<p>Update your <code>pom.xml</code> to reflect these changes. Below is an example of the updated dependency configuration:</p>
+<p>Update your <code>pom.xml</code> to reflect these changes. Old configuration:</p>
 
-<div class="code-block">
-    <p><strong>Old Configuration:</strong></p>
-    <pre><code>&lt;dependency&gt;
+<div class="codebox">
+  <pre>&lt;dependency&gt;
     &lt;groupId&gt;com.digitalpebble.stormcrawler&lt;/groupId&gt;
     &lt;artifactId&gt;storm-crawler&lt;/artifactId&gt;
     &lt;version&gt;OLD_VERSION&lt;/version&gt;
-&lt;/dependency&gt;</code></pre>
+&lt;/dependency&gt;</pre>
 </div>
 
-<div class="code-block">
-    <p><strong>New Configuration:</strong></p>
-    <pre><code>&lt;dependency&gt;
+<p>New configuration:</p>
+
+<div class="codebox">
+  <pre>&lt;dependency&gt;
     &lt;groupId&gt;org.apache.stormcrawler&lt;/groupId&gt;
     &lt;artifactId&gt;stormcrawler&lt;/artifactId&gt;
-    &lt;version&gt;NEW_VERSION&lt;/version&gt;
-&lt;/dependency&gt;</code></pre>
+    &lt;version&gt;{{ site.version }}&lt;/version&gt;
+&lt;/dependency&gt;</pre>
 </div>
 
-<p>Replace <code>OLD_VERSION</code> with the version you are currently using and <code>NEW_VERSION</code> with the latest version of Apache StormCrawler.</p>
+<p>Replace <code>OLD_VERSION</code> with the version you are currently using; the current Apache StormCrawler release is <code>{{ site.version }}</code>.</p>
 
 <h2>Removal of Elasticsearch Module</h2>
 <p>The Elasticsearch module has been removed in the latest version of StormCrawler. You have two options to handle this change:</p>
 <ol>
-    <li><strong>Fork the Elasticsearch Module:</strong> You can fork the Elasticsearch module from the older version of StormCrawler and maintain it independently.</li>
-    <li><strong>Migrate to OpenSearch Module:</strong> Alternatively, you can migrate your code to use the OpenSearch module provided by Apache StormCrawler.</li>
+  <li><strong>Fork the Elasticsearch Module:</strong> You can fork the Elasticsearch module from the older version of StormCrawler and maintain it independently.</li>
+  <li><strong>Migrate to OpenSearch Module:</strong> Alternatively, you can migrate your code to use the OpenSearch module provided by Apache StormCrawler.</li>
 </ol>
 
 <h3>Forking the Elasticsearch Module</h3>
 <ol>
-    <li>Clone the repository containing the last version of StormCrawler that includes the Elasticsearch module.</li>
-    <li>Copy the Elasticsearch module into your project's repository.</li>
-    <li>Update your project's dependencies to include this local version of the Elasticsearch module.</li>
+  <li>Clone the repository containing the last version of StormCrawler that includes the Elasticsearch module.</li>
+  <li>Copy the Elasticsearch module into your project's repository.</li>
+  <li>Update your project's dependencies to include this local version of the Elasticsearch module.</li>
 </ol>
 
 <h3>Migrating to OpenSearch Module</h3>
 <p>If you choose to migrate to the OpenSearch module, you will need to update your code to use the new module. Here are the steps:</p>
 <ol>
-    <li>Add the OpenSearch dependency to your <code>pom.xml</code>:</li>
+  <li>Add the OpenSearch dependency to your <code>pom.xml</code>:</li>
 </ol>
 
-<div class="code-block">
-        <pre><code>&lt;dependency&gt;
+<div class="codebox">
+  <pre>&lt;dependency&gt;
     &lt;groupId&gt;org.apache.stormcrawler&lt;/groupId&gt;
     &lt;artifactId&gt;stormcrawler-opensearch&lt;/artifactId&gt;
-    &lt;version&gt;NEW_VERSION&lt;/version&gt;
-&lt;/dependency&gt;</code></pre>
+    &lt;version&gt;{{ site.version }}&lt;/version&gt;
+&lt;/dependency&gt;</pre>
 </div>
 
 <ol start="2">
-    <li>Update your code to replace any references to the Elasticsearch module with the corresponding OpenSearch module classes and methods. The API for OpenSearch is similar to Elasticsearch, so the changes should be straightforward.</li>
-    <li>Test your application thoroughly to ensure that the migration does not introduce any issues.</li>
+  <li>Update your code to replace any references to the Elasticsearch module with the corresponding OpenSearch module classes and methods. The API for OpenSearch is similar to Elasticsearch, so the changes should be straightforward.</li>
+  <li>Test your application thoroughly to ensure that the migration does not introduce any issues.</li>
 </ol>
 
 <h2>Summary</h2>
 <p>By following the steps outlined in this guide, you should be able to migrate your project to the latest version of Apache StormCrawler with minimal effort. Ensure you update your Maven dependencies and handle the removal of the Elasticsearch module by either forking it or migrating to the OpenSearch module.</p>
-<p>For any further assistance, reach out to the community via mailing lists or GitHub discussions.</p>
-</div>
+<p>For any further assistance, reach out to the community via the <a href="https://lists.apache.org/list.html?dev@stormcrawler.apache.org" target="_blank" rel="noopener">mailing lists</a> or <a href="https://github.com/apache/stormcrawler/discussions" target="_blank" rel="noopener">GitHub discussions</a>.</p>

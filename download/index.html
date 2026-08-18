@@ -7,48 +7,48 @@ heading: Download
 description: Verified source releases of StormCrawler, signed by the release managers.
 ---
 
-<p>StormCrawler&trade; software is an open source SDK for building low-latency, scalable web crawlers based on <a href="https://storm.apache.org/" target="_blank" rel="noopener">Apache Storm&reg;</a>. You can <a href="https://www.apache.org/dyn/closer.lua/stormcrawler/stormcrawler-3.7.0/apache-stormcrawler-3.7.0-source-release.tar.gz">download StormCrawler&trade; software here</a> (latest release: 3.7.0), or pick individual artifacts below.</p>
+<p>StormCrawler&trade; software is an open source SDK for building low-latency, scalable web crawlers based on <a href="https://storm.apache.org/" target="_blank" rel="noopener">Apache Storm&reg;</a>. You can <a href="https://www.apache.org/dyn/closer.lua/stormcrawler/stormcrawler-{{ site.version }}/apache-stormcrawler-{{ site.version }}-source-release.tar.gz">download StormCrawler&trade; software here</a> (latest release: {{ site.version }}), or pick individual artifacts below.</p>
 
 <div class="release-card">
-  <h3>Apache StormCrawler 3.7.0 <span class="badge">LATEST</span></h3>
+  <h3>Apache StormCrawler {{ site.version }} <span class="badge">LATEST</span></h3>
   <p style="margin:0;">Source release, signed and checksummed:</p>
   <div class="chip-cluster">
-    <a class="chip" href="https://www.apache.org/dyn/closer.lua/stormcrawler/stormcrawler-3.7.0/apache-stormcrawler-3.7.0-source-release.tar.gz">SOURCE TAR.GZ</a>
-    <a class="chip" href="https://github.com/apache/stormcrawler/releases/tag/stormcrawler-3.7.0" target="_blank" rel="noopener">RELEASE NOTES &#8599;</a>
+    <a class="chip" href="https://www.apache.org/dyn/closer.lua/stormcrawler/stormcrawler-{{ site.version }}/apache-stormcrawler-{{ site.version }}-source-release.tar.gz">SOURCE TAR.GZ</a>
+    <a class="chip" href="https://github.com/apache/stormcrawler/releases/tag/stormcrawler-{{ site.version }}" target="_blank" rel="noopener">RELEASE NOTES &#8599;</a>
     <a class="chip" href="https://search.maven.org/search?q=org.apache.stormcrawler" target="_blank" rel="noopener">MAVEN CENTRAL &#8599;</a>
   </div>
 </div>
 
 <h2>Chain of trust</h2>
-<p>You <b>must</b> <a href="https://www.apache.org/info/verification.html">verify</a> the integrity of the downloaded files &mdash; every release ships with everything you need to prove it came from us. The chain has four links:</p>
+<p>You <b>must</b> <a href="https://www.apache.org/info/verification.html">verify</a> the integrity of the downloaded files: every release ships with everything you need to prove it came from us. The chain has four links:</p>
 
 <div class="vchain">
   <div class="vlink">
-    <p class="slabel">01 &mdash; GET</p>
+    <p class="slabel">01 &middot; GET</p>
     <h3>Source archive</h3>
     <p>Fetch the tar.gz from an Apache mirror.</p>
     <div class="chip-cluster">
-      <a class="chip" href="https://www.apache.org/dyn/closer.lua/stormcrawler/stormcrawler-3.7.0/apache-stormcrawler-3.7.0-source-release.tar.gz">TAR.GZ</a>
+      <a class="chip" href="https://www.apache.org/dyn/closer.lua/stormcrawler/stormcrawler-{{ site.version }}/apache-stormcrawler-{{ site.version }}-source-release.tar.gz">TAR.GZ</a>
     </div>
   </div>
   <div class="vlink">
-    <p class="slabel">02 &mdash; CHECK</p>
+    <p class="slabel">02 &middot; CHECK</p>
     <h3>Integrity</h3>
     <p>Your SHA-512 checksum must match ours.</p>
     <div class="chip-cluster">
-      <a class="chip" href="https://downloads.apache.org/stormcrawler/stormcrawler-3.7.0/apache-stormcrawler-3.7.0-source-release.tar.gz.sha512">SHA512</a>
+      <a class="chip" href="https://downloads.apache.org/stormcrawler/stormcrawler-{{ site.version }}/apache-stormcrawler-{{ site.version }}-source-release.tar.gz.sha512">SHA512</a>
     </div>
   </div>
   <div class="vlink">
-    <p class="slabel">03 &mdash; PROVE</p>
+    <p class="slabel">03 &middot; PROVE</p>
     <h3>Authenticity</h3>
     <p>The OpenPGP signature (*.asc) is made by a release manager.</p>
     <div class="chip-cluster">
-      <a class="chip" href="https://downloads.apache.org/stormcrawler/stormcrawler-3.7.0/apache-stormcrawler-3.7.0-source-release.tar.gz.asc">ASC</a>
+      <a class="chip" href="https://downloads.apache.org/stormcrawler/stormcrawler-{{ site.version }}/apache-stormcrawler-{{ site.version }}-source-release.tar.gz.asc">ASC</a>
     </div>
   </div>
   <div class="vlink">
-    <p class="slabel">04 &mdash; TRUST</p>
+    <p class="slabel">04 &middot; TRUST</p>
     <h3>Key ring</h3>
     <p>Match the signature against the project's KEYS file.</p>
     <div class="chip-cluster">
@@ -59,10 +59,10 @@ description: Verified source releases of StormCrawler, signed by the release man
 
 <h3>Verify like a release manager</h3>
 <div class="codebox">
-  <pre id="verify-cmd">$ sha512sum -c apache-stormcrawler-3.7.0-source-release.tar.gz.sha512
+  <pre id="verify-cmd">$ sha512sum -c apache-stormcrawler-{{ site.version }}-source-release.tar.gz.sha512
 $ gpg --import KEYS
-$ gpg --verify apache-stormcrawler-3.7.0-source-release.tar.gz.asc</pre>
-  <button class="copy-chip" data-copy="#verify-cmd" hidden style="position:absolute;top:10px;right:10px;">copy</button>
+$ gpg --verify apache-stormcrawler-{{ site.version }}-source-release.tar.gz.asc</pre>
+  <button class="copy-chip" data-copy="#verify-cmd" hidden>copy</button>
 </div>
 
 <p>More information about release signing and verifying signatures can be found <a href="https://www.apache.org/dev/release-signing.html">here</a>.</p>
@@ -71,4 +71,7 @@ $ gpg --verify apache-stormcrawler-3.7.0-source-release.tar.gz.asc</pre>
 <p>Artifacts are available via <a href="https://search.maven.org/search?q=org.apache.stormcrawler">Maven Central</a>.</p>
 
 <h3>Older Releases</h3>
-<p>Previous <b>non</b>-ASF releases can be found <a href="https://search.maven.org/search?q=g:com.digitalpebble.stormcrawler">here</a>.</p>
+<p>Earlier ASF releases are listed on the <a href="https://github.com/apache/stormcrawler/releases" target="_blank" rel="noopener">GitHub releases page</a> and remain available from the <a href="https://archive.apache.org/dist/stormcrawler/" target="_blank" rel="noopener">Apache archive</a>. Previous <b>non</b>-ASF releases (group <code>com.digitalpebble.stormcrawler</code>) can be found <a href="https://search.maven.org/search?q=g:com.digitalpebble.stormcrawler" target="_blank" rel="noopener">on Maven Central</a>.</p>
+
+<h3>Migrating from 2.x</h3>
+<p>Coming from a pre-Apache (DigitalPebble) release? The <a href="{{ site.baseurl }}/download/3.0/migration-guide.html">migration guide</a> covers the new Maven coordinates, package renames and removed modules.</p>
