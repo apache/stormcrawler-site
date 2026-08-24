@@ -122,6 +122,12 @@
 <h2>Threat Model and Security Considerations</h2>
 <p>StormCrawler is designed to operate in trusted environments as part of a distributed <a href="https://storm.apache.org/" target="_blank" rel="noopener">Apache Storm&reg;</a> cluster.</p>
 
+	<h3>Crawled Content Is Untrusted by Design</h3>
+	<p>StormCrawler is a library for broad web crawling. It fetches URLs it was told to fetch, including URLs discovered in previously fetched pages, and it parses the bytes that come back. Both the URLs and the bytes are chosen by the operators of the sites being crawled, which means attacker-controlled input is not an edge case for a crawler: it is the normal operating condition. Every component that handles a response body, a response header, a redirect target or an extracted outlink is handling hostile data by default.</p>
+	<p>It follows that consequences of the crawler crawling what it was configured to crawl are not, in themselves, vulnerabilities. If a topology is pointed at a host, fetches a resource from it and stores the result, that is the software working as intended, regardless of what the remote host chose to serve. What the project does treat as a security problem is content crossing a boundary it was never meant to cross: crawled bytes influencing the crawler's own configuration or control data, reaching resources the operator did not expose to the crawl, or causing credentials to be disclosed.</p>
+	<p>This is the frame for the rest of this section. The controls described below exist so that operators can define where that boundary lies for their deployment. Choosing not to configure them widens the boundary rather than removing it.</p>
+	<p>Malformed or hostile responses that make a crawl slow, stall a worker or exhaust its memory are bugs the project fixes. Such effects are confined to the crawl the operator chose to run, and the project treats them as robustness rather than as a compromise of the deployment.</p>
+
 <h3>Trusted Configuration</h3>
 <p>The configuration file used by StormCrawler is loaded during topology submission and is treated as a trusted source. If an attacker is able to modify this file, they would already have full access to the system. Securing the configuration file and the environment in which topologies are submitted is essential.</p>
 
@@ -132,6 +138,52 @@
   <li>Underlying systems should not store secrets or hold elevated privileges beyond those assigned to the authorized users</li>
   <li>Avoid deploying StormCrawler in multi-tenant environments without strong isolation guarantees</li>
 </ul>
+
+	<h3>Operator Responsibilities</h3>
+	<p>StormCrawler is a library, not a finished crawler. Several controls that determine what a crawl is allowed to reach ship disabled or permissive, because the library cannot know the scope of the crawl a given operator intends to run. Configuring them is the operator's responsibility.</p>
+
+	<h4>URL Filtering</h4>
+	<p>The library ships no URL filters at all: <code>urlfilters.config.file</code> is present but commented out in <code>crawler-default.yaml</code>, so a topology built directly on the library will follow every outlink it discovers, unbounded, unless the operator supplies a filter configuration. Projects generated from the StormCrawler Maven archetypes do not have this problem: they set <code>urlfilters.config.file</code> and ship a <code>default-regex-filters.txt</code> as a starting point.</p>
+	<p>A topology running with no URL filtering at all is not a supported configuration. Operators should define the intended crawl scope explicitly, in terms of hosts, domains and URL patterns, and should treat the filter configuration as a security control rather than a tuning parameter.</p>
+
+	<h4>Protocol Schemes</h4>
+	<p>The <code>protocols</code> key currently ships as <code>"http,https,file"</code>, which registers the <code>file</code> protocol implementation alongside the HTTP ones. Because outlinks are extracted from crawled pages, an enabled <code>file</code> scheme gives crawled content a path to the local filesystem of the worker unless URL filtering prevents it. This is the combination that matters: the file scheme and the absence of URL filters together, not either one alone.</p>
+	<p>Non-web schemes should be enabled deliberately, for deployments that actually crawl local files, and should be paired with URL filters that constrain which paths may be reached. Operators who do not crawl local content should reduce <code>protocols</code> to <code>"http,https"</code>.</p>
+
+	<h4>Egress Restriction</h4>
+	<p>Regular-expression URL filters operate on the URL string and cannot know what a hostname resolves to. A hostname under the control of a crawled site can resolve to a loopback, link-local or private address, which no pattern on the URL can detect. <code>http.filter.ipaddress.include</code> and <code>http.filter.ipaddress.exclude</code> address this: they are applied after DNS resolution, at connection time, and are the only control in the library that can act on the resolved address. Both ship commented out in <code>crawler-default.yaml</code>, with <code>"localhost,sitelocal"</code> shown as a suggested exclude value.</p>
+	<p>Operators crawling the public web should set an exclude rule covering loopback and site-local ranges at minimum; operators crawling a known internal estate should prefer an explicit include rule. Note that this filtering is implemented in the OkHttp protocol only. Topologies using other protocol implementations, including the browser-based ones, need to obtain the same restriction from the network layer around the workers.</p>
+
+	<h4>Resource Limits</h4>
+	<p><code>http.content.limit</code> defaults to <code>-1</code>, meaning no limit: the size of a fetched document is decided by the remote server. The archetype configurations set it to <code>65536</code>. Since response bodies are attacker-chosen, an unbounded limit lets a crawled host decide how much memory a worker allocates for a single fetch.</p>
+	<p>Operators should set a finite <code>http.content.limit</code> appropriate to the content they intend to index. The related <code>http.robots.content.limit</code> defaults to the same value and deserves the same treatment.</p>
+
+	<h3>Transport and Credentials</h3>
+	<p><code>http.trust.everything</code> currently defaults to <code>true</code>. With that setting, the OkHttp protocol accepts any server certificate and performs no hostname verification. The rationale is that broad crawling encounters expired, self-signed and otherwise misconfigured certificates constantly, that a crawl aborting on them would be of limited use, and that the fetched bytes are treated as hostile in any case, so certificate validity adds little to how the response is handled.</p>
+	<p>That rationale covers the content of an ordinary anonymous crawl. It does not cover anything the crawler sends. With certificate and hostname verification disabled, the crawler cannot tell which host it is actually talking to, so any credential, custom header or replayed cookie attached to a request crosses a channel whose far end was never authenticated. Operators who crawl anything authenticated must weigh this, and should set <code>http.trust.everything</code> to <code>false</code> for those crawls.</p>
+	<p>Credentials configured through <code>http.basicauth.user</code> and <code>http.basicauth.password</code> are turned into a fixed <code>Authorization</code> header that is attached to every request the protocol instance makes, with no host scoping. If such a topology follows an outlink to a third-party host, the credentials go with it. Operators crawling authenticated sites should scope credentials by origin themselves, by running a separate topology per origin with URL filters confining that topology to it, rather than combining authenticated and general crawling in one topology.</p>
+	<p>Cookie replay is a related risk. <code>http.use.cookies</code> is <code>false</code> by default, and enabling it causes cookies stored from a response to be sent with requests for links found in that response. Operators enabling it on an authenticated crawl should apply the same per-origin separation as for Basic authentication.</p>
+	<p>Cookie scoping as implemented is not a security boundary. Operators should confine authenticated crawls by topology rather than relying on which cookies are sent where.</p>
+
+	<h3>Advisories and Hardening</h3>
+	<p>StormCrawler follows the <a href="https://www.apache.org/security/">ASF Security Team</a>'s policy on when an advisory is issued.</p>
+	<ul>
+		<li>We issue an advisory for a vulnerability in a released artifact. This includes low-severity issues, issues that affect only non-default but valid configurations, and issues the project found itself rather than receiving from an external reporter.</li>
+		<li>We treat improvements to default configuration values and added safeguards as security hardening. These ship in normal releases, described in the release notes, without an advisory.</li>
+		<li>Vulnerabilities in dependencies follow the ASF's dependency guidance. We update affected dependencies in normal releases and do not usually issue our own advisory for them.</li>
+	</ul>
+	<p>As the ASF policy notes, what counts as a vulnerability depends in part on what a project states as expected behaviour, which is why this page describes the crawler's threat model rather than only its reporting process.</p>
+
+	<h3>Summary</h3>
+	<p>StormCrawler's security model assumes a trusted deployment environment. Users should:</p>
+	<ul>
+		<li>Secure configuration files and deployment infrastructure</li>
+		<li>Restrict Apache Storm&reg; cluster access</li>
+		<li>Follow best practices for secret and privilege management</li>
+		<li>Define the crawl scope explicitly with URL filters, and enable only the protocol schemes the crawl needs</li>
+		<li>Restrict egress by resolved IP address and set a finite content limit</li>
+		<li>Scope any credentials used for authenticated crawls to a topology confined to their origin</li>
+	</ul>
 
 <h2>Asking Questions About Known Security Problems</h2>
 <p>Questions about whether a vulnerability applies to your application, further information on a published vulnerability, or availability of patches should be addressed to the <a href="https://lists.apache.org/list.html?dev@stormcrawler.apache.org" target="_blank" rel="noopener">dev mailing list</a> (<a href="mailto:dev-subscribe@stormcrawler.apache.org">subscribe</a> &middot; <a href="mailto:dev-unsubscribe@stormcrawler.apache.org">unsubscribe</a>).</p>
