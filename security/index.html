@@ -81,7 +81,7 @@ title: Reporting Security Problems to Apache StormCrawler
 	</ul>
 	<p>Because StormCrawler is a library rather than a deployed service, the configuration it ships is a starting point and not a secured deployment. Where a weakness is reachable because a control described on this page was not configured, we improve the default and treat the change as hardening. Where the library defeats a control an operator did configure, or discloses a configured secret in a way this page does not describe, we treat it as a vulnerability.</p>
 
-	<p>We publish an advisory when operators need to act beyond taking the next release: change a configuration, inspect or repair stored data, or rotate a credential. Where the fix is sufficient on its own, it ships in a normal release and the release notes carry any operator-visible change.</p>
+	<p>Whether we publish an advisory follows from that classification and not from how much work the fix requires of anyone. A vulnerability in a released artifact gets an advisory even when installing the next release is all an operator has to do, because the point of an advisory is to let operators judge how urgently to upgrade. Where more than an upgrade is needed, such as changing a configuration, inspecting or repairing stored data, or rotating a credential, the advisory says so and the release notes repeat it. A hardening change ships in a normal release with a release note and no advisory.</p>
 
 	<p>Log output is not a confidentiality boundary. Enabling DEBUG logging on the protocol implementations can put configured credentials into the logs. Treat DEBUG output from a topology that uses an authenticated proxy or crawls authenticated sites as sensitive, and scope log retention accordingly.</p>
 
