@@ -1046,19 +1046,28 @@ html:not(.no-js) .hero__webbox .hero__mark {
   font-size: 1em; }
 
 .release-card {
-  background: var(--accent);
+  background: var(--code-bg);
   border: 2px solid var(--border-strong);
   border-radius: var(--radius-card);
   padding: 22px;
   margin: 0 0 1.5rem;
-  color: #fff; }
+  color: var(--code-fg); }
 
 .release-card h3 {
   margin: 0 0 .5rem;
   color: inherit; }
 
+.release-card .badge {
+  background: var(--accent);
+  color: #fff; }
+
 [data-theme="dark"] .release-card {
+  background: var(--accent);
   color: #191A16; }
+
+[data-theme="dark"] .release-card .badge {
+  background: var(--icon-chip-bg);
+  color: var(--icon-chip-fg); }
 
 .vchain {
   display: grid;
