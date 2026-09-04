@@ -13,28 +13,43 @@
   
   
 
-  <title>Migration Guide - Apache StormCrawler</title>
-  <meta name="description" content="Moving from a pre-Apache (DigitalPebble) StormCrawler release to 3.x under the Apache umbrella.">
+  <title>Page not found - Apache StormCrawler</title>
+  <meta name="description" content="This page does not exist. The thread you followed leads nowhere.">
 
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Apache StormCrawler">
-  <meta property="og:title" content="Migration Guide - Apache StormCrawler">
-  <meta property="og:description" content="Moving from a pre-Apache (DigitalPebble) StormCrawler release to 3.x under the Apache umbrella.">
-  <meta property="og:url" content="https://stormcrawler.apache.org/download/3.0/migration-guide.html">
+  <meta property="og:title" content="Page not found - Apache StormCrawler">
+  <meta property="og:description" content="This page does not exist. The thread you followed leads nowhere.">
+  <meta property="og:url" content="https://stormcrawler.apache.org/404.html">
   <meta property="og:image" content="https://stormcrawler.apache.org/img/social-card.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Apache StormCrawler — every web has its spider">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Migration Guide - Apache StormCrawler">
-  <meta name="twitter:description" content="Moving from a pre-Apache (DigitalPebble) StormCrawler release to 3.x under the Apache umbrella.">
+  <meta name="twitter:title" content="Page not found - Apache StormCrawler">
+  <meta name="twitter:description" content="This page does not exist. The thread you followed leads nowhere.">
   <meta name="twitter:image" content="https://stormcrawler.apache.org/img/social-card.png">
 
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="https://stormcrawler.apache.org/download/3.0/migration-guide.html">
+  <link rel="canonical" href="https://stormcrawler.apache.org/404.html">
   <link rel="alternate" type="application/rss+xml" title="Apache StormCrawler" href="https://stormcrawler.apache.org/feed.xml">
   <link rel="icon" type="image/png" href="/img/favicon.png">
   <link rel="sitemap" type="application/xml" href="/sitemap.xml">
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Apache StormCrawler",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Cross-platform (JVM)",
+    "softwareVersion": "3.7.0",
+    "license": "https://www.apache.org/licenses/LICENSE-2.0",
+    "url": "https://stormcrawler.apache.org/",
+    "sameAs": ["https://github.com/apache/stormcrawler"],
+    "description": "This page does not exist. The thread you followed leads nowhere."
+  }
+  </script>
   
   <script>
     (function() {
@@ -47,7 +62,7 @@
 </head>
 
 
-  <body class="migration-guide">
+  <body class="home">
 
     <a class="skip-link" href="#main">Skip to content</a>
 
@@ -60,7 +75,7 @@
       </a>
     </div>
     <nav class="links" aria-label="Main menu">
-      <a class="site-nav-link" href="/">Home</a>
+      <a class="site-nav-link active" href="/">Home</a>
       <a class="site-nav-link" href="/download/">Download</a>
       <a class="site-nav-link" href="/docs/">Documentation</a>
       <a class="site-nav-link" href="/contribute/">Contribute</a>
@@ -82,88 +97,19 @@
 
 
     
-      <div class="page-hero">
-        <div class="page-hero__inner">
-          
-          <p class="eyebrow">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2 4.5 13.5H11L9.5 22 19 10h-6.5L13 2Z"/></svg>
-            DOWNLOAD
-          </p>
-          
-          <h1>Migration Guide</h1>
-          <p class="page-hero__sub">Moving from a pre-Apache (DigitalPebble) StormCrawler release to 3.x under the Apache umbrella.</p>
-        </div>
-      </div>
-      <main class="main-content page-content" id="main">
-        <p>This guide provides step-by-step instructions for migrating your project from older versions of StormCrawler to the new version under the Apache umbrella. Key changes include updates to the group and artifact IDs, as well as the removal of the Elasticsearch module.</p>
-
-<h2>Group ID and Artifact ID Changes</h2>
-
-<h3>Group ID</h3>
-<p>The group ID has changed from <code>com.digitalpebble.stormcrawler</code> to <code>org.apache.stormcrawler</code>. This change reflects the project's transition to the Apache Software Foundation.</p>
-
-<h3>Artifact ID</h3>
-<p>The artifact ID has changed from <code>storm-crawler</code> to <code>stormcrawler</code>.</p>
-
-<h3>Maven Configuration</h3>
-<p>Update your <code>pom.xml</code> to reflect these changes. Old configuration:</p>
-
-<div class="codebox">
-  <pre>&lt;dependency&gt;
-    &lt;groupId&gt;com.digitalpebble.stormcrawler&lt;/groupId&gt;
-    &lt;artifactId&gt;storm-crawler&lt;/artifactId&gt;
-    &lt;version&gt;OLD_VERSION&lt;/version&gt;
-&lt;/dependency&gt;</pre>
+      <main class="main-content" id="main">
+        <div class="lost">
+  <div class="lost__thread" aria-hidden="true"></div>
+  <img class="lost__mark only-light" src="/img/spider-mark-light.svg" alt="">
+  <img class="lost__mark only-dark" src="/img/spider-mark.svg" alt="">
+  <p class="slabel">404 &middot; BROKEN THREAD</p>
+  <h1 class="lost__title">This thread<br>leads nowhere<span class="dot" style="color:var(--accent-ink);">.</span></h1>
+  <p class="lost__copy">The page you followed has been moved, retired, or never spun. Pick a thread that still holds:</p>
+  <div class="hero__ctas" style="justify-content:center;">
+    <a class="btn btn--solid" href="/">Back home</a>
+    <a class="btn btn--ghost" href="/docs/">Documentation</a>
+  </div>
 </div>
-
-<p>New configuration:</p>
-
-<div class="codebox">
-  <pre>&lt;dependency&gt;
-    &lt;groupId&gt;org.apache.stormcrawler&lt;/groupId&gt;
-    &lt;artifactId&gt;stormcrawler&lt;/artifactId&gt;
-    &lt;version&gt;3.7.0&lt;/version&gt;
-&lt;/dependency&gt;</pre>
-</div>
-
-<p>Replace <code>OLD_VERSION</code> with the version you are currently using; the current Apache StormCrawler release is <code>3.7.0</code>.</p>
-
-<h2>Removal of Elasticsearch Module</h2>
-<p>The Elasticsearch module has been removed in the latest version of StormCrawler. You have two options to handle this change:</p>
-<ol>
-  <li><strong>Fork the Elasticsearch Module:</strong> You can fork the Elasticsearch module from the older version of StormCrawler and maintain it independently.</li>
-  <li><strong>Migrate to OpenSearch Module:</strong> Alternatively, you can migrate your code to use the OpenSearch module provided by Apache StormCrawler.</li>
-</ol>
-
-<h3>Forking the Elasticsearch Module</h3>
-<ol>
-  <li>Clone the repository containing the last version of StormCrawler that includes the Elasticsearch module.</li>
-  <li>Copy the Elasticsearch module into your project's repository.</li>
-  <li>Update your project's dependencies to include this local version of the Elasticsearch module.</li>
-</ol>
-
-<h3>Migrating to OpenSearch Module</h3>
-<p>If you choose to migrate to the OpenSearch module, you will need to update your code to use the new module. Here are the steps:</p>
-<ol>
-  <li>Add the OpenSearch dependency to your <code>pom.xml</code>:</li>
-</ol>
-
-<div class="codebox">
-  <pre>&lt;dependency&gt;
-    &lt;groupId&gt;org.apache.stormcrawler&lt;/groupId&gt;
-    &lt;artifactId&gt;stormcrawler-opensearch&lt;/artifactId&gt;
-    &lt;version&gt;3.7.0&lt;/version&gt;
-&lt;/dependency&gt;</pre>
-</div>
-
-<ol start="2">
-  <li>Update your code to replace any references to the Elasticsearch module with the corresponding OpenSearch module classes and methods. The API for OpenSearch is similar to Elasticsearch, so the changes should be straightforward.</li>
-  <li>Test your application thoroughly to ensure that the migration does not introduce any issues.</li>
-</ol>
-
-<h2>Summary</h2>
-<p>By following the steps outlined in this guide, you should be able to migrate your project to the latest version of Apache StormCrawler with minimal effort. Ensure you update your Maven dependencies and handle the removal of the Elasticsearch module by either forking it or migrating to the OpenSearch module.</p>
-<p>For any further assistance, reach out to the community via the <a href="https://lists.apache.org/list.html?dev@stormcrawler.apache.org" target="_blank" rel="noopener">mailing lists</a> or <a href="https://github.com/apache/stormcrawler/discussions" target="_blank" rel="noopener">GitHub discussions</a>.</p>
 
       </main>
     
