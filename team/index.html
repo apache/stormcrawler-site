@@ -2,17 +2,12 @@
 layout: default
 slug: team
 title: Apache StormCrawler Project Team
+eyebrow: COMMUNITY
+heading: Project Team
+description: The committers and PMC members behind Apache StormCrawler, and the contributors on our Wall of Fame.
 ---
 
-<div class="row row-col">
-    <h1>Project Team</h1>
-
-    <p>
-        Apache StormCrawler is built and maintained by a community of committers and
-        PMC members. The list below is generated at build time from the Apache
-        <a href="https://whimsy.apache.org/" target="_blank" rel="noopener">Whimsy</a>
-        LDAP exports.
-    </p>
+<p>Apache StormCrawler is built and maintained by a community of committers and PMC members. The list below is generated at build time from the Apache <a href="https://whimsy.apache.org/" target="_blank" rel="noopener">Whimsy</a> LDAP exports.</p>
 
     {% if site.data.team and site.data.team.size > 0 %}
         <div class="contributor-grid">
@@ -40,7 +35,7 @@ title: Apache StormCrawler Project Team
     {% endif %}
 
     {% if site.data.wall_of_fame and site.data.wall_of_fame.size > 0 %}
-        <h2 id="wall-of-fame">Wall of Fame &mdash; Thanks to Our Contributors</h2>
+        <h2 id="wall-of-fame">Wall of Fame: Thanks to Our Contributors</h2>
         <p>
             Apache StormCrawler exists because of the people below, who have contributed
             code, reviews, documentation and bug reports across the project's GitHub
@@ -63,4 +58,4 @@ title: Apache StormCrawler Project Team
             Last updated: <time datetime="{{ site.data.team_meta.last_updated }}">{{ site.data.team_meta.last_updated }}</time>
         </p>
     {% endif %}
-</div>
+

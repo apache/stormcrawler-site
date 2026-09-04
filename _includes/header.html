@@ -1,23 +1,28 @@
-<header class="site-header">
-  <div class="site-header__wrap">
+<header class="site-header" id="site-header">
+  <div class="site-header__inner">
     <div class="site-header__logo">
-      <a href="{{ site.baseurl }}/">
-        <img class="logo-light" src="{{ site.baseurl }}/img/logo.png" alt="Apache StormCrawler">
-        <img class="logo-dark" src="{{ site.baseurl }}/img/logo-dark.png" alt="Apache StormCrawler">
+      <a href="{{ site.baseurl }}/" aria-label="Apache StormCrawler home">
+        <img class="only-light" src="{{ site.baseurl }}/img/logo-light.svg" alt="Apache StormCrawler">
+        <img class="only-dark" src="{{ site.baseurl }}/img/logo-dark.svg" alt="Apache StormCrawler">
       </a>
+    </div>
+    <nav class="links" aria-label="Main menu">
+      <a class="site-nav-link{% if page.slug == 'home' %} active{% endif %}" href="{{ site.baseurl }}/">Home</a>
+      <a class="site-nav-link{% if page.slug == 'download' %} active{% endif %}" href="{{ site.baseurl }}/download/">Download</a>
+      <a class="site-nav-link{% if page.slug == 'documentation' %} active{% endif %}" href="{{ site.baseurl }}/docs/">Documentation</a>
+      <a class="site-nav-link{% if page.slug == 'contribute' %} active{% endif %}" href="{{ site.baseurl }}/contribute/">Contribute</a>
+      <a class="site-nav-link{% if page.slug == 'security' %} active{% endif %}" href="{{ site.baseurl }}/security/">Security</a>
+      <a class="site-nav-link{% if page.slug == 'support' %} active{% endif %}" href="{{ site.baseurl }}/support/">Support</a>
+      <a class="site-nav-link{% if page.slug == 'team' %} active{% endif %}" href="{{ site.baseurl }}/team/">Team</a>
+    </nav>
+    <div class="site-header__actions">
+      <a class="gh-pill" href="https://github.com/apache/stormcrawler" target="_blank" rel="noopener" aria-label="Apache StormCrawler on GitHub">
+        <span class="gh-txt">GitHub &#8599;</span><svg class="gh-ico" width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+      </a>
+      <button class="icon-btn nav-burger" id="nav-toggle" aria-expanded="false" aria-controls="site-header" aria-label="Menu">
+        <svg width="16" height="16" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M2 4.5h14M2 9h14M2 13.5h14"/></svg>
+      </button>
     </div>
   </div>
 </header>
-<nav class="site-nav">
-  <ul>
-    <li><a href="{{ site.baseurl }}/index.html">Home</a>
-    <li><a href="{{ site.baseurl }}/download/index.html">Download</a>
-    <li><a href="{{ site.baseurl }}/docs/latest/index.html#_quick_start">Quick Start</a>
-    <li><a href="{{ site.baseurl }}/docs/">Documentation</a></li>
-    <li><a href="{{ site.baseurl }}/contribute/">Contribute</a></li>
-    <li><a href="{{ site.baseurl }}/security/">Security</a></li>
-    <li><a href="{{ site.baseurl }}/support/">Support</a></li>
-    <li><a href="{{ site.baseurl }}/team/">Team</a></li>
-  </ul>
-</nav>
-<span id="forkongithub"><a href="https://github.com/apache/stormcrawler">Fork me on GitHub</a></span>
+<button class="icon-btn theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">&#9790;</button>

@@ -2,14 +2,52 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#F7F7F3">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#141312">
 
-  <title>{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}</title>
-  <meta name="description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
+  {% assign page_title = page.title | default: site.title %}
+  {% assign page_desc = page.description | default: site.description | strip_newlines | strip %}
+  {% assign canonical_url = page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url %}
+  {% assign social_image = '/img/social-card.png' | prepend: site.baseurl | prepend: site.url %}
+
+  <title>{{ page_title }}</title>
+  <meta name="description" content="{{ page_desc }}">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="{{ site.title }}">
+  <meta property="og:title" content="{{ page_title }}">
+  <meta property="og:description" content="{{ page_desc }}">
+  <meta property="og:url" content="{{ canonical_url }}">
+  <meta property="og:image" content="{{ social_image }}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Apache StormCrawler — every web has its spider">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ page_title }}">
+  <meta name="twitter:description" content="{{ page_desc }}">
+  <meta name="twitter:image" content="{{ social_image }}">
 
   <link rel="stylesheet" href="{{ "/css/main.css" | prepend: site.baseurl }}">
-  <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
+  <link rel="canonical" href="{{ canonical_url }}">
   <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ "/feed.xml" | prepend: site.baseurl | prepend: site.url }}">
-  <link rel="icon" type="/image/png" href="{{ site.baseurl }}/img/favicon.png" />
+  <link rel="icon" type="image/png" href="{{ site.baseurl }}/img/favicon.png">
+  <link rel="sitemap" type="application/xml" href="{{ site.baseurl }}/sitemap.xml">
+  {% if page.slug == 'home' %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Apache StormCrawler",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Cross-platform (JVM)",
+    "softwareVersion": "{{ site.version }}",
+    "license": "https://www.apache.org/licenses/LICENSE-2.0",
+    "url": "{{ site.url }}/",
+    "sameAs": ["https://github.com/apache/stormcrawler"],
+    "description": "{{ page_desc }}"
+  }
+  </script>
+  {% endif %}
   <script>
     (function() {
       var t = localStorage.getItem('theme');

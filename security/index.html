@@ -2,18 +2,37 @@
 layout: default
 slug: security
 title: Reporting Security Problems to Apache StormCrawler
+eyebrow: SECURITY
+heading: Security
+description: How to report vulnerabilities privately, and the StormCrawler threat model.
 ---
 
-<div class="row row-col">
-	<h1>Security</h1>
-	<h2>Reporting New Security Problems with Apache StormCrawler</h2>
-	<p>The Apache Software Foundation takes a very active stance in eliminating security problems and denial of service attacks against its products.</p>
-	<p>We strongly encourage people to report security problems privately using the security mailing list of the <a href="https://www.apache.org/security/">ASF Security Team</a> before disclosing them in a public forum.</p>
-	<p>Please note that the security mailing list should only be used for reporting undisclosed security vulnerabilities and managing the process of fixing such vulnerabilities. We cannot accept regular bug reports or other queries at this address. All mail sent to this address that does not relate to an undisclosed security problem in our source code will be ignored.</p>
-	<p>The private security mailing address is: <a class="externalLink" href="mailto:security@apache.org">security@apache.org</a></p>
+<div class="callout callout--alert">
+  <p><b>Found a vulnerability?</b> Report it privately to <a href="mailto:security@apache.org">security@apache.org</a>, never in a public forum. The security list is only for undisclosed vulnerabilities and managing their fixes; regular bug reports and other queries cannot be accepted at this address.</p>
+</div>
 
-	<h2>Threat Model and Security Considerations</h2>
-	<p>StormCrawler is designed to operate in trusted environments as part of a distributed Apache Storm&reg; cluster. This document outlines the threat model and key security assumptions to help users understand the secure use and deployment of StormCrawler.</p>
+<h2>How disclosure works</h2>
+<p>The Apache Software Foundation takes a very active stance in eliminating security problems and denial of service attacks against its products. Every report follows the <a href="https://www.apache.org/security/" target="_blank" rel="noopener">ASF security process</a>:</p>
+<div class="vchain vchain--3">
+  <div class="vlink">
+    <p class="slabel">01 &middot; REPORT</p>
+    <h3>Privately</h3>
+    <p>You write to the ASF Security Team; the report stays confidential.</p>
+  </div>
+  <div class="vlink">
+    <p class="slabel">02 &middot; FIX</p>
+    <h3>Quietly</h3>
+    <p>The PMC develops, reviews and releases a fix before any disclosure.</p>
+  </div>
+  <div class="vlink">
+    <p class="slabel">03 &middot; DISCLOSE</p>
+    <h3>Publicly</h3>
+    <p>The vulnerability is announced once a fixed release is available.</p>
+  </div>
+</div>
+
+<h2>Threat Model and Security Considerations</h2>
+<p>StormCrawler is designed to operate in trusted environments as part of a distributed <a href="https://storm.apache.org/" target="_blank" rel="noopener">Apache Storm&reg;</a> cluster.</p>
 
 	<h3>Crawled Content Is Untrusted by Design</h3>
 	<p>StormCrawler is a library for broad web crawling. It fetches URLs it was told to fetch, including URLs discovered in previously fetched pages, and it parses the bytes that come back. Both the URLs and the bytes are chosen by the operators of the sites being crawled, which means attacker-controlled input is not an edge case for a crawler: it is the normal operating condition. Every component that handles a response body, a response header, a redirect target or an extracted outlink is handling hostile data by default.</p>
@@ -21,30 +40,16 @@ title: Reporting Security Problems to Apache StormCrawler
 	<p>This is the frame for the rest of this section. The controls described below exist so that operators can define where that boundary lies for their deployment. Choosing not to configure them widens the boundary rather than removing it.</p>
 	<p>Malformed or hostile input that makes a crawl slow, stalls a worker or exhausts its memory is a bug the project fixes, whether it arrives in a response or by way of data the crawl stored earlier. Availability effects of this kind are confined to the crawl the operator chose to run, and the project treats them as robustness rather than as a compromise of the deployment. This is separate from the availability of the Apache Storm&reg; cluster itself, which is the operator's to protect.</p>
 
-	<h3>Trusted Configuration</h3>
-	<p>The configuration file used by StormCrawler is loaded during topology submission and is treated as a trusted source. It does not involve any user-supplied input at runtime.</p>
-	<p>If an attacker is able to modify this file, they would already have full access to the system, including:</p>
-	<ul>
-		<li>The ability to alter behavior of the topology</li>
-		<li>Access to credentials and other secrets</li>
-		<li>Arbitrary control over job execution</li>
-	</ul>
-	<p>Securing the configuration file and the environment in which topologies are submitted is essential. However, modification of the file implies full system compromise and is out of scope for runtime protections.</p>
+<h3>Trusted Configuration</h3>
+<p>The configuration file used by StormCrawler is loaded during topology submission and is treated as a trusted source. If an attacker is able to modify this file, they would already have full access to the system. Securing the configuration file and the environment in which topologies are submitted is essential.</p>
 
-	<h3>Apache Storm&reg; Cluster Security</h3>
-	<p>StormCrawler runs on an Apache Storm&reg; cluster, which is designed to allow users to:</p>
-	<ul>
-		<li>Submit topologies</li>
-		<li>Execute custom, user-defined code</li>
-	</ul>
-	<p>This model inherently trusts cluster users and assumes they are authorized.</p>
-
-	<h4>Security Recommendations:</h4>
-	<ul>
-		<li>Access to the Apache Storm&reg; cluster must be strictly restricted to trusted users</li>
-		<li>Underlying systems should not store secrets or hold elevated privileges beyond those assigned to the authorized users</li>
-		<li>Avoid deploying StormCrawler in multi-tenant environments without strong isolation guarantees</li>
-	</ul>
+<h3>Apache Storm&reg; Cluster Security</h3>
+<p>StormCrawler runs on an <a href="https://storm.apache.org/" target="_blank" rel="noopener">Apache Storm&reg;</a> cluster, which allows users to submit topologies and execute custom, user-defined code. This model inherently trusts cluster users and assumes they are authorized.</p>
+<ul>
+  <li>Access to the Apache Storm&reg; cluster must be strictly restricted to trusted users</li>
+  <li>Underlying systems should not store secrets or hold elevated privileges beyond those assigned to the authorized users</li>
+  <li>Avoid deploying StormCrawler in multi-tenant environments without strong isolation guarantees</li>
+</ul>
 
 	<h3>Operator Responsibilities</h3>
 	<p>StormCrawler is a library, not a finished crawler. Several controls that determine what a crawl is allowed to reach ship disabled or permissive, because the library cannot know the scope of the crawl a given operator intends to run. Configuring them is the operator's responsibility.</p>
@@ -98,15 +103,14 @@ title: Reporting Security Problems to Apache StormCrawler
 		<li>Scope any credentials used for authenticated crawls to a topology confined to their origin</li>
 	</ul>
 
-	<h2>Asking Questions About Known Security Problems</h2>
-	<p>Questions about:</p>
-	<ul>
-		<li>if a vulnerability applies to your particular application</li>
-		<li>obtaining further information on a published vulnerability</li>
-		<li>availability of patches and/or new releases</li>
-	</ul>
-	<p>should be addressed to the <a href="https://lists.apache.org/list.html?dev@stormcrawler.apache.org">dev mailing list</a>.</p>
+<h2>Asking Questions About Known Security Problems</h2>
+<p>Questions about whether a vulnerability applies to your application, further information on a published vulnerability, or availability of patches should be addressed to the <a href="https://lists.apache.org/list.html?dev@stormcrawler.apache.org" target="_blank" rel="noopener">dev mailing list</a> (<a href="mailto:dev-subscribe@stormcrawler.apache.org">subscribe</a> &middot; <a href="mailto:dev-unsubscribe@stormcrawler.apache.org">unsubscribe</a>).</p>
 
-	<h2>Known Security Vulnerabilities</h2>
-	<p>No known security vulnerability yet.</p>
+<h2>Known Security Vulnerabilities</h2>
+<p>No security vulnerabilities have been disclosed for Apache StormCrawler to date. When one is published, it will be listed here with its CVE identifier, the affected versions and the fixed release.</p>
+<!-- CVE list template — uncomment and fill in when the first advisory lands:
+<div class="faq">
+  <p class="faq__q">CVE-XXXX-XXXXX — short title</p>
+  <p class="faq__a">Affects: x.y.z and earlier &middot; Fixed in: x.y.z &middot; <a href="https://www.cve.org/CVERecord?id=CVE-XXXX-XXXXX">advisory</a></p>
 </div>
+-->
