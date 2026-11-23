@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.23">
+<title>Migrating to 4.0.0</title>
+<link rel="stylesheet" href="/css/docs.css">
+<script>(function(){try{var t=localStorage.getItem('theme');if(t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();</script>
+<meta name="theme-color" content="#C33540">
+<script src="/js/darkmode-docs.js"></script><link rel="canonical" href="https://stormcrawler.apache.org/docs/latest/migrating.html"></head>
+<body class="article">
+<style>
+.sc-docheader{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:16px;height:60px;padding:0 28px;background:rgba(247,247,243,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+[data-theme="dark"] .sc-docheader{background:rgba(20,19,18,.92)}
+.sc-docheader img{height:30px;display:block}
+.sc-docheader .logo-d{display:none}
+[data-theme="dark"] .sc-docheader .logo-l{display:none}
+[data-theme="dark"] .sc-docheader .logo-d{display:block}
+.sc-docheader .crumb{font-family:"JetBrains Mono",SFMono-Regular,Menlo,monospace;font-size:12px;color:var(--muted)}
+.sc-docheader .crumb b{color:var(--acc)}
+.sc-docheader .right{margin-left:auto;display:flex;align-items:center;gap:14px}
+.sc-docheader .right a{font-size:13.5px;font-weight:500;color:var(--copy)}
+.sc-docheader .right a:hover{color:var(--acc);text-decoration:none}
+.sc-docheader .crumb-sep{border-left:1px solid var(--line);padding-left:16px}
+.verwrap{position:relative;display:flex;align-items:center}
+.verwrap summary{list-style:none;cursor:pointer;font-family:"JetBrains Mono",SFMono-Regular,Menlo,monospace;font-size:11.5px;font-weight:600;color:var(--ink);border:1px solid var(--line);border-radius:100px;padding:6px 12px;background:var(--bg);display:inline-flex;align-items:center;gap:6px;line-height:1.4}
+.verwrap summary::-webkit-details-marker{display:none}
+.verwrap summary b{color:var(--acc)}
+.vermenu{position:absolute;top:calc(100% + 6px);left:0;min-width:190px;background:var(--bg);border:1px solid var(--line);border-radius:12px;box-shadow:0 8px 28px rgba(28,29,25,.12);padding:6px;z-index:40}
+.vermenu a{display:flex;justify-content:space-between;gap:12px;font-family:"JetBrains Mono",SFMono-Regular,Menlo,monospace;font-size:12px;color:var(--copy);padding:8px 10px;border-radius:8px}
+.vermenu a:hover{background:var(--panel);text-decoration:none}
+.vermenu a.cur{color:var(--ink);font-weight:600;background:var(--acc-soft)}
+.vermenu .all{border-top:1px solid var(--line);margin-top:4px;padding-top:8px;color:var(--acc)}
+[data-theme="dark"] .vermenu{box-shadow:0 8px 28px rgba(0,0,0,.5)}
+</style>
+<header class="sc-docheader">
+<a href="/"><img class="logo-l" src="/img/logo-light.svg" alt="Apache StormCrawler"><img class="logo-d" src="/img/logo-dark.svg" alt="Apache StormCrawler"></a>
+<a class="crumb crumb-sep" href="/docs/">Documentation</a>
+<details class="verwrap">
+<summary>v <b>latest</b> &#9662;</summary>
+<div class="vermenu">
+<a class="cur" href="/docs/latest/migrating.html">latest <span>current</span></a>
+<a href="/docs/4.0.0/migrating.html">4.0.0</a>
+<a href="/docs/3.7.0/index.html">3.7.0</a>
+<a href="/docs/3.6.0/index.html">3.6.0</a>
+<a href="/docs/3.5.1/index.html">3.5.1</a>
+<a class="all" href="/docs/">All versions &#8599;</a>
+</div>
+</details>
+<nav class="right">
+<a href="/">Website</a>
+<a href="https://javadoc.io/doc/org.apache.stormcrawler/stormcrawler-core/4.0.0" target="_blank" rel="noopener">Javadoc &#8599;</a>
+<a href="https://github.com/apache/stormcrawler" target="_blank" rel="noopener">GitHub &#8599;</a>
+</nav>
+</header>
+<div id="header">
+<div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_migrating_to_4_0_0">Migrating to 4.0.0</a>
+<ul class="sectlevel2">
+<li><a href="#_upgrading">Upgrading</a></li>
+<li><a href="#_crawler_configuration_and_behaviour">Crawler configuration and behaviour</a></li>
+<li><a href="#_custom_java_code">Custom Java code</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="_migrating_to_4_0_0">Migrating to 4.0.0</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This section covers upgrades from 3.7.0 to 4.0. Each entry says who is
+affected and, where needed, what to do. For other changes, see the release
+notes. When upgrading from an earlier 3.x release, also read the release notes
+of the versions in between.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#_upgrading">Upgrading</a> applies to every crawler.</p>
+</li>
+<li>
+<p><a href="#_crawler_configuration_and_behaviour">Crawler configuration and behaviour</a> applies to crawlers which use the keys
+or modules named in its entries.</p>
+</li>
+<li>
+<p><a href="#_stored_data">Stored data</a> applies to crawls which reuse data stored before the upgrade.</p>
+</li>
+<li>
+<p><a href="#_metrics_and_output_formats">Metrics and output formats</a> applies to crawls whose metrics or output are
+read by other tools.</p>
+</li>
+<li>
+<p><a href="#_custom_java_code">Custom Java code</a> applies to projects with their own Java classes.</p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_upgrading">Upgrading</h3>
+<div class="sect3">
+<h4 id="_upgrade_steps">Upgrade steps</h4>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>If a crawl using the SQL module may need a rollback to 3.x, back up its status
+table first (see <a href="#_stored_data">Stored data</a>).</p>
+</li>
+<li>
+<p>Upgrade the Storm cluster and its JDK, and update the project, as described
+in <a href="#_java_and_storm">Java and Storm</a> and <a href="#_project_changes">Project changes</a>.</p>
+</li>
+<li>
+<p>Fix the build of custom classes, as described in
+<a href="#_custom_java_code">Custom Java code</a>.</p>
+</li>
+<li>
+<p>Review the configuration against
+<a href="#_crawler_configuration_and_behaviour">Crawler configuration and behaviour</a>.</p>
+</li>
+<li>
+<p>Start the topology. It fails at startup when a filter file names a class
+removed in 4.0, and on an invalid IP filter rule, Tika configuration or jsoup
+XPath expression or a <code>FastURLFilter</code> rule without a type. If <code>http.basicauth.hosts</code> or <code>http.custom.headers.hosts</code> is empty, those
+credentials are not sent and a warning is logged.</p>
+</li>
+<li>
+<p>After the first crawl, compare a few URLs from the cases below with their
+records from before the upgrade: fetch status, extracted content and stored
+keys. These cases change what is fetched, parsed or stored without stopping the
+topology. The list is not complete.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>robots.txt redirects to another host, and robots.txt files over 512 KiB</p>
+</li>
+<li>
+<p>redirects on sites whose robots.txt lists sitemaps</p>
+</li>
+<li>
+<p>hosts with invalid certificates or non-public IP addresses</p>
+</li>
+<li>
+<p><code>file:</code> URLs</p>
+</li>
+<li>
+<p>cookies without a <code>Domain</code> attribute</p>
+</li>
+<li>
+<p>sitemaps without <code>isSitemap</code> in their metadata</p>
+</li>
+<li>
+<p>sitemaps and feeds with many entity references</p>
+</li>
+<li>
+<p>pages with a charset declared in the HTTP <code>Content-Type</code></p>
+</li>
+<li>
+<p>Tika metadata keys, embedded documents and the MIME type whitelist</p>
+</li>
+<li>
+<p>custom JSoupFilters, which now also run on Tika output</p>
+</li>
+<li>
+<p>stored URL forms and host keys</p>
+</li>
+<li>
+<p>text extracted by the AI module</p>
+</li>
+<li>
+<p><code>HostURLFilter</code> with <code>ignoreOutsideDomain: true</code></p>
+</li>
+<li>
+<p>custom URL filters which throw exceptions</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_java_and_storm">Java and Storm</h4>
+<div class="paragraph">
+<p>StormCrawler 4.0 requires Java 25 and Apache Storm 3.2.0, so the Storm cluster
+and its JDK must be upgraded too. The changes to the cluster are described in
+the release notes of
+<a href="https://storm.apache.org/2026/07/22/storm300-released.html">Storm 3.0.0</a>,
+<a href="https://storm.apache.org/2026/09/12/storm310-released.html">Storm 3.1.0</a> and
+<a href="https://storm.apache.org/2026/11/10/storm320-released.html">Storm 3.2.0</a>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_project_changes">Project changes</h4>
+<div class="paragraph">
+<p>Projects generated from a 3.x archetype need these changes in their <code>pom.xml</code>:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Set <code>stormcrawler.version</code> to <code>4.0.0</code> and <code>storm.version</code> to <code>3.2.0</code>.</p>
+</li>
+<li>
+<p>Set the <code>source</code> and <code>target</code> of the compiler plugin to <code>25</code>.</p>
+</li>
+<li>
+<p>If the project depends on <code>stormcrawler-tika</code>, add an <code>AppendingTransformer</code>
+to the shade plugin for each index file of Tika 4. Tika spreads these files
+over several jars: <code>META-INF/extensions.idx</code> and, under <code>META-INF/tika/</code>,
+<code>detectors.idx</code>, <code>encoding-detectors.idx</code>, <code>language-detectors.idx</code>,
+<code>metadata-filters.idx</code>, <code>parse-context.idx</code>, <code>parsers.idx</code>, <code>renderers.idx</code> and
+<code>translators.idx</code>.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;transformer</span>
+    <span class="attribute-name">implementation</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">org.apache.maven.plugins.shade.resource.AppendingTransformer</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;resource&gt;</span>META-INF/tika/parsers.idx<span class="tag">&lt;/resource&gt;</span>
+<span class="tag">&lt;/transformer&gt;</span></code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>If the project declares <code>tika-parsers-standard-package</code>, add
+<code>&lt;type&gt;pom&lt;/type&gt;</code> to that dependency. Tika 4 publishes it as a POM.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>A <code>pom.xml</code> generated by the 4.0 archetype contains all of these changes and
+can be used for comparison. The <code>crawler.flux</code> of a project generated from a 3.x
+archetype also needs the status stream connection described in <a href="#_topologies">Topologies</a>.</p>
+</div>
+<div class="paragraph">
+<p>These modules change:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>stormcrawler-opensearch-java</code> is merged into <code>stormcrawler-opensearch</code>, which
+now uses the OpenSearch Java client. Users of either module should follow
+<a href="https://github.com/apache/stormcrawler/blob/stormcrawler-4.0.0/external/opensearch/README.md#upgrading-from-versions-before-40">Upgrading from versions before 4.0</a>
+in the OpenSearch README.</p>
+</li>
+<li>
+<p>The Selenium module is removed. Use the
+<a href="configuration.html#_playwright">Playwright</a> module instead.</p>
+</li>
+<li>
+<p>The AWS module no longer supports CloudSearch. It keeps
+the S3 bolts. Index into another backend, for instance
+<a href="configuration.html#_opensearch">OpenSearch</a>.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_crawler_configuration_and_behaviour">Crawler configuration and behaviour</h3>
+<div class="sect3">
+<h4 id="_http_and_access_to_resources">HTTP and access to resources</h4>
+<div class="paragraph">
+<p>The keys below are described in
+<a href="configuration.html#_configuration_options">Configuration Options</a>.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>A robots.txt redirect is now followed only within the same scheme, host and
+port, or from http to https on the same host with default or unchanged ports.
+Other redirects, for instance from <code>example.com</code> to <code>www.example.com</code>, are
+refused. The URLs of the host then end as <code>ERROR</code> with <code>error.cause</code> set to
+<code>robots.txt</code>, and a warning starting with <code>Robots for</code> is logged. With the
+default <code>fetchInterval.error: -1</code> they are never fetched again. Before the first
+crawl, set <code>http.robots.redirect.crossorigin.allow: true</code> to follow such
+redirects, or <code>http.robots.redirect.refused.allow: true</code> to crawl these hosts
+without robots.txt rules.</p>
+</li>
+<li>
+<p><code>org.apache.stormcrawler.protocol.httpclient.HttpProtocol</code> is removed. If
+<code>http.protocol.implementation</code> or <code>https.protocol.implementation</code> names it, use
+the default, <code>org.apache.stormcrawler.protocol.okhttp.HttpProtocol</code>.</p>
+</li>
+<li>
+<p>With OkHttp, <code>http.trust.everything</code> now defaults to <code>false</code> instead of
+<code>true</code>, and the new <code>http.verify.hostnames</code> defaults to <code>true</code>. Fetches from
+hosts with an invalid certificate end as <code>FETCH_ERROR</code>, with the TLS exception
+in <code>fetch.exception</code>. For self-signed or expired certificates, set
+<code>http.trust.everything: true</code>. For a valid certificate issued to another host
+name, set <code>http.verify.hostnames: false</code>. Either setting stops credentials from
+being sent, as described in the next entry.</p>
+</li>
+<li>
+<p>With OkHttp, basic auth, credential headers and cookies are now sent only over
+HTTPS with the certificate and host name checks on. Credential headers are
+<code>Authorization</code>, <code>Proxy-Authorization</code>, <code>Cookie</code>, <code>X-Api-Key</code> and those listed
+in <code>http.credentials.headers</code>. To send credentials anyway, set
+<code>http.credentials.allow.insecure: true</code>.</p>
+</li>
+<li>
+<p>Basic auth is now sent only to the hosts listed in <code>http.basicauth.hosts</code>,
+and credential headers only to those listed in <code>http.custom.headers.hosts</code>,
+instead of every host.
+Crawls which set <code>http.basicauth.user</code> or credential headers in
+<code>http.custom.headers</code> must list their hosts, each subdomain separately. If a
+list is empty, those credentials are not sent and a warning is logged at
+startup.</p>
+</li>
+<li>
+<p><code>http.filter.ipaddress.exclude</code> now blocks loopback, private, link-local,
+multicast and other non-public addresses by default, for OkHttp and Playwright.
+With OkHttp, a blocked fetch ends as <code>FETCH_ERROR</code> and logs
+<code>Blocked connection to IP address</code>. To crawl an intranet or local servers,
+override the key, for instance with <code>""</code>. Setting only
+<code>http.filter.ipaddress.include</code> does not undo the default. An invalid rule now
+fails the topology at startup instead of being ignored. See
+<a href="configuration.html#_ip_address_filtering">IP Address Filtering</a>.</p>
+</li>
+<li>
+<p><code>protocols</code> now defaults to <code>http,https</code> instead of <code>http,https,file</code>. The
+querying spouts set stored URLs whose scheme is not listed to <code>ERROR</code>. To crawl
+a local corpus, add <code>file</code> before the first crawl with 4.0 and set the new
+<code>file.protocol.root</code>. Without <code>file.protocol.root</code>, <code>file:</code> URLs end as
+<code>FETCH_ERROR</code> and a warning starting with <code>Refusing to read</code> is logged.</p>
+</li>
+<li>
+<p><code>http.robots.content.limit</code> now defaults to 524288 bytes instead of no limit,
+so a robots.txt larger than 512 KiB is truncated. To read larger files, raise
+the limit. The value <code>-1</code>, which meant no limit in 3.x, now means the value of
+<code>http.content.limit</code>, 65536 bytes in the archetype configurations.</p>
+</li>
+<li>
+<p>With <code>http.allow.redirects: true</code>, OkHttp now runs each redirect hop through
+the URL filters and follows at most <code>http.allow.redirects.max</code> hops, 5 by
+default. To follow longer chains, raise <code>http.allow.redirects.max</code>.</p>
+</li>
+<li>
+<p>With <code>http.use.cookies: true</code>, a cookie without a <code>Domain</code> attribute is now
+sent only to the host which set it, and only when <code>protocol.set-cookie-origin</code>
+is present next to <code>protocol.set-cookie</code>. Add <code>protocol.set-cookie-origin</code>
+wherever <code>protocol.set-cookie</code> is listed in <code>metadata.transfer</code> or
+<code>metadata.persist</code>.</p>
+</li>
+<li>
+<p>A sitemap without <code>isSitemap</code> in its metadata, such as a seed, is now detected
+by its content only when the new <code>sitemap.sniffContent</code> is <code>true</code>. Otherwise
+the URLs it lists are not added. Set <code>isSitemap=true</code> in the metadata of such
+seeds, or set <code>sitemap.sniffContent: true</code>.</p>
+</li>
+<li>
+<p>A sitemap which fails to parse now ends as <code>FETCH_ERROR</code> instead of <code>ERROR</code>,
+and <code>isSitemap</code> is removed from its metadata. Records already set to <code>ERROR</code>
+are not changed.</p>
+</li>
+<li>
+<p>With <code>sitemap.discovery: true</code> and the <code>SitemapFilter</code> URL filter, as in the
+archetype configurations, redirect targets, including meta refreshes, on sites
+whose robots.txt lists a sitemap are now kept instead of being dropped, so more
+URLs are discovered.</p>
+</li>
+<li>
+<p>With Playwright, setting <code>http.proxy</code> no longer disables certificate
+validation. Behind a TLS-intercepting proxy, set
+<code>playwright.ignore.https.errors: true</code> or install the proxy CA in the browser
+image.</p>
+</li>
+<li>
+<p>When set, <code>fetcher.thread.timeout</code> now also applies to the robots.txt lookup.
+A lookup which times out is treated as failed, and the URLs of the host are
+fetched without robots.txt rules while the failure is cached, one hour by
+default with <code>robots.error.cache.spec</code>. Set the timeout above the time a
+robots.txt fetch takes. A value above <code>topology.message.timeout.secs</code> is lowered
+to it, and a warning is logged.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_parse_filters_and_xml">Parse filters and XML</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>The ParseFilters <code>org.apache.stormcrawler.parse.filter.XPathFilter</code>,
+<code>LDJsonParseFilter</code> and <code>LinkParseFilter</code> are removed. Remove their entries from
+<code>parsefilters.json</code> and add the classes of the same names in
+<code>org.apache.stormcrawler.jsoup</code> to <code>jsoupfilters.json</code>. The 3.x archetype
+configurations already list the jsoup <code>XPathFilter</code> and <code>LinkParseFilter</code>
+there.
+Custom ParseFilters are covered in
+<a href="#_parsefilters_without_a_dom">ParseFilters without a DOM</a>.</p>
+</li>
+<li>
+<p>Expressions of the removed <code>XPathFilter</code> must be rewritten for the jsoup one,
+which selects what to extract with a suffix of the expression instead of a
+wrapper function. <code>string(//X)</code> becomes <code>//X/tidyText()</code>, which returns one
+value per matching element instead of the first only. <code>serialize(//X)</code> becomes
+<code>//X/html()</code>, which returns the inner HTML of the element without its own
+tags. The suffixes <code>/allText()</code> and <code>/@attribute</code> are also
+available.</p>
+</li>
+<li>
+<p>The jsoup <code>XPathFilter</code> now compiles its expressions at startup with the JDK
+XPath engine. An invalid expression fails the topology instead of being logged
+for each page, and jsoup&#8217;s <code>W3CDom.XPathFactoryProperty</code> is ignored.</p>
+</li>
+<li>
+<p>The jsoup <code>XPathFilter</code> now skips blank values and tries the next expression
+for the same key. With the archetype configurations, an empty <code>&lt;title&gt;</code> falls
+back to the <code>title</code> meta tag, and blank descriptions or keywords are no longer
+stored.</p>
+</li>
+<li>
+<p><code>CommaSeparatedToMultivaluedMetadata</code>, which the archetype configurations
+apply to <code>parse.keywords</code>, now keeps at most 128 values per key and logs a
+warning when it drops more. To keep more, set its <code>maxTokens</code> parameter.</p>
+</li>
+<li>
+<p>Charset detection now reads the charset of the HTTP <code>Content-Type</code> header,
+which it missed in 3.x with the default <code>protocol.md.prefix</code>. When the header
+and the meta tag declare the same charset, it is used without detection. When
+only the header declares one, it guides the detection. When they differ, the
+meta tag guides it, as in 3.x. The decoded text of these pages can change.</p>
+</li>
+<li>
+<p><code>DebugParseFilter</code> is removed, with no replacement. Remove its entry from
+<code>parsefilters.json</code>.</p>
+</li>
+<li>
+<p>Core no longer depends on Xerces. Sitemaps, feeds and the XML-based documents
+parsed by Tika, such as OpenDocument files, now use the JDK parser. It fails on
+documents with many entity references, such as escaped ampersands in URLs. See
+<a href="configuration.html#_parsing">Parsing</a> for the JVM options that lift its
+limits.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_tika_4">Tika 4</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Tika 4 reads its configuration from JSON only. The default file is now
+<code>tika-config.json</code> instead of <code>tika-config.xml</code>.
+Convert a custom configuration as described in
+<a href="https://tika.apache.org/docs/4.0.x/migration-to-4x/migrating-to-4x.html">migrating to Tika 4</a>,
+and set its name with <code>parser.tika.config.file</code>. The <code>parse.tika.config.file</code>
+key of the 3.x archetype configurations was never read and can be removed. An
+invalid configuration fails the bolt at startup.</p>
+</li>
+<li>
+<p>The
+<a href="https://tika.apache.org/docs/4.0.x/migration-to-4x/metadata-changes-4x.html">metadata renames of Tika 4</a>
+change the keys which the ParserBolt stores with the prefix <code>parse.</code>. For
+example, <code>parse.resourceName</code> becomes <code>parse.tk:resource-name</code>. The <code>dc:*</code> keys
+are unchanged. Update <code>indexer.md.mapping</code>, filters and other code reading these
+keys. A wildcard mapping such as <code>parse.*</code> produces different field names. The
+<code>parse.title</code>, <code>parse.keywords</code> and <code>parse.description</code> keys of the archetype
+configurations come from the JSoupFilters, and their names are unchanged.</p>
+</li>
+<li>
+<p>The Ogg, Vorbis, Opus, FLAC, Speex and Theora parsers are now part of Tika. If
+a Tika configuration names the classes under <code>org.gagravarr.tika</code>, use the Tika
+parsers instead. They are registered as <code>ogg-parser</code>, <code>vorbis-parser</code>,
+<code>opus-parser</code>, <code>flac-parser</code>, <code>speex-parser</code> and <code>theora-parser</code>.</p>
+</li>
+<li>
+<p>Embedded documents are now parsed only when <code>parser.extract.embedded</code> is
+<code>true</code>. With the default <code>false</code>, their text no longer ends up in the parent
+document. To keep it, set <code>parser.extract.embedded: true</code>.</p>
+</li>
+<li>
+<p><code>parser.mimetype.whitelist</code> is now matched against the type detected from the
+content instead of the HTTP <code>Content-Type</code>. Content whose type cannot be
+detected is <code>application/octet-stream</code>, and it is skipped unless the whitelist
+includes it. To keep parsing such content, add <code>application/octet-stream</code> to the
+whitelist.</p>
+</li>
+<li>
+<p>The ParserBolt now also runs the JSoupFilters of <code>jsoup.filters.config.file</code>
+on the XHTML produced by Tika. The <code>XPathFilter</code> of the archetype
+configurations also sets <code>parse.title</code> for these documents when Tika reports a
+title.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_topologies">Topologies</h4>
+<div class="paragraph">
+<p>The querying spouts of the OpenSearch, Solr, SQL and URLFrontier modules now
+mark rows whose URL scheme is not in <code>protocols</code> as <code>ERROR</code>. They send them on
+the <code>status</code> stream. Connect the spout to the status updater on that stream, as
+the 4.0 archetype <code>crawler.flux</code> files do. Without it, these rows are queried
+again and again, and the spout logs a warning starting with
+<code>The status stream reached no component</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="yaml">  - <span class="string"><span class="content">from: &quot;spout&quot;</span></span>
+    <span class="key">to</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">status</span><span class="delimiter">&quot;</span></span>
+    <span class="key">grouping</span>:
+      <span class="key">type</span>: <span class="string"><span class="content">FIELDS</span></span>
+      <span class="key">args</span>: <span class="string"><span class="content">[&quot;url&quot;]</span></span>
+      <span class="key">streamId</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">status</span><span class="delimiter">&quot;</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In Java, the equivalent is
+<code>.fieldsGrouping("spout", Constants.StatusStreamName, new Fields("url"))</code> on the
+status updater bolt.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_stored_data">Stored data</h4>
+<div class="paragraph">
+<p>Some URLs and keys stored by 3.x get a different form in 4.0. Stored records
+are not rewritten. If a URL discovered again gets a different stored form or
+storage key, an additional record can be created and the URL may be fetched
+again. No configuration change is needed. The URLs affected are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>URLs with a query which <code>BasicURLNormalizer</code> rewrites because of an uppercase
+scheme or host, an IDN host or path escapes. The <code>?</code> and the query after it
+are now kept, instead of the <code>?</code> being escaped to <code>%3F</code> and the query becoming
+part of the path.</p>
+</li>
+<li>
+<p>URLs with a <code>/</code> in a query value, such as <code>?sid=01/10&amp;mode=thread</code>. The
+normalizer no longer turns the <code>&amp;</code> after the last <code>/</code> into a second <code>?</code>.</p>
+</li>
+<li>
+<p>URLs whose query contains <code>;</code>, when <code>removeHashes</code> is <code>true</code> or
+<code>queryElementsToRemove</code> is not empty. The archetype configurations set
+<code>removeHashes: true</code>. The query is now split on <code>&amp;</code> only, so <code>?a=1;b=2</code> is
+written as <code>?a=1%3Bb%3D2</code> instead of <code>?a=1&amp;b=2</code>. A parameter after a <code>;</code> is no
+longer removed.</p>
+</li>
+<li>
+<p>URLs whose host has uppercase letters, percent-escapes, a trailing dot or
+Unicode characters. The politeness queues, partition keys and robots.txt cache
+now use the host lowercased, percent-decoded, without the trailing dot and in
+punycode. With <code>opensearch.status.routing</code> or with URLFrontier, the next update
+of such a URL can be stored under the new key, next to the old record.</p>
+</li>
+<li>
+<p>URLs with a Unicode host. The OpenSearch <code>key</code> field and the value of
+<code>DomainParseFilter</code> are now in punycode. With <code>hostIDNtoASCII: true</code> in
+<code>BasicURLNormalizer</code>, as in the archetype configurations, URLs added after the
+setting was enabled are not affected.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The SQL <code>StatusUpdaterBolt</code> now writes the metadata column in an escaped form
+behind a <code>v1</code> marker. Rows written by 3.x are read as before, so no migration is
+needed. After a rollback to 3.x, a value written by 4.0 which contains a
+backslash, a tab, a line break or <code>=</code> is read with its escape sequence, for
+instance <code>a\=1</code> instead of <code>a=1</code>. If a rollback may be needed, back up the
+table before upgrading.</p>
+</div>
+<div class="paragraph">
+<p>With a wildcard mapping in <code>indexer.md.mapping</code>, such as <code>parse.*</code>, the SQL
+<code>IndexerBolt</code> now skips metadata keys which are not made of letters, digits and
+<code>_</code> only, and logs them, instead of failing the insert.</p>
+</div>
+<div class="paragraph">
+<p>The Solr <code>StatusUpdaterBolt</code> no longer replaces the record of a URL already in
+the <code>status</code> collection when the URL is discovered or injected again. Seeds
+injected again keep their status and <code>nextFetchDate</code>. To fetch known URLs
+again, change their <code>nextFetchDate</code> in the collection. This needs the
+<code>updateLog</code> of <code>solrconfig.xml</code>, which the <code>status</code> configset has had since
+3.5.0. A collection created from an older configset still has its records
+replaced.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_metrics_and_output_formats">Metrics and output formats</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>With Metrics V2, the status updater metrics <code>cache.hits</code> and <code>cache.misses</code>
+are now cumulative counters instead of values reset on every read. Dashboards
+which plotted their values must plot their rate instead, for instance with
+<code>rate()</code> in Prometheus. With Metrics V1 they are reported as a single <code>cache</code>
+metric, which the bundled metrics consumers flatten to <code>cache.hits</code> and
+<code>cache.misses</code>.</p>
+</li>
+<li>
+<p>Storm 3.2.0 ignores <code>storm.metrics.reporters</code>, and Nimbus logs a warning when
+a topology sets it. Rename it to <code>topology.metrics.reporters</code>. The Javadoc of
+the 3.x <code>MetricsReporter</code> classes of the OpenSearch, Solr and SQL modules used
+the old key.</p>
+</li>
+<li>
+<p>In WARC records, <code>WARC-Protocol</code> is now repeated for each value and uses
+lowercase identifiers, for example <code>tls/1.3</code> instead of <code>TLS_1_3</code>. The cipher
+suite is written to a new <code>WARC-Cipher-Suite</code> header. Line breaks in metadata
+values are replaced by spaces, and invalid keys in <code>warc.metadata.keys</code> are
+dropped with a warning. Tools which parse <code>WARC-Protocol</code> must accept a
+repeated header and lowercase values.</p>
+</li>
+<li>
+<p>The LLM text extraction of the AI module has a new default prompt. The
+extractor now keeps only the <code>&lt;content&gt;</code> element of a reply which has one and
+removes the markup outside fenced code blocks, whatever the prompt. The
+extracted text changes for every crawl which uses the module. See the
+<a href="https://github.com/apache/stormcrawler/blob/stormcrawler-4.0.0/external/ai/README.md">AI module README</a>
+for the prompt placeholders.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_removed_configuration_keys">Removed configuration keys</h4>
+<div class="paragraph">
+<p>These keys are no longer read and can be removed:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>parser.uppercase.element.names</code>, with no replacement.</p>
+</li>
+<li>
+<p><code>selenium.*</code>, replaced by the keys of the Playwright module.</p>
+</li>
+<li>
+<p><code>navigationfilters.config.file</code>. Playwright page actions are declared in
+<code>playwright.page.actions.config.file</code>.</p>
+</li>
+<li>
+<p><code>cloudsearch.*</code>, with no replacement.</p>
+</li>
+<li>
+<p><code>opensearch.sniff</code> and <code>opensearch.&lt;type&gt;.sniff</code>. List every node in
+<code>opensearch.&lt;type&gt;.addresses</code> instead, or put a load balancer in front of the
+cluster.</p>
+</li>
+<li>
+<p><code>opensearch.responseBufferSize</code> and <code>opensearch.&lt;type&gt;.responseBufferSize</code>,
+with no replacement.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The OpenSearch bolts and metrics consumers which write through
+<code>AsyncBulkProcessor</code> log a warning at startup when one of these <code>opensearch</code>
+keys is set.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_url_filters">URL filters</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>A URL filter which throws an exception now rejects the URL instead of letting
+it through. The log shows <code>URL filter &lt;class&gt; threw exception</code>.</p>
+</li>
+<li>
+<p>A <code>FastURLFilter</code> rule without a type now fails at startup with
+<code>FastURLFilter rule does not start with a known type</code>. Start each rule with
+<code>DenyPath</code>, <code>DenyPathQuery</code>, <code>AllowPath</code> or <code>AllowPathQuery</code>.</p>
+</li>
+<li>
+<p><code>HostURLFilter</code> now applies <code>ignoreOutsideDomain: true</code> also when
+<code>ignoreOutsideHost</code> is not set. Such a configuration drops outlinks to other
+domains. To keep them, remove <code>ignoreOutsideDomain</code>.</p>
+</li>
+<li>
+<p><code>SelfURLFilter</code> now compares the path and query of a link with those of the
+page case-sensitively. A link or redirect which differs from the page URL only
+in letter case, such as from <code>/a.html</code> to <code>/A.html</code>, is no longer dropped.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_custom_java_code">Custom Java code</h3>
+<div class="sect3">
+<h4 id="_parsefilters_without_a_dom">ParseFilters without a DOM</h4>
+<div class="paragraph">
+<p>ParseFilters no longer receive a DOM. The parse filters shipped with
+StormCrawler which used it are covered in
+<a href="#_parse_filters_and_xml">Parse filters and XML</a>.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>ParseFilter.filter</code> now takes <code>(String url, byte[] content, ParseResult parse)</code>.
+The <code>DocumentFragment</code> argument and <code>needsDOM()</code> are removed. Remove them from
+custom ParseFilters. Move logic which read the DOM to a JSoupFilter, which gets
+the jsoup document.</p>
+</li>
+<li>
+<p><code>DocumentFragmentBuilder</code>, the Tika module&#8217;s <code>DOMBuilder</code> and
+<code>RobotsTags.extractMetaTags(DocumentFragment)</code> are removed. Use the jsoup
+document, and <code>RobotsTags.extractMetaTags(String)</code> with the content of the
+robots meta tag.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_other_api_changes">Other API changes</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>The HttpClient protocol is removed. Port its subclasses to the OkHttp
+protocol.</p>
+</li>
+<li>
+<p>The Selenium module is removed. Rewrite custom NavigationFilters, for instance
+as Playwright page actions declared in <code>playwright.page.actions.config.file</code>.</p>
+</li>
+<li>
+<p><code>ParseResult.get(String)</code> is removed. Use <code>getOrCreate(String)</code> to add a
+sub-document or <code>getIfPresent(String)</code> to read one. The parser bolts no longer
+emit a sub-document whose content, text and metadata are all empty.</p>
+</li>
+<li>
+<p><code>CookieConverter.getCookies(String[], URL)</code> and the new overload which also
+takes the URL that set the cookies return immutable
+<code>org.apache.stormcrawler.util.CookieConverter.Cookie</code> records instead of
+HttpClient cookies. Update the cookie type import and use the record accessors
+<code>name()</code>, <code>value()</code>, <code>domain()</code>, <code>path()</code>, <code>secure()</code> and <code>expiry()</code>. The expiry
+is a <code>java.time.Instant</code>, or <code>null</code> for a session cookie.</p>
+</li>
+<li>
+<p>The OkHttp <code>HttpProtocol</code> no longer has
+<code>addHeadersToRequest(Request.Builder, Metadata)</code>. Subclasses which override it
+must override
+<code>addHeadersToRequest(Request.Builder, Metadata, boolean sendCredentials)</code>
+instead. An override of the old method without <code>@Override</code> still compiles, but
+StormCrawler no longer calls it.</p>
+</li>
+<li>
+<p>The static methods <code>WARCRecordFormat.getDigestSha1(byte[])</code> and
+<code>getDigestSha1(byte[], byte[])</code> are removed. Use the instance methods
+<code>getDigest(byte[])</code> and <code>getDigest(byte[], byte[])</code>. They apply the algorithm
+passed to the constructor, SHA-1 by default.</p>
+</li>
+<li>
+<p><code>CharsetIdentification.getCharset</code> and <code>getCharsetFast</code> now require a fourth
+argument: the prefix of the response headers in the metadata, with its
+separator. Pass <code>"protocol."</code>, for instance, or <code>""</code> when the headers are not
+prefixed.</p>
+</li>
+<li>
+<p><code>URLBuffer.getInstance(Map)</code> and the static
+<code>Configurable.configure(Map, JsonNode, Class, String)</code> are removed. Use
+<code>URLBuffer.createInstance(Map)</code> and
+<code>Configurable.createConfiguredInstance(String, Class, Map, JsonNode)</code>, which
+takes the name of the calling class first.</p>
+</li>
+<li>
+<p>Code using Tika classes directly must follow the
+<a href="https://tika.apache.org/docs/4.0.x/migration-to-4x/migrating-to-4x.html">Tika 4 migration guide</a>.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_dependencies_no_longer_provided">Dependencies no longer provided</h4>
+<div class="paragraph">
+<p>Core no longer depends on the HttpComponents libraries HttpClient and HttpCore.
+The few classes it used are copied into
+<code>org.apache.stormcrawler.internal.httpcomponents</code>, which is for internal use
+only. Code which uses HttpComponents classes and relied on core to bring them
+in must declare its own dependency. An example is <code>org.apache.http.HttpHeaders</code> from HttpCore 4, for
+the names of the response headers in the metadata.</p>
+</div>
+<div class="paragraph">
+<p>These dependencies are no longer brought in transitively:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Xerces</p>
+</li>
+<li>
+<p>the OpenSearch REST clients, sniffer and server jar</p>
+</li>
+<li>
+<p>Selenium</p>
+</li>
+<li>
+<p>the HBase client libraries, through the WARC module</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Code importing their classes must declare its own dependency.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2026-11-13 15:39:53 +0100
+</div>
+</div>
+<script>(function(){var links=[].slice.call(document.querySelectorAll('#toc a[href^="#"]'));if(!links.length)return;var map=links.map(function(a){var t=document.getElementById(decodeURIComponent(a.getAttribute('href')).slice(1));return t?{a:a,t:t}:null}).filter(Boolean);function on(){var y=window.pageYOffset+90,cur=map[0];map.forEach(function(m){if(m.t.offsetTop<=y)cur=m});links.forEach(function(a){a.classList.toggle('active',cur&&a===cur.a)})}window.addEventListener('scroll',on,{passive:true});on();})();</script>
+<script>(function(){if(!navigator.clipboard)return;document.querySelectorAll('.listingblock pre').forEach(function(pre){var b=document.createElement('button');b.className='sc-copy';b.textContent='copy';b.addEventListener('click',function(){navigator.clipboard.writeText(pre.textContent).then(function(){b.textContent='copied \u26A1';setTimeout(function(){b.textContent='copy'},1500)})});pre.closest('.listingblock').appendChild(b)})})();</script>
+</body>
+</html>

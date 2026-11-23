@@ -36,12 +36,13 @@
 [data-theme="dark"] .vermenu{box-shadow:0 8px 28px rgba(0,0,0,.5)}
 </style>
 <header class="sc-docheader">
-<a href="/"><img class="logo-l" src="/img/logo.png" alt="Apache StormCrawler"><img class="logo-d" src="/img/logo-dark.svg" alt="Apache StormCrawler"></a>
+<a href="/"><img class="logo-l" src="/img/logo-light.svg" alt="Apache StormCrawler"><img class="logo-d" src="/img/logo-dark.svg" alt="Apache StormCrawler"></a>
 <a class="crumb crumb-sep" href="/docs/">Documentation</a>
 <details class="verwrap">
 <summary>v <b>latest</b> &#9662;</summary>
 <div class="vermenu">
 <a class="cur" href="/docs/latest/configuration.html">latest <span>current</span></a>
+<a href="/docs/4.0.0/configuration.html">4.0.0</a>
 <a href="/docs/3.7.0/configuration.html">3.7.0</a>
 <a href="/docs/3.6.0/configuration.html">3.6.0</a>
 <a href="/docs/3.5.1/configuration.html">3.5.1</a>
@@ -50,7 +51,7 @@
 </details>
 <nav class="right">
 <a href="/">Website</a>
-<a href="https://javadoc.io/doc/org.apache.stormcrawler/stormcrawler-core/3.7.0" target="_blank" rel="noopener">Javadoc &#8599;</a>
+<a href="https://javadoc.io/doc/org.apache.stormcrawler/stormcrawler-core/4.0.0" target="_blank" rel="noopener">Javadoc &#8599;</a>
 <a href="https://github.com/apache/stormcrawler" target="_blank" rel="noopener">GitHub &#8599;</a>
 </nav>
 </header>
@@ -121,7 +122,10 @@ Transparent identification is a fundamental part of ethical web crawling.</p>
 </ul>
 </div>
 <div class="paragraph">
-<p>Whereas StormCrawler used to provide a default value for these, this is not the case since version 2.11 and you will now be asked to provide a value.</p>
+<p>Only <code>http.agent.name</code> is required. Empty elements are left out of the string, which has the form <code>name/version (description; url; email)</code>.</p>
+</div>
+<div class="paragraph">
+<p>StormCrawler has not provided default values for these since version 2.11.</p>
 </div>
 <div class="paragraph">
 <p>You can specify the user agent verbatim with the config <code>http.agent</code> but you will still need to provide a <code>http.agent.name</code> for parsing robots.txt files.</p>
@@ -157,7 +161,7 @@ Allow: /publications/</pre>
 <div class="sect2">
 <h3 id="_proxy">Proxy</h3>
 <div class="paragraph">
-<p>StormCrawler&#8217;s proxy system is built on top of the <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/proxy/SCProxy.java">SCProxy</a> class and the <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/proxy/ProxyManager.java">ProxyManager</a> interface. Every proxy used in the system is formatted as a <strong>SCProxy</strong>. The <strong>ProxyManager</strong> implementations handle the management and delegation of their internal proxies. At the call of <code>Protocol#getProtocolOutput()</code>, the <code>ProxyManager.getProxy()</code> is called to retrieve a proxy for the individual request.</p>
+<p>StormCrawler&#8217;s proxy system is built on top of the <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-4.0.0/core/src/main/java/org/apache/stormcrawler/proxy/SCProxy.java">SCProxy</a> class and the <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-4.0.0/core/src/main/java/org/apache/stormcrawler/proxy/ProxyManager.java">ProxyManager</a> interface. Every proxy used in the system is formatted as a <strong>SCProxy</strong>. The <strong>ProxyManager</strong> implementations handle the management and delegation of their internal proxies. At the call of <code>Protocol#getProtocolOutput()</code>, the <code>ProxyManager.getProxy()</code> is called to retrieve a proxy for the individual request.</p>
 </div>
 <div class="paragraph">
 <p>The <strong>ProxyManager</strong> interface can be implemented in a custom class to create custom logic for proxy management and load balancing. When <code>http.proxy.manager</code> is omitted, the core HTTP protocol implementations create <strong>SingleProxyManager</strong> only if <code>http.proxy.host</code> is configured. To use <strong>SingleProxyManager</strong> with only a full <code>http.proxy</code> connection string, or to use <strong>MultiProxyManager</strong> or custom implementations, pass the class path and name via the config parameter <code>http.proxy.manager</code>:</p>
@@ -173,7 +177,7 @@ Allow: /publications/</pre>
 <div class="ulist">
 <ul>
 <li>
-<p><a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/proxy/SingleProxyManager.java">SingleProxyManager</a>
+<p><a href="https://github.com/apache/stormcrawler/blob/stormcrawler-4.0.0/core/src/main/java/org/apache/stormcrawler/proxy/SingleProxyManager.java">SingleProxyManager</a>
 Manages a single proxy passed by the backwards compatible proxy fields in the configuration:</p>
 <div class="literalblock">
 <div class="content">
@@ -189,7 +193,7 @@ http.proxy.pass (optional)
 </div>
 </li>
 <li>
-<p><a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/proxy/MultiProxyManager.java">MultiProxyManager</a>
+<p><a href="https://github.com/apache/stormcrawler/blob/stormcrawler-4.0.0/core/src/main/java/org/apache/stormcrawler/proxy/MultiProxyManager.java">MultiProxyManager</a>
 Manages multiple proxies passed through a TXT file. The file should contain connection strings for all proxies including the protocol and authentication (if needed). The file supports comment lines (<code>//</code> or <code>#</code>) and empty lines. The file path should be passed via the config at the below field. The TXT file must be available to all nodes participating in the topology:</p>
 <div class="literalblock">
 <div class="content">
@@ -270,7 +274,7 @@ Selects the proxy with the least amount of usage. This is performed lazily for s
 <div class="sect3">
 <h4 id="_metadatatransfer">MetadataTransfer</h4>
 <div class="paragraph">
-<p>The class <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/util/MetadataTransfer.java">MetadataTransfer</a> is an important part of the framework and is used in key parts of a pipeline:</p>
+<p>The class <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-4.0.0/core/src/main/java/org/apache/stormcrawler/util/MetadataTransfer.java">MetadataTransfer</a> is an important part of the framework and is used in key parts of a pipeline:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -310,10 +314,10 @@ Selects the proxy with the least amount of usage. This is performed lazily for s
 </ul>
 </div>
 <div class="paragraph">
-<p>The former is used when creating <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/parse/Outlink.java">Outlinks</a>, i.e., in the parsing bolts but also for handling redirections in the [[FetcherBolt(s)]].</p>
+<p>The former is used when creating <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-4.0.0/core/src/main/java/org/apache/stormcrawler/parse/Outlink.java">Outlinks</a>, i.e., in the parsing bolts but also for handling redirections in the [[FetcherBolt(s)]].</p>
 </div>
 <div class="paragraph">
-<p>The latter is used by extensions of the <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/persistence/AbstractStatusUpdaterBolt.java">AbstractStatusUpdaterBolt</a> class to determine which <strong>Metadata</strong> should be persisted.</p>
+<p>The latter is used by extensions of the <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-4.0.0/core/src/main/java/org/apache/stormcrawler/persistence/AbstractStatusUpdaterBolt.java">AbstractStatusUpdaterBolt</a> class to determine which <strong>Metadata</strong> should be persisted.</p>
 </div>
 <div class="paragraph">
 <p>The behavior of the default <strong>MetadataTransfer</strong> class is driven by configuration only. It has the following options:</p>
@@ -321,10 +325,10 @@ Selects the proxy with the least amount of usage. This is performed lazily for s
 <div class="ulist">
 <ul>
 <li>
-<p><code>metadata.transfer</code>:: list of metadata key values to filter or transfer to the outlinks. Please see the corresponding comments in <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/resources/crawler-default.yaml">crawler-default.yaml</a></p>
+<p><code>metadata.transfer</code>:: list of metadata key values to filter or transfer to the outlinks. Please see the corresponding comments in <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-4.0.0/core/src/main/resources/crawler-default.yaml">crawler-default.yaml</a></p>
 </li>
 <li>
-<p><code>metadata.persist</code>:: list of metadata key values to persist in the status storage. Please see the corresponding comments in <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/resources/crawler-default.yaml">crawler-default.yaml</a></p>
+<p><code>metadata.persist</code>:: list of metadata key values to persist in the status storage. Please see the corresponding comments in <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-4.0.0/core/src/main/resources/crawler-default.yaml">crawler-default.yaml</a></p>
 </li>
 <li>
 <p><code>metadata.track.path</code>:: whether to track the URL path or not. Boolean value, true by default.</p>
@@ -389,7 +393,7 @@ as an ERROR. If true: the fetcher caps its local delay and emits the requested d
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">fetcher.max.urls.in.queues</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">-1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Limits the number of URLs that can be stored in a fetch queue. -1 disables the limit.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Maximum number of URLs held by the FetcherBolt: URLs being fetched plus URLs waiting in all its queues. The bolt stops taking tuples while the limit is reached. -1 disables the limit.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">fetcher.maxThreads.host/domain/ip</p></td>
@@ -440,12 +444,22 @@ is defined.</p></td>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">fetcher.timeout.queue</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">-1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Maximum wait time (seconds) for items in the queue. -1 disables timeout.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Maximum time (seconds) a URL can wait in the queue, checked after robots.txt processing. A URL which waited longer is acked without being fetched and without a status update for that URL, and the <code>queue.timeout</code> counter is incremented. -1 disables the check.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">fetcher.thread.timeout</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hard deadline (seconds) for each protocol call made for a URL, independent of the protocol&#8217;s own socket timeouts: the robots.txt lookup, each redirect it follows (up to 5, each a call of its own), and the page fetch, whose redirect chain shares a single deadline. Worst case for one URL is therefore several times the value. -1 disables it. The deadline never exceeds <code>topology.message.timeout.secs</code>. With the default okhttp protocol the deadline is applied to the HTTP call itself: on expiry the call is cancelled, the socket closed and the URL reported as <code>FETCH_ERROR</code> with <code>fetch.exception</code> "Socket timeout fetching"; if <code>http.content.partial.as.trimmed</code> is on, content already received is kept instead and flagged as trimmed for "time". One step escapes the cancellation: a DNS lookup is synchronous and cannot be interrupted, so a slow resolver holds the fetcher thread past the deadline until it returns, at which point the timeout is reported. Protocols which do not enforce the deadline themselves (see <code>Protocol.supportsFetchTimeout(url, metadata)</code>, resolved per URL by <code>DelegatorProtocol</code>) run the call on a helper thread which is abandoned on timeout. On both paths a robots.txt lookup which times out lets the page be fetched without rules and is cached in the robots error cache like any failed lookup (see <code>Protocol.robotRulesTimedOut(url)</code>), so later URLs of the host do not each wait for another deadline. The <code>fetch.timeout</code> counter counts every timeout, <code>fetch.deadline</code> only the ones where this deadline fired, <code>robots.timeout</code> the lookups abandoned on a helper thread.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">fetcher.thread.timeout.helpers</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2 x fetcher.threads.number (2 for SimpleFetcherBolt)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Maximum number of helper threads per bolt instance for the abandoned fetches above. Threads are created on demand and released after a minute idle. When every helper is busy the URL never reaches the network: it is acked without a status, like a URL which waited too long in the queue, so that the spout retries it later, and the <code>fetch.helper.rejected</code> counter is incremented. In <code>FetcherBolt</code> the queue of the URL is backed off exponentially rather than made ready again at once: its own crawl delay (at least 1 s), doubled at each consecutive rejection, capped by <code>fetcher.max.crawl.delay</code> (30 s if negative) but never below the queue&#8217;s own delay, spread with equal jitter (between half the value and the value), and reset by any fetch of the queue that runs. Helpers are shared by all hosts, so a host that never answers can make fetches of other hosts be deferred this way until its helpers time out; the <code>fetchhelpers</code> gauge shows how many are busy.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">fetcherbolt.queue.debug.filepath</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">""</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Path to a debug log (e.g. /tmp/fetcher-dump-{port}).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Path of a trigger file on the worker, <code>{port}</code> being replaced by the worker port (e.g. /tmp/fetcher-dump-{port}). When the file exists, the FetcherBolt logs the content of its queues at the next tick and deletes the file.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">http.agent.description</p></td>
@@ -473,6 +487,11 @@ is defined.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Version in User-Agent header.</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">http.basicauth.hosts</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hosts the Basic Authentication credentials of <code>http.basicauth.user</code> are sent to, as a list or a comma-separated string. Host names or IP addresses (IPv6 with or without brackets) without scheme, port, path or wildcard, matched exactly and case-insensitively against the host of each request, robots.txt fetches and redirect targets included; subdomains are not included and have to be listed separately. <strong>Breaking change in 4.0.0:</strong> the credentials used to be sent to every host; if this is empty they are not sent at all and a warning is logged at startup.</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">http.basicauth.password</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Password for http.basicauth.user.</p></td>
@@ -480,7 +499,7 @@ is defined.</p></td>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">http.basicauth.user</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Username for Basic Authentication.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Username for Basic Authentication. Only sent to the hosts listed in <code>http.basicauth.hosts</code>.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">http.content.limit</p></td>
@@ -491,9 +510,7 @@ is defined.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">http.protocol.implementation</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">org.apache.stormcrawler.protocol.okhttp.HttpProtocol</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">HTTP Protocol
-implementation. Note: the Apache HttpClient implementation
-(<code>org.apache.stormcrawler.protocol.httpclient.HttpProtocol</code>) is <strong>deprecated</strong> and will be removed in
-the next major release.</p></td>
+implementation.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">http.proxy</p></td>
@@ -543,7 +560,7 @@ the next major release.</p></td>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">http.retry.on.connection.failure</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">(OkHttp only) Retry fetching on connection failure. See <a href="https://square.github.io/okhttp/5.x/okhttp/okhttp3/-ok-http-client/-builder/retry-on-connection-failure.html">OkHttp docs</a>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">(OkHttp only) Retry fetching on connection failure. See <a href="https://okhttp.org/okhttp-connection-recovery/">OkHttp docs</a>.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">http.robots.403.allow</p></td>
@@ -562,8 +579,8 @@ the next major release.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">http.robots.content.limit</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Maximum bytes to fetch for robots.txt. -1 uses http.content.limit.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">524288</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Maximum bytes to fetch for robots.txt. May be larger than <code>http.content.limit</code>, so that a robots.txt is read in full even where pages are truncated. Set to -1 to use <code>http.content.limit</code> instead.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">http.robots.file.skip</p></td>
@@ -581,9 +598,14 @@ the next major release.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Ignore robots directives from HTML meta tags.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">http.skip.robots</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">http.robots.redirect.crossorigin.allow</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Deprecated (replaced by http.robots.file.skip).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Follow a robots.txt redirect pointing at a different scheme, host or port than the URL it was reached from. Redirects to schemes other than http and https are never followed. A redirect which only replaces http with https while staying on the same host and port is always followed, whatever this is set to. When enabled, the robots.txt is re-fetched from the host named in the <code>Location</code> header, for up to 5 hops, and each of these requests carries the headers configured through <code>http.custom.headers</code>, except for credential headers if the host is not listed in <code>http.custom.headers.hosts</code>, and those of <code>http.basicauth.*</code> if the host is listed in <code>http.basicauth.hosts</code>, as any other request does; see <code>http.filter.ipaddress.exclude</code> to restrict the addresses those fetches may reach.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">http.robots.redirect.refused.allow</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Allow crawling when a robots.txt redirect was not followed because of <code>http.robots.redirect.crossorigin.allow</code>. If false, nothing is crawled on that host until the redirect is followed or this is set to true.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">robots.noFollow.strict</p></td>
@@ -603,15 +625,13 @@ the next major release.</p></td>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">http.use.cookies</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Use cookies in subsequent requests.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Use cookies in subsequent requests. Requires <code>protocol.set-cookie</code> and <code>protocol.set-cookie-origin</code> in <code>metadata.transfer</code>.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">https.protocol.implementation</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">org.apache.stormcrawler.protocol.okhttp.HttpProtocol</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">HTTPS Protocol
-implementation. Note: the Apache HttpClient implementation
-(<code>org.apache.stormcrawler.protocol.httpclient.HttpProtocol</code>) is <strong>deprecated</strong> and will be removed in
-the next major release.</p></td>
+implementation.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">partition.url.mode</p></td>
@@ -620,8 +640,8 @@ the next major release.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">protocols</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">http,https,file</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Supported protocols.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">http,https</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Supported protocols. The <code>file</code> scheme is not enabled by default; a crawl of a local corpus has to add it explicitly and confine reads with <code>file.protocol.root</code>.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">redirections.allowed</p></td>
@@ -631,12 +651,22 @@ the next major release.</p></td>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">http.allow.redirects</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">(OkHttp only) Follow HTTP redirects immediately in the HTTP protocol client. Note: if followed immediately, redirect target URLs are not emitted to the status stream, are not filtered, not deduplicated, and not checked against robots.txt.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">(OkHttp only) Follow HTTP redirects immediately in the HTTP protocol client. Note: if followed immediately, redirect target URLs are not emitted to the status stream, are not deduplicated and not checked against robots.txt, but each target runs through the URL filter chain before the hop is taken (up to <code>http.allow.redirects.max</code> hops; the final URL is recorded in the response metadata as <code>_redirectedTo</code>; credentials are not carried to another origin or to a server which is not authenticated, e.g. after an https to http downgrade).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">http.allow.redirects.max</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">(OkHttp only) Maximum number of redirect hops followed when <code>http.allow.redirects</code> is enabled. A chain which does not end within this many hops returns its last redirect response, which is handled like a redirect that is not followed immediately.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">sitemap.discovery</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Enable automatic sitemap discovery.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">stormcrawler.metrics.version</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">v1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Storm metrics API used by StormCrawler components: <code>v1</code> (legacy), <code>v2</code> (V2 metrics API) or <code>both</code>.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">urlbuffer.class</p></td>
@@ -666,6 +696,11 @@ the next major release.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">file.protocol.implementation</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">org.apache.stormcrawler.protocol.file.FileProtocol</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Protocol implementation for file:// URLs.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">file.protocol.root</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Directory that FileProtocol reads are confined to (used when the <code>file</code> scheme is enabled). Only paths canonicalising below this directory are served; everything else, including symlinks escaping it, returns 403, and a file URL carrying a host component is refused. Without it the file scheme serves nothing.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">file.encoding</p></td>
@@ -710,7 +745,12 @@ the next major release.</p></td>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">http.custom.headers</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Custom HTTP headers.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Custom HTTP headers. Credential headers (see <code>http.credentials.headers</code>) are only sent to the hosts listed in <code>http.custom.headers.hosts</code>, the other headers to every host.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">http.custom.headers.hosts</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hosts the credential headers of <code>http.custom.headers</code> are sent to, with the same syntax and matching as <code>http.basicauth.hosts</code> and independent of it. On a host listed in both, an <code>Authorization</code> header of <code>http.custom.headers</code> replaces the one of <code>http.basicauth.<strong></code>. *Breaking change in 4.0.0:</strong> the credential headers used to be sent to every host; if this is empty they are not sent at all and a warning is logged at startup.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">http.accept</p></td>
@@ -732,76 +772,67 @@ header.</p></td>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">http.filter.ipaddress.include</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">(OkHttp only) Comma-separated list (or YAML list) of allowed IP ranges. If empty, all addresses are allowed unless excluded. See <a href="#IP Address Filtering">[IP Address Filtering]</a>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">(OkHttp and Playwright) Comma-separated list (or YAML list) of allowed IP ranges. If empty, all addresses are allowed unless excluded. See <a href="#_ip_address_filtering">IP Address Filtering</a>.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">http.filter.ipaddress.exclude</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">(OkHttp only) Comma-separated list (or YAML list) of blocked IP ranges. See <a href="#IP Address Filtering">[IP Address Filtering]</a>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">localhost, sitelocal, linklocal, anylocal, multicast, 100.64.0.0/10, 0.0.0.0/8, fc00::/7, ::/128</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">(OkHttp and Playwright) Comma-separated list (or YAML list) of blocked IP ranges. Set to <code>""</code> to crawl private address space. See <a href="#_ip_address_filtering">IP Address Filtering</a>.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">http.trust.everything</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">(OkHttp only) If true, accept any TLS certificate, including self-signed, expired or otherwise invalid ones. The servers are then not authenticated: anyone able to answer for the host name receives everything sent to them. Credentials (basic auth, credential headers, cookies) are withheld from cleartext http:// requests and from https:// requests on such connections unless <code>http.credentials.allow.insecure</code> is set to true.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">http.verify.hostnames</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">If true, trust all SSL/TLS connections.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">(OkHttp only) If true, check that the certificate presented by the server matches the host name contacted. Independent of <code>http.trust.everything</code>: a valid certificate for a different name is accepted when this is false. Credentials are then withheld unless <code>http.credentials.allow.insecure</code> is set to true.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">navigationfilters.config.file</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">JSON config for NavigationFilter (used by the Selenium protocol module).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">http.credentials.allow.insecure</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">(OkHttp only) If true, send credentials (basic auth, credential headers, cookies) even on connections which do not authenticate the server: cleartext http:// urls and, when <code>http.trust.everything</code> is true or <code>http.verify.hostnames</code> is false, https:// urls as well. Redirect hops to another origin (scheme, host or port) never carry them.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">selenium.addresses</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">WebDriver server addresses.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">selenium.capabilities</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Desired WebDriver capabilities
-.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">selenium.delegated.protocol</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Delegated protocol for selective Selenium usage.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">selenium.implicitlyWait</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">WebDriver element search timeout.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">selenium.instances.num</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Number of instances per WebDriver connection.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">selenium.pageLoadTimeout</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">WebDriver page load timeout.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">selenium.setScriptTimeout</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">WebDriver script execution timeout.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">http.credentials.headers</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">authorization, proxy-authorization, cookie, x-api-key</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">(OkHttp only) Header names (case-insensitive) which carry credentials and are therefore withheld from requests to servers which were not authenticated. Applies to the headers configured with <code>http.custom.headers</code> and to headers set by request. Names given here are added to the four defaults, which are always treated as credentials.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">topology.message.timeout.secs</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">OKHTTP message timeout.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">30 (Storm default)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Storm key. OkHttp uses it as the timeout of a whole call, and <code>fetcher.thread.timeout</code> is capped to it.</p></td>
 </tr>
 </tbody>
 </table>
+<div class="sect4">
+<h5 id="_ip_address_filtering">IP Address Filtering</h5>
 <div class="paragraph">
-<p>[[IP Address Filtering]]
-===== IP Address Filtering</p>
+<p>The OkHttp protocol implementation (<code>org.apache.stormcrawler.protocol.okhttp.HttpProtocol</code>) limits
+or blocks connections to IP address ranges. Because a DNS entry of an arbitrary host name may resolve
+to a private or loopback address, filtering URLs is not sufficient to prevent information leakage to
+a public search index or web archive. The filtering therefore happens at the protocol level, once the
+IP address is known.</p>
 </div>
 <div class="paragraph">
-<p>The OkHttp protocol implementation (<code>org.apache.stormcrawler.protocol.okhttp.HttpProtocol</code>) can
-optionally limit or block connections to IP address ranges. Because a DNS entry of an arbitrary host
-name may resolve to a private or loopback address, filtering URLs is not sufficient to prevent
-information leakage to a public search index or web archive. The filtering therefore happens at the
-protocol level, once the IP address is known.</p>
+<p>By default, loopback, private, link-local, unspecified and multicast addresses are blocked, as well as
+carrier grade NAT (<code>100.64.0.0/10</code>), <code>0.0.0.0/8</code> and IPv6 unique local addresses (<code>fc00::/7</code>). To
+crawl an intranet, override <code>http.filter.ipaddress.exclude</code>; setting only
+<code>http.filter.ipaddress.include</code> does not undo the default, because exclude rules win.</p>
+</div>
+<div class="paragraph">
+<p>Fetches through a proxy are not filtered. The proxy resolves the target host and connects to it, so
+the protocol only sees the address of the proxy, which may well be private. What the fetcher can
+reach through a proxy is then decided by the egress rules of the proxy.</p>
+</div>
+<div class="paragraph">
+<p>The Playwright protocol (<code>org.apache.stormcrawler.protocol.playwright.HttpProtocol</code>) applies the same
+rules to the requests of the page, its subresources and popups, and aborts the rejected ones.
+Service workers are blocked while the filter is active, as their requests cannot be intercepted.
+Redirect hops and WebSocket connections are not checked. The host is resolved separately from the
+browser, so short-lived DNS records or a remote browser using another resolver can lead to a
+different address.</p>
 </div>
 <div class="paragraph">
 <p>Two properties control the behaviour:</p>
@@ -835,19 +866,36 @@ blocked, even if it also matches an include rule.</p>
 <li>
 <p><code>sitelocal</code> — matches any site-local address (<code>InetAddress.isSiteLocalAddress()</code>)</p>
 </li>
+<li>
+<p><code>linklocal</code> — matches any link-local address (<code>InetAddress.isLinkLocalAddress()</code>), i.e. <code>169.254.0.0/16</code>
+and <code>fe80::/10</code></p>
+</li>
+<li>
+<p><code>anylocal</code> — matches the wildcard address (<code>InetAddress.isAnyLocalAddress()</code>)</p>
+</li>
+<li>
+<p><code>multicast</code> — matches any multicast address (<code>InetAddress.isMulticastAddress()</code>)</p>
+</li>
 </ul>
 </div>
 <div class="paragraph">
-<p>For example, to block crawling of localhost and private address spaces:</p>
+<p>For example, to crawl an intranet in <code>10.0.0.0/8</code> and nothing else:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="yaml"><span class="key">http.filter.ipaddress.exclude</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">localhost,sitelocal</span><span class="delimiter">&quot;</span></span></code></pre>
+<pre class="CodeRay highlight"><code data-lang="yaml"><span class="key">http.filter.ipaddress.exclude</span>: <span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span>
+<span class="key">http.filter.ipaddress.include</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">10.0.0.0/8</span><span class="delimiter">&quot;</span></span></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>When a connection to a blocked address is attempted, the fetch fails with an <code>IOException</code> and a
-warning is logged. If neither property is set, no IP filtering is performed.</p>
+<p><code>sitelocal</code> follows the JDK and covers <code>10.0.0.0/8</code>, <code>172.16.0.0/12</code> and <code>192.168.0.0/16</code> only. Carrier
+grade NAT (<code>100.64.0.0/10</code>) and IPv6 unique local addresses (<code>fc00::/7</code>) have no keyword and are added
+as CIDR blocks when they are also to be blocked.</p>
+</div>
+<div class="paragraph">
+<p>When a connection to a blocked address is attempted, a warning is logged. With OkHttp the fetch
+fails with an <code>IOException</code>. With Playwright the request is aborted: a blocked page fails the fetch,
+a blocked subresource is missing from the rendered page. If both properties are empty, e.g. <code>http.filter.ipaddress.exclude: ""</code> without include rules, no IP filtering is performed.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -862,6 +910,7 @@ effectively disabled for proxied fetches.
 </td>
 </tr>
 </table>
+</div>
 </div>
 </div>
 <div class="sect3">
@@ -927,11 +976,9 @@ effectively disabled for proxied fetches.
 </table>
 <div class="paragraph">
 <p>Note: <code>indexer.md.docid</code> is never used raw: the matching value is passed through SHA-256
-(the same digest used for the default URL-based ID), except for CloudSearch, whose
-<code>CloudSearchIndexerBolt</code> re-digests it with SHA-512 via <code>CloudSearchUtils.getID</code> to satisfy
-CloudSearch&#8217;s ID constraints. It is only honoured by backends whose bolts call
-<code>AbstractIndexerBolt#getDocumentID</code> under the hood: the OpenSearch and OpenSearch-Java
-<code>IndexerBolt</code>/<code>DeletionBolt</code> pairs, and the CloudSearch <code>CloudSearchIndexerBolt</code>. The Solr and
+(the same digest used for the default URL-based ID). It is only honoured by backends whose
+bolts call <code>AbstractIndexerBolt#getDocumentID</code> under the hood: the OpenSearch
+<code>IndexerBolt</code>/<code>DeletionBolt</code> pair. The Solr and
 SQL indexers build their document/row key directly from the URL and never call
 <code>getDocumentID()</code>, so this setting is silently ignored for those two backends.</p>
 </div>
@@ -940,7 +987,7 @@ SQL indexers build their document/row key directly from the URL and never call
 <h4 id="_status_persistence">Status Persistence</h4>
 <div class="paragraph">
 <p>This refers to persisting the status of a URL (e.g. ERROR, DISCOVERED etc.) along with something like a <code>nextFetchDate</code>
-that is being calculated by a <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/persistence/DefaultScheduler.java">Scheduler</a>.</p>
+that is being calculated by a <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-4.0.0/core/src/main/java/org/apache/stormcrawler/persistence/DefaultScheduler.java">Scheduler</a>.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -983,7 +1030,7 @@ that is being calculated by a <a href="https://github.com/apache/stormcrawler/bl
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">status.updater.cache.spec</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">maximumSize=10000, expireAfterAccess=1h</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">maximumSize=1000000,expireAfterAccess=1h</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Cache specification for the status updater.</p></td>
 </tr>
 <tr>
@@ -995,6 +1042,11 @@ that is being calculated by a <a href="https://github.com/apache/stormcrawler/bl
 <td class="tableblock halign-left valign-top"><p class="tableblock">status.updater.use.cache</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Whether to use cache to avoid re-persisting URLs.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">status.updater.normalise.hosts</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Normalise the host component of discovered URLs (percent-decoded, lowercased, trailing dot removed) so that aliases of one server are stored once, share a politeness queue and a robots.txt fetch. Off by default: document ids are hashed from the URL, so enabling it re-discovers aliases already stored in raw form as a second, bounded record.</p></td>
 </tr>
 </tbody>
 </table>
@@ -1049,6 +1101,11 @@ that is being calculated by a <a href="https://github.com/apache/stormcrawler/bl
 <td class="tableblock halign-left valign-top"><p class="tableblock">Try to detect feeds automatically.</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">jsoup.filters.config.file</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Path to JSON config defining the JSoupFilters used by JSoupParserBolt. See <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-4.0.0/archetype/src/main/resources/archetype-resources/src/main/resources/jsoupfilters.json">default jsoupfilters.json</a>.</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">jsoup.treat.non.html.as.error</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">If true, non-HTML content is treated as an error by JSoupParserBolt. Note that <code>text/plain</code> is always handled directly (the content is used as the text) and never treated as an error. Its stored text honors <code>textextractor.no.text</code> and is capped at <code>textextractor.skip.after</code>; the raw fetched size is bounded by <code>http.content.limit</code>.</p></td>
@@ -1056,7 +1113,7 @@ that is being calculated by a <a href="https://github.com/apache/stormcrawler/bl
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">parsefilters.config.file</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">parsefilters.json</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Path to JSON config defining ParseFilters. See <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/archetype/src/main/resources/archetype-resources/src/main/resources/parsefilters.json">default parsefilters.json</a>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Path to JSON config defining ParseFilters. See <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-4.0.0/archetype/src/main/resources/archetype-resources/src/main/resources/parsefilters.json">default parsefilters.json</a>.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">parser.emitOutlinks</p></td>
@@ -1067,6 +1124,11 @@ that is being calculated by a <a href="https://github.com/apache/stormcrawler/bl
 <td class="tableblock halign-left valign-top"><p class="tableblock">parser.emitOutlinks.max.per.page</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">-1</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Limit number of emitted links per page.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sitemap.emitOutlinks.max</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Limit the number of URLs emitted as DISCOVERED per sitemap, or child sitemaps per sitemap index. -1 disables the limit. A trimmed sitemap is still marked as FETCHED and a warning is logged. This is a partial mitigation: the URLs have already been parsed when the limit applies, so it bounds what reaches the status stream, not the memory used by the parse.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">sitemap.filter.hours.since.modified</p></td>
@@ -1082,6 +1144,16 @@ that is being calculated by a <a href="https://github.com/apache/stormcrawler/bl
 <td class="tableblock halign-left valign-top"><p class="tableblock">sitemap.extensions</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Sitemap extensions to parse (IMAGE, LINKS, MOBILE, NEWS, VIDEO).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sitemap.sniffContent</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Classify a document without the <code>isSitemap</code> key as a sitemap when the first bytes of its content contain the sitemaps.org namespace. A content type which rules a sitemap out, such as HTML, stops the check.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sitemap.strict</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Apply strict URL checking: a sitemap only yields URLs below its own host and path. Recommended for open crawls.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">textextractor.exclude.tags</p></td>
@@ -1111,10 +1183,13 @@ that is being calculated by a <a href="https://github.com/apache/stormcrawler/bl
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">urlfilters.config.file</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">urlfilters.json</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">JSON file defining URL filters. See <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/archetype/src/main/resources/archetype-resources/src/main/resources/urlfilters.json">default urlfilters.json</a>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">JSON file defining URL filters. See <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-4.0.0/archetype/src/main/resources/archetype-resources/src/main/resources/urlfilters.json">default urlfilters.json</a>.</p></td>
 </tr>
 </tbody>
 </table>
+<div class="paragraph">
+<p>The JDK XML parser fails on sitemaps, feeds and XML-based documents parsed by Tika with many entity references, such as escaped ampersands in URLs. Add <code>-Djdk.xml.maxGeneralEntitySizeLimit=0 -Djdk.xml.totalEntitySizeLimit=0</code> to <code>topology.worker.childopts</code>, to <code>STORM_JAR_JVM_OPTS</code> in local mode, and to <code>parser.tika.pipes.jvmargs</code> when <code>parser.tika.timeout</code> is set. These properties set JVM-wide defaults for the JDK XML parsers; parser-specific settings take precedence.</p>
+</div>
 </div>
 <div class="sect3">
 <h4 id="_metadata_2">Metadata</h4>
@@ -1138,7 +1213,7 @@ minimising metadata clashes</p>
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">metadata.persist</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">_redirTo, error.cause, error.source, isSitemap, isFeed</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Metadata to persist but not transfer to outlinks.</p></td>
 </tr>
 <tr>
@@ -1181,7 +1256,7 @@ For full setup instructions, see the README in each module&#8217;s directory.</p
 <h4 id="_opensearch">OpenSearch</h4>
 <div class="paragraph">
 <p>Integration with <a href="https://opensearch.org/">OpenSearch</a> for indexing, URL status persistence, and metrics.
-See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/external/opensearch">opensearch module</a> for full details.</p>
+See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-4.0.0/external/opensearch">opensearch module</a> for full details.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -1200,12 +1275,12 @@ See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">opensearch.addresses</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">OpenSearch server address(es).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">OpenSearch server address(es). An address without a scheme is contacted over plain http, on port 9200 if none is given; use <code>https://</code> when credentials are configured.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">opensearch.user</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Username for authentication (optional).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Username for Basic authentication (optional). The credentials are only sent to the addresses listed, matched on scheme, host and port. A warning is logged if an address other than a loopback one uses plain http.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">opensearch.password</p></td>
@@ -1213,8 +1288,13 @@ See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/
 <td class="tableblock halign-left valign-top"><p class="tableblock">Password for authentication (optional).</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">opensearch.disable.tls.validation</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Do not check the certificates and host names of the OpenSearch nodes. A warning is logged when this is enabled.</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">opensearch.concurrentRequests</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Number of concurrent bulk requests.</p></td>
 </tr>
 <tr>
@@ -1225,16 +1305,16 @@ See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">opensearch.indexer.create</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Auto-create index if it does not exist.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Send documents with the bulk <code>create</code> operation instead of <code>index</code>, so that an existing document is not overwritten. The index is created at startup in either case.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">opensearch.indexer.bulkActions</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">100</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">50</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Number of documents to buffer before flushing.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">opensearch.indexer.flushInterval</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2s</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5s</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Maximum time before flushing the bulk buffer.</p></td>
 </tr>
 <tr>
@@ -1249,7 +1329,7 @@ See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">opensearch.status.bulkActions</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">500</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">50</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Batch size for status updates.</p></td>
 </tr>
 <tr>
@@ -1259,22 +1339,22 @@ See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">opensearch.status.routing</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Enable index routing for status documents.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">opensearch.status.routing.fieldname</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">key</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Field used for routing.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">opensearch.status.max.buckets</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">50</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Number of buckets for AggregationSpout.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">opensearch.status.max.urls.per.bucket</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">URLs returned per bucket.</p></td>
 </tr>
 <tr>
@@ -1292,6 +1372,16 @@ See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/
 <td class="tableblock halign-left valign-top"><p class="tableblock">metrics</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Index name for Storm metrics.</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">opensearch.queues.index.name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">queues</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Index name for the queues sent by QueueBolt.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">opensearch.queues.cache.spec</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">maximumSize=10000</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Caffeine cache spec of the queue keys QueueBolt has already sent.</p></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -1299,7 +1389,7 @@ See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/
 <h4 id="_solr">Solr</h4>
 <div class="paragraph">
 <p>Integration with <a href="https://solr.apache.org/">Apache Solr</a> for indexing, URL status persistence, and metrics.
-See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/external/solr">solr module</a> for full details. Supports both standalone Solr and SolrCloud (via ZooKeeper).</p>
+See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-4.0.0/external/solr">solr module</a> for full details. Supports both standalone Solr and SolrCloud (via ZooKeeper).</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -1377,7 +1467,7 @@ See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/
 <h4 id="_sql">SQL</h4>
 <div class="paragraph">
 <p>Integration with relational databases via JDBC for URL status persistence, indexing, and metrics.
-See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/external/sql">sql module</a> for full details and table creation scripts.</p>
+See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-4.0.0/external/sql">sql module</a> for full details and table creation scripts.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -1440,7 +1530,7 @@ See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/
 <h4 id="_urlfrontier">URLFrontier</h4>
 <div class="paragraph">
 <p>Integration with <a href="https://github.com/crawler-commons/url-frontier">URLFrontier</a>, a language-agnostic API for URL management and scheduling.
-See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/external/urlfrontier">urlfrontier module</a> for full details.</p>
+See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-4.0.0/external/urlfrontier">urlfrontier module</a> for full details.</p>
 </div>
 <div class="paragraph">
 <p><code>QueueRegulatorBolt</code> consumes the <code>queue</code> stream from the URLFrontier status updater and applies
@@ -1483,6 +1573,31 @@ probe exercises only representative metadata.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock">urlfrontier.address</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">URLFrontier service address (can be used instead of host and port).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">urlfrontier.tls.enabled</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Use TLS on the channels to URLFrontier. If false, the channels are plaintext.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">urlfrontier.tls.trust.cert.collection</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PEM file with the certificates trusted to sign the URLFrontier server certificate. The JVM trust store is used if not set.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">urlfrontier.tls.client.cert.chain</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PEM file with the client certificate chain sent for mutual TLS. Must be set together with <code>urlfrontier.tls.client.private.key</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">urlfrontier.tls.client.private.key</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PKCS#8 PEM file with the private key of the client certificate. Must be set together with <code>urlfrontier.tls.client.cert.chain</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">urlfrontier.tls.client.private.key.password</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Password of the client private key, if it is encrypted.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">urlfrontier.max.buckets</p></td>
@@ -1579,6 +1694,11 @@ probe exercises only representative metadata.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock">429, 503</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">HTTP status codes treated as a rate-limit signal by the QueueRegulatorBolt.</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">urlfrontier.batch.size</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">100</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Maximum number of discovered URLs sent in one message on the batched PutDiscovered endpoint (URLFrontier 2.6+). A partially filled batch is flushed after a second at the latest. 0 sends the discovered URLs individually on the streaming PutURLs endpoint.</p></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -1586,7 +1706,7 @@ probe exercises only representative metadata.</p>
 <h4 id="_tika">Tika</h4>
 <div class="paragraph">
 <p>Apache Tika integration for parsing non-HTML documents (PDF, Word, etc.).
-See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/external/tika">tika module</a> for full details.</p>
+See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-4.0.0/external/tika">tika module</a> for full details.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -1605,12 +1725,47 @@ See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">parser.mimetype.whitelist</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Regex list of allowed MIME types. If set, only matching types are parsed by the Tika ParserBolt.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Regex list of allowed MIME types. If set, only matching types are parsed by the Tika ParserBolt. The pattern is matched against the byte-detected MIME type, not the server-declared HTTP <code>Content-Type</code> header.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">parser.tika.config.file</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">tika-config.xml</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Path to the Tika configuration XML file.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">tika-config.json</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name of the classpath resource holding the Tika configuration (JSON format since Tika 4).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">parser.extract.embedded</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Whether to parse embedded documents. Since Tika 4 embedded documents are no longer parsed unless this is set to <code>true</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">parser.tika.text.maxlength</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Maximum number of characters of text extracted from a document, -1 (or any negative value) for no limit. When the limit is reached the parse stops, the text and outlinks extracted so far are kept and the metadata <code>parse.text.trimmed</code> is set to <code>true</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">parser.tika.pdf.maxpages</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Maximum number of pages of a PDF document to parse, 0 or less to keep the <code>maxPages</code> of the Tika configuration (no limit by default). The pages after it are skipped, their text and outlinks are not extracted. Other settings of <code>pdf-parser</code> in the <code>parse-context</code> section of the Tika configuration are kept.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">parser.tika.timeout</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Maximum time in milliseconds a document may take to parse, 0 or less for no limit. When set, the parse runs in a forked JVM (Tika Pipes), one per bolt instance; a parse that exceeds this is killed outright and reported to the status stream as an <code>ERROR</code> with the message <code>parse timeout</code>. A partial result returned between embedded documents is kept and marked <code>parse.text.trimmed</code>. When <code>parser.tika.text.maxlength</code> is negative (the default), the text is limited to 20,000,000 characters in this mode. Keep it well below <code>topology.message.timeout.secs</code>: the time a tuple waits behind a slow parse or a fork restart counts against that too. The forked JVM uses the <code>IdentityHtmlMapper</code> (the default), any other value of <code>parser.htmlmapper.classname</code> is ignored in this mode and Tika&#8217;s <code>DefaultHtmlMapper</code> is used instead, see the README of the module.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">parser.tika.pipes.jvmargs</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-Xmx512m</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">JVM arguments passed to each forked process under <code>parser.tika.timeout</code>. <code>-Xmx512m</code> is added when they set no maximum heap (<code>-Xmx</code>, <code>-XX:MaxHeapSize</code> or <code>-XX:MaxRAM*</code>).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">parser.tika.pipes.maxfilesperprocess</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Restart a forked process after this many documents under <code>parser.tika.timeout</code>, to bound slow leaks in parsing libraries. Unset uses Tika&#8217;s default, 100000.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">parser.tika.pipes.plugins.dir</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Directory holding Tika Pipes plugin zips under <code>parser.tika.timeout</code>, not needed by default. Unset uses Tika&#8217;s default plugin directory resolution.</p></td>
 </tr>
 </tbody>
 </table>
@@ -1626,13 +1781,6 @@ When using the Tika <code>ParserBolt</code> alongside <code>JSoupParserBolt</cod
 </tr>
 </table>
 </div>
-</div>
-<div class="sect3">
-<h4 id="_aws">AWS</h4>
-<div class="paragraph">
-<p>Integration with AWS services: CloudSearch for indexing and S3 for content caching.
-See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/external/aws">aws module</a> for full details.</p>
-</div>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -1640,10 +1788,17 @@ See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-AWS CloudSearch support (the <code>cloudsearch.*</code> settings below) is deprecated and will be removed in the next major release of StormCrawler.
+Since Tika 4, Tika metadata keys use namespaced names, which surface as renamed <code>parse.<strong></code> keys, e.g. <code>parse.resourceName</code> is now <code>parse.tk:resource-name</code>. Update any <code>indexer.md.mapping</code> or parse-filter rules that match on <code>parse.</strong></code> keys accordingly.
 </td>
 </tr>
 </table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_aws">AWS</h4>
+<div class="paragraph">
+<p>Integration with AWS services: S3 for content caching.
+See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-4.0.0/external/aws">aws module</a> for full details.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -1659,31 +1814,6 @@ AWS CloudSearch support (the <code>cloudsearch.*</code> settings below) is depre
 </tr>
 </thead>
 <tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">cloudsearch.endpoint</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">AWS CloudSearch document endpoint URL.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">cloudsearch.region</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">AWS region (e.g., "eu-west-1").</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">cloudsearch.batch.maxSize</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Documents to buffer before sending a batch. -1 disables batching.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">cloudsearch.batch.max.time.buffered</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">10</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Maximum time (seconds) before flushing the buffer.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">cloudsearch.batch.dump</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Dump batch JSON to a temp directory for debugging.</p></td>
-</tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">s3.region</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
@@ -1711,7 +1841,7 @@ AWS CloudSearch support (the <code>cloudsearch.*</code> settings below) is depre
 <h4 id="_ai_llm_text_extraction">AI (LLM Text Extraction)</h4>
 <div class="paragraph">
 <p>LLM-based text extraction using OpenAI-compatible APIs (including local models via Ollama).
-See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/external/ai">ai module</a> for full details.</p>
+See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-4.0.0/external/ai">ai module</a> for full details.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -1755,7 +1885,7 @@ See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">textextractor.llm.prompt</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">User prompt template. Use <code>{HTML}</code> and <code>{REQUEST}</code> as placeholders (optional).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User prompt template. Use <code>{HTML}</code> and <code>{REQUEST}</code> as placeholders (optional). <code>&lt;|</code> in the page HTML is written as <code>&lt; |</code> before it is substituted, so the page cannot contain a marker token of the form <code>&lt;|NAME|&gt;</code>. The text returned is the content of the <code>&lt;content&gt;</code> envelope of the reply if there is one, without the markup outside fenced code blocks; <code>textextractor.skip.after</code> limits its length.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">textextractor.llm.user_request</p></td>
@@ -1774,7 +1904,7 @@ See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/
 <h4 id="_playwright">Playwright</h4>
 <div class="paragraph">
 <p>Browser-based fetching using <a href="https://playwright.dev/">Playwright</a> for JavaScript-rendered pages.
-See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/external/playwright">playwright module</a> for full details.</p>
+See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-4.0.0/external/playwright">playwright module</a> for full details.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -1809,6 +1939,11 @@ See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/
 <td class="tableblock halign-left valign-top"><p class="tableblock">playwright.load.event</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">load</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Page load event to wait for. One of <code>load</code>, <code>domcontentloaded</code>, <code>networkidle</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">playwright.ignore.https.errors</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If <code>true</code>, the browser context accepts any TLS certificate, including self-signed, expired or otherwise invalid ones, for every page, navigation and subresource. The servers are then not authenticated: anyone able to answer for the host name can serve content that the browser renders and whose JavaScript it executes. Independent of <code>http.proxy</code>: deployments behind a TLS-intercepting proxy, which previously relied on certificate validation being disabled whenever a proxy was set, now need this key or the proxy CA installed in the browser image.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">playwright.skip.resource.types</p></td>
@@ -1913,7 +2048,7 @@ so one bad action cannot abort the rest of the chain.</p>
 </tbody>
 </table>
 <div class="paragraph">
-<p>See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/external/playwright">playwright module README</a> for the full parameter list of each built-in action and a guide on writing your own.</p>
+<p>See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-4.0.0/external/playwright">playwright module README</a> for the full parameter list of each built-in action and a guide on writing your own.</p>
 </div>
 </div>
 <div class="sect4">
@@ -1922,7 +2057,7 @@ so one bad action cannot abort the rest of the chain.</p>
 <p>Browser fetching is much more expensive than a plain HTTP fetch, so most operators only want
 Playwright on URLs that actually need it. The <code>JsRenderingDetector</code> parse filter inspects the
 parsed page from a cheap fetch and sets a metadata flag (default <code>fetch.with=playwright</code>) on URLs
-that look JavaScript-rendered. Pair it with <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/protocol/DelegatorProtocol.java">DelegatorProtocol</a>
+that look JavaScript-rendered. Pair it with <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-4.0.0/core/src/main/java/org/apache/stormcrawler/protocol/DelegatorProtocol.java">DelegatorProtocol</a>
 to route subsequent fetches of those URLs to the Playwright protocol while leaving everything else
 on a fast HTTP client.</p>
 </div>
@@ -1990,7 +2125,7 @@ on the current fetch, and <code>DefaultScheduler</code> reschedules the URL acco
 fetch interval (<code>fetchInterval.fetch.with=playwright: 5</code>) or drop <code>JsRenderingRedirectionBolt</code>
 between the parser and indexer. The bolt reads the routing flag and, on hit, emits only to the
 status stream with <code>Status.FETCHED</code> so the stub document never reaches the index. The full
-parameter list and tuning notes are in the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/external/playwright">playwright module README</a>.</p>
+parameter list and tuning notes are in the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-4.0.0/external/playwright">playwright module README</a>.</p>
 </div>
 </div>
 </div>
@@ -1998,7 +2133,7 @@ parameter list and tuning notes are in the <a href="https://github.com/apache/st
 <h4 id="_language_id">Language ID</h4>
 <div class="paragraph">
 <p>Language identification for crawled documents using the lang-detect library.
-See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/external/langid">langid module</a> source code for details.</p>
+See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-4.0.0/external/langid">langid module</a> source code for details.</p>
 </div>
 <div class="paragraph">
 <p>The <code>LanguageID</code> parse filter is configured in <code>parsefilters.json</code>:</p>
@@ -2034,7 +2169,7 @@ See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/
 <h4 id="_warc">WARC</h4>
 <div class="paragraph">
 <p>Reading and writing <a href="https://iipc.github.io/warc-specifications/specifications/warc-format/warc-1.1/">WARC</a> (Web ARChive) files for archival and replay.
-See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/external/warc">warc module</a> for full details.</p>
+See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-4.0.0/external/warc">warc module</a> for full details.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -2054,6 +2189,11 @@ See the <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/
 <td class="tableblock halign-left valign-top"><p class="tableblock">warc.metadata.keys</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Metadata keys to include as WARC metadata records (optional list).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">warc.digest.algorithm</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sha1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Algorithm for the WARC-Payload-Digest and WARC-Block-Digest headers: <code>sha1</code> or <code>sha256</code>. SHA-1 is the convention across the WARC ecosystem; downstream tooling such as CDX indexers may expect <code>sha1</code> digests. Digest values are Base32-encoded without padding.</p></td>
 </tr>
 </tbody>
 </table>
@@ -2118,7 +2258,7 @@ For complete WARC records, set <code>http.store.headers</code> to <code>true</co
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-07-29 14:14:21 +0200
+Last updated 2026-11-13 15:39:53 +0100
 </div>
 </div>
 <script>(function(){var links=[].slice.call(document.querySelectorAll('#toc a[href^="#"]'));if(!links.length)return;var map=links.map(function(a){var t=document.getElementById(decodeURIComponent(a.getAttribute('href')).slice(1));return t?{a:a,t:t}:null}).filter(Boolean);function on(){var y=window.pageYOffset+90,cur=map[0];map.forEach(function(m){if(m.t.offsetTop<=y)cur=m});links.forEach(function(a){a.classList.toggle('active',cur&&a===cur.a)})}window.addEventListener('scroll',on,{passive:true});on();})();</script>

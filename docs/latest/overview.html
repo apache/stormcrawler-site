@@ -36,12 +36,13 @@
 [data-theme="dark"] .vermenu{box-shadow:0 8px 28px rgba(0,0,0,.5)}
 </style>
 <header class="sc-docheader">
-<a href="/"><img class="logo-l" src="/img/logo.png" alt="Apache StormCrawler"><img class="logo-d" src="/img/logo-dark.svg" alt="Apache StormCrawler"></a>
+<a href="/"><img class="logo-l" src="/img/logo-light.svg" alt="Apache StormCrawler"><img class="logo-d" src="/img/logo-dark.svg" alt="Apache StormCrawler"></a>
 <a class="crumb crumb-sep" href="/docs/">Documentation</a>
 <details class="verwrap">
 <summary>v <b>latest</b> &#9662;</summary>
 <div class="vermenu">
 <a class="cur" href="/docs/latest/overview.html">latest <span>current</span></a>
+<a href="/docs/4.0.0/overview.html">4.0.0</a>
 <a href="/docs/3.7.0/overview.html">3.7.0</a>
 <a href="/docs/3.6.0/overview.html">3.6.0</a>
 <a href="/docs/3.5.1/overview.html">3.5.1</a>
@@ -50,7 +51,7 @@
 </details>
 <nav class="right">
 <a href="/">Website</a>
-<a href="https://javadoc.io/doc/org.apache.stormcrawler/stormcrawler-core/3.7.0" target="_blank" rel="noopener">Javadoc &#8599;</a>
+<a href="https://javadoc.io/doc/org.apache.stormcrawler/stormcrawler-core/4.0.0" target="_blank" rel="noopener">Javadoc &#8599;</a>
 <a href="https://github.com/apache/stormcrawler" target="_blank" rel="noopener">GitHub &#8599;</a>
 </nav>
 </header>
@@ -158,7 +159,7 @@ The project is actively maintained, widely adopted in production environments, a
 <p>Configurable politeness policies (e.g., crawl delay, user agent management)</p>
 </li>
 <li>
-<p>Robust HTTP fetcher based on <a href="https://hc.apache.org/">Apache HttpComponents</a> or <a href="https://square.github.io/okhttp/">OkHttp</a>.</p>
+<p>HTTP fetcher based on <a href="https://okhttp.org/">OkHttp</a>.</p>
 </li>
 <li>
 <p>MIME type detection and response-based filtering</p>
@@ -176,7 +177,7 @@ The project is actively maintained, widely adopted in production environments, a
 <p>Apache Maven archetypes for quickly bootstrapping new crawler projects</p>
 </li>
 <li>
-<p>Actively developed and used in production by <a href="#poweredby">multiple organizations</a></p>
+<p>Actively developed and used in production by <a href="powered-by.html#poweredby">multiple organizations</a></p>
 </li>
 </ul>
 </div>
@@ -185,7 +186,7 @@ The project is actively maintained, widely adopted in production environments, a
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-07-29 14:14:21 +0200
+Last updated 2026-11-13 15:39:53 +0100
 </div>
 </div>
 <script>(function(){var links=[].slice.call(document.querySelectorAll('#toc a[href^="#"]'));if(!links.length)return;var map=links.map(function(a){var t=document.getElementById(decodeURIComponent(a.getAttribute('href')).slice(1));return t?{a:a,t:t}:null}).filter(Boolean);function on(){var y=window.pageYOffset+90,cur=map[0];map.forEach(function(m){if(m.t.offsetTop<=y)cur=m});links.forEach(function(a){a.classList.toggle('active',cur&&a===cur.a)})}window.addEventListener('scroll',on,{passive:true});on();})();</script>
