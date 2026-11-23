@@ -42,6 +42,7 @@
 <summary>v <b>latest</b> &#9662;</summary>
 <div class="vermenu">
 <a class="cur" href="/docs/latest/architecture.html">latest <span>current</span></a>
+<a href="/docs/4.0.0/architecture.html">4.0.0</a>
 <a href="/docs/3.7.0/architecture.html">3.7.0</a>
 <a href="/docs/3.6.0/architecture.html">3.6.0</a>
 <a href="/docs/3.5.1/architecture.html">3.5.1</a>
@@ -50,7 +51,7 @@
 </details>
 <nav class="right">
 <a href="/">Website</a>
-<a href="https://javadoc.io/doc/org.apache.stormcrawler/stormcrawler-core/3.7.0" target="_blank" rel="noopener">Javadoc &#8599;</a>
+<a href="https://javadoc.io/doc/org.apache.stormcrawler/stormcrawler-core/4.0.0" target="_blank" rel="noopener">Javadoc &#8599;</a>
 <a href="https://github.com/apache/stormcrawler" target="_blank" rel="noopener">GitHub &#8599;</a>
 </nav>
 </header>
@@ -173,7 +174,9 @@ processed.</p>
 <div class="paragraph">
 <p>Parse Filters are applied within the parsing bolts, following parsing by
 <code>SiteMapParser</code>, <code>JSoupParser</code>, or <code>ParserBolt</code> (Tika). They can modify extracted text,
-metadata, and links before the content is indexed or new URLs are emitted.</p>
+metadata, and links before the content is indexed or new URLs are emitted.
+For HTML documents, <code>JSoupParser</code> and <code>ParserBolt</code> also apply JSoup Filters, which work
+directly on the JSoup document.</p>
 </div>
 <div class="paragraph">
 <p>Common Parse Filters include:</p>
@@ -216,7 +219,7 @@ interpreted</strong>.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-07-29 14:14:21 +0200
+Last updated 2026-11-13 15:39:53 +0100
 </div>
 </div>
 <script>(function(){var links=[].slice.call(document.querySelectorAll('#toc a[href^="#"]'));if(!links.length)return;var map=links.map(function(a){var t=document.getElementById(decodeURIComponent(a.getAttribute('href')).slice(1));return t?{a:a,t:t}:null}).filter(Boolean);function on(){var y=window.pageYOffset+90,cur=map[0];map.forEach(function(m){if(m.t.offsetTop<=y)cur=m});links.forEach(function(a){a.classList.toggle('active',cur&&a===cur.a)})}window.addEventListener('scroll',on,{passive:true});on();})();</script>

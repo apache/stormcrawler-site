@@ -19,6 +19,10 @@ description: Verified source releases of StormCrawler, signed by the release man
   </div>
 </div>
 
+<div class="callout">
+  <p><b>The 3.x line is end of life.</b> 3.7.0 is its last release. Upgrading from 3.x? The <a href="{{ site.baseurl }}/docs/latest/index.html#_migrating_to_4_0_0">migration guide</a> lists what changes.</p>
+</div>
+
 <h2>Chain of trust</h2>
 <p>You <b>must</b> <a href="https://www.apache.org/info/verification.html">verify</a> the integrity of the downloaded files: every release ships with everything you need to prove it came from us. The chain has four links:</p>
 
@@ -73,5 +77,6 @@ $ gpg --verify apache-stormcrawler-{{ site.version }}-source-release.tar.gz.asc<
 <h3>Older Releases</h3>
 <p>Earlier ASF releases are listed on the <a href="https://github.com/apache/stormcrawler/releases" target="_blank" rel="noopener">GitHub releases page</a> and remain available from the <a href="https://archive.apache.org/dist/stormcrawler/" target="_blank" rel="noopener">Apache archive</a>. Previous <b>non</b>-ASF releases (group <code>com.digitalpebble.stormcrawler</code>) can be found <a href="https://search.maven.org/search?q=g:com.digitalpebble.stormcrawler" target="_blank" rel="noopener">on Maven Central</a>.</p>
 
-<h3>Migrating from 2.x</h3>
-<p>Coming from a pre-Apache (DigitalPebble) release? The <a href="{{ site.baseurl }}/download/3.0/migration-guide.html">migration guide</a> covers the new Maven coordinates, package renames and removed modules.</p>
+<h3>Migrating</h3>
+<p><b>From 3.x:</b> the <a href="{{ site.baseurl }}/docs/latest/index.html#_migrating_to_4_0_0">4.0 migration guide</a> covers the upgrade steps, the configuration and behaviour changes, and the changes for custom Java code.</p>
+<p><b>From 2.x</b> (pre-Apache, DigitalPebble): the <a href="{{ site.baseurl }}/download/3.0/migration-guide.html">3.0 migration guide</a> covers the new Maven coordinates, package renames and removed modules.</p>

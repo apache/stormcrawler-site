@@ -42,6 +42,7 @@
 <summary>v <b>latest</b> &#9662;</summary>
 <div class="vermenu">
 <a class="cur" href="/docs/latest/quick-start.html">latest <span>current</span></a>
+<a href="/docs/4.0.0/quick-start.html">4.0.0</a>
 <a href="/docs/3.7.0/quick-start.html">3.7.0</a>
 <a href="/docs/3.6.0/quick-start.html">3.6.0</a>
 <a href="/docs/3.5.1/quick-start.html">3.5.1</a>
@@ -50,7 +51,7 @@
 </details>
 <nav class="right">
 <a href="/">Website</a>
-<a href="https://javadoc.io/doc/org.apache.stormcrawler/stormcrawler-core/3.7.0" target="_blank" rel="noopener">Javadoc &#8599;</a>
+<a href="https://javadoc.io/doc/org.apache.stormcrawler/stormcrawler-core/4.0.0" target="_blank" rel="noopener">Javadoc &#8599;</a>
 <a href="https://github.com/apache/stormcrawler" target="_blank" rel="noopener">GitHub &#8599;</a>
 </nav>
 </header>
@@ -79,7 +80,8 @@
 <div class="sect2">
 <h3 id="_prerequisites">Prerequisites</h3>
 <div class="paragraph">
-<p>To run StormCrawler, you will need Java SE 17 or later.</p>
+<p>To run StormCrawler, you will need Java SE 25 or later, and Apache Maven to generate and build the
+project.</p>
 </div>
 <div class="paragraph">
 <p>Additionally, since we&#8217;ll be running the required Apache Storm cluster using Docker Compose,
@@ -205,7 +207,7 @@ Specifying a user agent is important for crawler ethics because it identifies yo
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-You can learn more about the architecture and how each component works together if you look into <a href="#architecture">the architecture documentation</a>.
+You can learn more about the architecture and how each component works together if you look into <a href="architecture.html#architecture">the architecture documentation</a>.
 By exploring that part of the documentation, you can gain a better understanding of how StormCrawler performs crawling and how bolts, spouts, as well as parse and URL filters, collaborate in the process.
 </td>
 </tr>
@@ -214,7 +216,7 @@ By exploring that part of the documentation, you can gain a better understanding
 <div class="sect3">
 <h4 id="_docker_compose_setup">Docker Compose Setup</h4>
 <div class="paragraph">
-<p>Below is a simple <code>docker-compose.yml</code> configuration to spin up URLFrontier, Zookeeper, Storm Nimbus, Storm Supervisor, and the Storm UI:</p>
+<p>Below is a simple <code>docker-compose.yml</code> configuration to spin up URLFrontier, Zookeeper, Storm Nimbus, Storm Supervisor, the Storm UI and the Storm logviewer:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -289,6 +291,9 @@ By exploring that part of the documentation, you can gain a better understanding
 </li>
 <li>
 <p>Ensure network connectivity between services; Docker Compose handles this by default.</p>
+</li>
+<li>
+<p>The topology runs in the <code>supervisor</code> container, where <code>localhost</code> is the container itself. Set <code>urlfrontier.host: "urlfrontier"</code> in <code>crawler-conf.yaml</code>. Seeds are still injected from the host through <code>127.0.0.1:7071</code>.</p>
 </li>
 </ul>
 </div>
@@ -369,9 +374,9 @@ By exploring that part of the documentation, you can gain a better understanding
 --rm \
 -v &quot;$(pwd)/crawler-conf.yaml:/apache-storm/crawler-conf.yaml&quot; \
 -v &quot;$(pwd)/crawler.flux:/apache-storm/crawler.flux&quot; \
--v &quot;$(pwd)/${artifactId}-${version}.jar:/apache-storm/${artifactId}-${version}.jar&quot; \
+-v &quot;$(pwd)/target/${artifactId}-${version}.jar:/apache-storm/${artifactId}-${version}.jar&quot; \
 storm:latest \
-storm jar ${artifactId}-${version}.jar org.apache.storm.flux.Flux --remote crawler.flux</code></pre>
+storm jar ${artifactId}-${version}.jar org.apache.storm.flux.Flux crawler.flux</code></pre>
 </div>
 </div>
 <details>
@@ -383,15 +388,15 @@ storm jar ${artifactId}-${version}.jar org.apache.storm.flux.Flux --remote crawl
   --rm `
   -v &quot;${PWD}/crawler-conf.yaml:/apache-storm/crawler-conf.yaml&quot; `
   -v &quot;${PWD}/crawler.flux:/apache-storm/crawler.flux&quot; `
-  -v &quot;${PWD}/$artifactId-$version.jar:/apache-storm/$artifactId-$version.jar&quot; `
+  -v &quot;${PWD}/target/$artifactId-$version.jar:/apache-storm/$artifactId-$version.jar&quot; `
   storm:latest `
-  storm jar $artifactId-$version.jar org.apache.storm.flux.Flux --remote crawler.flux</code></pre>
+  storm jar $artifactId-$version.jar org.apache.storm.flux.Flux crawler.flux</code></pre>
 </div>
 </div>
 </div>
 </details>
 <div class="paragraph">
-<p>where <code>${NETWORK}</code> is the name of the Docker network of the previously started Docker Compose. You can find this name by running</p>
+<p>where <code>${NETWORK}</code> is the network Docker Compose created for these services, by default <code>&lt;project&gt;_default</code>, where Docker Compose derives <code>&lt;project&gt;</code> from the name of the directory holding <code>docker-compose.yml</code>. You can find this name by running</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -443,7 +448,7 @@ In a Storm topology defined with Flux, parallelism specifies the number of tasks
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-07-29 14:14:21 +0200
+Last updated 2026-11-13 15:39:53 +0100
 </div>
 </div>
 <script>(function(){var links=[].slice.call(document.querySelectorAll('#toc a[href^="#"]'));if(!links.length)return;var map=links.map(function(a){var t=document.getElementById(decodeURIComponent(a.getAttribute('href')).slice(1));return t?{a:a,t:t}:null}).filter(Boolean);function on(){var y=window.pageYOffset+90,cur=map[0];map.forEach(function(m){if(m.t.offsetTop<=y)cur=m});links.forEach(function(a){a.classList.toggle('active',cur&&a===cur.a)})}window.addEventListener('scroll',on,{passive:true});on();})();</script>

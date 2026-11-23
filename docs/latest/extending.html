@@ -42,6 +42,7 @@
 <summary>v <b>latest</b> &#9662;</summary>
 <div class="vermenu">
 <a class="cur" href="/docs/latest/extending.html">latest <span>current</span></a>
+<a href="/docs/4.0.0/extending.html">4.0.0</a>
 <a href="/docs/3.7.0/extending.html">3.7.0</a>
 <a href="/docs/3.6.0/extending.html">3.6.0</a>
 <a href="/docs/3.5.1/index.html">3.5.1</a>
@@ -50,7 +51,7 @@
 </details>
 <nav class="right">
 <a href="/">Website</a>
-<a href="https://javadoc.io/doc/org.apache.stormcrawler/stormcrawler-core/3.7.0" target="_blank" rel="noopener">Javadoc &#8599;</a>
+<a href="https://javadoc.io/doc/org.apache.stormcrawler/stormcrawler-core/4.0.0" target="_blank" rel="noopener">Javadoc &#8599;</a>
 <a href="https://github.com/apache/stormcrawler" target="_blank" rel="noopener">GitHub &#8599;</a>
 </nav>
 </header>
@@ -144,7 +145,6 @@
 <pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">import</span> <span class="include">org.apache.stormcrawler.parse.ParseFilter</span>;
 <span class="keyword">import</span> <span class="include">org.apache.stormcrawler.parse.ParseResult</span>;
 <span class="keyword">import</span> <span class="include">com.fasterxml.jackson.databind.JsonNode</span>;
-<span class="keyword">import</span> <span class="include">org.w3c.dom.DocumentFragment</span>;
 <span class="keyword">import</span> <span class="include">java.util.Map</span>;
 
 <span class="directive">public</span> <span class="type">class</span> <span class="class">MyParseFilter</span> <span class="directive">extends</span> ParseFilter {
@@ -157,15 +157,9 @@
     }
 
     <span class="annotation">@Override</span>
-    <span class="directive">public</span> <span class="type">boolean</span> needsDOM() {
-        <span class="keyword">return</span> <span class="predefined-constant">false</span>; <span class="comment">// set to true if you need the DOM tree</span>
-    }
-
-    <span class="annotation">@Override</span>
-    <span class="directive">public</span> <span class="type">void</span> filter(<span class="predefined-type">String</span> url, <span class="type">byte</span><span class="type">[]</span> content, DocumentFragment doc,
-                       ParseResult parse) {
+    <span class="directive">public</span> <span class="type">void</span> filter(<span class="predefined-type">String</span> url, <span class="type">byte</span><span class="type">[]</span> content, ParseResult parse) {
         <span class="comment">// Extract data and store in metadata</span>
-        parse.get(url).getMetadata().setValue(metadataKey, <span class="string"><span class="delimiter">&quot;</span><span class="content">extracted-value</span><span class="delimiter">&quot;</span></span>);
+        parse.getOrCreate(url).getMetadata().setValue(metadataKey, <span class="string"><span class="delimiter">&quot;</span><span class="content">extracted-value</span><span class="delimiter">&quot;</span></span>);
     }
 }</code></pre>
 </div>
@@ -189,7 +183,7 @@
 </div>
 </div>
 <div class="paragraph">
-<p>If <code>needsDOM()</code> returns <code>false</code> for all configured parse filters, the parsing bolt skips DOM generation entirely, improving performance.</p>
+<p>ParseFilters do not get a parsed representation of the document. To extract data from the HTML markup, implement a <a href="internals.html#jsoupfilters">JSoupFilter</a> instead, which gets the JSoup document.</p>
 </div>
 </div>
 <div class="sect3">
@@ -241,13 +235,13 @@
 </div>
 </div>
 <div class="paragraph">
-<p>Use the <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/protocol/DelegatorProtocol.java">DelegatorProtocol</a> when you need to route URLs to different protocol implementations based on metadata or URL patterns.</p>
+<p>Use the <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-4.0.0/core/src/main/java/org/apache/stormcrawler/protocol/DelegatorProtocol.java">DelegatorProtocol</a> when you need to route URLs to different protocol implementations based on metadata or URL patterns.</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_custom_page_action_playwright">Custom Page Action (Playwright)</h4>
 <div class="paragraph">
-<p>The <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/external/playwright">Playwright protocol</a> exposes a <code>PageAction</code> extension point so you can plug site-specific post-navigate behaviour (tab/accordion expansion, cookie-banner dismissal, infinite-scroll, custom <code>evaluate()</code> calls, screenshotting, &#8230;&#8203;) into the protocol without subclassing it. Actions are loaded as an ordered chain from a JSON file referenced by <code>playwright.page.actions.config.file</code> and follow the same <code>Configurable</code> lifecycle as URL/parse filters. The chain runs after <code>page.navigate()</code> succeeds and before <code>page.content()</code> is captured, so any DOM mutations land in the rendered content returned by the protocol.</p>
+<p>The <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-4.0.0/external/playwright">Playwright protocol</a> exposes a <code>PageAction</code> extension point so you can plug site-specific post-navigate behaviour (tab/accordion expansion, cookie-banner dismissal, infinite-scroll, custom <code>evaluate()</code> calls, screenshotting, &#8230;&#8203;) into the protocol without subclassing it. Actions are loaded as an ordered chain from a JSON file referenced by <code>playwright.page.actions.config.file</code> and follow the same <code>Configurable</code> lifecycle as URL/parse filters. The chain runs after <code>page.navigate()</code> succeeds and before <code>page.content()</code> is captured, so any DOM mutations land in the rendered content returned by the protocol.</p>
 </div>
 <div class="paragraph">
 <p>A handful of built-in actions ship with the module — <code>DismissOverlayAction</code>, <code>ExpandClickablesAction</code>, <code>ScrollToBottomAction</code>, <code>EvaluateAction</code>, <code>WaitForSelectorAction</code>, <code>ScreenshotAction</code>. Reach for a custom action when none of those fit. Extend <code>PageAction</code> and implement <code>apply</code>:</p>
@@ -303,7 +297,7 @@
 <div class="sect3">
 <h4 id="_custom_bolt_or_spout">Custom Bolt or Spout</h4>
 <div class="paragraph">
-<p>For a bolt that emits on the status stream (like fetchers and parsers), extend <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/bolt/StatusEmitterBolt.java">StatusEmitterBolt</a>:</p>
+<p>For a bolt that emits on the status stream (like fetchers and parsers), extend <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-4.0.0/core/src/main/java/org/apache/stormcrawler/bolt/StatusEmitterBolt.java">StatusEmitterBolt</a>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -335,7 +329,7 @@
 </div>
 </div>
 <div class="paragraph">
-<p>For a custom spout, extend <code>BaseRichSpout</code> and implement <code>open()</code>, <code>nextTuple()</code>, <code>ack()</code>, <code>fail()</code>, and <code>declareOutputFields()</code>. See <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/spout/FileSpout.java">FileSpout</a> for a simple example. For spouts backed by a storage layer, extend <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-3.7.0/core/src/main/java/org/apache/stormcrawler/persistence/AbstractQueryingSpout.java">AbstractQueryingSpout</a> instead.</p>
+<p>For a custom spout, extend <code>BaseRichSpout</code> and implement <code>open()</code>, <code>nextTuple()</code>, <code>ack()</code>, <code>fail()</code>, and <code>declareOutputFields()</code>. See <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-4.0.0/core/src/main/java/org/apache/stormcrawler/spout/FileSpout.java">FileSpout</a> for a simple example. For spouts backed by a storage layer, extend <a href="https://github.com/apache/stormcrawler/blob/stormcrawler-4.0.0/core/src/main/java/org/apache/stormcrawler/persistence/AbstractQueryingSpout.java">AbstractQueryingSpout</a> instead.</p>
 </div>
 </div>
 </div>
@@ -460,10 +454,10 @@
 <p><strong>FETCHED</strong> — successfully retrieved and processed</p>
 </li>
 <li>
-<p><strong>FETCH_ERROR</strong> — transient error (network timeout, HTTP 5xx). Will be retried.</p>
+<p><strong>FETCH_ERROR</strong> — failed fetch (e.g. network error, HTTP 4xx or 5xx). Retried by default until <code>max.fetch.errors</code> is reached.</p>
 </li>
 <li>
-<p><strong>ERROR</strong> — terminal error (too many retries, HTTP 4xx). Not retried by default.</p>
+<p><strong>ERROR</strong> — error not retried by default (e.g. fetch error limit reached or URL denied by robots.txt).</p>
 </li>
 <li>
 <p><strong>REDIRECTION</strong> — HTTP 3xx redirect encountered</p>
@@ -525,16 +519,16 @@
 <div class="ulist">
 <ul>
 <li>
-<p><code>fetcher_counter</code> — event counts (fetched, error, redirection, robots_rules_fetches)</p>
+<p><code>fetcher_counter</code> — event counts (fetched, bytes_fetched, status_&lt;code&gt;, exception, fetch.timeout, fetch.deadline, queue.timeout, robots.fetched, robots.fromCache, robots.timeout, fetch.helper.rejected)</p>
 </li>
 <li>
-<p><code>fetcher_average</code> — averaged values (download_time, queue_wait_time)</p>
+<p><code>fetcher_average_perdoc</code> — averaged values per document (fetch_time, time_in_queues, bytes_fetched)</p>
 </li>
 <li>
-<p><code>fetcher_average_persec</code> — throughput rates (fetched_per_sec, error_per_sec)</p>
+<p><code>fetcher_average_persec</code> — throughput rates (bytes_fetched_perSec, fetched_perSec)</p>
 </li>
 <li>
-<p><code>activethreads</code> — number of currently active fetching threads</p>
+<p><code>activethreads</code>, <code>in_queues</code>, <code>num_queues</code> — gauges of the active fetching threads, the URLs waiting in the queues and the number of queues</p>
 </li>
 </ul>
 </div>
@@ -555,7 +549,7 @@
 </div>
 </div>
 <div class="paragraph">
-<p>StormCrawler provides MetricsConsumer implementations for <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/external/opensearch">OpenSearch</a>, <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/external/solr">Solr</a>, and <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-3.7.0/external/sql">SQL</a>.</p>
+<p>StormCrawler provides MetricsConsumer implementations for <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-4.0.0/external/opensearch">OpenSearch</a>, <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-4.0.0/external/solr">Solr</a>, and <a href="https://github.com/apache/stormcrawler/tree/stormcrawler-4.0.0/external/sql">SQL</a>.</p>
 </div>
 <div class="paragraph">
 <p>The <strong>Storm UI</strong> (default port 8080) provides real-time visibility into topology health, including execute/process latency, emit counts, and error rates per bolt and spout.</p>
@@ -591,7 +585,7 @@
 <div class="ulist">
 <ul>
 <li>
-<p><code>fetcher.max.urls.in.queues</code> — caps total queued URLs to prevent memory exhaustion. -1 for unlimited.</p>
+<p><code>fetcher.max.urls.in.queues</code> — caps the URLs being fetched plus the URLs waiting in all queues, to prevent memory exhaustion. -1 for unlimited.</p>
 </li>
 <li>
 <p><code>fetcher.max.queue.size</code> — caps individual queue length.</p>
@@ -624,7 +618,7 @@
 <div class="sect3">
 <h4 id="_ssltls">SSL/TLS</h4>
 <div class="paragraph">
-<p>By default, StormCrawler&#8217;s OkHttp protocol trusts all certificates (<code>http.trust.everything: true</code>). For production crawls over untrusted networks, consider setting this to <code>false</code> and configuring a proper trust store.</p>
+<p>By default, StormCrawler&#8217;s OkHttp protocol validates the certificate chains of HTTPS servers and checks that the certificate matches the host name contacted (<code>http.trust.everything: false</code>, <code>http.verify.hostnames: true</code>). For crawls of hosts whose certificates cannot be validated, e.g. self-signed ones, set <code>http.trust.everything</code> to <code>true</code>: the servers are then not authenticated, so credentials (basic auth, credential headers in <code>http.custom.headers</code>, cookies) are withheld unless <code>http.credentials.allow.insecure</code> is set to <code>true</code>. Credentials are also withheld from cleartext http:// requests, which never authenticate the server. Which header names count as credentials is configured with <code>http.credentials.headers</code>. Hostname checking is a separate decision and can be disabled with <code>http.verify.hostnames: false</code>; the servers are then not authenticated either, and credentials are withheld in the same way.</p>
 </div>
 </div>
 <div class="sect3">
@@ -635,11 +629,40 @@
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="yaml"><span class="key">http.basicauth.user</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">username</span><span class="delimiter">&quot;</span></span>
-<span class="key">http.basicauth.password</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">password</span><span class="delimiter">&quot;</span></span></code></pre>
+<span class="key">http.basicauth.password</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">password</span><span class="delimiter">&quot;</span></span>
+<span class="key">http.basicauth.hosts</span>:
+  - <span class="string"><span class="delimiter">&quot;</span><span class="content">intranet.example.com</span><span class="delimiter">&quot;</span></span></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>These credentials are sent as an <code>Authorization</code> header with every request. For per-site authentication, use metadata-driven headers instead (see <a href="#Metadata-dependent Behavior For HTTP Protocols">[Metadata-dependent Behavior For HTTP Protocols]</a> in the Internals section).</p>
+<p>These credentials are sent as an <code>Authorization</code> header only to the hosts listed in <code>http.basicauth.hosts</code>. Entries are host names or IP addresses without scheme, port, path or wildcard; an entry which is not is ignored with a warning. Hosts are matched exactly and case-insensitively against the host of each request, including robots.txt fetches and redirect targets; subdomains are not included and have to be listed separately. Redirects followed with <code>http.allow.redirects</code> never carry the header to another scheme, host or port. Within these hosts, the header is sent with requests to servers authenticated by their TLS certificate; it is withheld from cleartext http:// requests and from https:// requests when <code>http.trust.everything</code> is enabled or <code>http.verify.hostnames</code> is disabled, unless <code>http.credentials.allow.insecure</code> is set to <code>true</code>.</p>
+</div>
+<div class="paragraph">
+<p><strong>Other credential headers</strong>, e.g. a bearer token or an API key, can be configured with <code>http.custom.headers</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="yaml"><span class="key">http.custom.headers</span>:
+  - <span class="string"><span class="delimiter">&quot;</span><span class="content">Authorization=Bearer token</span><span class="delimiter">&quot;</span></span>
+  - <span class="string"><span class="delimiter">&quot;</span><span class="content">X-Trace=crawler</span><span class="delimiter">&quot;</span></span>
+<span class="key">http.custom.headers.hosts</span>:
+  - <span class="string"><span class="delimiter">&quot;</span><span class="content">api.example.com</span><span class="delimiter">&quot;</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The headers of <code>http.custom.headers</code> which carry credentials (see <code>http.credentials.headers</code>) are only sent to the hosts listed in <code>http.custom.headers.hosts</code>, which takes entries of the same form and is matched in the same way as <code>http.basicauth.hosts</code>; the other headers, like <code>X-Trace</code> above, are sent to every host. The two host lists are independent of each other. On a host listed in both, an <code>Authorization</code> header of <code>http.custom.headers</code> replaces the one built from <code>http.basicauth.*</code>; on a host listed only in <code>http.basicauth.hosts</code>, the Basic Authentication header is sent. Credential headers are withheld from servers which were not authenticated in the same way as the Basic Authentication credentials. For per-URL authentication, use metadata-driven headers instead (see <a href="internals.html#_metadata_dependent_behavior_for_http_protocols">Metadata-dependent Behavior For HTTP Protocols</a> in the Internals section).</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Breaking change in 4.0.0: before, the credentials of <code>http.basicauth.*</code> and the credential headers of <code>http.custom.headers</code> were sent to every host crawled, including the targets of outlinks. If <code>http.basicauth.hosts</code> or <code>http.custom.headers.hosts</code> is empty, the corresponding credentials are now not sent at all, and a warning is logged at startup.
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect3">
@@ -656,7 +679,7 @@
 </div>
 </div>
 <div class="paragraph">
-<p>For rotating proxies, use the <code>MultiProxyManager</code> with a proxy list file. See the <a href="configuration.html">Proxy configuration section</a> for details.</p>
+<p>For rotating proxies, use the <code>MultiProxyManager</code> with a proxy list file. See the <a href="configuration.html#_proxy">Proxy configuration section</a> for details.</p>
 </div>
 </div>
 </div>
@@ -665,7 +688,7 @@
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-07-29 14:14:21 +0200
+Last updated 2026-11-13 15:39:53 +0100
 </div>
 </div>
 <script>(function(){var links=[].slice.call(document.querySelectorAll('#toc a[href^="#"]'));if(!links.length)return;var map=links.map(function(a){var t=document.getElementById(decodeURIComponent(a.getAttribute('href')).slice(1));return t?{a:a,t:t}:null}).filter(Boolean);function on(){var y=window.pageYOffset+90,cur=map[0];map.forEach(function(m){if(m.t.offsetTop<=y)cur=m});links.forEach(function(a){a.classList.toggle('active',cur&&a===cur.a)})}window.addEventListener('scroll',on,{passive:true});on();})();</script>

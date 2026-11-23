@@ -22,7 +22,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Checkout
@@ -47,7 +47,7 @@ jobs:
 
       - name: 'Copy build to site repo'
         run: |
-          rsync -avP --delete --exclude .git --exclude docker-compose.yml --exclude README.md --exclude .asf.yaml _site/. ./asf-staging
+          rsync -avP --checksum --delete --exclude .git --exclude docker-compose.yml --exclude README.md --exclude .asf.yaml _site/. ./asf-staging
         shell: bash
 
       - name: 'commit site'

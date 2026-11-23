@@ -1,10 +1,12 @@
 # Documentation and Javadoc versions listed on /docs/.
 # The current release itself lives in _config.yml as site.version.
 docs:
+  - "4.0.0"
   - "3.7.0"
   - "3.6.0"
   - "3.5.1"
 javadoc:
+  - "4.0.0"
   - "3.7.0"
   - "3.6.0"
   - "3.5.1"
